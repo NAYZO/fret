@@ -1,0 +1,32 @@
+{% extends "NzoTunisiefretBundle::layoutClient.html.twig" %}
+
+{% block title %} {{ parent() }} Exportateur {% endblock %}
+
+{% block head %}
+{% endblock head %}
+
+{% block body %}
+
+{% block content %}
+    {% include "NzoUserBundle::connexion.html.twig" %}
+<br> Postule Demande Export
+<br>
+
+<form action="#" id="contactForm" method="post" {{ form_enctype(form) }}>
+
+  {{ form_widget(form) }}
+
+    <!--bouton enregistrer-->
+    <div class="buttons-set">
+        <p class="required">* Obligatoire</p>
+        <button type="submit" class="button"><span><span>Enregistrer</span></span></button>
+    </div>
+
+</form>
+{% endblock content %}
+
+{% block footer %}
+{% endblock footer %}
+
+{% endblock body %}  
+ 

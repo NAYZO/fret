@@ -1,0 +1,34 @@
+<?php
+
+namespace Nzo\TunisiefretBundle\Form;
+
+use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\FormBuilderInterface;
+
+class DemandeExportType extends AbstractType
+{
+    public function buildForm(FormBuilderInterface $builder, array $options)
+
+    {
+	    $builder
+                ->add('titre')  
+                ->add('description')    
+                ->add('pays')
+                ->add('pays', 'country', array('preferred_choices' => array('TN') ) ) 
+                    
+                ->add('ville')
+                ->add('codepostal')
+                ->add('adresse')
+                ->add('datemax')                   
+                ->add('prix')   
+                ->add('demandeexporttype')    
+            ;            
+           
+    }
+
+    public function getName()
+    {
+        return 'nzodemandeexport';
+    }
+   
+}

@@ -1,0 +1,8 @@
+
+{% if is_granted('ROLE_CLIENT') %}
+    {% include "NzoUserBundle:Profile:edit_profile_client.html.twig" %}
+{% elseif is_granted('ROLE_EXPORTATEUR') %}
+    {% include "NzoUserBundle:Profile:edit_profile_exportateur.html.twig" %}
+{% elseif is_granted('ROLE_ADMIN') %}
+    {% include "NzoUserBundle:Profile:edit_profile_admin.html.twig" %}
+{% endif %}

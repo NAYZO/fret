@@ -1,0 +1,4 @@
+nzo_tunisiefret:
+    resource: "@NzoTunisiefretBundle/Resources/config/routing.yml"
+    prefix:   /
+

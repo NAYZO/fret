@@ -1,0 +1,14 @@
+{% extends "NzoTunisiefretBundle::layout.html.twig" %}
+
+{% block title %} {{ parent() }} Mot de passe oublié{% endblock %}
+
+{% block content %}
+    
+<div class="bg-login">
+    {% include "NzoUserBundle:Resetting:reset_content.html.twig" %}
+</div>
+<div <div class="foot">
+    <h6 class="text-center style_h">Vous avez un compte? <a href="{{ path('fos_user_security_login') }}" class="linklogin">Login</a></h6>
+</div>
+    
+{% endblock content %}

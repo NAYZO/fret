@@ -1,0 +1,46 @@
+ 
+{% extends "NzoTunisiefretBundle::layoutClient.html.twig" %}
+
+{% block title %} {{ parent() }} Client {% endblock %}
+
+
+{% block content %}
+    {% include "NzoUserBundle::connexion.html.twig" %}
+<br>                                           
+                          
+                            <!--formulaire-->
+                            <form action="" id="contactForm">
+                                <div class="fieldset">     
+                                    
+                                    <h2 class="legend">Voir Profil</h2> 
+                                    <ul class="form-list">
+                                        <li>
+                                            <div class="field">
+                                                <label>Nom : <span>{{user.nom}}</span></label>
+                                            </div>
+                                            <div class="field">
+                                                <label>Prénom : <span>{{user.prenom}}</span></label>
+                                            </div>
+                                           
+                                        </li>
+                                        <li>
+                                            <div class="field">
+                                                <label>Ville : <span>{{user.ville}}</span></label>
+                                            </div>
+                                            <div class="field">
+                                                <label>Téléphone fix : <span>{{user.tel}}</span></label>
+                                            </div>
+                                            
+                                        </li>
+                                        <li>
+                                            <div class="field">
+                                                <label>adresse : <span>{{user.adresse}}</span></label>
+                                            </div>
+                                            <div class="field">
+                                                <label>Email : <span>{{user.email}}</span></label>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </form>
+{% endblock content %}

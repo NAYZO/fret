@@ -1,0 +1,24 @@
+{% extends "NzoTunisiefretBundle::layout.html.twig" %}
+
+{% block title %} {{ parent() }} Sign Up {% endblock %}
+ 
+{% block content %}
+
+<form action="{{ path('exportateur_registration') }}" id="contactForm" method="post" {{ form_enctype(form) }}>
+    <fieldset>
+        <legend class="colorlegend"><strong>Sign Up</strong></legend>  
+        <h6 class="style_h">Create a new account:</h6>        
+
+            {{ form_widget(form) }}
+
+        <input type="submit" value="Sign Up" name="_submit" class="btn btn-primary pull-right">
+    </fieldset>
+</form>
+
+<div class="foot">
+    <h6 class="text-center style_h">Do you have an account? <a href="{{ path('fos_user_security_login') }}" class="linklogin">Sign In</a></h6>
+</div>
+
+{% endblock content %}
+
+

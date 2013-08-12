@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>{% block title %}TunisieFret - {% endblock title %}</title>
+        <!-- CSS -->
+        <link href="{{ asset('bundles/nzotunisiefret/css/bootstrap.css') }}" rel="stylesheet" media="screen">
+        <link href="{{ asset('bundles/nzotunisiefret/css/style.css') }}" rel="stylesheet" media="screen">
+        <link href="{{ asset('bundles/nzotunisiefret/css/bootstrap-responsive.css') }}" rel="stylesheet" media="screen">
+        <!--FONT-->
+        <link href='http://fonts.googleapis.com/css?family=Droid+Sans:400,700' rel='stylesheet' type='text/css'/>
+       {% block head %}  {% endblock head %}
+    </head>
+    <body>
+        <a href="{{ path('fos_user_change_password') }}" > <span> Change Password </span> </a>
+        <br>
+        <a href="{{ path('nzo_poserdemande_export') }}" > <span> Poser demande export </span> </a>
+        <br>
+    {% block body %}
+
+        <div class="container">
+            <div class="row">
+                <div class="span12">
+                    <div class="well">
+                        {% block content %} {% endblock content %}
+                    </div>
+                </div>
+                {% block footer %}{% endblock footer %}
+            </div>
+       </div>
+    {% endblock body %} 
+    </body>
+    <!--JAVASCRIPT-->
+    <script src="{{ asset('bundles/nzotunisiefret/js/jquery-1.10.2.min.js') }}"></script>
+    <script src="{{ asset('bundles/nzotunisiefret/js/bootstrap.js') }}"></script>
+    {% block js %}  {% endblock js %}
+</html>

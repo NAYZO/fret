@@ -1,0 +1,94 @@
+nzo_tunisiefret_homepage:
+    pattern:  /
+    defaults: { _controller: NzoTunisiefretBundle:Front:index }
+    
+nzo_inscription:
+    pattern:  /inscription/
+    defaults: { _controller: NzoTunisiefretBundle:Front:inscription }
+    
+    
+#CLIENT ROUTE    
+nzo_poserdemande_export:
+  pattern: /poser-demande-export/
+  defaults: {_controller: NzoTunisiefretBundle:Client:PoserDemandeExport}
+  
+#CLIENT EXPORTATEUR
+nzo_postuledemande_export:
+  pattern: /postule-demande-export/{id}
+  defaults: {_controller: NzoTunisiefretBundle:Exportateur:PostuleDemandeExport}  
+  requirements:
+        id:  \d+ 
+
+#--------------------------- FosUserBundle -----------------------------------
+client_registration:
+    pattern:  /inscription/client
+    defaults: { _controller: NzoUserBundle:RegistrationClient:register }
+    
+#client_edite_profil:
+#    pattern:  /profil/client/edite
+#    defaults: { _controller: NzoUserBundle:ProfileClient:edit }    
+    
+exportateur_registration:
+    pattern:  /inscription/exportateur
+    defaults: { _controller: NzoUserBundle:RegistrationExportateur:register }
+
+    
+fos_user_security:
+    resource: "@FOSUserBundle/Resources/config/routing/security.xml"
+
+fos_user_profile:
+    resource: "@FOSUserBundle/Resources/config/routing/profile.xml"
+    prefix: /profile
+
+   
+
+fos_user_registration_check_email:
+    pattern: /check-email
+    defaults: { _controller: FOSUserBundle:Registration:checkEmail }
+    requirements:
+      _method: GET
+      
+fos_user_registration_confirm:
+    pattern: /inscription/confirmer/{token}
+    defaults: { _controller: FOSUserBundle:Registration:confirm }
+    requirements:
+      _method: GET
+      
+fos_user_registration_confirmed:
+    pattern: /inscription/confirmer
+    defaults: { _controller: FOSUserBundle:Registration:confirmed }
+    requirements:
+      _method: GET    
+      
+fos_user_change_password:
+    pattern: /change-password
+    defaults: { _controller: FOSUserBundle:ChangePassword:changePassword }
+    requirements:
+      _method: GET|POST   
+      
+      
+fos_user_resetting_request:
+    pattern: /request
+    defaults: { _controller: FOSUserBundle:Resetting:request }
+    requirements:
+      _method: GET
+
+fos_user_resetting_send_email:
+    pattern: /send-email
+    defaults: { _controller: FOSUserBundle:Resetting:sendEmail }
+    requirements:
+      _method: POST
+
+fos_user_resetting_check_email:
+    pattern: /check-email
+    defaults: { _controller: FOSUserBundle:Resetting:checkEmail }
+    requirements:
+      _method: GET
+
+fos_user_resetting_reset:
+    pattern: /reset/{token}
+    defaults: { _controller: FOSUserBundle:Resetting:reset }
+    requirements:
+      _method: GET|POST
+
+#--------------------------- babababababababaab -----------------------------------

@@ -1,0 +1,22 @@
+{% extends "NzoTunisiefretBundle::layout.html.twig" %}
+
+{% block title %} {{ parent() }} Inscription {% endblock %}
+
+{% block head %}
+{% endblock head %}
+
+{% block body %}
+
+{% block content %}
+    {% include "NzoUserBundle::connexion.html.twig" %}
+<br> Inscription
+<br>
+<a href="{{path('client_registration')}}"> Inscription Client</a>
+<br>
+<a href="{{path('exportateur_registration')}}"> Inscription exportateur</a>
+{% endblock content %}
+
+{% block footer %}
+{% endblock footer %}
+
+{% endblock body %}  

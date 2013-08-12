@@ -1,0 +1,9 @@
+parameters:
+#    nzo_user.example.class: Nzo\UserBundle\Example
+
+services:            
+    nzo_user.registration.form.type:
+        class: Nzo\UserBundle\Form\Type\RegistrationFormType
+        arguments: [%fos_user.model.user.class%]
+        tags:
+            - { name: form.type, alias: nzo_user_registration }

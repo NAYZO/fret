@@ -1,0 +1,14 @@
+{% extends "NzoTunisiefretBundle::layout.html.twig" %}
+
+{% block title %} {{ parent() }} Confirmation {% endblock %}
+
+
+{% block content %}   
+<div class="bg-login">
+    <div class="alert alert-info text-center">
+        {{ 'resetting.check_email'|trans({'%email%': email}, 'FOSUserBundle') }}
+    </div>
+</div>
+{% endblock content %}
+    
+                               

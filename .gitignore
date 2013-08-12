@@ -1,0 +1,9 @@
+/app/cache/*
+/app/config/parameters.yml
+/app/logs/*
+/build/
+/bin/
+/nbproject/
+/others/
+/vendor/
+/composer.phar

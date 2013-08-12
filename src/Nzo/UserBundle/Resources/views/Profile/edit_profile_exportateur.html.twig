@@ -1,0 +1,22 @@
+ 
+{% extends "NzoTunisiefretBundle::layoutExportateur.html.twig" %}
+
+{% block title %} {{ parent() }} Exportateur {% endblock %}
+
+
+{% block content %}
+<form action="{{ path('fos_user_profile_edit') }}" id="contactForm" method="post" {{ form_enctype(form) }}>
+                                <div class="fieldset">
+                                    <h2 class="legend">Edite Profil</h2>
+
+                
+    {{ form_widget(form) }}
+                                        
+                                </div>
+                                <div class="buttons-set">
+                                    <p class="required">* Obligatoire</p>
+
+                                    <button type="submit" class="button"><span><span>Envoyer</span></span></button>
+                                </div>    
+</form>
+{% endblock content %}

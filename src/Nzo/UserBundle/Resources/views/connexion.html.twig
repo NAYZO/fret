@@ -1,0 +1,12 @@
+{% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+<a href="{{ path('fos_user_profile_show') }}" class="login"> <span> {{ app.user.username }} </span> </a>
+    <li>
+        <a href="{{ path('fos_user_security_logout') }}">
+            <i class="icon-off"></i> {{ 'layout.logout'|trans([], 'FOSUserBundle') }} 
+        </a>
+    </li>
+{% else %}
+<a href="{{ path('fos_user_security_login') }}" > <span> Login </span> </a>
+<a href="{{ path('nzo_inscription') }}"> <span> Register </span> </a>
+{% endif %}
+
