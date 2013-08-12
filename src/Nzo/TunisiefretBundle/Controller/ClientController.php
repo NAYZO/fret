@@ -35,5 +35,48 @@ class ClientController extends Controller {
         }
         return $this->render('NzoTunisiefretBundle:Client:PoserDemandeExport.html.twig', array('form' => $form->createView()));
     }
+    
+   /**
+    * @Secure(roles="ROLE_CLIENT")
+    */
+    public function ListeDemandeExportAction()
+    {
+        $usr = $this->get('security.context')->getToken()->getUser();
+            $em = $this->getDoctrine()->getManager();        
+            $query = $em->getRepository('NzoTunisiefretBundle:DemandeExport')->getMyDemandeExport($usr->getId());
+            $paginator = $this->get('knp_paginator'); 
+            $listedemandeexport = $paginator->paginate($query,
+            $this->get('request')->query->get('page', 1), 6);         
+            return $this->render('NzoTunisiefretBundle:Client:ListeDemandeExport.html.twig', array('listedemandeexport' => $listedemandeexport));
+    }
+    
+    /**
+    * @Secure(roles="ROLE_CLIENT")
+    */
+    public function DetailDemandeExportAction($id)
+    {
+        $usr = $this->get('security.context')->getToken()->getUser();
+            $em = $this->getDoctrine()->getManager();        
+            $mydemande = $em->find('NzoTunisiefretBundle:DemandeExport', $id);
+       // security access     
+            if($mydemande->getClient() != $usr) return $this->redirect($this->generateUrl('nzo_tunisiefret_homepage'));
+       // security access   
+            $postules = $em->getRepository('NzoTunisiefretBundle:DemandeExportPostule')->getDemandeExportPostuleByDemande($id);
+        return $this->render('NzoTunisiefretBundle:Client:DetailDemandeExport.html.twig', array('mydemande' => $mydemande, 'postules' => $postules));
+    }
 
+    /**
+    * @Secure(roles="ROLE_CLIENT")
+    */
+    public function DetailDemandeExportPostuleAction($id)
+    {
+        $usr = $this->get('security.context')->getToken()->getUser();
+            $em = $this->getDoctrine()->getManager();        
+            $postule = $em->find('NzoTunisiefretBundle:DemandeExportPostule', $id);
+       // security access     
+           
+       // security access   
+            $msgs = $em->getRepository('NzoTunisiefretBundle:MsgDemandeExport')->findBy( array('demandeexportpostule' => $postule));
+        return $this->render('NzoTunisiefretBundle:Client:DetailDemandeExportPostule.html.twig', array('postule' => $postule, 'msgs' => $msgs));
+    }
 }

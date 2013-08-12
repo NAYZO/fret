@@ -1,0 +1,29 @@
+{% extends "NzoTunisiefretBundle::layoutClient.html.twig" %}
+
+{% block title %} {{ parent() }} Client {% endblock %}
+
+{% block head %}
+{% endblock head %}
+
+{% block body %}
+
+{% block content %}
+    {% include "NzoUserBundle::connexion.html.twig" %}
+<br> Detail Demande Export
+<br>
+titre Demande : {{mydemande.titre}} <br>
+Liste Postule: <br>
+
+{% for postule in postules %} 
+    {{postule.id}} | Date Postule: {{postule.datepostule|date("d/m/Y")}} | <a href="{{path('nzo_detaildemande_export_postule', {'id':postule.id} )}}"> Voir </a>
+    <br>
+{% endfor %}
+
+    
+{% endblock content %}
+
+{% block footer %}
+{% endblock footer %}
+
+{% endblock body %}  
+ 

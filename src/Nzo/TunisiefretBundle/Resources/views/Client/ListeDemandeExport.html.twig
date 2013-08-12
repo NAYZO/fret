@@ -1,0 +1,30 @@
+{% extends "NzoTunisiefretBundle::layoutClient.html.twig" %}
+
+{% block title %} {{ parent() }} Client {% endblock %}
+
+{% block head %}
+{% endblock head %}
+
+{% block body %}
+
+{% block content %}
+    {% include "NzoUserBundle::connexion.html.twig" %}
+<br> Liste Demande Export
+<br>
+
+{% for demande in listedemandeexport %}
+    {{demande.titre}} | <a href="{{path('nzo_detaildemande_export', {'id':demande.id} )}}"> Voir detail</a> 
+    <br>
+{% endfor %}
+    
+    <div class="navigation">
+    {{ knp_pagination_render(listedemandeexport) }}
+    </div>
+    
+{% endblock content %}
+
+{% block footer %}
+{% endblock footer %}
+
+{% endblock body %}  
+ 

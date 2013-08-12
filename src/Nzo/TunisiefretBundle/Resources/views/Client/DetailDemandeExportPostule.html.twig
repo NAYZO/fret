@@ -1,0 +1,29 @@
+{% extends "NzoTunisiefretBundle::layoutClient.html.twig" %}
+
+{% block title %} {{ parent() }} Client {% endblock %}
+
+{% block head %}
+{% endblock head %}
+
+{% block body %}
+
+{% block content %}
+    {% include "NzoUserBundle::connexion.html.twig" %}
+<br> Detail Demande Export Postule
+<br>
+Date Postule: {{postule.datepostule|date("d/m/Y")}} <br>
+Liste Msg: <br>
+
+{% for msg in msgs %} 
+    {{msg.id}} | Date msg: {{msg.date|date("d/m/Y H:i")}}
+    <br>
+{% endfor %}
+
+    
+{% endblock content %}
+
+{% block footer %}
+{% endblock footer %}
+
+{% endblock body %}  
+ 

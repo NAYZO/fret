@@ -12,4 +12,13 @@ use Doctrine\ORM\EntityRepository;
  */
 class DemandeExportPostuleRepository extends EntityRepository
 {
+    public function getDemandeExportPostuleByDemande($id)
+    {
+         $qb = $this->createQueryBuilder('a');
+         $qb->where('a.demandeexport = :demandeexport')
+            ->setParameter('demandeexport', $id)
+            ->orderBy('a.datepostule', 'DESC');
+         return $qb->getQuery()->execute();
+    }   
+    
 }

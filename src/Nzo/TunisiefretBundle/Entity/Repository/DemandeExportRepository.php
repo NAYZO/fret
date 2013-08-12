@@ -20,4 +20,21 @@ class DemandeExportRepository extends EntityRepository
             ->orderBy('a.date_depos', 'DESC');
          return $qb->getQuery();            
     } 
+    
+    public function getMyDemandeExport($id)
+    {
+         $qb = $this->createQueryBuilder('a');
+         $qb->where('a.client = :client')
+            ->setParameter('client', $id)
+            ->orderBy('a.date_depos', 'DESC');
+         return $qb->getQuery();            
+    } 
+    
+//    public function getDemandeExportById($id)
+//    {
+//         $qb = $this->createQueryBuilder('a');
+//         $qb->where('a.id = :id')
+//            ->setParameter('id', $id);            
+//         return $qb->getQuery()->execute();
+//    } 
 }
