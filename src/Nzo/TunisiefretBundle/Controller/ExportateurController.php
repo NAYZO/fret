@@ -24,7 +24,7 @@ class ExportateurController extends Controller {
         $PostuleExport->setExportateur($usr);
         $PostuleExport->setDemandeexport($DemandeExport);
         $form = $this->createForm(new DemandeExportPostuleType(), $PostuleExport);
-        if ($this->getRequest()->getMethod() === 'POST') {
+        if ($request->getMethod() === 'POST') {
             $form->handleRequest($request);
             if ($form->isValid()) {
                 $em = $this->getDoctrine()->getManager();

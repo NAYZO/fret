@@ -7,6 +7,10 @@ use Symfony\Component\HttpFoundation\Request;
 
 use Nzo\TunisiefretBundle\Form\DemandeExportType;
 use Nzo\TunisiefretBundle\Entity\DemandeExport;
+use Nzo\TunisiefretBundle\Entity\DemandeExportPostule;
+
+use Nzo\TunisiefretBundle\Form\MsgDemandeExportType;
+use Nzo\TunisiefretBundle\Entity\MsgDemandeExport;
 
 use JMS\SecurityExtraBundle\Annotation\Secure;
 
@@ -68,15 +72,20 @@ class ClientController extends Controller {
     /**
     * @Secure(roles="ROLE_CLIENT")
     */
-    public function DetailDemandeExportPostuleAction($id)
-    {
+    public function DetailDemandeExportPostuleAction(DemandeExportPostule $postule)
+    { 
         $usr = $this->get('security.context')->getToken()->getUser();
+        // security access 
+        if($postule->getDemandeexport()->getClient() != $usr) return $this->redirect($this->generateUrl('nzo_tunisiefret_homepage'));
+        // security access   
+
+        $MsgForm = new MsgDemandeExport();
+        $MsgForm->setClient($usr);
+        $MsgForm->setDemandeexportpostule($postule);
+        $form = $this->createForm(new MsgDemandeExportType(), $MsgForm);
+
             $em = $this->getDoctrine()->getManager();        
-            $postule = $em->find('NzoTunisiefretBundle:DemandeExportPostule', $id);
-       // security access     
-           
-       // security access   
             $msgs = $em->getRepository('NzoTunisiefretBundle:MsgDemandeExport')->findBy( array('demandeexportpostule' => $postule));
-        return $this->render('NzoTunisiefretBundle:Client:DetailDemandeExportPostule.html.twig', array('postule' => $postule, 'msgs' => $msgs));
+        return $this->render('NzoTunisiefretBundle:Client:DetailDemandeExportPostule.html.twig', array('postule' => $postule, 'msgs' => $msgs, 'form' => $form->createView()));
     }
 }

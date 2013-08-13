@@ -19,6 +19,16 @@ Liste Msg: <br>
     <br>
 {% endfor %}
 
+<form action="#" id="contactForm" method="post" {{ form_enctype(form) }}>
+
+  {{ form_widget(form) }}
+
+
+    <div class="buttons-set">
+        <button type="submit" class="button"><span><span>Envoyez</span></span></button>
+    </div>
+
+</form>
     
 {% endblock content %}
 
