@@ -13,6 +13,12 @@
        {% block head %}  {% endblock head %}
     </head>
     <body>
+            {% include "NzoUserBundle::connexion.html.twig" %}
+            <br>
+        <a href="{{ path('nzo_tunisiefret_homepage') }}" > <span> Home </span> </a>
+        <br>
+        <a href="{{ path('fos_user_profile_edit') }}" > <span> Modifier Profil </span> </a>
+        <br>
      <a href="{{ path('fos_user_change_password') }}" > <span> Change Password </span> </a>
     {% block body %}
         <div class="container">

@@ -8,8 +8,8 @@
 {% block body %}
 
 {% block content %}
-    {% include "NzoUserBundle::connexion.html.twig" %}
-<br> connected exportateur <br> liste Demande Export <br>
+
+<br> liste Demande Export <br>
 
 {% for demande in demandeexport %}
     {{demande.titre}} | <a href="{{path('nzo_postuledemande_export', {'id':demande.id} )}}"> Poster </a> 

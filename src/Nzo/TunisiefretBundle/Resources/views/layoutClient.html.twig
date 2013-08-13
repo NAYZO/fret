@@ -13,13 +13,19 @@
        {% block head %}  {% endblock head %}
     </head>
     <body>
+            {% include "NzoUserBundle::connexion.html.twig" %}
+        <br>
+        <a href="{{ path('nzo_tunisiefret_homepage') }}" > <span> Home </span> </a>
+        <br>
+        <a href="{{ path('fos_user_profile_edit') }}" > <span> Modifier Profil </span> </a>
+        <br>
         <a href="{{ path('fos_user_change_password') }}" > <span> Change Password </span> </a>
         <br>
         <a href="{{ path('nzo_poserdemande_export') }}" > <span> Poser demande export </span> </a>
         <br>
         <a href="{{ path('nzo_voirlistedemande_export') }}" > <span> Voir liste demande export </span> </a>
         <br>
-    {% block body %}
+    {% block body %}  
 
         <div class="container">
             <div class="row">
