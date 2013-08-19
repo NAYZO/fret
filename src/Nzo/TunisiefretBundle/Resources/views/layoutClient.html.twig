@@ -5,9 +5,8 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>{% block title %}TunisieFret - {% endblock title %}</title>
         <!-- CSS -->
-        <link href="{{ asset('bundles/nzotunisiefret/css/bootstrap.css') }}" rel="stylesheet" media="screen">
-        <link href="{{ asset('bundles/nzotunisiefret/css/style.css') }}" rel="stylesheet" media="screen">
-        <link href="{{ asset('bundles/nzotunisiefret/css/bootstrap-responsive.css') }}" rel="stylesheet" media="screen">
+        <!--JAVASCRIPT-->
+        <script src="{{ asset('bundles/nzotunisiefret/js/jquery-2.0.3.min.js') }}"></script>
         <!--FONT-->
         <link href='http://fonts.googleapis.com/css?family=Droid+Sans:400,700' rel='stylesheet' type='text/css'/>
        {% block head %}  {% endblock head %}
@@ -39,8 +38,5 @@
        </div>
     {% endblock body %} 
     </body>
-    <!--JAVASCRIPT-->
-    <script src="{{ asset('bundles/nzotunisiefret/js/jquery-1.10.2.min.js') }}"></script>
-    <script src="{{ asset('bundles/nzotunisiefret/js/bootstrap.js') }}"></script>
     {% block js %}  {% endblock js %}
 </html>

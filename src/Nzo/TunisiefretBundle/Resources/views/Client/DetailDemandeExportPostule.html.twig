@@ -19,7 +19,7 @@ Liste Msg: <br>
     <br>
 {% endfor %}
 
-<form action="#" id="contactForm" method="post" {{ form_enctype(form) }}>
+<form action="#" id="msgform" method="post" {{ form_enctype(form) }}>
 
   {{ form_widget(form) }}
 
@@ -29,6 +29,28 @@ Liste Msg: <br>
     </div>
 
 </form>
+    
+    <script>
+    $(document).ready(function(){
+        $('#msgform').on('submit', function(event){
+            event.preventDefault();        
+            var postdata = 'msg=' + $('#nzomsgdemandeexport_message').val();
+            $.ajax({
+                url: "{{ path('ajax_send_msg_client') }}",
+                type: "POST",
+                data: postdata,
+                //dataType: 'json',
+                success: function (res) { 
+                    alert(res);
+                },
+                error: function() {
+                    alert('erreur');
+                }
+            });
+        });
+
+    });
+    </script>
     
 {% endblock content %}
 

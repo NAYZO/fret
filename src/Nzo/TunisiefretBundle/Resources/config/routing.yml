@@ -11,8 +11,12 @@ nzo_inscription:
 nzo_poserdemande_export:
     pattern: /poser-demande-export/
     defaults: {_controller: NzoTunisiefretBundle:Client:PoserDemandeExport}
+    
+ajax_send_msg_client:
+    pattern: /message-client-send/
+    defaults: {_controller: NzoTunisiefretBundle:Client:MessageClientSend}
   
-#CLIENT EXPORTATEUR
+#EXPORTATEUR ROUTE
 nzo_postuledemande_export:
     pattern: /postule-demande-export/{id}
     defaults: {_controller: NzoTunisiefretBundle:Exportateur:PostuleDemandeExport}  

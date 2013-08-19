@@ -4,6 +4,8 @@ namespace Nzo\TunisiefretBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Httpfoundation\Response;
+use JMS\SecurityExtraBundle\Annotation\Secure;
 
 use Nzo\TunisiefretBundle\Form\DemandeExportType;
 use Nzo\TunisiefretBundle\Entity\DemandeExport;
@@ -11,8 +13,6 @@ use Nzo\TunisiefretBundle\Entity\DemandeExportPostule;
 
 use Nzo\TunisiefretBundle\Form\MsgDemandeExportType;
 use Nzo\TunisiefretBundle\Entity\MsgDemandeExport;
-
-use JMS\SecurityExtraBundle\Annotation\Secure;
 
 class ClientController extends Controller {
 
@@ -69,7 +69,7 @@ class ClientController extends Controller {
         return $this->render('NzoTunisiefretBundle:Client:DetailDemandeExport.html.twig', array('mydemande' => $mydemande, 'postules' => $postules));
     }
 
-    /**
+   /**
     * @Secure(roles="ROLE_CLIENT")
     */
     public function DetailDemandeExportPostuleAction(DemandeExportPostule $postule)
@@ -87,5 +87,27 @@ class ClientController extends Controller {
             $em = $this->getDoctrine()->getManager();        
             $msgs = $em->getRepository('NzoTunisiefretBundle:MsgDemandeExport')->findBy( array('demandeexportpostule' => $postule));
         return $this->render('NzoTunisiefretBundle:Client:DetailDemandeExportPostule.html.twig', array('postule' => $postule, 'msgs' => $msgs, 'form' => $form->createView()));
+    }
+    
+    /**
+     * @Secure(roles="ROLE_CLIENT")
+     */
+    public function MessageClientSendAction(Request $request) 
+    {
+        if ($request->isXmlHttpRequest()) {
+            $valeur = $request->request->get('msg');
+//            $em = $this->getDoctrine()->getManager();
+//            $groupes = $em->getRepository('NzoTunisiefretBundle:groupe')->findBy(array('section' => $_POST['id']));
+//            $i = 0;
+//            foreach ($groupes as $res) {
+//                $val[$i] = array('id' => $res->getId(), 'nom' => $res->getNom());
+//                $i++;
+//            }
+//            $valeur = array('val' => $val);
+            //print(json_encode($valeur));
+            echo $valeur;
+            $response = new Response();
+            return $response;
+        }
     }
 }
