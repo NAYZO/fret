@@ -14,6 +14,8 @@ use Nzo\TunisiefretBundle\Entity\DemandeExportPostule;
 use Nzo\TunisiefretBundle\Form\MsgDemandeExportType;
 use Nzo\TunisiefretBundle\Entity\MsgDemandeExport;
 
+use Nzo\TunisiefretBundle\Entity\NotifMsg;
+
 class ClientController extends Controller {
 
    /**
@@ -77,16 +79,13 @@ class ClientController extends Controller {
         $usr = $this->get('security.context')->getToken()->getUser();
         // security access 
         if($postule->getDemandeexport()->getClient() != $usr) return $this->redirect($this->generateUrl('nzo_tunisiefret_homepage'));
-        // security access   
-
-        $MsgForm = new MsgDemandeExport();
-        $MsgForm->setClient($usr);
-        $MsgForm->setDemandeexportpostule($postule);
-        $form = $this->createForm(new MsgDemandeExportType(), $MsgForm);
+        // security access  
+//        $MsgForm = new MsgDemandeExport();
+//        $form = $this->createForm(new MsgDemandeExportType(), $MsgForm);
 
             $em = $this->getDoctrine()->getManager();        
             $msgs = $em->getRepository('NzoTunisiefretBundle:MsgDemandeExport')->findBy( array('demandeexportpostule' => $postule));
-        return $this->render('NzoTunisiefretBundle:Client:DetailDemandeExportPostule.html.twig', array('postule' => $postule, 'msgs' => $msgs, 'form' => $form->createView()));
+        return $this->render('NzoTunisiefretBundle:Client:DetailDemandeExportPostule.html.twig', array('postule' => $postule, 'msgs' => $msgs));
     }
     
     /**
@@ -95,19 +94,44 @@ class ClientController extends Controller {
     public function MessageClientSendAction(Request $request) 
     {
         if ($request->isXmlHttpRequest()) {
-            $valeur = $request->request->get('msg');
-//            $em = $this->getDoctrine()->getManager();
-//            $groupes = $em->getRepository('NzoTunisiefretBundle:groupe')->findBy(array('section' => $_POST['id']));
-//            $i = 0;
-//            foreach ($groupes as $res) {
-//                $val[$i] = array('id' => $res->getId(), 'nom' => $res->getNom());
-//                $i++;
-//            }
-//            $valeur = array('val' => $val);
-            //print(json_encode($valeur));
-            echo $valeur;
-            $response = new Response();
-            return $response;
+            // save msg
+            $msg = $request->request->get('msg');
+            $id = $request->request->get('id');                    
+            $em = $this->getDoctrine()->getManager();
+            $usr = $this->get('security.context')->getToken()->getUser();
+            $MsgForm = new MsgDemandeExport();    
+            $MsgForm->setClient($usr);                
+            $postule = $em->find('NzoTunisiefretBundle:DemandeExportPostule', $id);
+            $MsgForm->setDemandeexportpostule($postule);
+            $MsgForm->setMessage($msg);
+                $em->persist($MsgForm);
+                $em->flush();
+            // notif Exportateur
+            $exportateur = $postule->getExportateur();
+            $notifmsg = new NotifMsg();
+            $notifmsg->setExportateur($exportateur);
+            $notifmsg->setEmetteur($usr->getPrenom().' '.$usr->getNom());
+            $notifmsg->setTitredemandeexport($postule->getDemandeexport()->getTitre());
+            if (strlen($msg)> 70){
+                $text = substr($msg, 0, 70).'...';
+                $notifmsg->setText($text);
+            }            
+            else
+                $notifmsg->setText($msg);
+            $em->persist($notifmsg);
+            $em->flush();
+
+           //  recuperation liste msg
+           $msgs = $em->getRepository('NzoTunisiefretBundle:MsgDemandeExport')->findBy( array('demandeexportpostule' => $postule));
+
+           $i = 0;
+            foreach ($msgs as $res) {
+                $msgdate = $res->getDate()->format('d/m/Y H:i');
+                if($usr==$res->getClient() ) $msguser='Moi'; else $msguser=$res->getExportateur()->getPrenom().' '.$res->getExportateur()->getNom();
+                $val[$i] = array('date' =>$msgdate, 'msg' => $res->getMessage(), 'user' => $msguser);
+                $i++;
+            }
+        return new Response(json_encode($val));
         }
     }
 }

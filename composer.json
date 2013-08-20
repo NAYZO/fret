@@ -24,7 +24,8 @@
         "pugx/multi-user-bundle": "3.0.*@dev",
         "vich/uploader-bundle": "*",
         "jms/security-extra-bundle": "*",
-        "knplabs/knp-paginator-bundle": "dev-master"
+        "knplabs/knp-paginator-bundle": "dev-master",
+        "raulfraile/ladybug-bundle": "*"
     },
     "scripts": {
         "post-install-cmd": [
