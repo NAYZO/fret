@@ -4,6 +4,7 @@ namespace Nzo\TunisiefretBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Httpfoundation\Response;
 
 use Nzo\TunisiefretBundle\Form\DemandeExportPostuleType;
 use Nzo\TunisiefretBundle\Entity\DemandeExportPostule;
@@ -46,6 +47,15 @@ class ExportateurController extends Controller {
             }
         }
         return $this->render('NzoTunisiefretBundle:Exportateur:PostuleDemandeExport.html.twig', array('form' => $form->createView()));
+    }
+    
+    public function GetEtatAction($id)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $usr = $this->get('security.context')->getToken()->getUser();
+        $res = $em->getRepository('NzoTunisiefretBundle:DemandeExportPostule')->findBy( array('exportateur' => $usr, 'demandeexport' => $id));
+        ($res != NULL)? $val='true' : $val='false';
+        return new Response($val);
     }
 
 }
