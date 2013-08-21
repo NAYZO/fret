@@ -137,7 +137,12 @@ class Exportateur extends User
      * @ORM\Column(type="string", length=255, name="logo", nullable=true)
      * 
      */
-    protected $logoname;    
+    protected $logoname; 
+    
+    /**
+     * @ORM\Column(name="updatedvichat", type="datetime")
+     */
+    protected $UpdatedVichAt;
  
 
     public function __construct()
@@ -163,8 +168,12 @@ class Exportateur extends User
         return $this->uploadlogo;
     }
 
-    public function setUploadlogo(File $uploadlogo) {
+    public function setUploadlogo(File $uploadlogo = null) {
         $this->uploadlogo = $uploadlogo;
+        
+        if ($uploadlogo instanceof File) {
+            $this->setUpdatedVichAt(new \DateTime());
+        }
     }
   /*******************************************************************************/
 
@@ -551,5 +560,28 @@ class Exportateur extends User
     public function getNotifmsg()
     {
         return $this->notifmsg;
+    }
+
+    /**
+     * Set UpdatedVichAt
+     *
+     * @param \DateTime $updatedVichAt
+     * @return Exportateur
+     */
+    public function setUpdatedVichAt($updatedVichAt)
+    {
+        $this->UpdatedVichAt = $updatedVichAt;
+    
+        return $this;
+    }
+
+    /**
+     * Get UpdatedVichAt
+     *
+     * @return \DateTime 
+     */
+    public function getUpdatedVichAt()
+    {
+        return $this->UpdatedVichAt;
     }
 }

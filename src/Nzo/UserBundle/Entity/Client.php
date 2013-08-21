@@ -138,6 +138,11 @@ class Client extends User
      */
     protected $logoname;
     
+    /**
+     * @ORM\Column(name="updatedvichat", type="datetime")
+     */
+    protected $UpdatedVichAt;
+    
 
     public function __construct()
     {      
@@ -160,8 +165,12 @@ class Client extends User
         return $this->uploadlogo;
     }
 
-    public function setUploadlogo(File $uploadlogo) {
+    public function setUploadlogo(File $uploadlogo = null) {
         $this->uploadlogo = $uploadlogo;
+        
+        if ($uploadlogo instanceof File) {
+            $this->setUpdatedVichAt(new \DateTime());
+        }
     }
   /*******************************************************************************/
  
@@ -504,5 +513,28 @@ class Client extends User
     public function getNotifmsg()
     {
         return $this->notifmsg;
+    }
+
+    /**
+     * Set UpdatedVichAt
+     *
+     * @param \DateTime $updatedVichAt
+     * @return Client
+     */
+    public function setUpdatedVichAt($updatedVichAt)
+    {
+        $this->UpdatedVichAt = $updatedVichAt;
+    
+        return $this;
+    }
+
+    /**
+     * Get UpdatedVichAt
+     *
+     * @return \DateTime 
+     */
+    public function getUpdatedVichAt()
+    {
+        return $this->UpdatedVichAt;
     }
 }
