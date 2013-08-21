@@ -21,14 +21,14 @@ class ExportateurController extends Controller {
     public function PostuleDemandeExportAction(DemandeExport $DemandeExport, Request $request)
     {
         $usr = $this->get('security.context')->getToken()->getUser();
+        $em = $this->getDoctrine()->getManager();
         $PostuleExport = new DemandeExportPostule();
         $PostuleExport->setExportateur($usr);
         $PostuleExport->setDemandeexport($DemandeExport);
         $form = $this->createForm(new DemandeExportPostuleType(), $PostuleExport);
         if ($request->getMethod() === 'POST') {
             $form->handleRequest($request);
-            if ($form->isValid()) {
-                $em = $this->getDoctrine()->getManager();
+            if ($form->isValid()) {                
                 //augmente NB postule sur la Demande
                 $DemandeExport->setNombredepostule($DemandeExport->getNombredepostule()+1);
                 //Notification Client
@@ -46,9 +46,14 @@ class ExportateurController extends Controller {
                 return $this->redirect($this->generateUrl('nzo_tunisiefret_homepage'));
             }
         }
-        return $this->render('NzoTunisiefretBundle:Exportateur:PostuleDemandeExport.html.twig', array('form' => $form->createView()));
+        $res = $em->getRepository('NzoTunisiefretBundle:DemandeExportPostule')->findBy( array('exportateur' => $usr, 'demandeexport' => $DemandeExport));
+        ($res != NULL)? $val='true' : $val='false';
+        return $this->render('NzoTunisiefretBundle:Exportateur:PostuleDemandeExport.html.twig', array('val' => $val, 'demandeexport' =>$DemandeExport, 'form' => $form->createView()));
     }
     
+   /**
+    * @Secure(roles="ROLE_EXPORTATEUR")
+    */
     public function GetEtatAction($id)
     {
         $em = $this->getDoctrine()->getManager();
@@ -56,6 +61,42 @@ class ExportateurController extends Controller {
         $res = $em->getRepository('NzoTunisiefretBundle:DemandeExportPostule')->findBy( array('exportateur' => $usr, 'demandeexport' => $id));
         ($res != NULL)? $val='true' : $val='false';
         return new Response($val);
+    }
+    
+   /**
+    * @Secure(roles="ROLE_EXPORTATEUR")
+    */
+    public function ListePostuleActiveAction()
+    {
+        $usr = $this->get('security.context')->getToken()->getUser();
+        $em = $this->getDoctrine()->getManager();   
+        $query = $em->createQuery("SELECT a FROM NzoTunisiefretBundle:DemandeExportPostule a JOIN a.demandeexport d WHERE d.tacking = 0 AND a.demande_refuser = 0 AND a.demande_accepter = 0 AND a.exportateur = ".$usr->getId()." ORDER BY a.datepostule DESC ");
+        $paginator = $this->get('knp_paginator'); 
+        $listepostules = $paginator->paginate($query,
+        $this->get('request')->query->get('page', 1), 6);         
+        return $this->render('NzoTunisiefretBundle:Exportateur:ListePostuleActive.html.twig', array('listepostules' => $listepostules));
+    }
+    
+   /**
+    * @Secure(roles="ROLE_EXPORTATEUR")
+    */
+    public function ListePostuleArchiveAction()
+    {
+        $usr = $this->get('security.context')->getToken()->getUser();
+        $em = $this->getDoctrine()->getManager();   
+        $query = $em->createQuery("SELECT a FROM NzoTunisiefretBundle:DemandeExportPostule a JOIN a.demandeexport d WHERE d.tacking = 1 OR a.demande_refuser = 1 AND a.demande_accepter = 0 AND a.exportateur = ".$usr->getId()." ORDER BY a.datepostule DESC ");
+        $paginator = $this->get('knp_paginator'); 
+        $listepostules = $paginator->paginate($query,
+        $this->get('request')->query->get('page', 1), 6);         
+        return $this->render('NzoTunisiefretBundle:Exportateur:ListePostuleArchive.html.twig', array('listepostules' => $listepostules));
+    }
+    
+   /**
+    * @Secure(roles="ROLE_EXPORTATEUR")
+    */
+    public function VoirDetailPOstuleAction(DemandeExportPostule $postule)
+    {
+        return $this->render('NzoTunisiefretBundle:Exportateur:VoirDetailPostule.html.twig', array('postule' => $postule));
     }
 
 }

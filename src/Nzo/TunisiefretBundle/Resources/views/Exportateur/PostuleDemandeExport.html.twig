@@ -11,7 +11,18 @@
 
 <br> Postule Demande Export
 <br>
-
+    titre:  {{demandeexport.titre}} <br>
+    Date: {{demandeexport.datedepos|date("d/m/Y H:i")}}  | 
+    {%if val=='true'%}
+        Déja Posté
+    {%else%}
+        Pas Encore Poster
+    {%endif%}
+    
+    <br>
+        {{demandeexport.description}}
+    <br>
+{%if val=='false'%}   
 <form action="#" id="contactForm" method="post" {{ form_enctype(form) }}>
 
   {{ form_widget(form) }}
@@ -21,8 +32,8 @@
         <p class="required">* Obligatoire</p>
         <button type="submit" class="button"><span><span>Enregistrer</span></span></button>
     </div>
-
 </form>
+{%endif%} 
 {% endblock content %}
 
 {% block footer %}

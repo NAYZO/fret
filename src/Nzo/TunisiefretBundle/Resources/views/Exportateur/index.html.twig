@@ -9,15 +9,15 @@
 
 {% block content %}
 
-<br> liste Demande Export <br>
+<br> liste Demande Export <br> <br>
 
 {% for demande in demandeexport %}
-    titre:  {{demande.titre}} <br>
+    titre:  <a href="{{path('nzo_postuledemande_export', {'id':demande.id} )}}"> {{demande.titre}} </a>  <br>
     Date: {{demande.datedepos|date("d/m/Y H:i")}}  | 
     {%if render(controller('NzoTunisiefretBundle:Exportateur:GetEtat', {'id': demande}))=='true'%}
         Déja Posté
     {%else%}
-        <a href="{{path('nzo_postuledemande_export', {'id':demande.id} )}}"> Poster </a> 
+        Pas Encore Poster
     {%endif%}
     
     <br>
@@ -28,6 +28,7 @@
     {%endif%}
     <br>
     -----------------------------------------------------
+    <br>
 {% endfor %}
     
     <div class="navigation">

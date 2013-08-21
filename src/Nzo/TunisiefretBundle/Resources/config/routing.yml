@@ -15,14 +15,7 @@ nzo_poserdemande_export:
 ajax_send_msg_client:
     pattern: /message-client-send/
     defaults: {_controller: NzoTunisiefretBundle:Client:MessageClientSend}
-  
-#EXPORTATEUR ROUTE
-nzo_postuledemande_export:
-    pattern: /postule-demande-export/{id}
-    defaults: {_controller: NzoTunisiefretBundle:Exportateur:PostuleDemandeExport}  
-    requirements:
-        id:  \d+ 
-
+    
 nzo_voirlistedemande_export:
     pattern: /liste-demande-export/
     defaults: {_controller: NzoTunisiefretBundle:Client:ListeDemandeExport}
@@ -37,7 +30,29 @@ nzo_detaildemande_export_postule:
     pattern: /detail-demande-export/{id}/postule/
     defaults: {_controller: NzoTunisiefretBundle:Client:DetailDemandeExportPostule}  
     requirements:
-        id:  \d+        
+        id:  \d+    
+  
+#EXPORTATEUR ROUTE
+nzo_postuledemande_export:
+    pattern: /postule-demande-export/{id}
+    defaults: {_controller: NzoTunisiefretBundle:Exportateur:PostuleDemandeExport}  
+    requirements:
+        id:  \d+       
+
+exp_liste_postule_active:
+    pattern: /liste-postule-active/
+    defaults: {_controller: NzoTunisiefretBundle:Exportateur:ListePostuleActive}
+
+exp_liste_postule_archive:
+    pattern: /liste-postule-archive/
+    defaults: {_controller: NzoTunisiefretBundle:Exportateur:ListePostuleArchive}
+    
+exp_voir_detail_postule:    
+    pattern: /exportateur/{id}/detail-postule/
+    defaults: {_controller: NzoTunisiefretBundle:Exportateur:VoirDetailPOstule}  
+    requirements:
+        id:  \d+         
+
 #--------------------------- FosUserBundle -----------------------------------
 client_registration:
     pattern:  /inscription/client

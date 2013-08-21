@@ -15,9 +15,7 @@ class DemandeExportRepository extends EntityRepository
     public function getAllDemandeExport()
     {
          $qb = $this->createQueryBuilder('a');
-         $qb->where('a.tacking = :tacking')
-            ->setParameter('tacking', 0)
-            ->orderBy('a.date_depos', 'DESC');
+         $qb->orderBy('a.date_depos', 'DESC');
          return $qb->getQuery();            
     } 
     

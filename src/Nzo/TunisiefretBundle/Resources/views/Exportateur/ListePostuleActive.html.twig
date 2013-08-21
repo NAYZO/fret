@@ -1,0 +1,33 @@
+{% extends "NzoTunisiefretBundle::layoutExportateur.html.twig" %}
+
+{% block title %} {{ parent() }} Exportateur {% endblock %}
+
+{% block head %}
+{% endblock head %}
+
+{% block body %}
+
+{% block content %}
+
+<br> liste Postules Active <br> <br>
+
+{% for postule in listepostules %}
+    titre:  {{postule.demandeexport.titre}} |
+    Date postule: {{postule.datepostule|date("d/m/Y H:i")}} |   
+    <a href="{{path('exp_voir_detail_postule', {'id':postule.id} )}}"> Voir </a>
+    <br>
+    -----------------------------------------------------
+    <br>
+{% endfor %}
+    
+    <div class="navigation">
+    {{ knp_pagination_render(listepostules) }}
+    </div>
+
+{% endblock content %}
+
+{% block footer %}
+{% endblock footer %}
+
+{% endblock body %}  
+ 
