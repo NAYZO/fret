@@ -38,4 +38,9 @@ class FrontController extends Controller
         }
         return $this->redirect($this->generateUrl('nzo_tunisiefret_homepage'));
     }
+    
+    public function contactAction()
+    {
+        
+    }
 }

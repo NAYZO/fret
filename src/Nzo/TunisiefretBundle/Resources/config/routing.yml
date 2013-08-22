@@ -6,7 +6,13 @@ nzo_inscription:
     pattern:  /inscription/
     defaults: { _controller: NzoTunisiefretBundle:Front:inscription }
     
-    
+nzo_contact:
+    pattern: /contact/
+    defaults:
+        _controller: FrameworkBundle:Template:template
+        template: 'NzoTunisiefretBundle:Front:contact.html.twig'
+        
+        
 #CLIENT ROUTE    
 nzo_poserdemande_export:
     pattern: /poser-demande-export/
