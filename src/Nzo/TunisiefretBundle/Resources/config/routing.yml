@@ -12,6 +12,12 @@ nzo_contact:
         _controller: FrameworkBundle:Template:template
         template: 'NzoTunisiefretBundle:Front:contact.html.twig'
         
+nzo_apropos:
+    pattern: /a-propos/
+    defaults:
+        _controller: FrameworkBundle:Template:template
+        template: 'NzoTunisiefretBundle:Front:apropos.html.twig'        
+        
         
 #CLIENT ROUTE    
 nzo_poserdemande_export:
