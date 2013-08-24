@@ -2,16 +2,77 @@
 
 {% block title %} {{ parent() }} Home {% endblock %}
 
-{% block head %}
-{% endblock head %}
+{% block head %}{% endblock head %}
 
-{% block body %}
+       {% block carrousel %}
+                    <div id="carousel" class="carousel slide">
+            <!-- Indicators -->
+            <ol class="carousel-indicators">
+                <li data-target="#carousel" data-slide-to="0" class="active"></li>
+                <li data-target="#carousel" data-slide-to="1"></li>
+            </ol>
+
+            <!-- Wrapper for slides -->
+            <div class="carousel-inner">
+                <div class="item active">
+                    <img class="img-responsive" src="{{ asset('bundles/nzotunisiefret/images') }}/img1.jpg" alt="img2">
+                    <div class="bg-caption">
+                        <h3 class="black">Pellentesque aliquam nibh at aliquam vehicula</h3>
+                        <p class="blue">Amazing place to discover</p> 
+                    </div>
+                </div>
+                <div class="item">
+                    <img class="img-responsive" src="{{ asset('bundles/nzotunisiefret/images') }}/img2.jpg" alt="img1">
+                    <div class="bg-caption">
+                        <h3 class="black">Pellentesque aliquam nibh at aliquam vehicula</h3>
+                        <p class="blue">Amazing place to discover</p> 
+                    </div>
+                </div>
+            </div>
+
+            <!-- Controls -->
+            <a class="left carousel-control" href="#carousel" data-slide="prev">
+                <span class="icon-prev"></span>
+            </a>
+            <a class="right carousel-control" href="#carousel" data-slide="next">
+                <span class="icon-next"></span>
+            </a>
+        </div>
+        {% endblock carrousel %}
 
 {% block content %}
-<br> Home <br>
+   
+        <div class="col-md-12" style="margin-bottom: 50px">
+                    <div class="row">
+                        <h3 class="text-center">Let us take care of it for you</h3>
+                        <p class="text-center">TUNISIE FRET est une plateforme web sécurisée et fiable de Bource de Fret pour la Tunisie, unique en Tunisie, Bourse d'opportunité d'affaire et de rencontre entre conducteurs et affreteurs partageant leur idéal d’écomobilité de fret, de solidarité et de consommation responsable. Consultez nos exemples de trajets de Paris, publiez de facon sécurisé vos annonces de cocamionnage et économisez!</p>
+                        <div class="col-md-4"> 
+                            <div class="row">
+                                <h4 class="title">Nos Services</h4>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6 col-md-4">
+                            <div class="thumbnail">
+                                <img src="{{ asset('bundles/nzotunisiefret/images') }}/img-1.jpg" alt="avion" class="img-responsive">
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-md-4">
+                            <div class="thumbnail">
+                                <img src="{{ asset('bundles/nzotunisiefret/images') }}/img-2.jpg" alt="bateau" class="img-responsive">
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-md-4">
+                            <div class="thumbnail">
+                                <img src="{{ asset('bundles/nzotunisiefret/images') }}/img-3.jpg" alt="camion" class="img-responsive">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <h3 class="text-center">Let us take care of it for you</h3>
+                        <p class="text-center">TUNISIE FRET est une plateforme web sécurisée et fiable de Bource de Fret pour la Tunisie, unique en Tunisie, Bourse d'opportunité d'affaire et de rencontre entre conducteurs et affreteurs partageant leur idéal d’écomobilité de fret, de solidarité et de consommation responsable. Consultez nos exemples de trajets de Paris, publiez de facon sécurisé vos annonces de cocamionnage et économisez!</p>
+                    </div>
+                </div>
 {% endblock content %}
 
-{% block footer %}
-{% endblock footer %}
-
-{% endblock body %}  
