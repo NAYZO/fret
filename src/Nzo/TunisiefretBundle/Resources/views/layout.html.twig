@@ -4,37 +4,74 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>{% block title %}TunisieFret - {% endblock title %}</title>
+        <!--To be sure using the latest rendering mode for IE-->
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <!-- CSS -->
         <link href="{{ asset('bundles/nzotunisiefret/css/bootstrap.css') }}" rel="stylesheet" media="screen">
         <link href="{{ asset('bundles/nzotunisiefret/css/style.css') }}" rel="stylesheet" media="screen">
-        <link href="{{ asset('bundles/nzotunisiefret/css/bootstrap-responsive.css') }}" rel="stylesheet" media="screen">
-        <!--FONT-->
-        <link href='http://fonts.googleapis.com/css?family=Droid+Sans:400,700' rel='stylesheet' type='text/css'/>
-       {% block head %}  {% endblock head %}
+        {% block head %}  {% endblock head %}
     </head>
     <body>
-        
-    {% include "NzoUserBundle::connexion.html.twig" %}
-    <br>
-    <a href="{{path('nzo_tunisiefret_homepage')}}"> Home </a>    
-    <br>
-    <a href="{{path('nzo_contact')}}"> Contact </a>
-    <br>
-    <a href="{{path('nzo_apropos')}}"> A Propos </a>
+      <nav class="bg-menu navbar" role="navigation">
+            <div class="container">
+                <!-- Brand and toggle get grouped for better mobile display -->
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                        <span class="sr-only">Menu</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="{{path('nzo_tunisiefret_homepage')}}"><img src="{{ asset('bundles/nzotunisiefret/images') }}/logo.png" alt="logo"/></a>
+                </div>
+                <!-- Collect the nav links, forms, and other content for toggling -->
+                <div class="collapse navbar-collapse navbar-ex1-collapse">
+                    <ul class="nav navbar-nav navbar-right nav-style">
+                        <li><a href="{{path('nzo_tunisiefret_homepage')}}">Acceuil</a></li>
+                        <li><a href="{{path('nzo_apropos')}}">A propos de nous</a></li>
+                        <li><a href="{{path('nzo_contact')}}">Contact</a></li>
+                        {% include "NzoUserBundle::connexion.html.twig" %}
+                    </ul>
+                </div><!-- /.navbar-collapse -->
+            </div>
+        </nav>
+
     
     {% block body %}
-        <div class="container">
+        {% block carrousel %}{% endblock carrousel %}
+        {% block banner %}{% endblock banner %}
+        <section class="container">
             <div class="row">
               {% block content %}{% endblock content %}
             </div>
-        </div>   
+        </section>   
         
-        {% block footer %}{% endblock footer %}
+        {% block footer %}
+            <footer class="footer-bg">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-4">
+                        <ul class="list-inline footer-menu">
+                            <li><a href="{{path('nzo_tunisiefret_homepage')}}">Acceuil</a></li>
+                            <li><a href="{{path('nzo_apropos')}}">A propos de nous</a></li>
+                            <li><a href="{{path('nzo_contact')}}">Contact</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-md-4"></div>
+                    <div class="col-md-4 text-right copyright">© 2013 Ovynet. All Rights Reserved.</div>
+                </div>
+            </div>
+            <div id="btn_up">
+                <img alt="Retour en haut" title="Retour en haut" src="{{ asset('bundles/nzotunisiefret/images') }}/up.png">
+            </div>
+        </footer>
+        {% endblock footer %}
 
     {% endblock body %} 
         
     <!--JAVASCRIPT-->
-    <script src="{{ asset('bundles/nzotunisiefret/js/jquery-1.10.2.min.js') }}"></script>
-    <script src="{{ asset('bundles/nzotunisiefret/js/bootstrap.js') }}"></script>
+     <script src="{{asset('bundles/nzotunisiefret/js/jquery-2.0.3.min.js') }}"></script>
+     <script src="{{ asset('bundles/nzotunisiefret/js/bootstrap.js') }}"></script>
+     <script src="{{ asset('bundles/nzotunisiefret/js/up.js') }}"></script>
     </body>
 </html>
