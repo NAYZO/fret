@@ -77,7 +77,6 @@ client_registration:
 exportateur_registration:
     pattern:  /inscription/exportateur
     defaults: { _controller: NzoUserBundle:RegistrationExportateur:register }
-
     
 fos_user_security:
     resource: "@FOSUserBundle/Resources/config/routing/security.xml"
@@ -85,8 +84,6 @@ fos_user_security:
 fos_user_profile:
     resource: "@FOSUserBundle/Resources/config/routing/profile.xml"
     prefix: /profile
-
-   
 
 fos_user_registration_check_email:
     pattern: /check-email
@@ -106,9 +103,10 @@ fos_user_registration_confirmed:
     requirements:
       _method: GET    
       
-fos_user_change_password:
+# modif bundle to NzoUser      
+fos_user_change_password: 
     pattern: /change-password
-    defaults: { _controller: FOSUserBundle:ChangePassword:changePassword }
+    defaults: { _controller: NzoUserBundle:ChangePassword:changePassword } 
     requirements:
       _method: GET|POST   
       

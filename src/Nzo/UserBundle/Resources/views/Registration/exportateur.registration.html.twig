@@ -7,11 +7,118 @@
 <form action="{{ path('exportateur_registration') }}" id="contactForm" method="post" {{ form_enctype(form) }}>
     <fieldset>
         <legend class="colorlegend"><strong>Sign Up</strong></legend>  
-        <h6 class="style_h">Create a new account:</h6>        
-
-            {{ form_widget(form) }}
-
+        <h6 class="style_h">Create a new account:</h6> 
+        
+        {% if(form_errors(form)) %}
+            <div class="alert alert-error text-center"> {{ form_errors(form) }} </div>
+        {% endif %}
+            
+        {#--Username---#}
+        <div class="input-prepend">
+            <span class="add-on"><i class="icon-user">Username</i></span>
+            {{ form_widget(form.username,{'attr': {'class': 'span3','placeholder': 'Username'}}) }}
+        </div>
+        {% if(form_errors(form.username)) %}
+          <div class="error-input">{{ form_errors(form.username) }}</div>
+        {% endif %}
+          
+        {#--Email---#}
+        <div class="input-prepend">
+            <span class="add-on"><i class="icon-globe">E-mail</i></span>
+            {{ form_widget(form.email,{'attr': {'class': 'span3','placeholder': 'E-mail'}}) }}
+        </div>
+        {% if(form_errors(form.email)) %}
+          <div class="error-input">{{ form_errors(form.email) }}</div>
+        {% endif %} 
+        
+        {#--Password---#}
+        <div class="input-prepend">
+            <span class="add-on"><i class="icon-lock">Password</i></span>
+            {{ form_widget(form.plainPassword.first,{'attr': {'class': 'span3','placeholder': 'Password'}}) }}                                      
+        </div>
+        {#--Password Confirm---#}
+        <div class="input-prepend">
+            <span class="add-on"><i class="icon-lock">Password Confirmation</i></span>
+            {{ form_widget(form.plainPassword.second,{'attr': {'class': 'span3','placeholder': 'Password Confirmation'}}) }}
+        </div>
+            {% if(form_errors(form.plainPassword.first)) %}
+                <div class="error-input">{{ form_errors(form.plainPassword.first) }}</div>
+            {% endif %} 
+    
+       {#--Entreprise---#}
+        <div class="input-prepend">
+            <span class="add-on"><i class="icon-user">Nom Entreprise</i></span>
+            {{ form_widget(form.nomentrop,{'attr': {'class': 'span3','placeholder': 'Nom Entreprise'}}) }}
+        </div>
+        {% if(form_errors(form.nomentrop)) %}
+          <div class="error-input">{{ form_errors(form.nomentrop) }}</div>
+        {% endif %}         
+          
+        {#--Ville---#}
+        <div class="input-prepend">
+            <span class="add-on"><i class="icon-user">Ville</i></span>
+            {{ form_widget(form.ville,{'attr': {'class': 'span3','placeholder': 'Ville'}}) }}
+        </div>
+        {% if(form_errors(form.ville)) %}
+          <div class="error-input">{{ form_errors(form.ville) }}</div>
+        {% endif %}  
+          
+        {#--Adresse---#}
+        <div class="input-prepend">
+            <span class="add-on"><i class="icon-user">Adresse</i></span>
+            {{ form_widget(form.adresse,{'attr': {'class': 'span3','placeholder': 'Adresse'}}) }}
+        </div>
+        {% if(form_errors(form.adresse)) %}
+          <div class="error-input">{{ form_errors(form.adresse) }}</div>
+        {% endif %}    
+          
+        {#--Tel---#}
+        <div class="input-prepend">
+            <span class="add-on"><i class="icon-user">Tel</i></span>
+            {{ form_widget(form.tel,{'attr': {'class': 'span3','placeholder': 'Tel'}}) }}
+        </div>
+        {% if(form_errors(form.tel)) %}
+          <div class="error-input">{{ form_errors(form.tel) }}</div>
+        {% endif %}    
+          
+        {#--Fax---#}
+        <div class="input-prepend">
+            <span class="add-on"><i class="icon-user">Fax</i></span>
+            {{ form_widget(form.fax,{'attr': {'class': 'span3','placeholder': 'Fax'}}) }}
+        </div>
+        {% if(form_errors(form.fax)) %}
+          <div class="error-input">{{ form_errors(form.fax) }}</div>
+        {% endif %} 
+          
+        {#--Website---#}
+        <div class="input-prepend">
+            <span class="add-on"><i class="icon-user">Site Web</i></span>
+            {{ form_widget(form.siteweb,{'attr': {'class': 'span3','placeholder': 'Site Web'}}) }}
+        </div>
+        {% if(form_errors(form.siteweb)) %}
+          <div class="error-input">{{ form_errors(form.siteweb) }}</div>
+        {% endif %}     
+          
+        {#--Description---#}
+        <div class="input-prepend">
+            <span class="add-on"><i class="icon-user">Description</i></span>
+            {{ form_widget(form.description,{'attr': {'class': 'span3','placeholder': 'Description'}}) }}
+        </div>
+        {% if(form_errors(form.description)) %}
+          <div class="error-input">{{ form_errors(form.description) }}</div>
+        {% endif %}  
+          
+        {#--Logo---#}
+        <div class="input-prepend">
+            <span class="add-on"><i class="icon-user">Logo</i></span>
+            {{ form_widget(form.uploadlogo,{'attr': {'class': 'span3','placeholder': 'Logo'}}) }}
+        </div>
+        {% if(form_errors(form.uploadlogo)) %}
+          <div class="error-input">{{ form_errors(form.uploadlogo) }}</div>
+        {% endif %}        
+                               
         <input type="submit" value="Sign Up" name="_submit" class="btn btn-primary pull-right">
+               {{ form_rest(form) }}
     </fieldset>
 </form>
 

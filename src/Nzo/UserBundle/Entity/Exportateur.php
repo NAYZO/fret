@@ -140,7 +140,7 @@ class Exportateur extends User
     protected $logoname; 
     
     /**
-     * @ORM\Column(name="updatedvichat", type="datetime")
+     * @ORM\Column(name="updatedvichat", type="datetime", nullable=true)
      */
     protected $UpdatedVichAt;
  

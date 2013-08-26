@@ -6,24 +6,24 @@
 
 {% block content %}
 <form action="{{ path('fos_user_profile_edit') }}" id="contactForm" method="post" {{ form_enctype(form) }}>
-                                <div class="fieldset">
-                                    <h2 class="legend">Edite Profil</h2>
-                                    <ul class="form-list">
-                
-                                     <li>
-                                            <div class="field">
-                                                <label><em>*</em>Login</label>
-                                                <div class="input-box">
+    <div class="fieldset">
+        <h2 class="legend">Edite Profil</h2>
+        <ul class="form-list">
+
+            <li>
+                <div class="field">
+                    <label><em>*</em>Login</label>
+                    <div class="input-box">
                                                     {{ form_widget(form.username,{'attr': {'class': 'input-text'}}) }}
                                                     {% if(form_errors(form)) %}
-                                                      <div class="validation-advice"> {{ form_errors(form) }} </div>
+                            <div class="validation-advice"> {{ form_errors(form) }} </div>
                                                     {% endif %}
                                                     {% if(form_errors(form.username)) %}
-                                                      <div class="validation-advice">{{ form_errors(form.username) }}</div>
+                            <div class="validation-advice">{{ form_errors(form.username) }}</div>
                                                     {% endif %}                             
-                                                </div>
-                                            </div>
-                                             
+                        </div>
+                    </div>
+
                                       {#       <div class="field">
                                                  <label><em>*</em>Votre mot de passe:</label>
                                                 <div class="input-box">
@@ -34,65 +34,65 @@
                                                     </div>		 
                                               </div>
                                         #}    
-                                        </li>
-                                        
-                                        <li>
-                                            <div class="field">
-                                                <label><em>*</em>Nom</label>
-                                                <div class="input-box">
+                </li>
+
+                <li>
+                    <div class="field">
+                        <label><em>*</em>Nom</label>
+                        <div class="input-box">
                                                     {{ form_widget(form.nom,{'attr': {'class': 'input-text'}}) }}
                                                     {% if(form_errors(form.nom)) %}
-                                                      <div class="validation-advice">{{ form_errors(form.nom) }}</div>
+                                <div class="validation-advice">{{ form_errors(form.nom) }}</div>
                                                     {% endif %}                             
-                                                </div>
-                                            </div>
-                                            <div class="field">
-                                                <label><em>*</em>Prénom</label>
-                                                <div class="input-box">
+                            </div>
+                        </div>
+                        <div class="field">
+                            <label><em>*</em>Prénom</label>
+                            <div class="input-box">
                                                     {{ form_widget(form.prenom,{'attr': {'class': 'input-text'}}) }}
                                                     {% if(form_errors(form.prenom)) %}
-                                                      <div class="validation-advice">{{ form_errors(form.prenom) }}</div>
+                                    <div class="validation-advice">{{ form_errors(form.prenom) }}</div>
                                                     {% endif %}      
-                                                </div>
-                                            </div>
-                                            <div class="field">
-                                                <label><em>*</em>Email</label>
-                                                <div class="input-box">
+                                </div>
+                            </div>
+                            <div class="field">
+                                <label><em>*</em>Email</label>
+                                <div class="input-box">
                                                     {{ form_widget(form.email,{'attr': {'class': 'input-text'}}) }}
                                                     {% if(form_errors(form.email)) %}
-                                                      <div class="validation-advice">{{ form_errors(form.email) }}</div>
+                                        <div class="validation-advice">{{ form_errors(form.email) }}</div>
                                                     {% endif %} 
-                                                </div>
-                                            </div>    
-                                            
-                                        </li>
-                                        <li>
+                                    </div>
+                                </div>    
 
-                                            <div class="field">
-                                                <label><em>*</em>Ville</label>
+                            </li>
+                            <li>
+
+                                <div class="field">
+                                    <label><em>*</em>Ville</label>
                                                     {{ form_widget(form.ville) }}
                                                     {% if(form_errors(form.ville)) %}
-                                                      <div class="validation-advice">{{ form_errors(form.ville) }}</div>
+                                    <div class="validation-advice">{{ form_errors(form.ville) }}</div>
                                                     {% endif %} 
-                                            </div>
-                                            <div class="field">
-                                                <label>Téléphone fix</label>
-                                                <div class="input-box">
+                                </div>
+                                <div class="field">
+                                    <label>Téléphone fix</label>
+                                    <div class="input-box">
                                                      {{ form_widget(form.tel,{'attr': {'class': 'input-text'}}) }}
                                                     {% if(form_errors(form.tel)) %}
-                                                      <div class="validation-advice">{{ form_errors(form.tel) }}</div>
+                                            <div class="validation-advice">{{ form_errors(form.tel) }}</div>
                                                     {% endif %} 
-                                                </div>
-                                            </div>
-                                            
-                                        </li>
-                                        
-                                    </ul>
-                                </div>
-                                <div class="buttons-set">
-                                    <p class="required">* Obligatoire</p>
+                                        </div>
+                                    </div>
+
+                                </li>
+
+                            </ul>
+                        </div>
+                        <div class="buttons-set">
+                            <p class="required">* Obligatoire</p>
                                     {{ form_rest(form) }}
-                                    <button type="submit" class="button"><span><span>Envoyer</span></span></button>
-                                </div>    
-</form>
+                            <button type="submit" class="button"><span><span>Envoyer</span></span></button>
+                        </div>    
+                    </form>
 {% endblock content %}

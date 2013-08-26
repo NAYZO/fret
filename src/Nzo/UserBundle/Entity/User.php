@@ -11,7 +11,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Table(name="tunisiefret_user")
  * @ORM\InheritanceType("JOINED")
  * @ORM\DiscriminatorColumn(name="type", type="string")
- * @ORM\DiscriminatorMap({"client" = "Client", "exportateur" = "Exportateur"})
+ * @ORM\DiscriminatorMap({"client" = "Client", "exportateur" = "Exportateur", "admin" = "Admin"})
  *
  */
 abstract class User extends BaseUser

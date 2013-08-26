@@ -11,7 +11,7 @@ class FrontController extends Controller
     {
         if ($this->get('security.context')->isGranted('ROLE_ADMIN')) 
         {
-            // do something 
+            return $this->render('NzoTunisiefretBundle:Admin:index.html.twig');
         } 
         else if ($this->get('security.context')->isGranted('ROLE_CLIENT')) 
         {                      

@@ -145,3 +145,7 @@ pugx_multi_user:
             name: nzo_exportateur_profile
             validation_groups:  [Profile, Default] 
     
+    admin:
+        entity: 
+          class: Nzo\UserBundle\Entity\Admin
+

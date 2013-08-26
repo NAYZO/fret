@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>{% block title %}TunisieFret - {% endblock title %}</title>
+{% block head %}  {% endblock head %}
+    </head>
+    <body>
+            <a href="{{ path('fos_user_security_logout') }}"> Déconnexion </a>
+        <br>
+        <a href="{{ path('nzo_tunisiefret_homepage') }}" > <span> Home </span> </a>
+        <br>
+        <a href="{{ path('fos_user_change_password') }}" > <span> Change Password </span> </a>
+        <br>
+    {% block body %}  
+
+        <div class="container">
+            <div class="row">
+                <div class="span12">
+                    <div class="well">
+                        {% block content %} {% endblock content %}
+                    </div>
+                </div>
+                {% block footer %}{% endblock footer %}
+            </div>
+       </div>
+    {% endblock body %} 
+    </body>
+    {% block js %}  {% endblock js %}
+</html>
