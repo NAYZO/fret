@@ -1643,7 +1643,9 @@ legend {
 label {
   display: inline-block;
   margin-bottom: 5px;
-  font-weight: bold;
+/*  font-weight: bold;*/
+  color: rgb(99, 99, 99);
+  padding-bottom: 10px;
 }
 
 input[type="search"] {
