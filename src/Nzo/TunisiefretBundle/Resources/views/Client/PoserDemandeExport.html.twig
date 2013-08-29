@@ -15,6 +15,22 @@
     <fieldset>
         <legend class="colorlegend"><strong>Inscrivez Vous</strong></legend>  
   
+        
+        
+        
+        
+        {% if(form_errors(form)) %}
+            <div class="alert alert-error text-center"> {{ form_errors(form) }} </div>
+        {% endif %}
+        
+        
+        
+        
+        
+        
+        
+        
+        
         {#--titre---#}
         <div class="form-group">
             <label>Titre</label>
@@ -97,6 +113,20 @@
         {% endif %}
           
         <input type="submit" value="Enregistrer" name="_submit" class="btn btn-primary pull-right">
+        
+        
+        
+        
+        
+        
+        {{ form_rest(form) }}
+        
+        
+        
+        
+        
+        
+        
     </fieldset>
 </form>
 </div>

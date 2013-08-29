@@ -13,13 +13,13 @@ class DemandeExportType extends AbstractType
 	    $builder
                 ->add('titre')  
                 ->add('description')    
-                ->add('pays')
-                ->add('pays', 'country', array('preferred_choices' => array('TN') ) ) 
-                    
+                ->add('pays', 'country', array('preferred_choices' => array('TN') ) )        
                 ->add('ville')
                 ->add('codepostal')
                 ->add('adresse')
-                ->add('datemax')                   
+                ->add('datemax', 'date', array(
+                                        'widget' => 'single_text',
+                                        ))         
                 ->add('prix')   
                 ->add('demandeexporttype')    
             ;            

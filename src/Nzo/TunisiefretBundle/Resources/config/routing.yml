@@ -106,7 +106,7 @@ fos_user_registration_confirmed:
     requirements:
       _method: GET    
       
-# modif bunde to NzoUser      
+# modif bundle to NzoUser      
 fos_user_change_password: 
     pattern: /change-password
     defaults: { _controller: NzoUserBundle:ChangePassword:changePassword } 
@@ -139,3 +139,13 @@ fos_user_resetting_reset:
       _method: GET|POST
 
 #--------------------------- babababababababaab -----------------------------------
+# ADMIN
+
+admin_liste_clients:
+    pattern: /admin/liste-clients/
+    defaults: { _controller: NzoTunisiefretBundle:Admin:ListeClients }
+
+admin_liste_exportateurs:
+    pattern: /admin/liste-exportateurs/
+    defaults: { _controller: NzoTunisiefretBundle:Admin:ListeExportateurs }
+        

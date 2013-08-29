@@ -1,0 +1,32 @@
+{% extends "NzoTunisiefretBundle::layoutAdmin.html.twig" %}
+
+{% block title %} {{ parent() }} Admin {% endblock %}
+
+{% block head %}
+{% endblock head %}
+
+{% block body %}
+
+{% block content %}
+
+<br> Liste Clients <br> <br>
+
+{% for client in listeclients %}
+    email:  {{client.email}} |
+    nom : {{client.nom}} |
+    <br>
+    -----------------------------------------------------
+    <br>
+{% endfor %}
+    
+    <div class="navigation">
+    {{ knp_pagination_render(listeclients) }}
+    </div>
+
+{% endblock content %}
+
+{% block footer %}
+{% endblock footer %}
+
+{% endblock body %}  
+ 
