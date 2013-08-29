@@ -1,31 +1,38 @@
 {% extends "NzoTunisiefretBundle::layout.html.twig" %}
 
 {% block title %} {{ parent() }} Sign Up {% endblock %}
- 
+ {% block banner %}
+            <div class="jumbotron">
+                <div class="col-md-4"> 
+                    <div class="row">
+                        <h4 class="title-banner" style="">Incription Exportateur </h4>
+                    </div>
+            </div>
+        </div>
+        {% endblock banner %}
 {% block content %}
-
-<form action="{{ path('exportateur_registration') }}" id="contactForm" method="post" {{ form_enctype(form) }}>
+<div class="col-md-8 col-md-offset-2">
+<form action="{{ path('exportateur_registration') }}" id="contactForm" method="post" {{ form_enctype(form) }} class="well" style="padding: 40px" role="form">
     <fieldset>
-        <legend class="colorlegend"><strong>Sign Up</strong></legend>  
-        <h6 class="style_h">Create a new account:</h6> 
+        <legend class="colorlegend"><strong>Inscrivez Vous</strong></legend> 
         
         {% if(form_errors(form)) %}
             <div class="alert alert-error text-center"> {{ form_errors(form) }} </div>
         {% endif %}
-            
+            <div class="col-md-6">    
         {#--Username---#}
-        <div class="input-prepend">
-            <span class="add-on"><i class="icon-user">Username</i></span>
-            {{ form_widget(form.username,{'attr': {'class': 'span3','placeholder': 'Username'}}) }}
+        <div class="form-group">
+                    <label>Nom D'utilisateur</label>
+            {{ form_widget(form.username,{'attr': {'class': 'form-control'}}) }}
         </div>
         {% if(form_errors(form.username)) %}
           <div class="error-input">{{ form_errors(form.username) }}</div>
         {% endif %}
           
         {#--Email---#}
-        <div class="input-prepend">
-            <span class="add-on"><i class="icon-globe">E-mail</i></span>
-            {{ form_widget(form.email,{'attr': {'class': 'span3','placeholder': 'E-mail'}}) }}
+        <div class="form-group">
+            <label>Email</label>
+            {{ form_widget(form.email,{'attr': {'class': 'form-control'}}) }}
         </div>
         {% if(form_errors(form.email)) %}
           <div class="error-input">{{ form_errors(form.email) }}</div>
@@ -34,96 +41,94 @@
         {#--Password---#}
         <div class="input-prepend">
             <span class="add-on"><i class="icon-lock">Password</i></span>
-            {{ form_widget(form.plainPassword.first,{'attr': {'class': 'span3','placeholder': 'Password'}}) }}                                      
+            {{ form_widget(form.plainPassword.first,{'attr': {'class': 'form-control'}}) }}                                      
         </div>
         {#--Password Confirm---#}
-        <div class="input-prepend">
-            <span class="add-on"><i class="icon-lock">Password Confirmation</i></span>
-            {{ form_widget(form.plainPassword.second,{'attr': {'class': 'span3','placeholder': 'Password Confirmation'}}) }}
+        <div class="form-group">
+            <label>Confirmez Votre Mot de passe</label>
+            {{ form_widget(form.plainPassword.second,{'attr': {'class': 'form-control'}}) }}
         </div>
             {% if(form_errors(form.plainPassword.first)) %}
                 <div class="error-input">{{ form_errors(form.plainPassword.first) }}</div>
             {% endif %} 
     
        {#--Entreprise---#}
-        <div class="input-prepend">
-            <span class="add-on"><i class="icon-user">Nom Entreprise</i></span>
-            {{ form_widget(form.nomentrop,{'attr': {'class': 'span3','placeholder': 'Nom Entreprise'}}) }}
+        <div class="form-group">
+                  <label>Nom Entreprise</label>
+            {{ form_widget(form.nomentrop,{'attr': {'class': 'form-control'}}) }}
         </div>
         {% if(form_errors(form.nomentrop)) %}
           <div class="error-input">{{ form_errors(form.nomentrop) }}</div>
         {% endif %}         
           
         {#--Ville---#}
-        <div class="input-prepend">
-            <span class="add-on"><i class="icon-user">Ville</i></span>
-            {{ form_widget(form.ville,{'attr': {'class': 'span3','placeholder': 'Ville'}}) }}
+        <div class="form-group">
+                  <label>Ville</label>
+            {{ form_widget(form.ville,{'attr': {'class': 'form-control'}}) }}
         </div>
         {% if(form_errors(form.ville)) %}
           <div class="error-input">{{ form_errors(form.ville) }}</div>
         {% endif %}  
-          
+                </div>
+               <div class="col-md-6"> 
         {#--Adresse---#}
-        <div class="input-prepend">
-            <span class="add-on"><i class="icon-user">Adresse</i></span>
-            {{ form_widget(form.adresse,{'attr': {'class': 'span3','placeholder': 'Adresse'}}) }}
+         <div class="form-group">
+              <label>Adresse</label>
+            {{ form_widget(form.adresse,{'attr': {'class': 'form-control'}}) }}
         </div>
         {% if(form_errors(form.adresse)) %}
           <div class="error-input">{{ form_errors(form.adresse) }}</div>
         {% endif %}    
           
         {#--Tel---#}
-        <div class="input-prepend">
-            <span class="add-on"><i class="icon-user">Tel</i></span>
-            {{ form_widget(form.tel,{'attr': {'class': 'span3','placeholder': 'Tel'}}) }}
+         <div class="form-group">
+              <label>Téléphone</label>
+            {{ form_widget(form.tel,{'attr': {'class': 'form-control'}}) }}
         </div>
         {% if(form_errors(form.tel)) %}
           <div class="error-input">{{ form_errors(form.tel) }}</div>
         {% endif %}    
           
         {#--Fax---#}
-        <div class="input-prepend">
-            <span class="add-on"><i class="icon-user">Fax</i></span>
-            {{ form_widget(form.fax,{'attr': {'class': 'span3','placeholder': 'Fax'}}) }}
+         <div class="form-group">
+              <label>Fax</label>
+            {{ form_widget(form.fax,{'attr': {'class': 'form-control'}}) }}
         </div>
         {% if(form_errors(form.fax)) %}
           <div class="error-input">{{ form_errors(form.fax) }}</div>
         {% endif %} 
           
         {#--Website---#}
-        <div class="input-prepend">
-            <span class="add-on"><i class="icon-user">Site Web</i></span>
-            {{ form_widget(form.siteweb,{'attr': {'class': 'span3','placeholder': 'Site Web'}}) }}
+         <div class="form-group">
+              <label>Site Web</label>
+            {{ form_widget(form.siteweb,{'attr': {'class': 'form-control'}}) }}
         </div>
         {% if(form_errors(form.siteweb)) %}
           <div class="error-input">{{ form_errors(form.siteweb) }}</div>
         {% endif %}     
           
         {#--Description---#}
-        <div class="input-prepend">
-            <span class="add-on"><i class="icon-user">Description</i></span>
-            {{ form_widget(form.description,{'attr': {'class': 'span3','placeholder': 'Description'}}) }}
+         <div class="form-group">
+              <label>Description</label>
+            {{ form_widget(form.description,{'attr': {'class': 'form-control'}}) }}
         </div>
         {% if(form_errors(form.description)) %}
           <div class="error-input">{{ form_errors(form.description) }}</div>
         {% endif %}  
           
         {#--Logo---#}
-        <div class="input-prepend">
-            <span class="add-on"><i class="icon-user">Logo</i></span>
-            {{ form_widget(form.uploadlogo,{'attr': {'class': 'span3','placeholder': 'Logo'}}) }}
+         <div class="form-group">
+              <label>Logo</label>
+            {{ form_widget(form.uploadlogo,{'attr': {'class': 'form-control'}}) }}
         </div>
         {% if(form_errors(form.uploadlogo)) %}
           <div class="error-input">{{ form_errors(form.uploadlogo) }}</div>
         {% endif %}        
-                               
+                   </div>                      
         <input type="submit" value="Sign Up" name="_submit" class="btn btn-primary pull-right">
                {{ form_rest(form) }}
     </fieldset>
 </form>
-
-<div class="foot">
-    <h6 class="text-center style_h">Do you have an account? <a href="{{ path('fos_user_security_login') }}" class="linklogin">Sign In</a></h6>
 </div>
 
 {% endblock content %}
