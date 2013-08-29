@@ -23,8 +23,9 @@
 }
 .nav-style li {
     border-left: 1px solid rgba(160, 160, 160, 0.59);
-    margin-top: 22px;
+    /*margin-top: 22px;*/
 }
+.style li {border: none}
 .nav-style li:first-child {
     border-left: none;
 }
