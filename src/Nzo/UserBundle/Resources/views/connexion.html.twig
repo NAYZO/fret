@@ -1,32 +1,38 @@
 {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
-<a href="{{ path('fos_user_profile_show') }}" class="login"> <span> {{ app.user.username }} </span> </a>
-    <li>
-        <a href="{{ path('fos_user_security_logout') }}">
-            <i class="icon-off"></i> {{ 'layout.logout'|trans([], 'FOSUserBundle') }} 
-        </a>
-    </li>
+<li class="dropdown">
+    <a id="dLabel" role="button" data-toggle="dropdown" href="">
+        {{ app.user.username }} <span class="caret"></span>
+    </a>
+    <ul class="dropdown-menu style" role="menu" aria-labelledby="dLabel">
+        <li><a href="{{ path('fos_user_profile_show') }}">Voir Profil</a></li>
+        <li><a href="{{ path('fos_user_profile_edit') }}" > Modifier Profil</a></li>
+        <li><a href="{{ path('fos_user_change_password') }}" >Change Password </a></li>
+        <li>
+            <a href="{{ path('fos_user_security_logout') }}">
+              {{ 'layout.logout'|trans([], 'FOSUserBundle') }} 
+            </a>
+        </li>
+    </ul>
+</li>
 {% else %}
-    <li><a href="{{ path('fos_user_security_login') }}" > Login</a></li>
-    <li><a data-toggle="modal" href="#myModal"> Inscription </a></li>
+<li><a href="{{ path('fos_user_security_login') }}">Login</a></li>
+<li><a data-toggle="modal" href="#myModal">Inscription</a></li>
     
-
-  <!-- Modal -->
-  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-          <h4 class="modal-title">Inscrivez vous en tant que :</h4>
-        </div>
-        <div class="modal-body col-md-offset-2">
-            <a href="{{path('client_registration')}}" class="btn btn-primary"> Inscription Client</a>
-            ou bien
-            <a href="{{path('exportateur_registration')}}"  class="btn btn-primary"> Inscription exportateur</a>
-
-        </div>
-     
-      </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-  </div><!-- /.modal -->
+<!-- Modal -->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">Inscrivez vous en tant que :</h4>
+                </div>
+                <div class="modal-body col-md-offset-2">
+                    <a href="{{path('client_registration')}}" class="btn btn-primary"> Inscription Client</a>
+                    ou bien
+                    <a href="{{path('exportateur_registration')}}"  class="btn btn-primary"> Inscription exportateur</a>
+                </div>
+            </div><!-- /.modal-content -->
+         </div><!-- /.modal-dialog -->
+     </div><!-- /.modal -->
 {% endif %}
 

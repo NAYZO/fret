@@ -4,39 +4,84 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>{% block title %}TunisieFret - {% endblock title %}</title>
+        <!--To be sure using the latest rendering mode for IE-->
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <!-- CSS -->
-        <!--JAVASCRIPT-->
-        <script src="{{ asset('bundles/nzotunisiefret/js/jquery-2.0.3.min.js') }}"></script>
-        <!--FONT-->
-        <link href='http://fonts.googleapis.com/css?family=Droid+Sans:400,700' rel='stylesheet' type='text/css'/>
-       {% block head %}  {% endblock head %}
+        <link href="{{ asset('bundles/nzotunisiefret/css/bootstrap.css') }}" rel="stylesheet" media="screen">
+        <link href="{{ asset('bundles/nzotunisiefret/css/style.css') }}" rel="stylesheet" media="screen">
+        {% block head %}  {% endblock head %}
     </head>
     <body>
-            {% include "NzoUserBundle::connexion.html.twig" %}
-        <br>
-        <a href="{{ path('nzo_tunisiefret_homepage') }}" > <span> Home </span> </a>
-        <br>
-        <a href="{{ path('fos_user_profile_edit') }}" > <span> Modifier Profil </span> </a>
-        <br>
-        <a href="{{ path('fos_user_change_password') }}" > <span> Change Password </span> </a>
-        <br>
-        <a href="{{ path('nzo_poserdemande_export') }}" > <span> Poser demande export </span> </a>
-        <br>
-        <a href="{{ path('nzo_voirlistedemande_export') }}" > <span> Voir liste demande export </span> </a>
-        <br>
-    {% block body %}  
-
-        <div class="container">
-            <div class="row">
-                <div class="span12">
-                    <div class="well">
-                        {% block content %} {% endblock content %}
-                    </div>
+           <nav class="bg-menu navbar" role="navigation">
+            <div class="container">
+                <!-- Brand and toggle get grouped for better mobile display -->
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                        <span class="sr-only">Menu</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="{{path('nzo_tunisiefret_homepage')}}"><img src="{{ asset('bundles/nzotunisiefret/images') }}/logo.png" alt="logo"/></a>
                 </div>
-                {% block footer %}{% endblock footer %}
+                <!-- Collect the nav links, forms, and other content for toggling -->
+                <div class="collapse navbar-collapse navbar-ex1-collapse">
+                    <ul class="nav navbar-nav navbar-right nav-style">
+                        <li><a href="{{ path('nzo_tunisiefret_homepage') }}">Acceuil</a></li>
+                        {% include "NzoUserBundle::connexion.html.twig" %}
+                    </ul>
+                </div><!-- /.navbar-collapse -->
             </div>
-       </div>
+        </nav>
+    {% block body %}
+        {% block carrousel %}{% endblock carrousel %}
+        {% block banner %}{% endblock banner %}
+        <section class="container">
+            <div class="row">
+                <ul class="nav nav-tabs bottom">
+                    <li><a href="{{ path('nzo_poserdemande_export') }}" >Poser demande export</a></li>
+                    <li><a href="{{ path('nzo_voirlistedemande_export') }}" >Voir liste demande export</a></li>
+                    {#<li class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                            Dropdown <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                        
+                        </ul>
+                    </li>#}
+                </ul>
+              {% block content %}{% endblock content %}
+            </div>
+        </section>   
+        
+        {% block footer %}
+            <footer class="footer-bg">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-4">
+                        <ul class="list-inline footer-menu">
+                            <li><a href="{{path('nzo_tunisiefret_homepage')}}">Acceuil</a></li>
+                            <li><a href="{{path('nzo_apropos')}}">A propos de nous</a></li>
+                            <li><a href="{{path('nzo_contact')}}">Contact</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-md-4"></div>
+                    <div class="col-md-4 text-right copyright">© 2013 Ovynet. All Rights Reserved.</div>
+                </div>
+            </div>
+            <div id="btn_up">
+                <img alt="Retour en haut" title="Retour en haut" src="{{ asset('bundles/nzotunisiefret/images') }}/up.png">
+            </div>
+        </footer>
+        {% endblock footer %}
+
     {% endblock body %} 
+    <!--JAVASCRIPT-->
+     <script src="{{asset('bundles/nzotunisiefret/js/jquery-2.0.3.min.js') }}"></script>
+     <script src="{{ asset('bundles/nzotunisiefret/js/bootstrap.js') }}"></script>
+     <script src="{{ asset('bundles/nzotunisiefret/js/up.js') }}"></script>
+     <script src="{{ asset('bundles/nzotunisiefret/js/modal.js') }}"></script>
+     {% block js %}  {% endblock js %}
     </body>
-    {% block js %}  {% endblock js %}
+    
 </html>
