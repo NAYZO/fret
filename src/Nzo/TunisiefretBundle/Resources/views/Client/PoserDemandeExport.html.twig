@@ -14,24 +14,10 @@
 <form action="#" id="contactForm" method="post" {{ form_enctype(form) }} class="well" style="padding: 40px" role="form">
     <fieldset>
         <legend class="colorlegend"><strong>Inscrivez Vous</strong></legend>  
-  
-        
-        
-        
-        
-        
         {% if(form_errors(form)) %}
             <div class="alert alert-error text-center"> {{ form_errors(form) }} </div>
         {% endif %}
-        
-        
-        
-        
-        
-        
-        
-        
-        
+
         {#--titre---#}
         <div class="form-group">
             <label>Titre</label>
@@ -106,28 +92,11 @@
         
         {#--Demande Export Type---#}
         <div class="form-group">
-            <label>Demande Export Type</label>
-            {{ form_widget(form.demandeexporttype,{'attr': {'class': 'form-control'}}) }}
+            {{ form_widget(form.demandeexporttype) }} Demande Export Type
         </div>
-        {% if(form_errors(form.demandeexporttype)) %}
-          <div class="error-input">{{ form_errors(form.demandeexporttype) }}</div>
-        {% endif %}
           
         <input type="submit" value="Enregistrer" name="_submit" class="btn btn-primary pull-right">
-        
-        
-        
-        
-        
-        
         {{ form_rest(form) }}
-        
-        
-        
-        
-        
-        
-        
     </fieldset>
 </form>
 </div>
