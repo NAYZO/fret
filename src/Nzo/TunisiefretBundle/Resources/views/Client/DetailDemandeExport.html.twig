@@ -9,28 +9,49 @@
     </div>
 </div>
 {% endblock banner %}
+
 {% block content %}
 <div class="col-md-8 col-md-offset-2 well">
     <h4>{{mydemande.titre}} </h4>
-    <h4>{{mydemande.reference}} </h4>
-    <h4>{{mydemande.prix}} </h4>
-    <h4>{{mydemande.description}} </h4>
-    <h4>{{mydemande.pays}} </h4>
-    <h4>{{mydemande.ville}} </h4>
-    <h4>{{mydemande.codepostal}} </h4>
-    <h4>{{mydemande.adresse}} </h4>
-    <h4>{{mydemande.datemax|date("d/m/Y")}} </h4>
-    <h4>{{mydemande.datedepos|date("d/m/Y")}} </h4>
-    
-    
-    
     <hr>
-Liste Postule: <br>
-
-{% for postule in postules %} 
-    {{postule.id}} | Date Postule: {{postule.datepostule|date("d/m/Y")}} | <a href="{{path('nzo_detaildemande_export_postule', {'id':postule.id} )}}"> Voir </a>
-    <br>
-{% endfor %}
+    <div class="col-md-6">
+        <p><strong>Réf : </strong>{{mydemande.reference}} </p>
+        <p><strong>Prix : </strong>{{mydemande.prix}} </p>
+        <p><strong>Pays : </strong>{{mydemande.pays}} </p>
+        <p><strong>Ville : </strong>{{mydemande.ville}} </p>
+    </div>
+    
+    <div class="col-md-6">
+        <p><strong>Code Postal : </strong>{{mydemande.codepostal}} </p>
+        <p><strong>Adresse : </strong>{{mydemande.adresse}} </p>
+        <p><strong>Date Maximal : </strong>{{mydemande.datemax|date("d/m/Y")}} </p>
+        <p><strong>Date Pos : </strong>{{mydemande.datedepos|date("d/m/Y")}} </p>
+    </div>
+    <div class="col-md-12">
+    <p><strong>Description : </strong>{{mydemande.description}} </p>
+    </div>
+    <hr>
+    <h4>Liste Postule: </h4>
+    <hr>
+    <table class="table table-striped table-bordered">
+        <thead>
+          <tr>
+            <th>Date De Postule</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+           {% for postule in postules %} 
+          <tr>
+            <td>{{postule.datepostule|date("d/m/Y")}}</td>
+            <td>
+               <a href="{{path('nzo_detaildemande_export_postule', {'id':postule.id} )}}"> Voir Détails </a>
+            </td>
+         
+          </tr>
+             {% endfor %}
+        </tbody>
+      </table>
 </div> 
 {% endblock content %}
  

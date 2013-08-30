@@ -12,32 +12,57 @@
 {% endblock banner %}
 
 {% block content %}
-
-<br> Detail Demande Export Postule
-<br>
-Date Postule: {{postule.datepostule|date("d/m/Y")}} <br>
-Liste Msg: <br>
-<div id='listmsg'> 
-{% for msg in msgs %} 
-    {%if msg.client != null %} Moi {%else%} {{msg.exportateur.prenom}} {{msg.exportateur.nom}} {%endif%}| 
-    Date msg: {{msg.date|date("d/m/Y H:i")}} | {{msg.message}}
-    <br>
-{% endfor %}
-</div>    
-    
-
-<form action="#" id="msgform" method="post">
-
-  <textarea id="nzomsgexp" required="required"></textarea>
-
-    <div class="buttons-set">
-        <button type="submit" class="button"><span><span>Envoyez</span></span></button>
+<div class="col-md-8 col-md-offset-2 well">
+    <h4> Date De Postule: {{postule.datepostule|date("d/m/Y")}} </h4>
+    <hr>
+<div class="panel-group" id="accordion">
+  {% set i = 0%}
+  {% for msg in msgs %} 
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h4 class="panel-title">
+        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapse{{i}}">
+          {%if msg.client != null %} Moi {%else%} {{msg.exportateur.prenom}} {{msg.exportateur.nom}} {%endif%}
+        </a>
+              <span class="pull-right">{{msg.date|date("d/m/Y H:i")}} </span>
+      </h4>
     </div>
-
+    <div id="collapse{{i}}" class="panel-collapse collapse">
+      <div class="panel-body">
+          {{msg.message}}
+     </div>
+    </div>
+  </div>
+  {% set i = i+1%}
+  {% endfor %}
+</div>
+    
+<form action="#" id="msgform" method="post" style="padding: 40px" role="form">
+    <div class="form-group">
+        <textarea id="nzomsgexp" required="required" class="form-control"></textarea>
+    </div>
+    <div class="buttons-set">
+        <button type="submit" class="btn btn-primary pull-right">Envoyez</button>
+    </div>
 </form>
-    
-<script>$(document).ready(function(){$('#msgform').on('submit',function(c){c.preventDefault();if($('#nzomsgexp').val()!='')$.ajax({url:"{{ path('ajax_send_msg_client') }}",type:"POST",data:{id:{{postule.id}},msg:$('#nzomsgexp').val()},dataType:'json',success:function(a){$('#nzomsgexp').val('');var b='';for(key in a){b+=a[key]['user']+' | Date msg: '+a[key]['date']+' | '+a[key]['msg']+'<br>'}$('#listmsg').html(b)},error:function(){alert('erreur')}});else alert('champs vide!')})});</script>
-    
+</div>
+{% block js %}  
+    <script>
+        $(document).ready(function(){$('#msgform').on('submit',function(c){c.preventDefault();
+            if($('#nzomsgexp').val()!='')$.ajax({url:"{{ path('ajax_send_msg_client') }}",
+            type:"POST",
+            data:{id:{{postule.id}},
+            msg:$('#nzomsgexp').val()},
+            dataType:'json',
+            success:function(a){$('#nzomsgexp').val('');
+            var b='';
+            for(key in a){b+=a[key]['user']+' | Date msg: '+a[key]['date']+' | '+a[key]['msg']+'<br>'}$('#listmsg').html(b)},
+            error:function(){alert('erreur')}});else alert('champs vide!')})});
+    </script>
+
+    <script src="{{ asset('bundles/nzotunisiefret/js/collapse.js') }}"></script>
+{% endblock js %} 
+
 {% endblock content %}
  
  
