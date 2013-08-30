@@ -15,19 +15,65 @@
 <div class="col-md-8 col-md-offset-2 well">
     <h4> Date De Postule: {{postule.datepostule|date("d/m/Y")}} </h4>
     <hr>
-<div class="panel-group" id="accordion">
-  {% for msg in msgs %} 
-
-        <div>
-          {%if msg.client != null %} Moi {%else%} {{msg.exportateur.prenom}} {{msg.exportateur.nom}} {%endif%}
-        </div>
+{% if msgs|length <= 4 %}    
+    <div class="panel-group" id="accordion">
+          {% for msg in msgs %} 
+            <div>
+                {%if msg.client != null %} Moi {%else%} {{msg.exportateur.prenom}} {{msg.exportateur.nom}} {%endif%}
+            </div>
               <span class="pull-right">{{msg.date|date("d/m/Y H:i")}} </span>
 
-        <div>
-          {{msg.message}}
-        </div>
-  {% endfor %}
-  </div>
+            <div>
+                {{msg.message}}
+            </div>
+          {% endfor %}    
+    </div>
+{% else %} 
+    
+    <div class="panel-group" id="accordion">
+        <!-- First -->
+            <div>
+                {%if msgs|first.client != null %} Moi {%else%} {{msgs|first.exportateur.prenom}} {{msgs|first.exportateur.nom}} {%endif%}
+            </div>
+              <span class="pull-right">{{msgs|first.date|date("d/m/Y H:i")}} </span>
+
+            <div>
+                {{msgs|first.message}}
+            </div>
+        <!-- BLOCK -->     
+        <span id='nzolengthmsg'> {{msgs|length -2 }} Messages </span>
+        <br>
+         <!-- Hidden FOR --> 
+         <div id='nzoblockfor' style="display: none">
+          {% for msg in msgs %} 
+            {% if msg != msgs|first and msg != msgs|last %}
+         
+            <div>
+                {%if msg.client != null %} Moi {%else%} {{msg.exportateur.prenom}} {{msg.exportateur.nom}} {%endif%}
+            </div>
+              <span class="pull-right">{{msg.date|date("d/m/Y H:i")}} </span>
+
+            <div>
+                {{msg.message}}
+            </div>
+         
+            {% endif %}  
+          {% endfor %}  
+         </div>          
+         <!-- Last -->
+            <div>
+                {%if msgs|last.client != null %} Moi {%else%} {{msgs|last.exportateur.prenom}} {{msgs|last.exportateur.nom}} {%endif%}
+            </div>
+              <span class="pull-right">{{msgs|last.date|date("d/m/Y H:i")}} </span>
+
+            <div>
+                {{msgs|last.message}}
+            </div>
+         <!-- END Last -->     
+    </div>       
+    
+{% endif %}
+
 
 </div>
     
@@ -77,8 +123,12 @@
             else alert('champs vide!');
             
             });
+            
+           $('#nzolengthmsg').on('click',function(){ 
+                $('#nzolengthmsg').remove();
+                $('#nzoblockfor').show();
+            });    
         });
     </script>
-
 
 {% endblock js %}
