@@ -48,16 +48,7 @@
 </div>
 {% block js %}  
     <script>
-        $(document).ready(function(){$('#msgform').on('submit',function(c){c.preventDefault();
-            if($('#nzomsgexp').val()!='')$.ajax({url:"{{ path('ajax_send_msg_client') }}",
-            type:"POST",
-            data:{id:{{postule.id}},
-            msg:$('#nzomsgexp').val()},
-            dataType:'json',
-            success:function(a){$('#nzomsgexp').val('');
-            var b='';
-            for(key in a){b+=a[key]['user']+' | Date msg: '+a[key]['date']+' | '+a[key]['msg']+'<br>'}$('#listmsg').html(b)},
-            error:function(){alert('erreur')}});else alert('champs vide!')})});
+        $(document).ready(function(){$('#msgform').on('submit',function(c){c.preventDefault();if($('#nzomsgexp').val()!='')$.ajax({url:"{{ path('ajax_send_msg_client') }}",type:"POST",data:{id:{{postule.id}},msg:$('#nzomsgexp').val()},dataType:'json',success:function(a){$('#nzomsgexp').val('');var b='';for(key in a){b+=a[key]['user']+' | Date msg: '+a[key]['date']+' | '+a[key]['msg']+'<br>'}$('#listmsg').html(b)},error:function(){alert('erreur')}});else alert('champs vide!')})});
     </script>
 
     <script src="{{ asset('bundles/nzotunisiefret/js/collapse.js') }}"></script>
