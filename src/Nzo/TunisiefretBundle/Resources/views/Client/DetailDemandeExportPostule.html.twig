@@ -116,7 +116,9 @@
                         var b='';
                         for(key in a)
                         {
-                            b+=a[key]['user']+' | Date msg: '+a[key]['date']+' | '+a[key]['msg']+'<br>';
+                            b+='<div class="panel panel-info"><div class="panel-heading"><h3 class="panel-title">'
+                                +a[key]['user']+'<p class="pull-right">'+a[key]['date']+'</p></h3></div><div class="panel-body">'
+                                +a[key]['msg']+'</div></div>';
                         }
                         $('#accordion').html(b);
                     },
