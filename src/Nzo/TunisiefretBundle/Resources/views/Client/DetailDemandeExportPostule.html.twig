@@ -1,5 +1,5 @@
 {% extends "NzoTunisiefretBundle::layoutClient.html.twig" %}
-{% block title %} {{ parent() }} Client {% endblock %}
+{% block title %} {{ parent() }} Détails Demandes Export Postule {% endblock %}
 
 {% block banner %}
 <div class="jumbotron">
@@ -16,25 +16,19 @@
     <h4> Date De Postule: {{postule.datepostule|date("d/m/Y")}} </h4>
     <hr>
 <div class="panel-group" id="accordion">
-  {% set i = 0%}
   {% for msg in msgs %} 
-  <div class="panel panel-default">
-    <div class="panel-heading">
-      <h4 class="panel-title">
-        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapse{{i}}">
+
+        <div>
           {%if msg.client != null %} Moi {%else%} {{msg.exportateur.prenom}} {{msg.exportateur.nom}} {%endif%}
-        </a>
+        </div>
               <span class="pull-right">{{msg.date|date("d/m/Y H:i")}} </span>
-      </h4>
-    </div>
-    <div id="collapse{{i}}" class="panel-collapse collapse">
-      <div class="panel-body">
+
+        <div>
           {{msg.message}}
-     </div>
-    </div>
-  </div>
-  {% set i = i+1%}
+        </div>
   {% endfor %}
+  </div>
+
 </div>
     
 <form action="#" id="msgform" method="post" style="padding: 40px" role="form">
@@ -46,23 +40,45 @@
     </div>
 </form>
 </div>
-{% block js %}  
-    <script>
-        $(document).ready(function(){$('#msgform').on('submit',function(c){c.preventDefault();
-            if($('#nzomsgexp').val()!='')$.ajax({url:"{{ path('ajax_send_msg_client') }}",
-            type:"POST",
-            data:{id:{{postule.id}},
-            msg:$('#nzomsgexp').val()},
-            dataType:'json',
-            success:function(a){$('#nzomsgexp').val('');
-            var b='';
-            for(key in a){b+=a[key]['user']+' | Date msg: '+a[key]['date']+' | '+a[key]['msg']+'<br>'}$('#listmsg').html(b)},
-            error:function(){alert('erreur')}});else alert('champs vide!')})});
-    </script>
-
-    <script src="{{ asset('bundles/nzotunisiefret/js/collapse.js') }}"></script>
-{% endblock js %} 
+ 
 
 {% endblock content %}
  
- 
+ {% block js %}  
+    <script>
+        $(document).ready(function(){
+        
+            $('#msgform').on('submit',function(c){
+                c.preventDefault();
+           
+            if( $('#nzomsgexp').val() !== '' )             
+            {
+                $.ajax({
+                    url:"{{ path('ajax_send_msg_client') }}",
+                    type:"POST",
+                    data:{ id:{{postule.id}}, msg:$('#nzomsgexp').val() },
+                    dataType:'json',
+                    success:function(a)
+                    {
+                        $('#nzomsgexp').val('');
+                        var b='';
+                        for(key in a)
+                        {
+                            b+=a[key]['user']+' | Date msg: '+a[key]['date']+' | '+a[key]['msg']+'<br>';
+                        }
+                        $('#accordion').html(b);
+                    },
+                    error:function()
+                    {
+                        alert('erreur');
+                    }   
+                });
+            }
+            else alert('champs vide!');
+            
+            });
+        });
+    </script>
+
+
+{% endblock js %}
