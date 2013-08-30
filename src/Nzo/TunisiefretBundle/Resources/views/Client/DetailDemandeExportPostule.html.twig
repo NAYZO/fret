@@ -15,79 +15,85 @@
 <div class="col-md-8 col-md-offset-2 well">
     <h4> Date De Postule: {{postule.datepostule|date("d/m/Y")}} </h4>
     <hr>
-{% if msgs|length <= 4 %}    
-    <div class="panel-group" id="accordion">
-          {% for msg in msgs %} 
-            <div>
-                {%if msg.client != null %} Moi {%else%} {{msg.exportateur.prenom}} {{msg.exportateur.nom}} {%endif%}
+    {% if msgs|length <= 4 %}   
+        {% for msg in msgs %} 
+            <div class="panel panel-default" id="accordion">
+                <div class="panel-heading">
+                    <h3 class="panel-title">
+                        {%if msg.client != null %} Moi {%else%} {{msg.exportateur.prenom}} {{msg.exportateur.nom}} {%endif%}
+                        <p class="pull-right">{{msg.date|date("d/m/Y H:i")}}</p>
+                    </h3>
+                </div>
+                <div class="panel-body">
+                    {{msg.message}}
+                </div>
             </div>
-              <span class="pull-right">{{msg.date|date("d/m/Y H:i")}} </span>
-
-            <div>
-                {{msg.message}}
-            </div>
-          {% endfor %}    
-    </div>
-{% else %} 
-    
+        {% endfor %}    
+    {% else %} 
     <div class="panel-group" id="accordion">
         <!-- First -->
-            <div>
-                {%if msgs|first.client != null %} Moi {%else%} {{msgs|first.exportateur.prenom}} {{msgs|first.exportateur.nom}} {%endif%}
+        <div class="panel panel-info" style=" margin-bottom: 5px">
+            <div class="panel-heading">
+                <h3 class="panel-title">
+                   {%if msgs|first.client != null %} Moi {%else%} {{msgs|first.exportateur.prenom}} {{msgs|first.exportateur.nom}} {%endif%}
+                    <p class="pull-right">{{msgs|first.date|date("d/m/Y H:i")}}</p>
+                </h3>
             </div>
-              <span class="pull-right">{{msgs|first.date|date("d/m/Y H:i")}} </span>
-
-            <div>
-                {{msgs|first.message}}
+            <div class="panel-body">
+                 {{msgs|first.message}}
             </div>
-        <!-- BLOCK -->     
-        <span id='nzolengthmsg'> {{msgs|length -2 }} Messages </span>
-        <br>
-         <!-- Hidden FOR --> 
-         <div id='nzoblockfor' style="display: none">
-          {% for msg in msgs %} 
+        </div>
+        <!-- BLOCK --> 
+        <div id='nzolengthmsg' class="panel panel-warning" style=" margin-bottom: 5px">
+            <div class="panel-heading">
+                <h3 class="panel-title">
+                    <span > {{msgs|length -2 }} Messages </span>
+                </h3>
+            </div>
+        </div>
+        <!-- Hidden FOR --> 
+        <div id='nzoblockfor' style="display: none; margin-bottom: 5px">
+            {% for msg in msgs %} 
             {% if msg != msgs|first and msg != msgs|last %}
-         
-            <div>
-                {%if msg.client != null %} Moi {%else%} {{msg.exportateur.prenom}} {{msg.exportateur.nom}} {%endif%}
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    <h3 class="panel-title">
+                        {%if msg.client != null %} Moi {%else%} {{msg.exportateur.prenom}} {{msg.exportateur.nom}} {%endif%}
+                        <p class="pull-right">{{msg.date|date("d/m/Y H:i")}}</p>
+                    </h3>
+                </div>
+                <div class="panel-body">
+                     {{msg.message}}
+                </div>
             </div>
-              <span class="pull-right">{{msg.date|date("d/m/Y H:i")}} </span>
-
-            <div>
-                {{msg.message}}
-            </div>
-         
             {% endif %}  
           {% endfor %}  
          </div>          
-         <!-- Last -->
-            <div>
-                {%if msgs|last.client != null %} Moi {%else%} {{msgs|last.exportateur.prenom}} {{msgs|last.exportateur.nom}} {%endif%}
+        <!-- Last -->
+        <div class="panel panel-info">
+            <div class="panel-heading">
+                <h3 class="panel-title">
+                    {%if msgs|last.client != null %} Moi {%else%} {{msgs|last.exportateur.prenom}} {{msgs|last.exportateur.nom}} {%endif%}
+                    <p class="pull-right">{{msgs|last.date|date("d/m/Y H:i")}}</p>
+                </h3>
             </div>
-              <span class="pull-right">{{msgs|last.date|date("d/m/Y H:i")}} </span>
-
-            <div>
-                {{msgs|last.message}}
+            <div class="panel-body">
+                 {{msgs|last.message}}
             </div>
-         <!-- END Last -->     
+        </div>
+        <!-- END Last -->     
     </div>       
+    {% endif %}
     
-{% endif %}
-
-
+    <form action="#" id="msgform" method="post" style="padding: 40px" role="form">
+        <div class="form-group">
+            <textarea id="nzomsgexp" required="required" class="form-control"></textarea>
+        </div>
+        <div class="buttons-set">
+            <button type="submit" class="btn btn-primary pull-right">Envoyez</button>
+        </div>
+    </form>
 </div>
-    
-<form action="#" id="msgform" method="post" style="padding: 40px" role="form">
-    <div class="form-group">
-        <textarea id="nzomsgexp" required="required" class="form-control"></textarea>
-    </div>
-    <div class="buttons-set">
-        <button type="submit" class="btn btn-primary pull-right">Envoyez</button>
-    </div>
-</form>
-</div>
- 
-
 {% endblock content %}
  
  {% block js %}  
