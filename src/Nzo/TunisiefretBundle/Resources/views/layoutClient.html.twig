@@ -40,15 +40,26 @@
             <div class="row">
                 <ul class="nav nav-tabs bottom">
                     <li><a href="{{ path('nzo_poserdemande_export') }}" >Poser demande export</a></li>
-                    <li><a href="{{ path('nzo_voirlistedemande_export') }}" >Voir liste demande export</a></li>
-                    {#<li class="dropdown">
+                    <li><a href="">Ajout Demande Type</a></li>
+                    <li class="dropdown">
                         <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                            Dropdown <span class="caret"></span>
+                            Mes Demandes <span class="caret"></span>
                         </a>
                         <ul class="dropdown-menu">
-                        
+                            <li><a href="{{ path('nzo_voirlistedemande_export') }}" >Active</a></li>
+                            <li><a href="" >Archivé</a></li>
                         </ul>
-                    </li>#}
+                    </li>
+                    
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                            Mes Contrats <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a href="" >En Cours</a></li>
+                            <li><a href="" >Terminer</a></li>
+                        </ul>
+                    </li>
                 </ul>
               {% block content %}{% endblock content %}
             </div>
