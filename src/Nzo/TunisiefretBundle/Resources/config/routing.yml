@@ -29,8 +29,8 @@ ajax_send_msg_client:
     defaults: {_controller: NzoTunisiefretBundle:Client:MessageClientSend}
     
 nzo_voirlistedemande_export:
-    pattern: /liste-demande-export/
-    defaults: {_controller: NzoTunisiefretBundle:Client:ListeDemandeExport}
+    pattern: /liste-demande-export/active/
+    defaults: {_controller: NzoTunisiefretBundle:Client:ListeDemandeExportActive}
     
 nzo_detaildemande_export:    
     pattern: /detail-demande-export/{id}

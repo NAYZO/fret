@@ -45,15 +45,15 @@ class ClientController extends Controller {
    /**
     * @Secure(roles="ROLE_CLIENT")
     */
-    public function ListeDemandeExportAction()
+    public function ListeDemandeExportActiveAction()
     {
         $usr = $this->get('security.context')->getToken()->getUser();
             $em = $this->getDoctrine()->getManager();        
-            $query = $em->getRepository('NzoTunisiefretBundle:DemandeExport')->getMyDemandeExport($usr->getId());
+            $query = $em->getRepository('NzoTunisiefretBundle:DemandeExport')->getClientDemandeExportActive($usr->getId());
             $paginator = $this->get('knp_paginator'); 
             $listedemandeexport = $paginator->paginate($query,
             $this->get('request')->query->get('page', 1), 6);         
-            return $this->render('NzoTunisiefretBundle:Client:ListeDemandeExport.html.twig', array('listedemandeexport' => $listedemandeexport));
+            return $this->render('NzoTunisiefretBundle:Client:ListeDemandeExportActive.html.twig', array('listedemandeexport' => $listedemandeexport));
     }
     
     /**
