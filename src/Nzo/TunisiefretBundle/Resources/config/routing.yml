@@ -28,13 +28,23 @@ ajax_send_msg_client:
     pattern: /message-client-send/
     defaults: {_controller: NzoTunisiefretBundle:Client:MessageClientSend}
     
-nzo_voirlistedemande_export:
+nzo_voirlistedemande_export_active:
     pattern: /liste-demande-export/active/
     defaults: {_controller: NzoTunisiefretBundle:Client:ListeDemandeExportActive}
+    
+nzo_voirlistedemande_export_archive:
+    pattern: /liste-demande-export/archive/
+    defaults: {_controller: NzoTunisiefretBundle:Client:ListeDemandeExportArchive}    
     
 nzo_detaildemande_export:    
     pattern: /detail-demande-export/{id}
     defaults: {_controller: NzoTunisiefretBundle:Client:DetailDemandeExport}  
+    requirements:
+        id:  \d+ 
+
+client_annuler_demande:        
+    pattern: /annuler-demande-export/{id}
+    defaults: {_controller: NzoTunisiefretBundle:Client:AnnulerDemandeExport}  
     requirements:
         id:  \d+ 
         

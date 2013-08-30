@@ -69,12 +69,18 @@ class DemandeExportPostule
      */
     private $demande_refuser;
     
+    /**
+     * @ORM\Column(name="annuler_by_exportateur", type="boolean")
+     */
+    private $annuler_by_exportateur;
+    
  
     
     public function __construct()
     {
         $this->demande_accepter = false;
         $this->demande_refuser = false;  
+        $this->annuler_by_exportateur = false;  
         $this->datepostule = new \DateTime('now');
     }
 
@@ -271,5 +277,28 @@ class DemandeExportPostule
     public function getDemandeexport()
     {
         return $this->demandeexport;
+    }
+
+    /**
+     * Set annuler_by_exportateur
+     *
+     * @param boolean $annulerByExportateur
+     * @return DemandeExportPostule
+     */
+    public function setAnnulerByExportateur($annulerByExportateur)
+    {
+        $this->annuler_by_exportateur = $annulerByExportateur;
+    
+        return $this;
+    }
+
+    /**
+     * Get annuler_by_exportateur
+     *
+     * @return boolean 
+     */
+    public function getAnnulerByExportateur()
+    {
+        return $this->annuler_by_exportateur;
     }
 }

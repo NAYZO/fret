@@ -25,6 +25,19 @@ class DemandeExportRepository extends EntityRepository
          $qb->where('a.client = :client')
             ->andWhere('a.tacking = 0')     
             ->andWhere('a.jobend = 0')          
+            ->andWhere('a.annuler = 0')               
+            ->setParameter('client', $id)
+            ->orderBy('a.date_depos', 'DESC');
+         return $qb->getQuery();            
+    } 
+    
+    public function getClientDemandeExportArchive($id)
+    {
+         $qb = $this->createQueryBuilder('a');
+         $qb->where('a.client = :client')
+            ->andWhere('a.tacking = 0')     
+            ->andWhere('a.jobend = 0')           
+            ->andWhere('a.annuler = 1')          
             ->setParameter('client', $id)
             ->orderBy('a.date_depos', 'DESC');
          return $qb->getQuery();            

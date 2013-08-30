@@ -116,6 +116,11 @@ class DemandeExport
     private $jobend;
     
     /**
+     * @ORM\Column(name="annuler", type="boolean")
+     */
+    private $annuler;
+    
+    /**
      * @var integer $nombredepostule
      *
      * @ORM\Column(name="nombredepostule", type="integer")
@@ -134,6 +139,7 @@ class DemandeExport
     {
         $this->tacking = false; 
         $this->jobend = false; 
+        $this->annuler = false; 
         $this->date_depos = new \DateTime('now');
         $this->nombredepostule = 0;
         $this->demandeexportpostule = new \Doctrine\Common\Collections\ArrayCollection();
@@ -527,5 +533,28 @@ class DemandeExport
     public function getDemandeexportpostule()
     {
         return $this->demandeexportpostule;
+    }
+
+    /**
+     * Set annuler
+     *
+     * @param boolean $annuler
+     * @return DemandeExport
+     */
+    public function setAnnuler($annuler)
+    {
+        $this->annuler = $annuler;
+    
+        return $this;
+    }
+
+    /**
+     * Get annuler
+     *
+     * @return boolean 
+     */
+    public function getAnnuler()
+    {
+        return $this->annuler;
     }
 }

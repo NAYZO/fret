@@ -45,6 +45,22 @@ class ClientController extends Controller {
    /**
     * @Secure(roles="ROLE_CLIENT")
     */
+    public function AnnulerDemandeExportAction(DemandeExport $mydemande)
+    {
+        $usr = $this->get('security.context')->getToken()->getUser();
+       // security access     
+            if($mydemande->getClient() != $usr) return $this->redirect($this->generateUrl('nzo_tunisiefret_homepage'));
+       // security access 
+            $em = $this->getDoctrine()->getManager();
+            $mydemande->setAnnuler(true);
+            $em->persist($mydemande);
+            $em->flush();
+        return $this->redirect($this->generateUrl('nzo_voirlistedemande_export_active'));    
+    }
+    
+   /**
+    * @Secure(roles="ROLE_CLIENT")
+    */
     public function ListeDemandeExportActiveAction()
     {
         $usr = $this->get('security.context')->getToken()->getUser();
@@ -54,6 +70,20 @@ class ClientController extends Controller {
             $listedemandeexport = $paginator->paginate($query,
             $this->get('request')->query->get('page', 1), 6);         
             return $this->render('NzoTunisiefretBundle:Client:ListeDemandeExportActive.html.twig', array('listedemandeexport' => $listedemandeexport));
+    }
+    
+   /**
+    * @Secure(roles="ROLE_CLIENT")
+    */
+    public function ListeDemandeExportArchiveAction()
+    {
+        $usr = $this->get('security.context')->getToken()->getUser();
+            $em = $this->getDoctrine()->getManager();        
+            $query = $em->getRepository('NzoTunisiefretBundle:DemandeExport')->getClientDemandeExportArchive($usr->getId());
+            $paginator = $this->get('knp_paginator'); 
+            $listedemandeexport = $paginator->paginate($query,
+            $this->get('request')->query->get('page', 1), 6);         
+            return $this->render('NzoTunisiefretBundle:Client:ListeDemandeExportArchive.html.twig', array('listedemandeexport' => $listedemandeexport));
     }
     
     /**
