@@ -39,13 +39,27 @@ nzo_voirlistedemande_export_archive:
 client_list_demande_type:
     pattern: /liste-demande-type/
     defaults: {_controller: NzoTunisiefretBundle:Client:ListeDemandeExportType}    
-    
+
+client_contrat_encours:
+    pattern: /liste-contrat-encours/
+    defaults: {_controller: NzoTunisiefretBundle:Client:ListeContratEncours}    
+
+client_contrat_terminer:
+    pattern: /liste-contrat-terminé/
+    defaults: {_controller: NzoTunisiefretBundle:Client:ListeContratTerminer}
+
 nzo_detaildemande_export:    
     pattern: /detail-demande-export/{id}
     defaults: {_controller: NzoTunisiefretBundle:Client:DetailDemandeExport}  
     requirements:
         id:  \d+ 
 
+client_terminer_demande:        
+    pattern: /terminer-demande-export/{id}
+    defaults: {_controller: NzoTunisiefretBundle:Client:TerminertDemandeExport}  
+    requirements:
+        id:  \d+
+        
 client_annuler_demande:        
     pattern: /annuler-demande-export/{id}
     defaults: {_controller: NzoTunisiefretBundle:Client:AnnulerDemandeExport}  
@@ -57,6 +71,12 @@ nzo_detaildemande_export_postule:
     defaults: {_controller: NzoTunisiefretBundle:Client:DetailDemandeExportPostule}  
     requirements:
         id:  \d+    
+
+client_reposter_demande_terminer:
+    pattern: /demande-terminé/{id}/reposter/
+    defaults: {_controller: NzoTunisiefretBundle:Client:ReposterDemandeExportTerminer}  
+    requirements:
+        id:  \d+      
         
 nzo_detaildemande_export_type:    
     pattern: /detail-demande-export/{id}/type/

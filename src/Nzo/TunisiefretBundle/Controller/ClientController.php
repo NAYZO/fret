@@ -57,7 +57,7 @@ class ClientController extends Controller {
             $em->flush();
         return $this->redirect($this->generateUrl('nzo_voirlistedemande_export_active'));   
         
-        // ================== manque notif exportateur
+        // ============================================================================================================================================ manque notif exportateur
     }
     
    /**
@@ -132,6 +132,34 @@ class ClientController extends Controller {
             $listedemandeexport = $paginator->paginate($query,
             $this->get('request')->query->get('page', 1), 6);         
             return $this->render('NzoTunisiefretBundle:Client:ListeDemandeExportActive.html.twig', array('listedemandeexport' => $listedemandeexport));
+    }
+    
+   /**
+    * @Secure(roles="ROLE_CLIENT")
+    */
+    public function ListeContratEncoursAction()
+    {
+        $usr = $this->get('security.context')->getToken()->getUser();
+            $em = $this->getDoctrine()->getManager();        
+            $query = $em->getRepository('NzoTunisiefretBundle:DemandeExport')->getClientContratEncours($usr->getId());
+            $paginator = $this->get('knp_paginator'); 
+            $listecontratencours = $paginator->paginate($query,
+            $this->get('request')->query->get('page', 1), 6);         
+            return $this->render('NzoTunisiefretBundle:Client:ListeContratEncours.html.twig', array('listecontratencours' => $listecontratencours));
+    }
+    
+    /**
+    * @Secure(roles="ROLE_CLIENT")
+    */
+    public function ListeContratTerminerAction()
+    {
+        $usr = $this->get('security.context')->getToken()->getUser();
+            $em = $this->getDoctrine()->getManager();        
+            $query = $em->getRepository('NzoTunisiefretBundle:DemandeExport')->getClientContratTerminer($usr->getId());
+            $paginator = $this->get('knp_paginator'); 
+            $listecontratterminer = $paginator->paginate($query,
+            $this->get('request')->query->get('page', 1), 6);         
+            return $this->render('NzoTunisiefretBundle:Client:ListeContratTerminer.html.twig', array('listecontratterminer' => $listecontratterminer));
     }
     
    /**
