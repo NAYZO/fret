@@ -70,6 +70,7 @@ class DemandeExport
      * @var integer $codepostal
      *
      * @ORM\Column(name="codepostal", type="integer")
+     * @Assert\NotBlank()
      */
     protected $codepostal;
     
@@ -85,6 +86,7 @@ class DemandeExport
      * @var datetime $datemax
      *
      * @ORM\Column(name="datemax", type="datetime")
+     * @Assert\NotBlank()
      */
     protected $datemax;
     
@@ -130,7 +132,7 @@ class DemandeExport
     /**
      * @var boolean $demandeexporttype
      *
-     * @ORM\Column(name="demande_transport_type", type="boolean", nullable=true)
+     * @ORM\Column(name="demande_export_type", type="boolean", nullable=true)
      */
     protected $demandeexporttype;
     

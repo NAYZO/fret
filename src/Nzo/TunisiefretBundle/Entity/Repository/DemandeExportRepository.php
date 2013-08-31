@@ -43,6 +43,16 @@ class DemandeExportRepository extends EntityRepository
          return $qb->getQuery();            
     } 
     
+    public function getClientDemandeExportType($id)
+    {
+         $qb = $this->createQueryBuilder('a');
+         $qb->where('a.client = :client')
+            ->andWhere('a.demandeexporttype = 1')                   
+            ->setParameter('client', $id)
+            ->orderBy('a.date_depos', 'DESC');
+         return $qb->getQuery();            
+    } 
+    
 //    public function getDemandeExportById($id)
 //    {
 //         $qb = $this->createQueryBuilder('a');

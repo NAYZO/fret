@@ -36,6 +36,10 @@ nzo_voirlistedemande_export_archive:
     pattern: /liste-demande-export/archive/
     defaults: {_controller: NzoTunisiefretBundle:Client:ListeDemandeExportArchive}    
     
+client_list_demande_type:
+    pattern: /liste-demande-type/
+    defaults: {_controller: NzoTunisiefretBundle:Client:ListeDemandeExportType}    
+    
 nzo_detaildemande_export:    
     pattern: /detail-demande-export/{id}
     defaults: {_controller: NzoTunisiefretBundle:Client:DetailDemandeExport}  
@@ -53,6 +57,28 @@ nzo_detaildemande_export_postule:
     defaults: {_controller: NzoTunisiefretBundle:Client:DetailDemandeExportPostule}  
     requirements:
         id:  \d+    
+        
+nzo_detaildemande_export_type:    
+    pattern: /detail-demande-export/{id}/type/
+    defaults: {_controller: NzoTunisiefretBundle:Client:DetailDemandeExportType}  
+    requirements:
+        id:  \d+          
+        
+        
+client_supprimer_demande_type:    
+    pattern: /demande-export-type/{id}/supprimer/
+    defaults: {_controller: NzoTunisiefretBundle:Client:SupprimerDemandeExportType}  
+    requirements:
+        id:  \d+            
+  
+client_reposter_demande_type:  
+    pattern: /demande-export-type/{id}/reposter/
+    defaults: {_controller: NzoTunisiefretBundle:Client:ReposterDemandeExportType}  
+    requirements:
+        id:  \d+             
+  
+  
+  
   
 #EXPORTATEUR ROUTE
 nzo_postuledemande_export:

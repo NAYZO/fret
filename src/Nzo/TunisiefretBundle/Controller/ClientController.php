@@ -55,8 +55,70 @@ class ClientController extends Controller {
             $mydemande->setAnnuler(true);
             $em->persist($mydemande);
             $em->flush();
-        return $this->redirect($this->generateUrl('nzo_voirlistedemande_export_active'));    
+        return $this->redirect($this->generateUrl('nzo_voirlistedemande_export_active'));   
+        
+        // ================== manque notif exportateur
     }
+    
+   /**
+    * @Secure(roles="ROLE_CLIENT")
+    */
+    public function SupprimerDemandeExportTypeAction(DemandeExport $mydemande)
+    {
+        $usr = $this->get('security.context')->getToken()->getUser();
+       // security access     
+            if($mydemande->getClient() != $usr) return $this->redirect($this->generateUrl('nzo_tunisiefret_homepage'));
+       // security access 
+            $em = $this->getDoctrine()->getManager();
+            $mydemande->setDemandeexporttype(false);
+            $em->persist($mydemande);
+            $em->flush();
+        return $this->redirect($this->generateUrl('client_list_demande_type'));    
+    }
+    
+   /**
+    * @Secure(roles="ROLE_CLIENT")
+    */
+    public function ReposterDemandeExportTypeAction(DemandeExport $mydemande, Request $request)
+    {
+        $usr = $this->get('security.context')->getToken()->getUser();
+       // security access     
+            if($mydemande->getClient() != $usr) return $this->redirect($this->generateUrl('nzo_tunisiefret_homepage'));
+       // security access 
+        $demande = new DemandeExport();
+            $demande->setAnnuler(false);
+            $demande->setJobend(false);
+            $demande->setTacking(false);
+            $demande->setDemandeexporttype(false);
+            $demande->setNombredepostule(0);
+            $demande->setAdresse($mydemande->getAdresse());
+            $demande->setClient($mydemande->getClient());
+            $demande->setCodepostal($mydemande->getCodepostal());
+            $demande->setDateDepos($mydemande->getDateDepos());
+            $demande->setDatemax($mydemande->getDatemax());            
+            $demande->setDescription($mydemande->getDescription());
+            $demande->setPays($mydemande->getPays());
+            $demande->setPrix($mydemande->getPrix());
+            $demande->setReference($mydemande->getReference());
+            $demande->setTitre($mydemande->getTitre());
+            $demande->setVille($mydemande->getVille());
+            
+        $form = $this->createForm(new DemandeExportType(), $demande);
+        if ($this->getRequest()->getMethod() === 'POST') {
+            $form->handleRequest($request);
+            if ($form->isValid()) {
+                $em = $this->getDoctrine()->getManager();
+                
+                $em->persist($demande);
+                $em->flush();
+
+                $this->get('session')->getFlashBag()->add('notice', 'c boooonn!');
+                return $this->redirect($this->generateUrl('nzo_tunisiefret_homepage'));
+            }
+        }
+        return $this->render('NzoTunisiefretBundle:Client:PoserDemandeExportType.html.twig', array('form' => $form->createView()));
+    }
+    
     
    /**
     * @Secure(roles="ROLE_CLIENT")
@@ -75,6 +137,20 @@ class ClientController extends Controller {
    /**
     * @Secure(roles="ROLE_CLIENT")
     */
+    public function ListeDemandeExportTypeAction()
+    {
+        $usr = $this->get('security.context')->getToken()->getUser();
+            $em = $this->getDoctrine()->getManager();        
+            $query = $em->getRepository('NzoTunisiefretBundle:DemandeExport')->getClientDemandeExportType($usr->getId());
+            $paginator = $this->get('knp_paginator'); 
+            $listedemandeexporttype = $paginator->paginate($query,
+            $this->get('request')->query->get('page', 1), 6);         
+            return $this->render('NzoTunisiefretBundle:Client:ListeDemandeExportType.html.twig', array('listedemandeexporttype' => $listedemandeexporttype));
+    }
+    
+   /**
+    * @Secure(roles="ROLE_CLIENT")
+    */
     public function ListeDemandeExportArchiveAction()
     {
         $usr = $this->get('security.context')->getToken()->getUser();
@@ -86,7 +162,7 @@ class ClientController extends Controller {
             return $this->render('NzoTunisiefretBundle:Client:ListeDemandeExportArchive.html.twig', array('listedemandeexport' => $listedemandeexport));
     }
     
-    /**
+   /**
     * @Secure(roles="ROLE_CLIENT")
     */
     public function DetailDemandeExportAction($id)
@@ -99,6 +175,20 @@ class ClientController extends Controller {
        // security access   
             $postules = $em->getRepository('NzoTunisiefretBundle:DemandeExportPostule')->getDemandeExportPostuleByDemande($id);
         return $this->render('NzoTunisiefretBundle:Client:DetailDemandeExport.html.twig', array('mydemande' => $mydemande, 'postules' => $postules));
+    }
+    
+    /**
+    * @Secure(roles="ROLE_CLIENT")
+    */
+    public function DetailDemandeExportTypeAction(DemandeExport $mydemande)
+    {
+        $usr = $this->get('security.context')->getToken()->getUser();
+            $em = $this->getDoctrine()->getManager();        
+       // security access     
+            if($mydemande->getClient() != $usr) return $this->redirect($this->generateUrl('nzo_tunisiefret_homepage'));
+       // security access   
+            
+        return $this->render('NzoTunisiefretBundle:Client:DetailDemandeExportType.html.twig', array('mydemande' => $mydemande));
     }
 
    /**

@@ -1,0 +1,52 @@
+{% extends "NzoTunisiefretBundle::layoutClient.html.twig" %}
+{% block title %} {{ parent() }} Liste Des Demandes Export Type {% endblock %}
+
+{% block banner %}
+<div class="jumbotron">
+    <div class="col-md-4"> 
+        <div class="row">
+            <h4 class="title-banner" style="">Liste Des Demandes Export Type</h4>
+        </div>
+    </div>
+</div>
+{% endblock banner %}
+
+{% block content %}
+<div class="col-md-8 col-md-offset-2 well">
+<table class="table table-striped table-bordered">
+        <thead>
+          <tr>
+            <th>Titre</th>  
+            <th>Reference</th>
+            <th>Pays</th>
+            <th>datemax</th>
+            <th>date depos</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+            {% for demande in listedemandeexporttype %}
+          <tr>
+            <td>{{demande.titre}}</td>
+            <td>{{demande.reference}}</td>          
+            <td>{{demande.pays}}</td>           
+            <td>{{demande.datemax|date("d/m/Y")}}</td>
+            <td>{{demande.datedepos|date("d/m/Y")}}</td>
+            <td>
+                <a href="{{path('nzo_detaildemande_export_type', {'id':demande.id} )}}"> Voir detail </a>
+                <a href="{{path('client_reposter_demande_type', {'id':demande.id} )}}"> Reposter</a>
+                <a href="{{path('client_supprimer_demande_type', {'id':demande.id} )}}"> Supprimer</a>
+            </td>
+         
+          </tr>
+             {% endfor %}
+        </tbody>
+      </table>
+
+    
+    <div class="navigation">
+    {{ knp_pagination_render(listedemandeexporttype) }}
+    </div>
+    </div> 
+{% endblock content %} 
+ 
