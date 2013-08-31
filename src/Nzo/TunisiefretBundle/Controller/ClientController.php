@@ -15,6 +15,7 @@ use Nzo\TunisiefretBundle\Form\MsgDemandeExportType;
 use Nzo\TunisiefretBundle\Entity\MsgDemandeExport;
 
 use Nzo\TunisiefretBundle\Entity\NotifMsg;
+use Nzo\TunisiefretBundle\Entity\Notification;
 
 class ClientController extends Controller {
 
@@ -54,11 +55,22 @@ class ClientController extends Controller {
             $em = $this->getDoctrine()->getManager();
             $mydemande->setAnnuler(true);
             $em->persist($mydemande);
+            
+            // notif Exportateurs
+            $listepostules = $mydemande->getDemandeexportpostule();
+            foreach($listepostules as $postule)
+            {
+                $notifmsg = new Notification();
+                $notifmsg->setExportateur($postule->getExportateur());
+                //==================================================================================================================== lien exportateur pour info demande export + classe css
+                $text = 'Demande Export <a href=""> <span>'.$mydemande->getTitre().'</span> </a> est annulé!';
+                $notifmsg->setText($text);
+                $em->persist($notifmsg);
+            }
+            
             $em->flush();
         return $this->redirect($this->generateUrl('nzo_voirlistedemande_export_active'));   
-        
-        // ============================================================================================================================================ manque notif exportateur
-    }
+  }
     
    /**
     * @Secure(roles="ROLE_CLIENT")
@@ -260,12 +272,7 @@ class ClientController extends Controller {
             $notifmsg->setExportateur($exportateur);
             $notifmsg->setEmetteur($usr->getPrenom().' '.$usr->getNom());
             $notifmsg->setTitredemandeexport($postule->getDemandeexport()->getTitre());
-            if (strlen($msg)> 70){
-                $text = substr($msg, 0, 70).'...';
-                $notifmsg->setText($text);
-            }            
-            else
-                $notifmsg->setText($msg);
+            $notifmsg->setText($msg);
             $em->persist($notifmsg);
             $em->flush();
 

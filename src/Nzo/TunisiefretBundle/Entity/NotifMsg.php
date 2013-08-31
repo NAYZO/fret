@@ -155,8 +155,12 @@ class NotifMsg
      * @param string $text
      * @return NotifMsg
      */
-    public function setText($text)
+    public function setText($text, $max=70)
     {
+        if (strlen($text) > $max){
+                $text = substr($text, 0, $max).'...';
+            }            
+   
         $this->text = $text;
     
         return $this;
