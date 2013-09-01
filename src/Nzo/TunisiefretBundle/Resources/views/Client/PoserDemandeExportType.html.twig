@@ -10,8 +10,8 @@
     </div>
 {% endblock banner %}
 {% block content %}
-<div class="col-md-8 col-md-offset-2">
-<form action="#" id="contactForm" method="post" {{ form_enctype(form) }} class="well" style="padding: 40px" role="form" novalidate>
+
+<form action="#" id="contactForm" method="post" {{ form_enctype(form) }} style="padding: 40px" role="form" novalidate>
     <fieldset>
         <legend class="colorlegend"><strong>Inscrivez Vous</strong></legend>  
         {% if(form_errors(form)) %}
@@ -99,7 +99,7 @@
         {{ form_rest(form) }}
     </fieldset>
 </form>
-</div>
+
 {% endblock content %}
 
  
