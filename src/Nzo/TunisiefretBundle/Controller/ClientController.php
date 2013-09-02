@@ -16,6 +16,8 @@ use Nzo\TunisiefretBundle\Entity\MsgDemandeExport;
 
 use Nzo\TunisiefretBundle\Entity\NotifMsg;
 use Nzo\TunisiefretBundle\Entity\Notification;
+use Nzo\TunisiefretBundle\Entity\AnnulerDemandeExport;
+use Nzo\TunisiefretBundle\Entity\TerminerDemandeExport;
 
 class ClientController extends Controller {
 
@@ -46,14 +48,57 @@ class ClientController extends Controller {
    /**
     * @Secure(roles="ROLE_CLIENT")
     */
-    public function AnnulerDemandeExportAction(DemandeExport $mydemande)
+    public function TerminerDemandeExportAction(DemandeExport $mydemande, Request $request)
+    {
+        $usr = $this->get('security.context')->getToken()->getUser();
+       // security access     
+            if($mydemande->getClient() != $usr || !$mydemande->getTacking()) return $this->redirect($this->generateUrl('nzo_tunisiefret_homepage'));
+       // security access 
+            $em = $this->getDoctrine()->getManager();
+            $terminer = new TerminerDemandeExport();
+            $terminer->setResultat( $request->request->get('terminer_resultat') );
+            $terminer->setDescription( $request->request->get('terminer_description') );
+            $em->persist($terminer);
+            // save Teminer object in DemandeExport
+            $mydemande->setTerminerDemande($terminer);
+            $em->persist($mydemande);
+            
+            // notif Exportateur
+            $listepostules = $mydemande->getDemandeexportpostule();
+            foreach($listepostules as $postule)
+            {
+                if($postule->getDemandeAccepter())
+                {
+                    $notifmsg = new Notification();
+                    $notifmsg->setExportateur($postule->getExportateur());
+                    //==================================================================================================================== lien exportateur pour info demande export + classe css
+                    $text = 'Demande Export <a href=""> <span>'.$mydemande->getTitre().'</span> </a> est Terminé!';
+                    $notifmsg->setText($text);
+                    $em->persist($notifmsg);
+                }
+            }
+            
+            $em->flush();
+            //==================================================================================================================== redirection au formulaire donner note au exportateur
+        return $this->redirect($this->generateUrl('formulaire donner note au exportateur'));   
+  }
+  
+    /**
+    * @Secure(roles="ROLE_CLIENT")
+    */
+    public function AnnulerDemandeExportAction(DemandeExport $mydemande, Request $request)
     {
         $usr = $this->get('security.context')->getToken()->getUser();
        // security access     
             if($mydemande->getClient() != $usr) return $this->redirect($this->generateUrl('nzo_tunisiefret_homepage'));
-       // security access 
+       // security access
             $em = $this->getDoctrine()->getManager();
-            $mydemande->setAnnuler(true);
+            $annuler = new AnnulerDemandeExport();
+            $annuler->setRaison( $request->request->get('annuler_raison') );
+            $annuler->setDescription( $request->request->get('annuler_description') );
+            $em->persist($annuler);
+            // save Annuler object in DemandeExport
+            $mydemande->setAnnulerDemande($annuler);
             $em->persist($mydemande);
             
             // notif Exportateurs
@@ -98,8 +143,6 @@ class ClientController extends Controller {
             if($mydemande->getClient() != $usr) return $this->redirect($this->generateUrl('nzo_tunisiefret_homepage'));
        // security access 
         $demande = new DemandeExport();
-            $demande->setAnnuler(false);
-            $demande->setJobend(false);
             $demande->setTacking(false);
             $demande->setDemandeexporttype(false);
             $demande->setNombredepostule(0);

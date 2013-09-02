@@ -24,8 +24,8 @@ class DemandeExportRepository extends EntityRepository
          $qb = $this->createQueryBuilder('a');
          $qb->where('a.client = :client')
             ->andWhere('a.tacking = 0')     
-            ->andWhere('a.jobend = 0')          
-            ->andWhere('a.annuler = 0')               
+            ->andWhere('a.terminer_demande is NULL')          
+            ->andWhere('a.annuler_demande is NULL')               
             ->setParameter('client', $id)
             ->orderBy('a.date_depos', 'DESC');
          return $qb->getQuery();            
@@ -36,8 +36,8 @@ class DemandeExportRepository extends EntityRepository
          $qb = $this->createQueryBuilder('a');
          $qb->where('a.client = :client')
             ->andWhere('a.tacking = 0')     
-            ->andWhere('a.jobend = 0')           
-            ->andWhere('a.annuler = 1')          
+            ->andWhere('a.terminer_demande is NULL')             
+            ->andWhere('a.annuler_demande is NOT NULL')              
             ->setParameter('client', $id)
             ->orderBy('a.date_depos', 'DESC');
          return $qb->getQuery();            
@@ -58,8 +58,8 @@ class DemandeExportRepository extends EntityRepository
          $qb = $this->createQueryBuilder('a');
          $qb->where('a.client = :client')
             ->andWhere('a.tacking = 1')     
-            ->andWhere('a.jobend = 0')           
-            ->andWhere('a.annuler = 0')                     
+            ->andWhere('a.terminer_demande is NULL')          
+            ->andWhere('a.annuler_demande is NULL')                    
             ->setParameter('client', $id)
             ->orderBy('a.date_depos', 'DESC');
          return $qb->getQuery();            
@@ -70,8 +70,8 @@ class DemandeExportRepository extends EntityRepository
          $qb = $this->createQueryBuilder('a');
          $qb->where('a.client = :client')
             ->andWhere('a.tacking = 1')     
-            ->andWhere('a.jobend = 1')           
-            ->andWhere('a.annuler = 0')                     
+            ->andWhere('a.terminer_demande is NOT NULL')          
+            ->andWhere('a.annuler_demande is NULL')                   
             ->setParameter('client', $id)
             ->orderBy('a.date_depos', 'DESC');
          return $qb->getQuery();            

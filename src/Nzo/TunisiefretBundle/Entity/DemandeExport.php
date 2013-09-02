@@ -30,6 +30,16 @@ class DemandeExport
     private $demandeexportpostule;
     
     /**
+     * @ORM\OneToOne(targetEntity="Nzo\TunisiefretBundle\Entity\TerminerDemandeExport", cascade={"remove"})
+     */
+    private $terminer_demande;
+    
+    /**
+     * @ORM\OneToOne(targetEntity="Nzo\TunisiefretBundle\Entity\AnnulerDemandeExport", cascade={"remove"})
+     */
+    private $annuler_demande;
+    
+    /**
      * @ORM\Column(name="reference", type="string", length=255)
      * @Assert\NotBlank()
      */
@@ -111,16 +121,11 @@ class DemandeExport
     private $tacking;
     
     /**
-     * @var boolean $jobend
+     * @var datetime $date_tacking
      *
-     * @ORM\Column(name="jobend", type="boolean")
+     * @ORM\Column(name="date_tacking", type="datetime")
      */
-    private $jobend;
-    
-    /**
-     * @ORM\Column(name="annuler", type="boolean")
-     */
-    private $annuler;
+    private $date_tacking;
     
     /**
      * @var integer $nombredepostule
@@ -140,8 +145,6 @@ class DemandeExport
     public function __construct()
     {
         $this->tacking = false; 
-        $this->jobend = false; 
-        $this->annuler = false; 
         $this->date_depos = new \DateTime('now');
         $this->nombredepostule = 0;
         $this->demandeexportpostule = new \Doctrine\Common\Collections\ArrayCollection();
@@ -413,26 +416,26 @@ class DemandeExport
     }
 
     /**
-     * Set jobend
+     * Set date_tacking
      *
-     * @param boolean $jobend
+     * @param \DateTime $dateTacking
      * @return DemandeExport
      */
-    public function setJobend($jobend)
+    public function setDateTacking($dateTacking)
     {
-        $this->jobend = $jobend;
+        $this->date_tacking = $dateTacking;
     
         return $this;
     }
 
     /**
-     * Get jobend
+     * Get date_tacking
      *
-     * @return boolean 
+     * @return \DateTime 
      */
-    public function getJobend()
+    public function getDateTacking()
     {
-        return $this->jobend;
+        return $this->date_tacking;
     }
 
     /**
@@ -457,7 +460,7 @@ class DemandeExport
     {
         return $this->nombredepostule;
     }
-   
+
     /**
      * Set demandeexporttype
      *
@@ -538,25 +541,48 @@ class DemandeExport
     }
 
     /**
-     * Set annuler
+     * Set terminer_demande
      *
-     * @param boolean $annuler
+     * @param \Nzo\TunisiefretBundle\Entity\TerminerDemandeExport $terminerDemande
      * @return DemandeExport
      */
-    public function setAnnuler($annuler)
+    public function setTerminerDemande(\Nzo\TunisiefretBundle\Entity\TerminerDemandeExport $terminerDemande = null)
     {
-        $this->annuler = $annuler;
+        $this->terminer_demande = $terminerDemande;
     
         return $this;
     }
 
     /**
-     * Get annuler
+     * Get terminer_demande
      *
-     * @return boolean 
+     * @return \Nzo\TunisiefretBundle\Entity\TerminerDemandeExport 
      */
-    public function getAnnuler()
+    public function getTerminerDemande()
     {
-        return $this->annuler;
+        return $this->terminer_demande;
+    }
+
+    /**
+     * Set annuler_demande
+     *
+     * @param \Nzo\TunisiefretBundle\Entity\AnnulerDemandeExport $annulerDemande
+     * @return DemandeExport
+     */
+    public function setAnnulerDemande(\Nzo\TunisiefretBundle\Entity\AnnulerDemandeExport $annulerDemande = null)
+    {
+        $this->annuler_demande = $annulerDemande;
+    
+        return $this;
+    }
+
+    /**
+     * Get annuler_demande
+     *
+     * @return \Nzo\TunisiefretBundle\Entity\AnnulerDemandeExport 
+     */
+    public function getAnnulerDemande()
+    {
+        return $this->annuler_demande;
     }
 }
