@@ -128,7 +128,7 @@ class DemandeExport
     /**
      * @var datetime $date_tacking
      *
-     * @ORM\Column(name="date_tacking", type="datetime")
+     * @ORM\Column(name="date_tacking", type="datetime", nullable=true)
      */
     private $date_tacking;
     
