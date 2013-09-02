@@ -30,6 +30,11 @@ class DemandeExport
     private $demandeexportpostule;
     
     /**
+     * @ORM\OneToOne(targetEntity="Nzo\TunisiefretBundle\Entity\AvisExport", cascade={"remove"})
+     */
+    private $avis_export;
+    
+    /**
      * @ORM\OneToOne(targetEntity="Nzo\TunisiefretBundle\Entity\TerminerDemandeExport", cascade={"remove"})
      */
     private $terminer_demande;
@@ -584,5 +589,28 @@ class DemandeExport
     public function getAnnulerDemande()
     {
         return $this->annuler_demande;
+    }
+
+    /**
+     * Set avis_export
+     *
+     * @param \Nzo\TunisiefretBundle\Entity\AvisExport $avisExport
+     * @return DemandeExport
+     */
+    public function setAvisExport(\Nzo\TunisiefretBundle\Entity\AvisExport $avisExport = null)
+    {
+        $this->avis_export = $avisExport;
+    
+        return $this;
+    }
+
+    /**
+     * Get avis_export
+     *
+     * @return \Nzo\TunisiefretBundle\Entity\AvisExport 
+     */
+    public function getAvisExport()
+    {
+        return $this->avis_export;
     }
 }

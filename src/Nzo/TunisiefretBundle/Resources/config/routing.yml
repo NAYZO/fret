@@ -97,7 +97,11 @@ client_reposter_demande_type:
     requirements:
         id:  \d+             
   
-  
+client_donner_avis_demande_export:  
+    pattern: /demande-export/{id}/ajout-avis/
+    defaults: {_controller: NzoTunisiefretBundle:Client:DonnerAvisDemandeExport}  
+    requirements:
+        id:  \d+  
   
   
 #EXPORTATEUR ROUTE

@@ -17,12 +17,7 @@ class AvisExport
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    protected $id;
-    
-    /**
-     * @ORM\ManyToOne(targetEntity="Nzo\TunisiefretBundle\Entity\DemandeExportPostule")
-     */
-    private $demandeexportpostule;    
+    protected $id;   
     
     /** 
      * @ORM\Column(name="avis_client", type="text")
@@ -148,28 +143,5 @@ class AvisExport
     public function getNoteexportateur()
     {
         return $this->noteexportateur;
-    }
-
-    /**
-     * Set demandeexportpostule
-     *
-     * @param \Nzo\TunisiefretBundle\Entity\DemandeExportPostule $demandeexportpostule
-     * @return AvisExport
-     */
-    public function setDemandeexportpostule(\Nzo\TunisiefretBundle\Entity\DemandeExportPostule $demandeexportpostule = null)
-    {
-        $this->demandeexportpostule = $demandeexportpostule;
-    
-        return $this;
-    }
-
-    /**
-     * Get demandeexportpostule
-     *
-     * @return \Nzo\TunisiefretBundle\Entity\DemandeExportPostule 
-     */
-    public function getDemandeexportpostule()
-    {
-        return $this->demandeexportpostule;
     }
 }

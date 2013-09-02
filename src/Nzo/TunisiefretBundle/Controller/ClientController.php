@@ -18,6 +18,7 @@ use Nzo\TunisiefretBundle\Entity\NotifMsg;
 use Nzo\TunisiefretBundle\Entity\Notification;
 use Nzo\TunisiefretBundle\Entity\AnnulerDemandeExport;
 use Nzo\TunisiefretBundle\Entity\TerminerDemandeExport;
+use Nzo\TunisiefretBundle\Entity\AvisExport;
 
 class ClientController extends Controller {
 
@@ -30,7 +31,7 @@ class ClientController extends Controller {
         $demande = new DemandeExport();
         $demande->setClient($usr);
         $form = $this->createForm(new DemandeExportType(), $demande);
-        if ($this->getRequest()->getMethod() === 'POST') {
+        if ($request->getMethod() === 'POST') {
             $form->handleRequest($request);
             if ($form->isValid()) {
                 $em = $this->getDoctrine()->getManager();
@@ -75,12 +76,12 @@ class ClientController extends Controller {
                     $text = 'Demande Export <a href=""> <span>'.$mydemande->getTitre().'</span> </a> est Terminé!';
                     $notifmsg->setText($text);
                     $em->persist($notifmsg);
+                    $postuleexport = $postule;
                 }
             }
             
             $em->flush();
-            //==================================================================================================================== redirection au formulaire donner note au exportateur
-        return $this->redirect($this->generateUrl('formulaire donner note au exportateur'));   
+        return $this->redirect($this->generateUrl('client_donner_avis_demande_export', array('id' => $postuleexport)));   
   }
   
     /**
@@ -159,7 +160,7 @@ class ClientController extends Controller {
             $demande->setVille($mydemande->getVille());
             
         $form = $this->createForm(new DemandeExportType(), $demande);
-        if ($this->getRequest()->getMethod() === 'POST') {
+        if ($request->getMethod() === 'POST') {
             $form->handleRequest($request);
             if ($form->isValid()) {
                 $em = $this->getDoctrine()->getManager();
@@ -331,5 +332,39 @@ class ClientController extends Controller {
             }
         return new Response(json_encode($val));
         }
+    }
+    
+    /**
+    * @Secure(roles="ROLE_CLIENT")
+    */
+    public function DonnerAvisDemandeExportAction(DemandeExportPostule $postule, Request $request)
+    {
+        $usr = $this->get('security.context')->getToken()->getUser();
+       // security access     
+            if($postule->getDemandeexport()->getClient() != $usr || !$postule->getDemandeexport()->getTerminerDemande()) return $this->redirect($this->generateUrl('nzo_tunisiefret_homepage'));
+       // security access 
+        if($request->getMethod() === 'POST')
+        {
+            $em = $this->getDoctrine()->getManager();
+            ( $postule->getDemandeexport()->getAvisExport() ) ? $avis = $postule->getDemandeexport()->getAvisExport() : $avis = new AvisExport();
+            $avis->setAvisclient($request->request->get('avisclient'));
+            $avis->setNoteclient($request->request->get('noteclient'));
+            $em->persist($avis);
+            
+            // notif Exportateur
+            $notifmsg = new Notification();
+            $notifmsg->setExportateur($postule->getExportateur());
+            //==================================================================================================================== lien exportateur pour avis export + classe css
+            $text = 'Vous avez reçu un Avis sur le Contrat Export <a href=""> <span>'.$postule->getDemandeexport()->getTitre().'</span> </a>';
+            $notifmsg->setText($text);
+            $em->persist($notifmsg);
+            
+            $em->flush();
+            
+            $this->get('session')->getFlashBag()->add('notice', 'c boooonn!');
+            return $this->redirect($this->generateUrl('nzo_tunisiefret_homepage'));
+        }
+
+        return $this->render('NzoTunisiefretBundle:Client:DonnerAvisExport.html.twig', array('demande' => $postule));
     }
 }
