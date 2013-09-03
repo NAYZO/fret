@@ -143,28 +143,32 @@ class ClientController extends Controller {
        // security access     
             if($mydemande->getClient() != $usr) return $this->redirect($this->generateUrl('nzo_tunisiefret_homepage'));
        // security access 
-        $demande = new DemandeExport();
-            $demande->setTacking(false);
-            $demande->setDemandeexporttype(false);
-            $demande->setNombredepostule(0);
-            $demande->setAdresse($mydemande->getAdresse());
-            $demande->setClient($mydemande->getClient());
-            $demande->setCodepostal($mydemande->getCodepostal());
-            $demande->setDateDepos($mydemande->getDateDepos());
-            $demande->setDatemax($mydemande->getDatemax());            
-            $demande->setDescription($mydemande->getDescription());
-            $demande->setPays($mydemande->getPays());
-            $demande->setPrix($mydemande->getPrix());
-            $demande->setReference($mydemande->getReference());
-            $demande->setTitre($mydemande->getTitre());
-            $demande->setVille($mydemande->getVille());
             
-        $form = $this->createForm(new DemandeExportType(), $demande);
+            $mydemande->setDemandeexporttype(false);
+            
+        $form = $this->createForm(new DemandeExportType(), $mydemande);
         if ($request->getMethod() === 'POST') {
+            
+            $mydemande->setDemandeexporttype(true);
+            $demande = new DemandeExport();
+            $form = $this->createForm(new DemandeExportType(), $demande);
+            
             $form->handleRequest($request);
             if ($form->isValid()) {
-                $em = $this->getDoctrine()->getManager();
+                $em = $this->getDoctrine()->getManager();               
                 
+                    $demande->setTacking(false);
+                    $demande->setNombredepostule(0);
+                    $demande->setAdresse( $form['adresse']->getData() );
+                    $demande->setClient( $usr );
+                    $demande->setCodepostal( $form['codepostal']->getData() );
+                    $demande->setDatemax( $form['datemax']->getData() );            
+                    $demande->setDescription( $form['description']->getData() ) ;
+                    $demande->setPays( $form['pays']->getData() );
+                    $demande->setPrix( $form['prix']->getData() );
+                    $demande->setTitre( $form['titre']->getData() );
+                    $demande->setVille( $form['ville']->getData() );
+                    
                 $em->persist($demande);
                 $em->flush();
 
