@@ -1,5 +1,5 @@
 {% extends "NzoTunisiefretBundle::layoutClient.html.twig" %}
-{% block title %} {{ parent() }} Client {% endblock %}
+{% block title %} {{ parent() }} Détails Demandes Export {% endblock %}
 {% block banner %}
 <div class="jumbotron">
     <div class="col-md-4"> 
@@ -11,8 +11,7 @@
 {% endblock banner %}
 
 {% block content %}
-<div class="col-md-8 col-md-offset-2 well">
-    <h4>{{mydemande.titre}} </h4>
+<h4 class="legend ">{{mydemande.titre}} </h4>
     <hr>
     <div class="col-md-6">
         <p><strong>Réf : </strong>{{mydemande.reference}} </p>
@@ -56,7 +55,6 @@
              {% endfor %}
         </tbody>
       </table>
-</div> 
 {% endblock content %}
  
  

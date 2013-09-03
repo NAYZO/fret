@@ -12,41 +12,33 @@
 {% endblock banner %}
 
 {% block content %}
-<div class="col-md-8 col-md-offset-2 well">
-<table class="table table-striped table-bordered">
-        <thead>
-          <tr>
-            <th>Titre</th>  
-            <th>Reference</th>
-            <th>Pays</th>
-            <th>datemax</th>
-            <th>date depos</th>
-            <th>Action</th>
-          </tr>
-        </thead>
-        <tbody>
-            {% for demande in listedemandeexporttype %}
-          <tr>
-            <td>{{demande.titre}}</td>
-            <td>{{demande.reference}}</td>          
-            <td>{{demande.pays}}</td>           
-            <td>{{demande.datemax|date("d/m/Y")}}</td>
-            <td>{{demande.datedepos|date("d/m/Y")}}</td>
-            <td>
-                <a href="{{path('nzo_detaildemande_export_type', {'id':demande.id} )}}"> Voir detail </a>
-                <a href="{{path('client_reposter_demande_type', {'id':demande.id} )}}"> Reposter</a>
-                <a href="{{path('client_supprimer_demande_type', {'id':demande.id} )}}"> Supprimer</a>
-            </td>
-         
-          </tr>
-             {% endfor %}
-        </tbody>
-      </table>
 
-    
-    <div class="navigation">
-    {{ knp_pagination_render(listedemandeexporttype) }}
-    </div>
-    </div> 
+<div class="list-group">
+    {% for demande in listedemandeexporttype %}
+        <div class="list-group-item" style="padding: 30px;">
+            <div class="legend list-group-item-heading">
+                <h4><strong>{{demande.reference}} | {{demande.titre}}</strong></h4>
+                <ul class="nav nav-pills pull-right cl-effect-17" style="margin-top: -38px;">
+                    <li> <a href="{{path('client_reposter_demande_type', {'id':demande.id} )}}"> Reposter</a></li>
+                    <li style="margin-top: 8px;">|</li>
+                    <li> <a href="{{path('client_supprimer_demande_type', {'id':demande.id} )}}"> Supprimer</a></li>
+                </ul>
+            </div>
+                <p style="color: grey;">{{demande.pays}} | Déposer le {{demande.datedepos|date("d/m/Y")}}</p>
+            <p class="list-group-item-text">
+                {% if demande.description|length > 150 %}
+                    {{demande.description|slice(0, 150)}}...
+                {%else%}
+                    {{demande.description}}
+                {% endif %}
+                <a href="{{path('nzo_detaildemande_export_type', {'id':demande.id} )}}" class="pull-right"> Voir detail </a>
+            </p>
+              
+        </div>
+    {% endfor %}
+</div>
+{{ knp_pagination_render(listedemandeexporttype) }}
+
+
 {% endblock content %} 
  
