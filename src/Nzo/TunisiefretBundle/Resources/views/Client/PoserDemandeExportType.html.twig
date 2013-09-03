@@ -13,89 +13,94 @@
 
 <form action="#" id="contactForm" method="post" {{ form_enctype(form) }} style="padding: 40px" role="form" novalidate>
     <fieldset>
-        <legend class="colorlegend"><strong>Inscrivez Vous</strong></legend>  
+        <legend class="colorlegend"><strong>Reposter Votre Demande D'export Type</strong></legend>  
         {% if(form_errors(form)) %}
-            <div class="alert alert-error text-center"> {{ form_errors(form) }} </div>
+            <div class="error-alert"> {{ form_errors(form) }} </div>
         {% endif %}
+        <div class="col-md-6">
+            <div class="row">
+                {#--titre---#}
+                <div class="form-group">
+                    <label>Titre <span class="required">*</span></label>
+                    {{ form_widget(form.titre,{'attr': {'class': 'form-control'}}) }}
+                </div>
+                {% if(form_errors(form.titre)) %}
+                  <div class="error-input">{{ form_errors(form.titre) }}</div>
+                {% endif %}
 
-        {#--titre---#}
-        <div class="form-group">
-            <label>Titre</label>
-            {{ form_widget(form.titre,{'attr': {'class': 'form-control'}}) }}
+                {#--Adresse---#}
+                <div class="form-group">
+                    <label>Adresse <span class="required">*</span></label>
+                    {{ form_widget(form.adresse,{'attr': {'class': 'form-control', 'rows': '5', 'style': 'resize:none'}}) }}
+                </div>
+                {% if(form_errors(form.adresse)) %}
+                  <div class="error-input">{{ form_errors(form.adresse) }}</div>
+                {% endif %}
+
+                {#--Pays---#}
+                <div class="form-group">
+                    <label>Pays <span class="required">*</span></label>
+                    {{ form_widget(form.pays,{'attr': {'class': 'form-control'}}) }}
+                </div>
+                {% if(form_errors(form.pays)) %}
+                  <div class="error-input">{{ form_errors(form.pays) }}</div>
+                {% endif %}
+            </div>
         </div>
-        {% if(form_errors(form.titre)) %}
-          <div class="error-input">{{ form_errors(form.titre) }}</div>
-        {% endif %}
+        <div class="col-md-6">
+            {#--Ville---#}
+            <div class="form-group">
+                <label>Ville <span class="required">*</span></label>
+                {{ form_widget(form.ville,{'attr': {'class': 'form-control'}}) }}
+            </div>
+            {% if(form_errors(form.ville)) %}
+              <div class="error-input">{{ form_errors(form.ville) }}</div>
+            {% endif %}
+
+            {#--Code Postal---#}
+            <div class="form-group">
+                <label>Code Postal <span class="required">*</span></label>
+                {{ form_widget(form.codepostal,{'attr': {'class': 'form-control'}}) }}
+            </div>
+            {% if(form_errors(form.codepostal)) %}
+              <div class="error-input">{{ form_errors(form.codepostal) }}</div>
+            {% endif %}
+
+            {#--Date Maximal---#}
+            <div class="form-group">
+                <label>Date Maximal <span class="required">*</span></label>
+                {{ form_widget(form.datemax,{'attr': {'class': 'form-control'}}) }}
+            </div>
+            {% if(form_errors(form.datemax)) %}
+              <div class="error-input">{{ form_errors(form.datemax) }}</div>
+            {% endif %}
+
+            {#--Prix---#}
+            <div class="form-group">
+                <label>Prix</label>
+                {{ form_widget(form.prix,{'attr': {'class': 'form-control'}}) }}
+            </div>
+            {% if(form_errors(form.prix)) %}
+              <div class="error-input">{{ form_errors(form.prix) }}</div>
+            {% endif %}
+        </div>     
         
         {#--Description---#}
         <div class="form-group">
             <label>Description</label>
-            {{ form_widget(form.description,{'attr': {'class': 'form-control'}}) }}
+            {{ form_widget(form.description,{'attr': {'class': 'form-control', 'rows': '5'}}) }}
         </div>
         {% if(form_errors(form.description)) %}
           <div class="error-input">{{ form_errors(form.description) }}</div>
         {% endif %}
-        
-        {#--Pays---#}
-        <div class="form-group">
-            <label>Pays</label>
-            {{ form_widget(form.pays,{'attr': {'class': 'form-control'}}) }}
-        </div>
-        {% if(form_errors(form.pays)) %}
-          <div class="error-input">{{ form_errors(form.pays) }}</div>
-        {% endif %}
           
-        {#--Ville---#}
-        <div class="form-group">
-            <label>Ville</label>
-            {{ form_widget(form.ville,{'attr': {'class': 'form-control'}}) }}
-        </div>
-        {% if(form_errors(form.ville)) %}
-          <div class="error-input">{{ form_errors(form.ville) }}</div>
-        {% endif %}
-           
-        {#--Code Postal---#}
-        <div class="form-group">
-            <label>Code Postal</label>
-            {{ form_widget(form.codepostal,{'attr': {'class': 'form-control'}}) }}
-        </div>
-        {% if(form_errors(form.codepostal)) %}
-          <div class="error-input">{{ form_errors(form.codepostal) }}</div>
-        {% endif %}
-
-        {#--Adresse---#}
-        <div class="form-group">
-            <label>Adresse</label>
-            {{ form_widget(form.adresse,{'attr': {'class': 'form-control'}}) }}
-        </div>
-        {% if(form_errors(form.adresse)) %}
-          <div class="error-input">{{ form_errors(form.adresse) }}</div>
-        {% endif %}
-          
-        {#--Date Maximal---#}
-        <div class="form-group">
-            <label>Date Maximal</label>
-            {{ form_widget(form.datemax,{'attr': {'class': 'form-control'}}) }}
-        </div>
-        {% if(form_errors(form.datemax)) %}
-          <div class="error-input">{{ form_errors(form.datemax) }}</div>
-        {% endif %}
-          
-        {#--Prix---#}
-        <div class="form-group">
-            <label>Prix</label>
-            {{ form_widget(form.prix,{'attr': {'class': 'form-control'}}) }}
-        </div>
-        {% if(form_errors(form.prix)) %}
-          <div class="error-input">{{ form_errors(form.prix) }}</div>
-        {% endif %}
-        
         {#--Demande Export Type---#}
         <div class="form-group">
             {{ form_widget(form.demandeexporttype) }} Demande Export Type
         </div>
           
         <input type="submit" value="Reposter" name="_submit" class="btn btn-primary pull-right">
+        <p class="text-danger"><span class="required">*</span> Champs Obligatoire</p>
         {{ form_rest(form) }}
     </fieldset>
 </form>
