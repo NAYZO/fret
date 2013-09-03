@@ -673,7 +673,7 @@
 }
 
 .cl-effect-17 a::before {
-	color: #fff;
+	color: #10649c;
 	text-shadow: 0 0 1px rgba(255,255,255,0.3);
 	content: attr(data-hover);
 	position: absolute;
@@ -690,7 +690,7 @@
 	bottom: 0;
 	width: 100%;
 	height: 2px;
-	background: #fff;
+	background: #10649b;
 	opacity: 0;
 	-webkit-transform: translateY(5px);
 	-moz-transform: translateY(5px);

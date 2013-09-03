@@ -11,12 +11,13 @@
 {% endblock banner %}
 
 {% block content %}
-      <a href="{{path('client_reposter_demande_type', {'id':mydemande.id} )}}"> Reposter Demande Type</a>
-      <a href="{{path('client_supprimer_demande_type', {'id':mydemande.id} )}}"> Supprimer Demande Type</a>
-                
-<div class="col-md-8 col-md-offset-2 well">
+<div class="legend">
     <h4>{{mydemande.titre}} </h4>
-    <hr>
+    <ul class="nav nav-pills cl-effect-17">
+        <li><a href="{{path('client_reposter_demande_type', {'id':mydemande.id} )}}"> Reposter Demande Type</a></li>
+        <li><a href="{{path('client_supprimer_demande_type', {'id':mydemande.id} )}}"> Supprimer Demande Type</a></li>
+    </ul>
+</div>
     <div class="col-md-6">
         <p><strong>Réf : </strong>{{mydemande.reference}} </p>
         <p><strong>Prix : </strong>{{mydemande.prix}} </p>
@@ -30,11 +31,10 @@
         <p><strong>Date Maximal : </strong>{{mydemande.datemax|date("d/m/Y")}} </p>
         <p><strong>Date Pos : </strong>{{mydemande.datedepos|date("d/m/Y")}} </p>
     </div>
-    <div class="col-md-12">
+    <div class="">
     <p><strong>Description : </strong>{{mydemande.description}} </p>
     </div>
-    
-</div> 
+
 {% endblock content %}
  
  
