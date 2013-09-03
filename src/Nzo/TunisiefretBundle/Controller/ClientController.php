@@ -168,7 +168,8 @@ class ClientController extends Controller {
                     $demande->setPrix( $form['prix']->getData() );
                     $demande->setTitre( $form['titre']->getData() );
                     $demande->setVille( $form['ville']->getData() );
-                    
+                
+                $usr->setNbdemandeexportdepose($usr->getNbdemandeexportdepose()+1);    
                 $em->persist($demande);
                 $em->flush();
 

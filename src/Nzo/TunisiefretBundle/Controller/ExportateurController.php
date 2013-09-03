@@ -20,6 +20,9 @@ class ExportateurController extends Controller {
     */
     public function PostuleDemandeExportAction(DemandeExport $DemandeExport, Request $request)
     {
+        // test if posted before
+     //    if($this->GetEtatAction($DemandeExport) == 'true') return $this->redirect($this->generateUrl('nzo_tunisiefret_homepage'));
+        // test if posted before
         $usr = $this->get('security.context')->getToken()->getUser();
         $em = $this->getDoctrine()->getManager();
         $PostuleExport = new DemandeExportPostule();
@@ -70,7 +73,7 @@ class ExportateurController extends Controller {
     {
         $usr = $this->get('security.context')->getToken()->getUser();
         $em = $this->getDoctrine()->getManager();   
-        $query = $em->createQuery("SELECT a FROM NzoTunisiefretBundle:DemandeExportPostule a JOIN a.demandeexport d WHERE d.tacking = 0 AND a.demande_refuser = 0 AND a.demande_accepter = 0 AND a.exportateur = ".$usr->getId()." ORDER BY a.datepostule DESC ");
+        $query = $em->createQuery("SELECT a FROM NzoTunisiefretBundle:DemandeExportPostule a JOIN a.demandeexport d WHERE d.tacking = 0 AND d.annuler_demande is NULL AND a.demande_refuser = 0 AND a.annuler_by_exportateur = 0 AND a.exportateur = ".$usr->getId()." ORDER BY a.datepostule DESC ");
         $paginator = $this->get('knp_paginator'); 
         $listepostules = $paginator->paginate($query,
         $this->get('request')->query->get('page', 1), 6);         
@@ -84,11 +87,39 @@ class ExportateurController extends Controller {
     {
         $usr = $this->get('security.context')->getToken()->getUser();
         $em = $this->getDoctrine()->getManager();   
-        $query = $em->createQuery("SELECT a FROM NzoTunisiefretBundle:DemandeExportPostule a JOIN a.demandeexport d WHERE d.tacking = 1 OR a.demande_refuser = 1 AND a.demande_accepter = 0 AND a.exportateur = ".$usr->getId()." ORDER BY a.datepostule DESC ");
+        $query = $em->createQuery("SELECT a FROM NzoTunisiefretBundle:DemandeExportPostule a JOIN a.demandeexport d WHERE d.tacking = 0 OR d.annuler_demande is NOT NULL OR a.demande_refuser = 1 OR a.annuler_by_exportateur = 1 AND a.exportateur = ".$usr->getId()." ORDER BY a.datepostule DESC ");
         $paginator = $this->get('knp_paginator'); 
         $listepostules = $paginator->paginate($query,
         $this->get('request')->query->get('page', 1), 6);         
         return $this->render('NzoTunisiefretBundle:Exportateur:ListePostuleArchive.html.twig', array('listepostules' => $listepostules));
+    }
+    
+   /**
+    * @Secure(roles="ROLE_EXPORTATEUR")
+    */
+    public function ListeTravailEnCoursAction()
+    {
+        $usr = $this->get('security.context')->getToken()->getUser();
+        $em = $this->getDoctrine()->getManager();   
+        $query = $em->createQuery("SELECT a FROM NzoTunisiefretBundle:DemandeExportPostule a JOIN a.demandeexport d WHERE d.tacking = 1 AND d.terminer_demande is NULL AND d.annuler_demande is NULL AND a.demande_refuser = 0 AND a.annuler_by_exportateur = 0 AND a.exportateur = ".$usr->getId()." ORDER BY a.datepostule DESC ");
+        $paginator = $this->get('knp_paginator'); 
+        $listepostules = $paginator->paginate($query,
+        $this->get('request')->query->get('page', 1), 6);         
+        return $this->render('NzoTunisiefretBundle:Exportateur:ListeTravailEnCours.html.twig', array('listepostules' => $listepostules));
+    }
+    
+    /**
+    * @Secure(roles="ROLE_EXPORTATEUR")
+    */
+    public function ListeTravailTermineAction()
+    {
+        $usr = $this->get('security.context')->getToken()->getUser();
+        $em = $this->getDoctrine()->getManager();   
+        $query = $em->createQuery("SELECT a FROM NzoTunisiefretBundle:DemandeExportPostule a JOIN a.demandeexport d WHERE d.terminer_demande is NOT NULL AND a.exportateur = ".$usr->getId()." ORDER BY a.datepostule DESC ");
+        $paginator = $this->get('knp_paginator'); 
+        $listepostules = $paginator->paginate($query,
+        $this->get('request')->query->get('page', 1), 6);         
+        return $this->render('NzoTunisiefretBundle:Exportateur:ListeTravailTermine.html.twig', array('listepostules' => $listepostules));
     }
     
    /**
@@ -99,4 +130,4 @@ class ExportateurController extends Controller {
         return $this->render('NzoTunisiefretBundle:Exportateur:VoirDetailPostule.html.twig', array('postule' => $postule));
     }
 
-}
+} 

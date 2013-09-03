@@ -15,7 +15,9 @@ class DemandeExportRepository extends EntityRepository
     public function getAllDemandeExport()
     {
          $qb = $this->createQueryBuilder('a');
-         $qb->orderBy('a.date_depos', 'DESC');
+         $qb->where('a.tacking = 0')              
+            ->andWhere('a.annuler_demande is NULL')  
+            ->orderBy('a.date_depos', 'DESC');
          return $qb->getQuery();            
     } 
     
@@ -23,8 +25,7 @@ class DemandeExportRepository extends EntityRepository
     {
          $qb = $this->createQueryBuilder('a');
          $qb->where('a.client = :client')
-            ->andWhere('a.tacking = 0')     
-            ->andWhere('a.terminer_demande is NULL')          
+            ->andWhere('a.tacking = 0')              
             ->andWhere('a.annuler_demande is NULL')               
             ->setParameter('client', $id)
             ->orderBy('a.date_depos', 'DESC');
@@ -35,8 +36,7 @@ class DemandeExportRepository extends EntityRepository
     {
          $qb = $this->createQueryBuilder('a');
          $qb->where('a.client = :client')
-            ->andWhere('a.tacking = 0')     
-            ->andWhere('a.terminer_demande is NULL')             
+            ->andWhere('a.tacking = 0')                 
             ->andWhere('a.annuler_demande is NOT NULL')              
             ->setParameter('client', $id)
             ->orderBy('a.date_depos', 'DESC');
@@ -58,8 +58,7 @@ class DemandeExportRepository extends EntityRepository
          $qb = $this->createQueryBuilder('a');
          $qb->where('a.client = :client')
             ->andWhere('a.tacking = 1')     
-            ->andWhere('a.terminer_demande is NULL')          
-            ->andWhere('a.annuler_demande is NULL')                    
+            ->andWhere('a.terminer_demande is NULL')                             
             ->setParameter('client', $id)
             ->orderBy('a.date_depos', 'DESC');
          return $qb->getQuery();            
@@ -68,10 +67,8 @@ class DemandeExportRepository extends EntityRepository
     public function getClientContratTerminer($id)
     {
          $qb = $this->createQueryBuilder('a');
-         $qb->where('a.client = :client')
-            ->andWhere('a.tacking = 1')     
-            ->andWhere('a.terminer_demande is NOT NULL')          
-            ->andWhere('a.annuler_demande is NULL')                   
+         $qb->where('a.client = :client')    
+            ->andWhere('a.terminer_demande is NOT NULL')                            
             ->setParameter('client', $id)
             ->orderBy('a.date_depos', 'DESC');
          return $qb->getQuery();            

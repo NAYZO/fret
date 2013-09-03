@@ -125,6 +125,14 @@ exp_voir_detail_postule:
     requirements:
         id:  \d+         
 
+exp_liste_travail_en_cours:
+    pattern: /liste-travail-encours/
+    defaults: {_controller: NzoTunisiefretBundle:Exportateur:ListeTravailEnCours}
+    
+exp_liste_travail_termine:
+    pattern: /liste-travail-termine/
+    defaults: {_controller: NzoTunisiefretBundle:Exportateur:ListeTravailTermine}
+    
 #--------------------------- FosUserBundle -----------------------------------
 client_registration:
     pattern:  /inscription/client
