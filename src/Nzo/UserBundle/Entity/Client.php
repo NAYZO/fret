@@ -39,33 +39,13 @@ class Client extends User
      */
     private $notifmsg;
     
-    /**
-     * @var string $nom
+   /**
+     * @var string $nomentrop
      *
-     * @ORM\Column(name="nom", type="string", length=255)
+     * @ORM\Column(name="nomentrop", type="string", length=255)
      * @Assert\NotBlank()
-     * @Assert\Length(
-     *      min = "2",
-     *      max = "50",
-     *      minMessage = "Votre nom doit faire au moins {{ limit }} caractères",
-     *      maxMessage = "Votre nom ne peut pas être plus long que {{ limit }} caractères"
-     * )
      */
-    protected $nom;
-
-    /**
-     * @var string $prenom
-     *
-     * @ORM\Column(name="prenom", type="string", length=255)
-     * @Assert\NotBlank()
-     * @Assert\Length(
-     *      min = "2",
-     *      max = "50",
-     *      minMessage = "Votre prénom doit faire au moins {{ limit }} caractères",
-     *      maxMessage = "Votre prénom ne peut pas être plus long que {{ limit }} caractères"
-     * )
-     */
-    protected $prenom;
+    protected $nomentrop;
     
     /**
      * @var string $ville
@@ -90,6 +70,27 @@ class Client extends User
      * @Assert\NotBlank()
      */
     protected $tel;
+    
+    /**
+     * @var string $fax
+     *
+     * @ORM\Column(name="fax", type="string", length=255, nullable=true)
+     */
+    protected $fax;
+    
+    /**
+     * @var string $siteweb
+     *
+     * @ORM\Column(name="siteweb", type="string", length=255, nullable=true)
+     */
+    protected $siteweb;
+    
+    /**
+     * @var text $description
+     *
+     * @ORM\Column(name="description", type="text", nullable=true)
+     */
+    protected $description;
     
     /**
      * @var string $note
@@ -186,49 +187,26 @@ class Client extends User
     }
 
     /**
-     * Set nom
+     * Set nomentrop
      *
-     * @param string $nom
+     * @param string $nomentrop
      * @return Client
      */
-    public function setNom($nom)
+    public function setNomentrop($nomentrop)
     {
-        $this->nom = $nom;
+        $this->nomentrop = $nomentrop;
     
         return $this;
     }
 
     /**
-     * Get nom
+     * Get nomentrop
      *
      * @return string 
      */
-    public function getNom()
+    public function getNomentrop()
     {
-        return $this->nom;
-    }
-
-    /**
-     * Set prenom
-     *
-     * @param string $prenom
-     * @return Client
-     */
-    public function setPrenom($prenom)
-    {
-        $this->prenom = $prenom;
-    
-        return $this;
-    }
-
-    /**
-     * Get prenom
-     *
-     * @return string 
-     */
-    public function getPrenom()
-    {
-        return $this->prenom;
+        return $this->nomentrop;
     }
 
     /**
@@ -298,6 +276,29 @@ class Client extends User
     public function getTel()
     {
         return $this->tel;
+    }
+
+    /**
+     * Set fax
+     *
+     * @param string $fax
+     * @return Client
+     */
+    public function setFax($fax)
+    {
+        $this->fax = $fax;
+    
+        return $this;
+    }
+
+    /**
+     * Get fax
+     *
+     * @return string 
+     */
+    public function getFax()
+    {
+        return $this->fax;
     }
 
     /**
@@ -416,6 +417,29 @@ class Client extends User
     }
 
     /**
+     * Set UpdatedVichAt
+     *
+     * @param \DateTime $updatedVichAt
+     * @return Client
+     */
+    public function setUpdatedVichAt($updatedVichAt)
+    {
+        $this->UpdatedVichAt = $updatedVichAt;
+    
+        return $this;
+    }
+
+    /**
+     * Get UpdatedVichAt
+     *
+     * @return \DateTime 
+     */
+    public function getUpdatedVichAt()
+    {
+        return $this->UpdatedVichAt;
+    }
+
+    /**
      * Add demandeexport
      *
      * @param \Nzo\TunisiefretBundle\Entity\DemandeExport $demandeexport
@@ -447,7 +471,6 @@ class Client extends User
     {
         return $this->demandeexport;
     }
-    
 
     /**
      * Add notification
@@ -516,25 +539,48 @@ class Client extends User
     }
 
     /**
-     * Set UpdatedVichAt
+     * Set siteweb
      *
-     * @param \DateTime $updatedVichAt
+     * @param string $siteweb
      * @return Client
      */
-    public function setUpdatedVichAt($updatedVichAt)
+    public function setSiteweb($siteweb)
     {
-        $this->UpdatedVichAt = $updatedVichAt;
+        $this->siteweb = $siteweb;
     
         return $this;
     }
 
     /**
-     * Get UpdatedVichAt
+     * Get siteweb
      *
-     * @return \DateTime 
+     * @return string 
      */
-    public function getUpdatedVichAt()
+    public function getSiteweb()
     {
-        return $this->UpdatedVichAt;
+        return $this->siteweb;
+    }
+
+    /**
+     * Set description
+     *
+     * @param string $description
+     * @return Client
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
+    
+        return $this;
+    }
+
+    /**
+     * Get description
+     *
+     * @return string 
+     */
+    public function getDescription()
+    {
+        return $this->description;
     }
 }

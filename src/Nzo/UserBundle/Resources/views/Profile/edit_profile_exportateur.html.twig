@@ -6,17 +6,106 @@
 
 {% block content %}
 <form action="{{ path('fos_user_profile_edit') }}" id="contactForm" method="post" {{ form_enctype(form) }}>
-                                <div class="fieldset">
-                                    <h2 class="legend">Edite Profil</h2>
+<fieldset>
+        <legend class="colorlegend"><strong>Modifier Profil</strong></legend>  
+        
+        {% if(form_errors(form)) %}
+            <div class="alert alert-error text-center"> {{ form_errors(form) }} </div>
+        {% endif %}
+        <div class="col-md-6"> 
+                {#--Nom d'utilisateur---#}
+                <div class="form-group">
+                    <label>Nom D'utilisateur</label>
+                    {{ form_widget(form.username,{'attr': {'class': 'form-control'}}) }}
+                </div>
+                {% if(form_errors(form.username)) %}
+                  <div class="error-input">{{ form_errors(form.username) }}</div>
+                {% endif %}
 
-                
-    {{ form_widget(form) }}
-                                        
-                                </div>
-                                <div class="buttons-set">
-                                    <p class="required">* Obligatoire</p>
+                {#--Email---#}
+                <div class="form-group">
+                  <label>Email</label>
+                    {{ form_widget(form.email,{'attr': {'class': 'form-control'}}) }}
+                </div>
+                {% if(form_errors(form.email)) %}
+                  <div class="error-input">{{ form_errors(form.email) }}</div>
+                {% endif %} 
+               
+                {#--Entreprise---#}
+                <div class="form-group">
+                          <label>Nom Entreprise</label>
+                    {{ form_widget(form.nomentrop,{'attr': {'class': 'form-control'}}) }}
+                </div>
+                {% if(form_errors(form.nomentrop)) %}
+                  <div class="error-input">{{ form_errors(form.nomentrop) }}</div>
+                {% endif %}         
 
-                                    <button type="submit" class="button"><span><span>Envoyer</span></span></button>
-                                </div>    
+                {#--Ville---#}
+                <div class="form-group">
+                          <label>Ville</label>
+                    {{ form_widget(form.ville,{'attr': {'class': 'form-control'}}) }}
+                </div>
+                {% if(form_errors(form.ville)) %}
+                  <div class="error-input">{{ form_errors(form.ville) }}</div>
+                {% endif %}  
+                        </div>
+                       <div class="col-md-6"> 
+                {#--Adresse---#}
+                 <div class="form-group">
+                      <label>Adresse</label>
+                    {{ form_widget(form.adresse,{'attr': {'class': 'form-control'}}) }}
+                </div>
+                {% if(form_errors(form.adresse)) %}
+                  <div class="error-input">{{ form_errors(form.adresse) }}</div>
+                {% endif %}    
+
+                {#--Tel---#}
+                 <div class="form-group">
+                      <label>Téléphone</label>
+                    {{ form_widget(form.tel,{'attr': {'class': 'form-control'}}) }}
+                </div>
+                {% if(form_errors(form.tel)) %}
+                  <div class="error-input">{{ form_errors(form.tel) }}</div>
+                {% endif %}    
+
+                {#--Fax---#}
+                 <div class="form-group">
+                      <label>Fax</label>
+                    {{ form_widget(form.fax,{'attr': {'class': 'form-control'}}) }}
+                </div>
+                {% if(form_errors(form.fax)) %}
+                  <div class="error-input">{{ form_errors(form.fax) }}</div>
+                {% endif %} 
+
+                {#--Website---#}
+                 <div class="form-group">
+                      <label>Site Web</label>
+                    {{ form_widget(form.siteweb,{'attr': {'class': 'form-control'}}) }}
+                </div>
+                {% if(form_errors(form.siteweb)) %}
+                  <div class="error-input">{{ form_errors(form.siteweb) }}</div>
+                {% endif %}     
+
+                {#--Description---#}
+                 <div class="form-group">
+                      <label>Description</label>
+                    {{ form_widget(form.description,{'attr': {'class': 'form-control'}}) }}
+                </div>
+                {% if(form_errors(form.description)) %}
+                  <div class="error-input">{{ form_errors(form.description) }}</div>
+                {% endif %}  
+
+                {#--Logo---#}
+                 <div class="form-group">
+                      <label>Logo</label>
+                    {{ form_widget(form.uploadlogo,{'attr': {'class': 'form-control'}}) }}
+                </div>
+                {% if(form_errors(form.uploadlogo)) %}
+                  <div class="error-input">{{ form_errors(form.uploadlogo) }}</div>
+                {% endif %}        
+                           </div>                      
+                <input type="submit" value="Modifier" name="_submit" class="btn btn-primary pull-right">
+                       {{ form_rest(form) }}
+            </fieldset>
 </form>
 {% endblock content %}

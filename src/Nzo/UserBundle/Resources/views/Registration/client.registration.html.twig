@@ -53,67 +53,84 @@
                     <div class="error-input">{{ form_errors(form.plainPassword.first) }}</div>
                 {% endif %} 
 
-               {#--Nom--#}
-               <div class="form-group">
-                 <label>Nom</label>
-                 {{ form_widget(form.nom,{'attr': {'class': 'form-control'}}) }}
-               </div>
-               {% if(form_errors(form.nom)) %}
-                  <div class="error-input">{{ form_errors(form.nom) }}</div>
-               {% endif %} 
-         </div>
-         <div class="col-md-6">
-            {#--Prenom---#}
-            <div class="form-group">
-                <label>Prénom</label>
-                {{ form_widget(form.prenom,{'attr': {'class': 'form-control'}}) }}
-            </div>
-            {% if(form_errors(form.prenom)) %}
-              <div class="error-input">{{ form_errors(form.prenom) }}</div>
-            {% endif %}         
+        {#--Entreprise---#}
+                <div class="form-group">
+                          <label>Nom Entreprise</label>
+                    {{ form_widget(form.nomentrop,{'attr': {'class': 'form-control'}}) }}
+                </div>
+                {% if(form_errors(form.nomentrop)) %}
+                  <div class="error-input">{{ form_errors(form.nomentrop) }}</div>
+                {% endif %}         
 
-            {#--Ville---#}
-            <div class="form-group">
-                <label>Ville</label>
-                {{ form_widget(form.ville,{'attr': {'class': 'form-control','placeholder': 'Ville'}}) }}
-            </div>
-            {% if(form_errors(form.ville)) %}
-              <div class="error-input">{{ form_errors(form.ville) }}</div>
-            {% endif %}  
+                {#--Ville---#}
+                <div class="form-group">
+                          <label>Ville</label>
+                    {{ form_widget(form.ville,{'attr': {'class': 'form-control'}}) }}
+                </div>
+                {% if(form_errors(form.ville)) %}
+                  <div class="error-input">{{ form_errors(form.ville) }}</div>
+                {% endif %}  
+                        </div>
+                       <div class="col-md-6"> 
+                {#--Adresse---#}
+                 <div class="form-group">
+                      <label>Adresse</label>
+                    {{ form_widget(form.adresse,{'attr': {'class': 'form-control'}}) }}
+                </div>
+                {% if(form_errors(form.adresse)) %}
+                  <div class="error-input">{{ form_errors(form.adresse) }}</div>
+                {% endif %}    
 
-            {#--Adresse---#}
-            <div class="form-group">
-              <label>Adresse</label>
-                {{ form_widget(form.adresse,{'attr': {'class': 'form-control','placeholder': 'Adresse'}}) }}
-            </div>
-            {% if(form_errors(form.adresse)) %}
-              <div class="error-input">{{ form_errors(form.adresse) }}</div>
-            {% endif %}    
+                {#--Tel---#}
+                 <div class="form-group">
+                      <label>Téléphone</label>
+                    {{ form_widget(form.tel,{'attr': {'class': 'form-control'}}) }}
+                </div>
+                {% if(form_errors(form.tel)) %}
+                  <div class="error-input">{{ form_errors(form.tel) }}</div>
+                {% endif %}    
 
-            {#--Tel---#}
-            <div class="form-group">
-                <label>Tel</label>
-                {{ form_widget(form.tel,{'attr': {'class': 'form-control','placeholder': 'Tel'}}) }}
-            </div>
-            {% if(form_errors(form.tel)) %}
-              <div class="error-input">{{ form_errors(form.tel) }}</div>
-            {% endif %}        
+                {#--Fax---#}
+                 <div class="form-group">
+                      <label>Fax</label>
+                    {{ form_widget(form.fax,{'attr': {'class': 'form-control'}}) }}
+                </div>
+                {% if(form_errors(form.fax)) %}
+                  <div class="error-input">{{ form_errors(form.fax) }}</div>
+                {% endif %} 
 
-            {#--Logo---#}
-            <div class="form-group">
-                <label>Logo</label>
-                {{ form_widget(form.uploadlogo,{'attr': {'class': 'form-control','placeholder': 'Logo'}}) }}
-            </div>
-            {% if(form_errors(form.uploadlogo)) %}
-              <div class="error-input">{{ form_errors(form.uploadlogo) }}</div>
-            {% endif %} 
-         </div> 
-       
-                <input type="submit" value="S'inscrire" name="_submit" class="btn btn-primary pull-right">
-                {{ form_rest(form) }}
-       
-    </fieldset>
-</form>
-    </div>
+                {#--Website---#}
+                 <div class="form-group">
+                      <label>Site Web</label>
+                    {{ form_widget(form.siteweb,{'attr': {'class': 'form-control'}}) }}
+                </div>
+                {% if(form_errors(form.siteweb)) %}
+                  <div class="error-input">{{ form_errors(form.siteweb) }}</div>
+                {% endif %}     
 
-{% endblock content %}
+                {#--Description---#}
+                 <div class="form-group">
+                      <label>Description</label>
+                    {{ form_widget(form.description,{'attr': {'class': 'form-control'}}) }}
+                </div>
+                {% if(form_errors(form.description)) %}
+                  <div class="error-input">{{ form_errors(form.description) }}</div>
+                {% endif %}  
+
+                {#--Logo---#}
+                 <div class="form-group">
+                      <label>Logo</label>
+                    {{ form_widget(form.uploadlogo,{'attr': {'class': 'form-control'}}) }}
+                </div>
+                {% if(form_errors(form.uploadlogo)) %}
+                  <div class="error-input">{{ form_errors(form.uploadlogo) }}</div>
+                {% endif %}        
+                           </div>                      
+                <input type="submit" value="Sign Up" name="_submit" class="btn btn-primary pull-right">
+                       {{ form_rest(form) }}
+            </fieldset>
+        </form>
+        </div>
+
+        {% endblock content %}
+

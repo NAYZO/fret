@@ -10,6 +10,8 @@
     </div>
 {% endblock banner %}
 {% block content %}
+
+{#
     <form action="" id="contactForm" class="well col-md-6 col-md-offset-3" style="padding: 40px">
         <fieldset> 
             <legend class="colorlegend"><strong>Votre Profil</strong></legend>
@@ -30,4 +32,40 @@
             </div>
         </fieldset>
      </form>
+
+#}
+
+                    <!--formulaire-->
+                            <form action="" id="contactForm">
+                                <div class="fieldset">     
+                                    
+                                    <h2 class="legend">Voir Profil</h2> 
+                                    <ul class="form-list">
+                                        <li>
+                                            <div class="field">
+                                                <label>Nom Entreprise: <span>{{user.nomentrop}}</span></label>
+                                            </div>
+                                           
+                                        </li>
+                                        <li>
+                                            <div class="field">
+                                                <label>Ville : <span>{{user.ville}}</span></label>
+                                            </div>
+                                            <div class="field">
+                                                <label>Téléphone fix : <span>{{user.tel}}</span></label>
+                                            </div>
+                                            
+                                        </li>
+                                        <li>
+                                            <div class="field">
+                                                <label>adresse : <span>{{user.adresse}}</span></label>
+                                            </div>
+                                            <div class="field">
+                                                <label>Email : <span>{{user.email}}</span></label>
+                                            </div>
+                                        </li>                                   
+                                    </ul>
+         <img src="{{ asset('clientfilesupload/')}}{{user.logoname}}" width="200" height="200" alt="alll">                      
+                                </div>
+                            </form>
 {% endblock content %}
