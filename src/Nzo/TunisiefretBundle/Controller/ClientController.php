@@ -319,7 +319,7 @@ class ClientController extends Controller {
             $exportateur = $postule->getExportateur();
             $notifmsg = new NotifMsg();
             $notifmsg->setExportateur($exportateur);
-            $notifmsg->setEmetteur($usr->getPrenom().' '.$usr->getNom());
+            $notifmsg->setEmetteur($usr->getNomentrop());
             $notifmsg->setTitredemandeexport($postule->getDemandeexport()->getTitre());
             $notifmsg->setText($msg);
             $em->persist($notifmsg);
@@ -331,7 +331,7 @@ class ClientController extends Controller {
            $i = 0;
             foreach ($msgs as $res) {
                 $msgdate = $res->getDate()->format('d/m/Y H:i');
-                if($usr==$res->getClient() ) $msguser='Moi'; else $msguser=$res->getExportateur()->getPrenom().' '.$res->getExportateur()->getNom();
+                if($usr==$res->getClient() ) $msguser='Moi'; else $msguser=$res->getExportateur()->getNomentrop();
                 $val[$i] = array('date' =>$msgdate, 'msg' => $res->getMessage(), 'user' => $msguser);
                 $i++;
             }
