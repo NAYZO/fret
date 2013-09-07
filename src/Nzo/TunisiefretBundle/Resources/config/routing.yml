@@ -71,6 +71,18 @@ client_postule_archive_detail:
     defaults: {_controller: NzoTunisiefretBundle:Client:DetailPostuleArchive}  
     requirements:
         id:  \d+ 
+
+client_demande_export_encours:
+    pattern: /demande-export/{id}/encours/
+    defaults: {_controller: NzoTunisiefretBundle:Client:DemandeExportEnCours}  
+    requirements:
+        id:  \d+
+        
+client_postule_encours_detail:
+    pattern: /postule-encours/{id}/detail/
+    defaults: {_controller: NzoTunisiefretBundle:Client:DetailPostuleEnCours}  
+    requirements:
+        id:  \d+         
         
 client_terminer_demande:        
     pattern: /terminer-demande-export/{id}

@@ -1,0 +1,245 @@
+{% extends "NzoTunisiefretBundle::layoutClient.html.twig" %}
+{% block title %} {{ parent() }} Détails Postule En Cours {% endblock %}
+
+{% block banner %}
+<div class="jumbotron">
+    <div class="col-md-4"> 
+        <div class="row">
+            <h4 class="title-banner" style="">Détails Postule En Cours</h4>
+        </div>
+    </div>
+</div>
+{% endblock banner %}
+
+{% block content %}
+<div class="padding">
+    {#----------------breadcrumb----------------#}
+    <ol class="breadcrumb">
+      <li><a href="{{path('nzo_tunisiefret_homepage')}}">Accueil</a></li>
+      <li>Mes Demandes</li>
+      <li><a href="{{path('nzo_voirlistedemande_export_encours')}}">En Cours</a></li>
+      <li class="active">Détails</li>
+    </ol>
+    
+    {#----------------Titre de la page----------------#}
+    <div class="legend2">
+        <h4 class="pull-left">Détails Demande Export En Cours</h4>
+        <div class="row" style="padding-right: 14px;">
+            <div class=" pull-right">
+                <a href="{{path('client_annuler_demande', {'id':postule.demandeexport.id})}}" class="btn btn-danger btn-sm" style="margin-top: 12px;">Annuler la Demande</a>
+            </div>
+        </div>
+    </div>
+    
+    {#----------------Etat de la demande----------------#}
+    <div class="row" style="padding-right: 14px;">
+        <h4 class="pull-right red">Etat de la demande: En Cours</h4>
+    </div>
+    
+    {#----------------Collapse----------------#}
+    <div class="row">
+        <div class="col-md-6">      
+            <div class="panel-group" id="accordion">
+                {#----------------Détails demande Export----------------#}
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
+                                Détail de la demande d'export
+                                <img src="{{ asset('bundles/nzotunisiefret/images') }}/down.png" alt="" class="pull-right"/>
+                            </a>
+                       </h4>
+                    </div>
+                    <div id="collapseOne" class="panel-collapse collapse">
+                        <div class="panel-body">
+                            <div class="media bottom">
+
+                                    <p><strong>Réf : </strong>{{postule.demandeexport.reference}} </p>
+                                    <p><strong>Prix : </strong>{{postule.demandeexport.prix}} </p>
+                                    <p><strong>Pays : </strong>{{postule.demandeexport.pays}} </p>
+                                    <p><strong>Ville : </strong>{{postule.demandeexport.ville}} </p>
+                    
+                                    <p><strong>Code Postal : </strong>{{postule.demandeexport.codepostal}} </p>
+                                    <p><strong>Adresse : </strong>{{postule.demandeexport.adresse}} </p>
+                                    <p><strong>Date Maximal : </strong>{{postule.demandeexport.datemax|date("d/m/Y")}} </p>
+                                    <p><strong>Date Pos : </strong>{{postule.demandeexport.datedepos|date("d/m/Y")}} </p>
+                                    <p><strong>Description : </strong>{{postule.demandeexport.description}} </p>
+                               
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                    
+                {#----------------Détails Postule----------------#}
+                <div class="panel panel-default">
+                  <div class="panel-heading">
+                    <h4 class="panel-title">
+                      <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseThree">
+                        Détails Postule
+                        <img src="{{ asset('bundles/nzotunisiefret/images') }}/down.png" alt="" class="pull-right"/>
+                      </a>
+                    </h4>
+                  </div>
+                  <div id="collapseThree" class="panel-collapse collapse">
+                    <div class="panel-body">
+                      <p style="color: grey">Date de Postule : {{postule.datepostule|date("d/m/Y")}} | Durée : {{postule.duree}} | Prix : {{postule.prix}} </p>
+                        <p class="list-group-item-text cl-effect-1">
+                          {{postule.description}}
+                        </p> 
+                    </div>
+                  </div>
+                </div>
+            </div>
+        </div>
+        
+        {#----------------Information sue l'exportateur----------------#}
+        <div class="col-md-6">
+            <div class="panel panel-default">
+                <div class="panel-heading">Informations sur l'exportateur</div>
+                    <div class="panel-body">
+                        Logo exportateur: <img class="media-object" src="{{ asset('exportateurfilesupload/')}}{{postule.exportateur.logoname}}" alt="{{postule.exportateur.logoname}}"  width="100" height="100" class="img-thumbnail">
+                        <br>
+                        Nom entreprise: {{postule.exportateur.nomentrop}} <br>
+                        Note: {{postule.exportateur.note}} <br>
+                        Contrat en cours:   {{postule.exportateur.nbcontratencours}} <br>
+                        Contrat Terminé: {{postule.exportateur.nbcontrattermine}}
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        {#----------------Nombre de message----------------#}
+        <h4 class="legend2 bottom">Messages ({{msgs|length}})</h4>
+
+        {#----------------Liste des messges----------------#}
+        <div class="row">
+            <div class="col-md-8"> 
+                {% if msgs|length <= 4 %}   
+                    {% for msg in msgs %} 
+                        <div class="panel panel-info" id="accordion">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">
+                                    {%if msg.client != null %} Moi {%else%} {{msg.exportateur.prenom}} {{msg.exportateur.nom}} {%endif%}
+                                    <p class="pull-right">{{msg.date|date("d/m/Y H:i")}}</p>
+                                </h3>
+                            </div>
+                            <div class="panel-body">
+                                {{msg.message}}
+                            </div>
+                        </div>
+                    {% endfor %}    
+                {% else %} 
+                <div class="panel-group" id="accordion">
+                    <!-- First -->
+                    <div class="panel panel-info" style=" margin-bottom: 5px">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">
+                               {%if msgs|first.client != null %} Moi {%else%} {{msgs|first.exportateur.prenom}} {{msgs|first.exportateur.nom}} {%endif%}
+                                <p class="pull-right">{{msgs|first.date|date("d/m/Y H:i")}}</p>
+                            </h3>
+                        </div>
+                        <div class="panel-body">
+                             {{msgs|first.message}}
+                        </div>
+                    </div>
+                    <!-- BLOCK --> 
+                    <div id='nzolengthmsg' class="panel panel-warning" style=" margin-bottom: 5px">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">
+                                <span > {{msgs|length -2 }} Messages </span>
+                            </h3>
+                        </div>
+                    </div>
+                    <!-- Hidden FOR --> 
+                    <div id='nzoblockfor' style="display: none; margin-bottom: 5px">
+                        {% for msg in msgs %} 
+                        {% if msg != msgs|first and msg != msgs|last %}
+                        <div class="panel panel-info">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">
+                                    {%if msg.client != null %} Moi {%else%} {{msg.exportateur.prenom}} {{msg.exportateur.nom}} {%endif%}
+                                    <p class="pull-right">{{msg.date|date("d/m/Y H:i")}}</p>
+                                </h3>
+                            </div>
+                            <div class="panel-body">
+                                 {{msg.message}}
+                            </div>
+                        </div>
+                        {% endif %}  
+                      {% endfor %}  
+                     </div>          
+                    <!-- Last -->
+                    <div class="panel panel-info">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">
+                                {%if msgs|last.client != null %} Moi {%else%} {{msgs|last.exportateur.prenom}} {{msgs|last.exportateur.nom}} {%endif%}
+                                <p class="pull-right">{{msgs|last.date|date("d/m/Y H:i")}}</p>
+                            </h3>
+                        </div>
+                        <div class="panel-body">
+                             {{msgs|last.message}}
+                        </div>
+                    </div>
+                    <!-- END Last -->     
+                </div>       
+                {% endif %}
+        </div>
+              
+        <div class="col-md-4">  
+            <form action="#" id="msgform" method="post" role="form">
+                <div class="form-group">
+                    <textarea id="nzomsgexp" required="required" class="form-control" rows="6"></textarea>
+                </div>
+                <div class="buttons-set">
+                    <button type="submit" class="btn btn-danger pull-right">Envoyez</button>
+                </div>
+            </form> 
+        </div>
+    </div>
+</div>      
+{% endblock content %}
+ 
+ {% block js %}  
+    <script>
+        $(document).ready(function(){
+        
+            $('#msgform').on('submit',function(c){
+                c.preventDefault();
+           
+            if( $('#nzomsgexp').val() !== '' )             
+            {
+                $.ajax({
+                    url:"{{ path('ajax_send_msg_client') }}",
+                    type:"POST",
+                    data:{ id:{{postule.id}}, msg:$('#nzomsgexp').val() },
+                    dataType:'json',
+                    success:function(a)
+                    {
+                        $('#nzomsgexp').val('');
+                        var b='';
+                        for(key in a)
+                        {
+                            b+='<div class="panel panel-info"><div class="panel-heading"><h3 class="panel-title">'
+                                +a[key]['user']+'<p class="pull-right">'+a[key]['date']+'</p></h3></div><div class="panel-body">'
+                                +a[key]['msg']+'</div></div>';
+                        }
+                        $('#accordion').html(b);
+                    },
+                    error:function()
+                    {
+                        alert('erreur');
+                    }   
+                });
+            }
+            else alert('champs vide!');
+            
+            });
+            
+           $('#nzolengthmsg').on('click',function(){ 
+                $('#nzolengthmsg').remove();
+                $('#nzoblockfor').show();
+            });    
+        });
+    </script>
+
+{% endblock js %}

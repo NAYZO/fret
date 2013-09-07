@@ -40,7 +40,7 @@ class ExportateurController extends Controller {
                 $Notification->setText('Nouveau Postule sur la Demande '.$DemandeExport->getReference());
                 // end Notification
                 //augmente NB postule de l'Exportateur
-                $usr->setNbdemandeexportpostuler($usr->getNbdemandeexportpostuler()+1);   
+                $usr->setNbdemandeexportpostule($usr->getNbdemandeexportpostule()+1);   
                 $em->persist($Notification);
                 $em->persist($PostuleExport);
                 $em->flush();

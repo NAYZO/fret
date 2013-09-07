@@ -35,7 +35,7 @@
             <td>{{demande.datedepos|date("d/m/Y")}}</td>
             <td>{{demande.nombredepostule}}</td>
             <td>
-                <a href="{{path('nzo_detaildemande_export', {'id':demande.id} )}}"> Voir detail </a>
+                <a href="{{path('client_demande_export_encours', {'id':demande.id} )}}"> Voir detail </a>
                 <a href="{{path('client_terminer_demande', {'id':demande.id} )}}"> Terminer</a>
             </td>
          

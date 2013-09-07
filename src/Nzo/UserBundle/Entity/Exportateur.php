@@ -189,6 +189,8 @@ class Exportateur extends User
     }
   /*******************************************************************************/
 
+   
+
     /**
      * Get id
      *
@@ -430,26 +432,72 @@ class Exportateur extends User
     }
 
     /**
-     * Set nbdemandeexportpostuler
+     * Set nbdemandeexportpostule
      *
-     * @param integer $nbdemandeexportpostuler
+     * @param integer $nbdemandeexportpostule
      * @return Exportateur
      */
-    public function setNbdemandeexportpostuler($nbdemandeexportpostuler)
+    public function setNbdemandeexportpostule($nbdemandeexportpostule)
     {
-        $this->nbdemandeexportpostuler = $nbdemandeexportpostuler;
+        $this->nbdemandeexportpostule = $nbdemandeexportpostule;
     
         return $this;
     }
 
     /**
-     * Get nbdemandeexportpostuler
+     * Get nbdemandeexportpostule
      *
      * @return integer 
      */
-    public function getNbdemandeexportpostuler()
+    public function getNbdemandeexportpostule()
     {
-        return $this->nbdemandeexportpostuler;
+        return $this->nbdemandeexportpostule;
+    }
+
+    /**
+     * Set nbcontratencours
+     *
+     * @param integer $nbcontratencours
+     * @return Exportateur
+     */
+    public function setNbcontratencours($nbcontratencours)
+    {
+        $this->nbcontratencours = $nbcontratencours;
+    
+        return $this;
+    }
+
+    /**
+     * Get nbcontratencours
+     *
+     * @return integer 
+     */
+    public function getNbcontratencours()
+    {
+        return $this->nbcontratencours;
+    }
+
+    /**
+     * Set nbcontrattermine
+     *
+     * @param integer $nbcontrattermine
+     * @return Exportateur
+     */
+    public function setNbcontrattermine($nbcontrattermine)
+    {
+        $this->nbcontrattermine = $nbcontrattermine;
+    
+        return $this;
+    }
+
+    /**
+     * Get nbcontrattermine
+     *
+     * @return integer 
+     */
+    public function getNbcontrattermine()
+    {
+        return $this->nbcontrattermine;
     }
 
     /**
@@ -473,6 +521,29 @@ class Exportateur extends User
     public function getLogoname()
     {
         return $this->logoname;
+    }
+
+    /**
+     * Set UpdatedVichAt
+     *
+     * @param \DateTime $updatedVichAt
+     * @return Exportateur
+     */
+    public function setUpdatedVichAt($updatedVichAt)
+    {
+        $this->UpdatedVichAt = $updatedVichAt;
+    
+        return $this;
+    }
+
+    /**
+     * Get UpdatedVichAt
+     *
+     * @return \DateTime 
+     */
+    public function getUpdatedVichAt()
+    {
+        return $this->UpdatedVichAt;
     }
 
     /**
@@ -572,97 +643,5 @@ class Exportateur extends User
     public function getNotifmsg()
     {
         return $this->notifmsg;
-    }
-
-    /**
-     * Set UpdatedVichAt
-     *
-     * @param \DateTime $updatedVichAt
-     * @return Exportateur
-     */
-    public function setUpdatedVichAt($updatedVichAt)
-    {
-        $this->UpdatedVichAt = $updatedVichAt;
-    
-        return $this;
-    }
-
-    /**
-     * Get UpdatedVichAt
-     *
-     * @return \DateTime 
-     */
-    public function getUpdatedVichAt()
-    {
-        return $this->UpdatedVichAt;
-    }
-
-    /**
-     * Set nbdemandeexportpostule
-     *
-     * @param integer $nbdemandeexportpostule
-     * @return Exportateur
-     */
-    public function setNbdemandeexportpostule($nbdemandeexportpostule)
-    {
-        $this->nbdemandeexportpostule = $nbdemandeexportpostule;
-    
-        return $this;
-    }
-
-    /**
-     * Get nbdemandeexportpostule
-     *
-     * @return integer 
-     */
-    public function getNbdemandeexportpostule()
-    {
-        return $this->nbdemandeexportpostule;
-    }
-
-    /**
-     * Set nbcontratencours
-     *
-     * @param integer $nbcontratencours
-     * @return Exportateur
-     */
-    public function setNbcontratencours($nbcontratencours)
-    {
-        $this->nbcontratencours = $nbcontratencours;
-    
-        return $this;
-    }
-
-    /**
-     * Get nbcontratencours
-     *
-     * @return integer 
-     */
-    public function getNbcontratencours()
-    {
-        return $this->nbcontratencours;
-    }
-
-    /**
-     * Set nbcontrattermine
-     *
-     * @param integer $nbcontrattermine
-     * @return Exportateur
-     */
-    public function setNbcontrattermine($nbcontrattermine)
-    {
-        $this->nbcontrattermine = $nbcontrattermine;
-    
-        return $this;
-    }
-
-    /**
-     * Get nbcontrattermine
-     *
-     * @return integer 
-     */
-    public function getNbcontrattermine()
-    {
-        return $this->nbcontrattermine;
     }
 }
