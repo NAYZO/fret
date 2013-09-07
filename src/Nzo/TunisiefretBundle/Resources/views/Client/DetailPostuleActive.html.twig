@@ -106,7 +106,7 @@
         </div>
         
         {#----------------Nombre de message----------------#}
-        <h4 class="legend2 bottom">Messages ({{msgs|length}})</h4>
+        <h4 class="legend2 bottom">Messages (<span id='nzonbmsg'>{{msgs|length}}</span>)</h4>
 
         {#----------------Liste des messges----------------#}
         <div class="row">
@@ -219,6 +219,7 @@
                                 +a[key]['msg']+'</div></div>';
                         }
                         $('#nzomsgcontent').html(b);
+                        $('#nzonbmsg').html( parseInt(key) +1 );
                     },
                     error:function()
                     {
