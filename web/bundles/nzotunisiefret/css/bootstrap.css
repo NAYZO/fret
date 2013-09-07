@@ -325,13 +325,13 @@ textarea {
 }
 
 a {
-  color: #428bca;
+  color: #3299BB;
   text-decoration: none;
 }
 
 a:hover,
 a:focus {
-  color: #2a6496;
+  color: #3299BB;
 /*  text-decoration: underline;*/
 }
 
@@ -2084,8 +2084,8 @@ fieldset[disabled] .btn-default.active {
 
 .btn-primary {
   color: #ffffff;
-  background-color: #428bca;
-  border-color: #357ebd;
+  background-color: #3299BB;
+  border-color: #3299BB;
 }
 
 .btn-primary:hover,
@@ -3233,8 +3233,8 @@ input[type="button"].btn-block {
   display: none;
   float: left;
   min-width: 160px;
-  padding: 5px 0;
-  margin: 2px 0 0;
+  padding: 0 0;
+  margin: 3px 0 0;
   font-size: 14px;
   list-style: none;
   background-color: #ffffff;
@@ -3260,7 +3260,7 @@ input[type="button"].btn-block {
 
 .dropdown-menu > li > a {
   display: block;
-  padding: 3px 20px;
+  padding: 5px 20px;
   clear: both;
   font-weight: normal;
   line-height: 1.428571429;
@@ -3272,7 +3272,7 @@ input[type="button"].btn-block {
 .dropdown-menu > li > a:focus {
   color: #ffffff;
   text-decoration: none;
-  background-color: #428bca;
+  background-color: #3299BB;
 }
 
 .dropdown-menu > .active > a,
@@ -4688,8 +4688,8 @@ textarea.input-group-sm > .input-group-btn > .btn {
   z-index: 2;
   color: #ffffff;
   cursor: default;
-  background-color: #428bca;
-  border-color: #428bca;
+  background-color: #3299BB;
+  border-color: #3299BB;
 }
 
 .pagination > .disabled > span,
@@ -5255,7 +5255,7 @@ a.thumbnail:focus {
   padding: 10px 15px;
   margin-bottom: -1px;
   background-color: #ffffff;
-  border: 1px solid #dddddd;
+  border: 1px solid #3299BB;
 }
 
 .list-group-item:first-child {

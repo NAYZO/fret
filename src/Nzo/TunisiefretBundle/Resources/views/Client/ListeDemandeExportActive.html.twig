@@ -12,7 +12,15 @@
 {% endblock banner %}
 
 {% block content %}
+<div class="padding">
 <div class="row" style="padding-right: 16px;padding-left: 16px;">
+    <div class="col-md-9 pull-left">
+        <ol class="breadcrumb" style="margin: 17px -14px;">
+            <li><a href="{{path('nzo_tunisiefret_homepage')}}">Accueil</a></li>
+            <li>Mes Demandes</li>
+            <li class="active">Active</li>
+        </ol>
+    </div>
    <div class="pull-right">
         {{ knp_pagination_render(listedemandeexport) }}
     </div>
@@ -21,7 +29,7 @@
     {% for demande in listedemandeexport %}
         <div class="list-group-item" style="padding: 30px;">
             <div class="legend list-group-item-heading">
-                <h4><a href="{{path('nzo_detaildemande_export', {'id':demande.id} )}}">{{demande.titre}}</a></h4>  
+                <h4 class="cl-effect-1"><a href="{{path('nzo_detaildemande_export', {'id':demande.id} )}}">{{demande.titre}}</a></h4>  
             </div>
             <p style="color: grey;">Nombre de Postule: {{demande.nombredepostule}} | Déposer le {{demande.datedepos|date("d/m/Y")}}</p>
             <p class="list-group-item-text">
