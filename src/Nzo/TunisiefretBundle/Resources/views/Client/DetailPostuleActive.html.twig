@@ -110,10 +110,10 @@
 
         {#----------------Liste des messges----------------#}
         <div class="row">
-            <div class="col-md-8"> 
+            <div class="col-md-8" id="nzomsgcontent"> 
                 {% if msgs|length <= 4 %}   
                     {% for msg in msgs %} 
-                        <div class="panel panel-info" id="accordion">
+                        <div class="panel panel-info">
                             <div class="panel-heading">
                                 <h3 class="panel-title">
                                     {%if msg.client != null %} Moi {%else%} {{msg.exportateur.prenom}} {{msg.exportateur.nom}} {%endif%}
@@ -125,10 +125,9 @@
                             </div>
                         </div>
                     {% endfor %}    
-                {% else %} 
-                <div class="panel-group" id="accordion">
-                    <!-- First -->
-                    <div class="panel panel-info" style=" margin-bottom: 5px">
+                {% else %}              
+                <!-- First -->
+                    <div class="panel panel-info">
                         <div class="panel-heading">
                             <h3 class="panel-title">
                                {%if msgs|first.client != null %} Moi {%else%} {{msgs|first.exportateur.prenom}} {{msgs|first.exportateur.nom}} {%endif%}
@@ -220,7 +219,7 @@
                                 +a[key]['user']+'<p class="pull-right">'+a[key]['date']+'</p></h3></div><div class="panel-body">'
                                 +a[key]['msg']+'</div></div>';
                         }
-                        $('#accordion').html(b);
+                        $('#nzomsgcontent').html(b);
                     },
                     error:function()
                     {
