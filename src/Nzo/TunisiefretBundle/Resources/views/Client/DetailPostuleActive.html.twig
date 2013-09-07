@@ -39,12 +39,12 @@
     {#----------------Collapse----------------#}
     <div class="row">
         <div class="col-md-6">      
-            <div class="panel-group" id="accordion">
+            <div class="panel-group" id="accordion1" style="margin-bottom: 10px">
                 {#----------------Détails demande Export----------------#}
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <h4 class="panel-title">
-                            <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
+                            <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion1" href="#collapseOne">
                                 Détail de la demande d'export
                                 <img src="{{ asset('bundles/nzotunisiefret/images') }}/down.png" alt="" class="pull-right"/>
                             </a>
@@ -52,30 +52,27 @@
                     </div>
                     <div id="collapseOne" class="panel-collapse collapse">
                         <div class="panel-body">
-                            <div class="media bottom">
-
-                                    <p><strong>Réf : </strong>{{postule.demandeexport.reference}} </p>
-                                    <p><strong>Prix : </strong>{{postule.demandeexport.prix}} </p>
-                                    <p><strong>Pays : </strong>{{postule.demandeexport.pays}} </p>
-                                    <p><strong>Ville : </strong>{{postule.demandeexport.ville}} </p>
-                    
-                                    <p><strong>Code Postal : </strong>{{postule.demandeexport.codepostal}} </p>
-                                    <p><strong>Adresse : </strong>{{postule.demandeexport.adresse}} </p>
-                                    <p><strong>Date Maximal : </strong>{{postule.demandeexport.datemax|date("d/m/Y")}} </p>
-                                    <p><strong>Date Pos : </strong>{{postule.demandeexport.datedepos|date("d/m/Y")}} </p>
-                                    <p><strong>Description : </strong>{{postule.demandeexport.description}} </p>
-                               
-                            </div>
+                            <p><strong class="red">Réf : </strong>{{postule.demandeexport.reference}} </p>
+                            <p><strong class="red">Prix : </strong>{{postule.demandeexport.prix}} </p>
+                            <p><strong class="red">Pays : </strong>{{postule.demandeexport.pays}} </p>
+                            <p><strong class="red">Ville : </strong>{{postule.demandeexport.ville}} </p>
+                            <p><strong class="red">Code Postal : </strong>{{postule.demandeexport.codepostal}} </p>
+                            <p><strong class="red">Adresse : </strong>{{postule.demandeexport.adresse}} </p>
+                            <p><strong class="red">Date Maximal : </strong>{{postule.demandeexport.datemax|date("d/m/Y")}} </p>
+                            <p><strong class="red">Date Dépot : </strong>{{postule.demandeexport.datedepos|date("d/m/Y")}} </p>
+                            <p><strong class="red">Description : </strong>{{postule.demandeexport.description}} </p>
                         </div>
                     </div>
-                </div>
-                    
-                {#----------------Détails Postule----------------#}
+                </div> 
+            </div>
+            
+           <div class="panel-group" id="accordion2">
+            {#----------------Détails Postule----------------#}
                 <div class="panel panel-default">
                   <div class="panel-heading">
                     <h4 class="panel-title">
-                      <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseThree">
-                        Détails Postule
+                      <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseThree">
+                        Détails Postule de l'exportateur
                         <img src="{{ asset('bundles/nzotunisiefret/images') }}/down.png" alt="" class="pull-right"/>
                       </a>
                     </h4>
@@ -89,9 +86,9 @@
                     </div>
                   </div>
                 </div>
-            </div>
+              </div>
         </div>
-        
+            
         {#----------------Information sue l'exportateur----------------#}
         <div class="col-md-6">
             <div class="panel panel-default">
