@@ -12,7 +12,14 @@
 {% endblock banner %}
 
 {% block content %}
+<div class="padding">
 <div class="row" style="padding-right: 16px;padding-left: 16px;">
+    <div class="col-md-9 pull-left">
+        <ol class="breadcrumb" style="margin: 17px -14px;">
+            <li><a href="{{path('nzo_tunisiefret_homepage')}}">Accueil</a></li>
+            <li class="active">Liste Demandes Type</li>
+        </ol>
+    </div>
    <div class="pull-right">
         {{ knp_pagination_render(listedemandeexporttype) }}
     </div>
@@ -21,11 +28,13 @@
     {% for demande in listedemandeexporttype %}
         <div class="list-group-item" style="padding: 30px;">
             <div class="legend list-group-item-heading">
-                <h4 class="pull-left"><a href="{{path('nzo_detaildemande_export_type', {'id':demande.id} )}}">{{demande.titre}}</a></h4>
+                <h4 class="pull-left cl-effect-1">
+                    <strong><a href="{{path('nzo_detaildemande_export_type', {'id':demande.id} )}}">{{demande.titre}}</a></strong>
+                </h4>
                 <div class="row" style="padding-right: 14px;">
                     <div class=" pull-right">
-                        <a href="{{path('client_reposter_demande_type', {'id':demande.id} )}}" class="btn btn-primary btn-xs"> Reposter</a>
-                        <a href="{{path('client_supprimer_demande_type', {'id':demande.id} )}}" class="btn btn-primary btn-xs"> Supprimer</a>
+                        <a href="{{path('client_reposter_demande_type', {'id':demande.id} )}}" class="btn btn-danger btn-xs"> Reposter</a>
+                        <a href="{{path('client_supprimer_demande_type', {'id':demande.id} )}}" class="btn btn-danger btn-xs"> Supprimer</a>
                     </div>
                 </div>
             </div>
@@ -47,6 +56,6 @@
         {{ knp_pagination_render(listedemandeexporttype) }}
     </div>
 </div>
-
+</div>
 {% endblock content %} 
  

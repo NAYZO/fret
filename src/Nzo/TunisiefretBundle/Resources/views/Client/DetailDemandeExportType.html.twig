@@ -11,12 +11,18 @@
 {% endblock banner %}
 
 {% block content %}
-<div class="legend bottom">
+<div class="padding">
+    <ol class="breadcrumb">
+      <li><a href="{{path('nzo_tunisiefret_homepage')}}">Accueil</a></li>
+      <li><a href="{{ path('client_list_demande_type') }}">Liste Demandes Export Type</a></li>
+      <li class="active">Détails</li>
+    </ol>
+    <div class="legend bottom">
     <h4 class="pull-left"><strong>{{mydemande.titre}}</strong> </h4>
      <div class="row" style="padding-right: 14px;">
         <div class=" pull-right">
-            <a href="{{path('client_reposter_demande_type', {'id':mydemande.id} )}}" class="btn btn-primary btn-xs"> Reposter</a>
-            <a href="{{path('client_supprimer_demande_type', {'id':mydemande.id} )}}" class="btn btn-primary btn-xs"> Supprimer</a>
+            <a href="{{path('client_reposter_demande_type', {'id':mydemande.id} )}}" class="btn btn-danger btn-xs"> Reposter</a>
+            <a href="{{path('client_supprimer_demande_type', {'id':mydemande.id} )}}" class="btn btn-danger btn-xs"> Supprimer</a>
         </div>
     </div>
 </div>
@@ -33,8 +39,8 @@
         <p><strong>Date Maximal : </strong>{{mydemande.datemax|date("d/m/Y")}} </p>
         <p><strong>Date Pos : </strong>{{mydemande.datedepos|date("d/m/Y")}} </p>
     </div>
-<p style="font-size:16px"><strong style="color: rgb(86, 164, 216)">Description : </strong>{{mydemande.description}} </p>
-
+    <p style="font-size:16px"><strong style="color: rgb(86, 164, 216)">Description : </strong>{{mydemande.description}} </p>
+</div>
 {% endblock content %}
  
  
