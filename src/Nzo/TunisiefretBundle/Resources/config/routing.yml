@@ -60,6 +60,18 @@ client_postule_active_detail:
     requirements:
         id:  \d+ 
         
+client_demande_export_archive:    
+    pattern: /demande-export/{id}/archive/
+    defaults: {_controller: NzoTunisiefretBundle:Client:DemandeExportArchive}  
+    requirements:
+        id:  \d+ 
+        
+client_postule_archive_detail:
+    pattern: /postule-archive/{id}/detail/
+    defaults: {_controller: NzoTunisiefretBundle:Client:DetailPostuleArchive}  
+    requirements:
+        id:  \d+ 
+        
 client_terminer_demande:        
     pattern: /terminer-demande-export/{id}
     defaults: {_controller: NzoTunisiefretBundle:Client:TerminertDemandeExport}  

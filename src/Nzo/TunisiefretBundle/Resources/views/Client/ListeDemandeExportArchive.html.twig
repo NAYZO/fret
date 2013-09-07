@@ -30,7 +30,7 @@
         <div class="list-group-item" style="padding: 30px;">
             <div class="legend list-group-item-heading">
                 <h4 class="cl-effect-1">
-                    <strong><a href="{{path('nzo_detaildemande_export', {'id':demande.id} )}}">{{demande.titre}}</a></strong>
+                    <strong><a href="{{path('client_demande_export_archive', {'id':demande.id} )}}">{{demande.titre}}</a></strong>
                 </h4>  
             </div>
             <p style="color: grey;">Nombre de Postule: {{demande.nombredepostule}} | Déposer le {{demande.datedepos|date("d/m/Y")}}</p>
@@ -40,7 +40,7 @@
                 {%else%}
                     {{demande.description}}
                 {% endif %}
-                <a href="{{path('nzo_detaildemande_export', {'id':demande.id} )}}" class="pull-right"> Voir détails </a>
+                <a href="{{path('client_demande_export_archive', {'id':demande.id} )}}" class="pull-right"> Voir détails </a>
             </p>
               
         </div>

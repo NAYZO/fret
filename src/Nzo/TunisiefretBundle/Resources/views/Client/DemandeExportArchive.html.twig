@@ -1,0 +1,61 @@
+{% extends "NzoTunisiefretBundle::layoutClient.html.twig" %}
+{% block title %} {{ parent() }} Demandes Export Archive{% endblock %}
+{% block banner %}
+<div class="jumbotron">
+    <div class="col-md-4"> 
+        <div class="row">
+            <h4 class="title-banner" style=""> Demandes Export Archive </h4>
+        </div>
+    </div>
+</div>
+{% endblock banner %}
+
+{% block content %}
+<div class="padding">
+    <ol class="breadcrumb">
+      <li><a href="{{path('nzo_tunisiefret_homepage')}}">Accueil</a></li>
+      <li>Mes Demandes</li>
+      <li><a href="{{ path('nzo_voirlistedemande_export_archive') }}">Archive</a></li>
+      <li class="active">Détails</li>
+    </ol>
+<h4 class="legend "><strong>{{mydemande.titre}}</strong> </h4>
+    <div class="col-md-6">
+        <p><strong>Référence : </strong>{{mydemande.reference}} </p>
+        <p><strong>Prix : </strong>{{mydemande.prix}} </p>
+        <p><strong>Pays : </strong>{{mydemande.pays}} </p>
+        <p><strong>Ville : </strong>{{mydemande.ville}} </p>
+    </div>
+    
+    <div class="col-md-6">
+        <p><strong>Code Postal : </strong>{{mydemande.codepostal}} </p>
+        <p><strong>Adresse : </strong>{{mydemande.adresse}} </p>
+        <p><strong>Date Maximal : </strong>{{mydemande.datemax|date("d/m/Y")}} </p>
+        <p><strong>Date Pos : </strong>{{mydemande.datedepos|date("d/m/Y")}} </p>
+    </div>
+    <div class="col-md-12 bottom">
+    <p style="font-size:16px"><strong style="color: rgb(86, 164, 216)">Description : </strong>{{mydemande.description}} </p>
+    </div>
+    <h4 class="legend"><strong>Liste Postule: </strong>({{postules|length}})</h4>
+    {% for postule in postules %} 
+       <div class="media">
+  <a class="pull-left" href="#">
+    <img class="media-object" src="{{ asset('exportateurfilesupload/')}}{{postule.exportateur.logoname}}" alt="{{postule.exportateur.logoname}}"  width="70" height="70" class="img-thumbnail">
+  </a>
+  <div class="media-body">
+      <h4 class="media-heading"><strong>{{postule.exportateur.nomentrop}}</strong></h4>
+      <p style="color: grey">{{postule.datepostule|date("d/m/Y")}}</p>
+      <p class="list-group-item-text cl-effect-1">
+        {% if postule.description|length > 150 %}
+            {{postule.description|slice(0, 150)}}...
+        {%else%}
+            {{postule.description}}
+        {% endif %}
+        <a href="{{path('client_postule_archive_detail', {'id':postule.id} )}}" class="pull-right"> Voir détails </a>
+    </p>
+  </div>
+</div>
+    {% endfor %}
+    </div>
+{% endblock content %}
+ 
+ 
