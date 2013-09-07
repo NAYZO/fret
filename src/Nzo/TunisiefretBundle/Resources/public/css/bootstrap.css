@@ -5526,13 +5526,13 @@ a.list-group-item:focus {
 }
 
 .panel-info {
-  border-color: #bce8f1;
+  border-color: #7AB1BD;
 }
 
 .panel-info > .panel-heading {
-  color: #3a87ad;
-  background-color: #d9edf7;
-  border-color: #bce8f1;
+  color: #08374E;
+  background-color: #C6E5D9;
+  border-color: #4B98A8;
 }
 
 .panel-info > .panel-heading + .panel-collapse .panel-body {
