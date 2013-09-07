@@ -11,8 +11,8 @@
 
 <br> Détail Demande Export
 <br>
-    titre:  {{demandeexport.titre}} <br>
-    Date: {{demandeexport.datedepos|date("d/m/Y H:i")}}  | 
+    titre demande export:  {{demandeexport.titre}} <br>
+    Date dépos: {{demandeexport.datedepos|date("d/m/Y H:i")}}  | 
     {%if val=='true'%}
         Déja Posté
     {%else%}
@@ -22,6 +22,15 @@
     <br>
         {{demandeexport.description}}
     <br>
+    -----------------------------------------------------
+<br>    
+Client: <br>
+Nom Entreprise: {{demandeexport.client.nomentrop}} <br>
+Nombre de Demande export déposé: {{demandeexport.client.nbdemandeexportdepose}} <br>
+Logo: <img class="media-object" src="{{ asset('clientfilesupload/')}}{{demandeexport.client.logoname}}" width="100" height="100" class="img-thumbnail"> <br>
+Note: {{demandeexport.client.note}} <br>
+
+<br>
 {%if val=='false'%}   
 <form action="#" id="contactForm" method="post" {{ form_enctype(form) }}>
 

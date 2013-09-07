@@ -119,9 +119,9 @@ exp_liste_postule_archive:
     pattern: /liste-postule-archive/
     defaults: {_controller: NzoTunisiefretBundle:Exportateur:ListePostuleArchive}
     
-exp_voir_detail_postule:    
-    pattern: /exportateur/{id}/detail-postule/
-    defaults: {_controller: NzoTunisiefretBundle:Exportateur:VoirDetailPOstule}  
+exp_detail_postule_active:    
+    pattern: /detail-postule/{id}/active/
+    defaults: {_controller: NzoTunisiefretBundle:Exportateur:DetailPostuleActive}  
     requirements:
         id:  \d+         
 

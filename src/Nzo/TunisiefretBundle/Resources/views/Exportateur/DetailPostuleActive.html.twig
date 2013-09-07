@@ -1,0 +1,41 @@
+{% extends "NzoTunisiefretBundle::layoutExportateur.html.twig" %}
+
+{% block title %} {{ parent() }} Detail Postule {% endblock %}
+
+{% block head %}
+{% endblock head %}
+
+{% block body %}
+
+{% block content %}
+
+<br> Detail Demande Export <br> <br>
+
+
+    titre demande export:  {{postule.demandeexport.titre}} |
+    Date dépos: {{postule.demandeexport.datedepos|date("d/m/Y H:i")}}  | 
+    <br>
+        {{postule.demandeexport.description}}
+    <br>
+    -----------------------------------------------------
+<br>    
+Client: <br>
+Nom Entreprise: {{postule.demandeexport.client.nomentrop}} <br>
+Nombre de Demande export déposé: {{postule.demandeexport.client.nbdemandeexportdepose}} <br>
+Logo: <img class="media-object" src="{{ asset('clientfilesupload/')}}{{postule.demandeexport.client.logoname}}" alt="{{postule.demandeexport.client.logoname}}"  width="100" height="100" class="img-thumbnail"> <br>
+Note: {{postule.demandeexport.client.note}} <br>
+
+<br> Detail Postule <br> <br>
+
+Date postule: {{postule.datepostule|date("d/m/Y H:i")}} <br>
+Duree: {{postule.duree}} <br>
+prix: {{postule.prix}} <br>
+Description: {{postule.description}} <br>
+
+{% endblock content %}
+
+{% block footer %}
+{% endblock footer %}
+
+{% endblock body %}  
+ 

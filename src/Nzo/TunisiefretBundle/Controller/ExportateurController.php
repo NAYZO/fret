@@ -125,9 +125,32 @@ class ExportateurController extends Controller {
    /**
     * @Secure(roles="ROLE_EXPORTATEUR")
     */
-    public function VoirDetailPOstuleAction(DemandeExportPostule $postule)
+    public function DetailPostuleActiveAction(DemandeExportPostule $postule)
     {
-        return $this->render('NzoTunisiefretBundle:Exportateur:VoirDetailPostule.html.twig', array('postule' => $postule));
+       // security access     
+            if($postule->getClient() != $usr || !$mydemande->getTacking()) return $this->redirect($this->generateUrl('nzo_tunisiefret_homepage'));
+       // security access 
+        $etat='';
+        if ($postule->getDemandeexport()->getTerminerDemande())
+            $etat = 'terminer';
+        else if ($postule->getDemandeexport()->getAnnulerDemande())
+            $etat = 'annuler_par_client';
+        else if ($postule->getDemandeexport()->getTacking() && !$postule->getDemandeexport()->getTerminerDemande() )
+            
+        return $this->render('NzoTunisiefretBundle:Exportateur:DetailPostuleActive.html.twig', array('postule' => $postule));
+    }
+    
+    
+    public function EtatExport(DemandeExportPostule $postule)
+    {
+        $etat='';
+        if ($postule->getDemandeexport()->getTerminerDemande())
+            $etat = 'terminer';
+        else if ($postule->getDemandeexport()->getAnnulerDemande())
+            $etat = 'annuler_par_client';
+        else if ($postule->getDemandeexport()->getTacking() && !$postule->getDemandeexport()->getTerminerDemande() )
+            
+       return $etat;
     }
 
 } 
