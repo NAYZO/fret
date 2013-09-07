@@ -140,7 +140,7 @@ class ExportateurController extends Controller {
         return $this->render('NzoTunisiefretBundle:Exportateur:DetailPostuleActive.html.twig', array('postule' => $postule));
     }
     
-    
+//============================================================================================================================================================= nn terminer
     public function EtatExport(DemandeExportPostule $postule)
     {
         $etat='';

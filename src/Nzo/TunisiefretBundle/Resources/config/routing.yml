@@ -48,12 +48,18 @@ client_contrat_terminer:
     pattern: /liste-contrat-terminé/
     defaults: {_controller: NzoTunisiefretBundle:Client:ListeContratTerminer}
 
-nzo_detaildemande_export:    
-    pattern: /detail-demande-export/{id}
-    defaults: {_controller: NzoTunisiefretBundle:Client:DetailDemandeExport}  
+client_demande_export_active:    
+    pattern: /demande-export/{id}/active/
+    defaults: {_controller: NzoTunisiefretBundle:Client:DemandeExportActive}  
     requirements:
         id:  \d+ 
 
+client_postule_active_detail:
+    pattern: /postule-active/{id}/detail/
+    defaults: {_controller: NzoTunisiefretBundle:Client:DetailPostuleActive}  
+    requirements:
+        id:  \d+ 
+        
 client_terminer_demande:        
     pattern: /terminer-demande-export/{id}
     defaults: {_controller: NzoTunisiefretBundle:Client:TerminertDemandeExport}  
@@ -64,13 +70,7 @@ client_annuler_demande:
     pattern: /annuler-demande-export/{id}
     defaults: {_controller: NzoTunisiefretBundle:Client:AnnulerDemandeExport}  
     requirements:
-        id:  \d+ 
-        
-nzo_detaildemande_export_postule:    
-    pattern: /detail-demande-export/{id}/postule/
-    defaults: {_controller: NzoTunisiefretBundle:Client:DetailDemandeExportPostule}  
-    requirements:
-        id:  \d+    
+        id:  \d+     
 
 client_reposter_demande_terminer:
     pattern: /demande-terminé/{id}/reposter/

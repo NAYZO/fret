@@ -120,7 +120,16 @@ class Client extends User
      * @ORM\Column(name="nbdemandeexportdepose", type="integer", nullable=true)
      */
     protected $nbdemandeexportdepose;
-        
+    
+    /**
+     * @ORM\Column(name="nbcontratencours", type="integer", nullable=true)
+     */
+    protected $nbcontratencours;
+    
+    /**
+     * @ORM\Column(name="nbcontrattermine", type="integer", nullable=true)
+     */
+    protected $nbcontrattermine;
     
     /**
      * @Assert\File(
@@ -156,6 +165,8 @@ class Client extends User
         $this->notifiermsg = 0;
         //$this->recevoiremail = true;
         $this->nbdemandeexportdepose = 0;   
+        $this->nbcontratencours = 0;   
+        $this->nbcontrattermine = 0;   
         $this->demandeexport = new \Doctrine\Common\Collections\ArrayCollection();
         $this->notification = new \Doctrine\Common\Collections\ArrayCollection();
         $this->notifmsg = new \Doctrine\Common\Collections\ArrayCollection();
@@ -582,5 +593,51 @@ class Client extends User
     public function getDescription()
     {
         return $this->description;
+    }
+
+    /**
+     * Set nbcontratencours
+     *
+     * @param integer $nbcontratencours
+     * @return Client
+     */
+    public function setNbcontratencours($nbcontratencours)
+    {
+        $this->nbcontratencours = $nbcontratencours;
+    
+        return $this;
+    }
+
+    /**
+     * Get nbcontratencours
+     *
+     * @return integer 
+     */
+    public function getNbcontratencours()
+    {
+        return $this->nbcontratencours;
+    }
+
+    /**
+     * Set nbcontrattermine
+     *
+     * @param integer $nbcontrattermine
+     * @return Client
+     */
+    public function setNbcontrattermine($nbcontrattermine)
+    {
+        $this->nbcontrattermine = $nbcontrattermine;
+    
+        return $this;
+    }
+
+    /**
+     * Get nbcontrattermine
+     *
+     * @return integer 
+     */
+    public function getNbcontrattermine()
+    {
+        return $this->nbcontrattermine;
     }
 }

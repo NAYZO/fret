@@ -254,47 +254,42 @@ class ClientController extends Controller {
    /**
     * @Secure(roles="ROLE_CLIENT")
     */
-    public function DetailDemandeExportAction($id)
+    public function DemandeExportActiveAction(DemandeExport $mydemande)
     {
         $usr = $this->get('security.context')->getToken()->getUser();
-            $em = $this->getDoctrine()->getManager();        
-            $mydemande = $em->find('NzoTunisiefretBundle:DemandeExport', $id);
        // security access     
-            if($mydemande->getClient() != $usr) return $this->redirect($this->generateUrl('nzo_tunisiefret_homepage'));
-       // security access   
-            $postules = $em->getRepository('NzoTunisiefretBundle:DemandeExportPostule')->getDemandeExportPostuleByDemande($id);
-        return $this->render('NzoTunisiefretBundle:Client:DetailDemandeExport.html.twig', array('mydemande' => $mydemande, 'postules' => $postules));
+           if($mydemande->getClient() != $usr) return $this->redirect($this->generateUrl('nzo_tunisiefret_homepage'));
+       // security access 
+        $em = $this->getDoctrine()->getManager();
+        $postules = $em->getRepository('NzoTunisiefretBundle:DemandeExportPostule')->getDemandeExportPostuleByDemande($mydemande);
+        return $this->render('NzoTunisiefretBundle:Client:DemandeExportActive.html.twig', array('mydemande' => $mydemande, 'postules' => $postules));
     }
     
     /**
     * @Secure(roles="ROLE_CLIENT")
     */
-    public function DetailDemandeExportTypeAction(DemandeExport $mydemande)
+    public function DetailPostuleActiveAction(DemandeExportPostule $postule)
     {
         $usr = $this->get('security.context')->getToken()->getUser();
-            $em = $this->getDoctrine()->getManager();        
+       // security access     
+           if($postule->getDemandeexport()->getClient() != $usr) return $this->redirect($this->generateUrl('nzo_tunisiefret_homepage'));
+       // security access 
+        $em = $this->getDoctrine()->getManager();        
+        $msgs = $em->getRepository('NzoTunisiefretBundle:MsgDemandeExport')->findBy( array('demandeexportpostule' => $postule));
+        return $this->render('NzoTunisiefretBundle:Client:DetailPostuleActive.html.twig', array('postule' => $postule, 'msgs' => $msgs));
+    }
+    
+   /**
+    * @Secure(roles="ROLE_CLIENT")
+    */
+    public function DetailDemandeExportTypeAction(DemandeExport $mydemande)
+    {
+        $usr = $this->get('security.context')->getToken()->getUser();       
        // security access     
             if($mydemande->getClient() != $usr) return $this->redirect($this->generateUrl('nzo_tunisiefret_homepage'));
        // security access   
             
         return $this->render('NzoTunisiefretBundle:Client:DetailDemandeExportType.html.twig', array('mydemande' => $mydemande));
-    }
-
-   /**
-    * @Secure(roles="ROLE_CLIENT")
-    */
-    public function DetailDemandeExportPostuleAction(DemandeExportPostule $postule)
-    { 
-        $usr = $this->get('security.context')->getToken()->getUser();
-        // security access 
-        if($postule->getDemandeexport()->getClient() != $usr) return $this->redirect($this->generateUrl('nzo_tunisiefret_homepage'));
-        // security access  
-//        $MsgForm = new MsgDemandeExport();
-//        $form = $this->createForm(new MsgDemandeExportType(), $MsgForm);
-
-            $em = $this->getDoctrine()->getManager();        
-            $msgs = $em->getRepository('NzoTunisiefretBundle:MsgDemandeExport')->findBy( array('demandeexportpostule' => $postule));
-        return $this->render('NzoTunisiefretBundle:Client:DetailDemandeExportPostule.html.twig', array('postule' => $postule, 'msgs' => $msgs));
     }
     
     /**
@@ -372,4 +367,6 @@ class ClientController extends Controller {
 
         return $this->render('NzoTunisiefretBundle:Client:DonnerAvisExport.html.twig', array('demande' => $postule));
     }
+    
+   
 }
