@@ -18,44 +18,61 @@
       <li><a href="{{ path('nzo_voirlistedemande_export_archive') }}">Archive</a></li>
       <li class="active">Détails</li>
     </ol>
-<h4 class="legend "><strong>{{mydemande.titre}}</strong> </h4>
-    <div class="col-md-6">
-        <p><strong>Référence : </strong>{{mydemande.reference}} </p>
-        <p><strong>Prix : </strong>{{mydemande.prix}} </p>
-        <p><strong>Pays : </strong>{{mydemande.pays}} </p>
-        <p><strong>Ville : </strong>{{mydemande.ville}} </p>
-    </div>
+        
+    <h4 class="legend2"><strong>{{mydemande.titre}}</strong> </h4>
     
-    <div class="col-md-6">
-        <p><strong>Code Postal : </strong>{{mydemande.codepostal}} </p>
-        <p><strong>Adresse : </strong>{{mydemande.adresse}} </p>
-        <p><strong>Date Maximal : </strong>{{mydemande.datemax|date("d/m/Y")}} </p>
-        <p><strong>Date Pos : </strong>{{mydemande.datedepos|date("d/m/Y")}} </p>
+    <div class="panel panel-default bottom">
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-md-6" style="border-right: 1px solid rgb(213, 210, 210);padding: 20px;">
+                    <p><strong class="red">Référence : </strong>{{mydemande.reference}} </p>
+                    <p><strong class="red">Prix : </strong>{{mydemande.prix}} </p>
+                    <p><strong class="red">Pays : </strong>{{mydemande.pays}} </p>
+                    <p><strong class="red">Ville : </strong>{{mydemande.ville}} </p>
+                </div>
+
+                <div class="col-md-6" style="padding: 20px;">
+                    <p><strong class="red">Code Postal : </strong>{{mydemande.codepostal}} </p>
+                    <p><strong class="red">Adresse : </strong>{{mydemande.adresse}} </p>
+                    <p><strong class="red">Date Maximal : </strong>{{mydemande.datemax|date("d/m/Y")}} </p>
+                    <p><strong class="red">Date Pos : </strong>{{mydemande.datedepos|date("d/m/Y")}} </p>
+                </div>
+            </div>
+            <div class="row">
+                <div style="padding: 20px;">
+                    <hr/>
+                    <p><strong class="red">Description : </strong>{{mydemande.description}} </p>
+                </div>
+           </div>
+        </div>
     </div>
-    <div class="col-md-12 bottom">
-    <p style="font-size:16px"><strong style="color: rgb(86, 164, 216)">Description : </strong>{{mydemande.description}} </p>
-    </div>
-    <h4 class="legend"><strong>Liste Postule: </strong>({{postules|length}})</h4>
+    <h4 class="legend2 bottom"><strong>Liste Postule: </strong>( {{postules|length}} )</h4>
+    
+    {#-------Liste postuler------------#}
     {% for postule in postules %} 
-       <div class="media">
-  <a class="pull-left" href="#">
-    <img class="media-object" src="{{ asset('exportateurfilesupload/')}}{{postule.exportateur.logoname}}" alt="{{postule.exportateur.logoname}}"  width="70" height="70" class="img-thumbnail">
-  </a>
-  <div class="media-body">
-      <h4 class="media-heading"><strong>{{postule.exportateur.nomentrop}}</strong></h4>
-      <p style="color: grey">{{postule.datepostule|date("d/m/Y")}}</p>
-      <p class="list-group-item-text cl-effect-1">
-        {% if postule.description|length > 150 %}
-            {{postule.description|slice(0, 150)}}...
-        {%else%}
-            {{postule.description}}
-        {% endif %}
-        <a href="{{path('client_postule_archive_detail', {'id':postule.id} )}}" class="pull-right"> Voir détails </a>
-    </p>
-  </div>
-</div>
-    {% endfor %}
+    <div class="panel panel-default bottom">
+        <div class="panel-body">
+            <div class="media">
+                <span class="pull-left">
+                    <img class="media-object" src="{{ asset('exportateurfilesupload/')}}{{postule.exportateur.logoname}}" alt="{{postule.exportateur.logoname}}"  width="70" height="70" class="img-thumbnail">
+                </span>
+                <div class="media-body">
+                    <h4 class="media-heading"><strong>{{postule.exportateur.nomentrop}}</strong></h4>
+                    <p style="color: grey">{{postule.datepostule|date("d/m/Y")}}</p>
+                    <p class="list-group-item-text cl-effect-1">
+                      {% if postule.description|length > 130 %}
+                          {{postule.description|slice(0, 130)}}...
+                      {%else%}
+                          {{postule.description}}
+                      {% endif %}
+                      <a href="{{path('client_postule_archive_detail', {'id':postule.id} )}}" class="pull-right"> Voir détails </a>
+                  </p>
+                </div>
+            </div>
+        </div>
     </div>
+    {% endfor %}
+</div>
 {% endblock content %}
  
  

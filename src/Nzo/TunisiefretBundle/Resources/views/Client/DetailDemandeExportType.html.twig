@@ -22,24 +22,52 @@
      <div class="row" style="padding-right: 14px;">
         <div class=" pull-right">
             <a href="{{path('client_reposter_demande_type', {'id':mydemande.id} )}}" class="btn btn-danger btn-xs"> Reposter</a>
-            <a href="{{path('client_supprimer_demande_type', {'id':mydemande.id} )}}" class="btn btn-danger btn-xs"> Supprimer</a>
+            <a data-toggle="modal" href="#nzomyModal" class="btn btn-danger btn-xs" >Supprimer</a>
+            <!-- Modal -->
+            <div class="modal fade" id="nzomyModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">Supprimer la Demande</h4>
+                  </div>
+                  <div class="modal-body">
+                   Voulez vous supprimer la demande ? 
+                  </div>
+                  <div class="modal-footer">
+                    <a href="{{path('client_supprimer_demande_type', {'id':mydemande.id} )}}" class="btn btn-primary">Confirmer</a>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                  </div>
+                </div><!-- /.modal-content -->
+              </div><!-- /.modal-dialog -->
+            </div><!-- /.modal -->
         </div>
     </div>
 </div>
-    <div class="col-md-6">
-        <p><strong>Réf : </strong>{{mydemande.reference}} </p>
-        <p><strong>Prix : </strong>{{mydemande.prix}} </p>
-        <p><strong>Pays : </strong>{{mydemande.pays}} </p>
-        <p><strong>Ville : </strong>{{mydemande.ville}} </p>
-    </div>
+<div class="panel panel-default">
+    <div class="panel-body">
+        <div class="row">
+            <div class="col-md-6" style="border-right: 1px solid rgb(213, 210, 210);padding: 20px;">
+                <p><strong class="red">Réf : </strong>{{mydemande.reference}} </p>
+                <p><strong class="red">Prix : </strong>{{mydemande.prix}} </p>
+                <p><strong class="red">Pays : </strong>{{mydemande.pays}} </p>
+                <p><strong class="red">Ville : </strong>{{mydemande.ville}} </p>
+            </div>
     
-    <div class="col-md-6">
-        <p><strong>Code Postal : </strong>{{mydemande.codepostal}} </p>
-        <p><strong>Adresse : </strong>{{mydemande.adresse}} </p>
-        <p><strong>Date Maximal : </strong>{{mydemande.datemax|date("d/m/Y")}} </p>
-        <p><strong>Date Pos : </strong>{{mydemande.datedepos|date("d/m/Y")}} </p>
+            <div class="col-md-6" style="padding: 20px;">
+                <p><strong class="red">Code Postal : </strong>{{mydemande.codepostal}} </p>
+                <p><strong class="red">Adresse : </strong>{{mydemande.adresse}} </p>
+                <p><strong class="red">Date Maximal : </strong>{{mydemande.datemax|date("d/m/Y")}} </p>
+                <p><strong class="red">Date Dépôt : </strong>{{mydemande.datedepos|date("d/m/Y")}} </p>
+            </div>
+        </div>
+        <div class="row">
+          <div style="padding: 20px;">
+               <hr/>
+                <p><strong class="red">Description : </strong>{{mydemande.description}} </div>
+          </div>   
+        </div>
     </div>
-    <p style="font-size:16px"><strong style="color: rgb(86, 164, 216)">Description : </strong>{{mydemande.description}} </p>
 </div>
 {% endblock content %}
  
