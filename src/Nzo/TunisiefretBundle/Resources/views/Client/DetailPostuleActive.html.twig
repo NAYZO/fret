@@ -52,16 +52,24 @@
                     </div>
                     <div id="collapseOne" class="panel-collapse collapse">
                         <div class="panel-body">
-                            <p><strong class="red">Réf : </strong>{{postule.demandeexport.reference}} </p>
-                            <p><strong class="red">Prix : </strong>{{postule.demandeexport.prix}} </p>
-                            <p><strong class="red">Pays : </strong>{{postule.demandeexport.pays}} </p>
-                            <p><strong class="red">Ville : </strong>{{postule.demandeexport.ville}} </p>
-                            <p><strong class="red">Code Postal : </strong>{{postule.demandeexport.codepostal}} </p>
-                            <p><strong class="red">Adresse : </strong>{{postule.demandeexport.adresse}} </p>
-                            <p><strong class="red">Date Maximal : </strong>{{postule.demandeexport.datemax|date("d/m/Y")}} </p>
-                            <p><strong class="red">Date Dépot : </strong>{{postule.demandeexport.datedepos|date("d/m/Y")}} </p>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <p><strong class="red">Réf : </strong>{{postule.demandeexport.reference}} </p>
+                                    <p><strong class="red">Prix : </strong>{{postule.demandeexport.prix}} </p>
+                                    <p><strong class="red">Pays : </strong>{{postule.demandeexport.pays}} </p>
+                                    <p><strong class="red">Ville : </strong>{{postule.demandeexport.ville}} </p>
+                                </div>
+                                <div class="col-md-6">
+                                    <p><strong class="red">Code Postal : </strong>{{postule.demandeexport.codepostal}} </p>
+                                    <p><strong class="red">Date Maximal : </strong>{{postule.demandeexport.datemax|date("d/m/Y")}} </p>
+                                    <p><strong class="red">Date Dépot : </strong>{{postule.demandeexport.datedepos|date("d/m/Y")}} </p>
+                                </div>
+                            </div>
+                            <hr>
+                                <p><strong class="red">Adresse : </strong>{{postule.demandeexport.adresse}}</p>
+                            <hr>
                             <p><strong class="red">Description : </strong>{{postule.demandeexport.description}} </p>
-                        </div>
+                        </div>       
                     </div>
                 </div> 
             </div>
@@ -79,7 +87,7 @@
                   </div>
                   <div id="collapseThree" class="panel-collapse collapse">
                     <div class="panel-body">
-                      <p style="color: grey">Date de Postule : {{postule.datepostule|date("d/m/Y")}} | Durée : {{postule.duree}} | Prix : {{postule.prix}} </p>
+                        <p style="color: grey"><span class="red">Date de Postule :</span> {{postule.datepostule|date("d/m/Y")}} | <span class="red"> Durée :</span> {{postule.duree}} | <span class="red"> Prix :</span> {{postule.prix}} </p>
                         <p class="list-group-item-text cl-effect-1">
                           {{postule.description}}
                         </p> 
@@ -94,12 +102,30 @@
             <div class="panel panel-default">
                 <div class="panel-heading">Informations sur l'exportateur</div>
                     <div class="panel-body">
-                        Logo exportateur: <img class="media-object" src="{{ asset('exportateurfilesupload/')}}{{postule.exportateur.logoname}}" alt="{{postule.exportateur.logoname}}"  width="100" height="100" class="img-thumbnail">
-                        <br>
-                        Nom entreprise: {{postule.exportateur.nomentrop}} <br>
-                        Note: {{postule.exportateur.note}} <br>
-                        Contrat en cours:   {{postule.exportateur.nbcontratencours}} <br>
-                        Contrat Terminé: {{postule.exportateur.nbcontrattermine}}
+                        <div class="media">
+                            <div class="pull-left">
+                                <a href=""><img class="media-object img-thumbnail" src="{{ asset('exportateurfilesupload/')}}{{postule.exportateur.logoname}}" alt="" width="100" height="100"></a>
+                            </div>
+                          <div class="media-body">
+                              <div class="legend bottom" style="padding-bottom: 29px;">
+                                  <a href=""><h4 class="media-heading pull-left">{{postule.exportateur.nomentrop}}</h4></a>
+                                <span class="pull-right">
+                                    <img src="{{ asset('bundles/nzotunisiefret/images') }}/star.png">
+                                    <img src="{{ asset('bundles/nzotunisiefret/images') }}/star.png">
+                                    <img src="{{ asset('bundles/nzotunisiefret/images') }}/star.png">
+                                    <img src="{{ asset('bundles/nzotunisiefret/images') }}/star.png">
+                                </span>
+                              </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <p class="red"><strong>Contrat en cours : </strong> {{postule.exportateur.nbcontratencours}}</p>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <p class="red"><strong>Contrat en terminé : </strong> {{postule.exportateur.nbcontrattermine}}</p>
+                                    </div>
+                                </div>
+                           </div>
+                        </div> 
                     </div>
                 </div>
             </div>
@@ -109,7 +135,7 @@
         <h4 class="legend2 bottom">Messages (<span id='nzonbmsg'>{{msgs|length}}</span>)</h4>
 
         {#----------------Liste des messges----------------#}
-        <div class="row">
+        <div id="colleges-table" class="row" >
             <div class="col-md-8" id="nzomsgcontent"> 
                 {% if msgs|length <= 4 %}   
                     {% for msg in msgs %} 
@@ -139,7 +165,7 @@
                         </div>
                     </div>
                     <!-- BLOCK --> 
-                    <div id='nzolengthmsg' class="panel panel-warning" style=" margin-bottom: 5px">
+                    <div id='nzolengthmsg' class="panel panel-warning">
                         <div class="panel-heading">
                             <h3 class="panel-title">
                                 <span > {{msgs|length -2 }} Messages </span>
@@ -179,8 +205,9 @@
                     <!-- END Last -->
                 {% endif %}
             </div>
-              
-        <div class="col-md-4">  
+               
+                    <div  class="col-md-4">
+            <div id="college-info">  
             <form action="#" id="msgform" method="post" role="form">
                 <div class="form-group">
                     <textarea id="nzomsgexp" required="required" class="form-control" rows="6"></textarea>
@@ -189,8 +216,10 @@
                     <button type="submit" class="btn btn-danger pull-right">Envoyez</button>
                 </div>
             </form> 
+                </div>
         </div>
     </div>
+          
 </div>      
 {% endblock content %}
  
@@ -237,5 +266,15 @@
             });    
         });
     </script>
-
+    <script type="text/javascript">
+$(window).scroll(function () {
+	var ttop = $('#colleges-table').position().top;
+	var hcltb = $('#colleges-table').height();
+	var mtop = $(window).scrollTop();
+	if(mtop > ttop) {
+	 if (mtop < (ttop+hcltb-200))
+	 { $('#college-info').css('top', (mtop-ttop-25));}
+	 }
+ });
+</script>
 {% endblock js %}
