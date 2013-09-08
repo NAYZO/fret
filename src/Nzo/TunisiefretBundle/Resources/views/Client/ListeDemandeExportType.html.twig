@@ -34,7 +34,27 @@
                 <div class="row" style="padding-right: 14px;">
                     <div class=" pull-right">
                         <a href="{{path('client_reposter_demande_type', {'id':demande.id} )}}" class="btn btn-danger btn-xs"> Reposter</a>
-                        <a href="{{path('client_supprimer_demande_type', {'id':demande.id} )}}" class="btn btn-danger btn-xs"> Supprimer</a>
+                        <!-- Button trigger modal -->
+                        <a data-toggle="modal" href="#nzomyModal" class="btn btn-danger btn-xs" >Supprimer</a>
+
+                        <!-- Modal -->
+                        <div class="modal fade" id="nzomyModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                          <div class="modal-dialog">
+                            <div class="modal-content">
+                              <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                <h4 class="modal-title">Supprimer la Demande</h4>
+                              </div>
+                              <div class="modal-body">
+                               Voulez vous supprimer la demande ? 
+                              </div>
+                              <div class="modal-footer">
+                                <a href="{{path('client_supprimer_demande_type', {'id':demande.id} )}}" class="btn btn-primary">Confirmer</a>
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                              </div>
+                            </div><!-- /.modal-content -->
+                          </div><!-- /.modal-dialog -->
+                        </div><!-- /.modal -->
                     </div>
                 </div>
             </div>

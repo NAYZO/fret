@@ -93,7 +93,7 @@
         
         {#--Description---#}
         <div class="form-group">
-            <label>Description</label>
+            <label>Description <span class="required">*</span></label>
             {{ form_widget(form.description,{'attr': {'class': 'form-control', 'rows': '5'}}) }}
         </div>
         {% if(form_errors(form.description)) %}
