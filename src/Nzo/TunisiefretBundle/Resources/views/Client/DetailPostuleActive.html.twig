@@ -12,7 +12,7 @@
 {% endblock banner %}
 
 {% block content %}
-<div class="padding">
+<div class="padding" style="margin-bottom: 177px;">
     {#----------------breadcrumb----------------#}
     <ol class="breadcrumb">
       <li><a href="{{path('nzo_tunisiefret_homepage')}}">Accueil</a></li>
@@ -26,7 +26,28 @@
         <h4 class="pull-left">Détails Demande Export Active</h4>
         <div class="row" style="padding-right: 14px;">
             <div class=" pull-right">
-                <a href="{{path('client_annuler_demande', {'id':postule.demandeexport.id})}}" class="btn btn-danger btn-sm" style="margin-top: 12px;">Annuler la Demande</a>
+            <!-- Button trigger modal -->
+            <a data-toggle="modal" href="#nzomyModal" class="btn btn-danger btn-sm" style="margin-top: 12px;">Annuler la Demande</a>
+
+            <!-- Modal -->
+            <div class="modal fade" id="nzomyModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">Annuler la Demande</h4>
+                  </div>
+                  <div class="modal-body">
+                   Voulez vous annuler la demande ? 
+                  </div>
+                  <div class="modal-footer">
+                      <a href="{{path('client_annuler_demande', {'id':postule.demandeexport.id})}}" class="btn btn-primary">Confirmer</a>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    
+                  </div>
+                </div><!-- /.modal-content -->
+              </div><!-- /.modal-dialog -->
+            </div><!-- /.modal -->
             </div>
         </div>
     </div>
