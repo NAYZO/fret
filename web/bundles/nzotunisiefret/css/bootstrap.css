@@ -5490,12 +5490,12 @@ a.list-group-item:focus {
 }
 
 .panel-warning {
-  border-color: #fbeed5;
+  border-color: #EEA1A1;
 }
 
 .panel-warning > .panel-heading {
-  color: #c09853;
-  background-color: #fcf8e3;
+  color: #B63B3B;
+  background-color: #FFE0E0;
   border-color: #fbeed5;
 }
 
@@ -5531,8 +5531,8 @@ a.list-group-item:focus {
 
 .panel-info > .panel-heading {
   color: #08374E;
-  background-color: #C6E5D9;
-  border-color: #4B98A8;
+  background-color: #CEE9DF;
+  border-color: #4B9EAF;
 }
 
 .panel-info > .panel-heading + .panel-collapse .panel-body {

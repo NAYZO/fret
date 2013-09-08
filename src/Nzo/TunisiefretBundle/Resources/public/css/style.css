@@ -224,12 +224,12 @@ color: #3079a2;
 padding-bottom: 14px;
 border-bottom: 1px dashed #74A5C5;
 }
-.col-md-6 > p {
+/*.col-md-6 > p {
     font-size: 16px;
 }
 .col-md-6 > p strong{
     color: rgb(86, 164, 216);
-}
+}*/
 /*.media{
     border: 1px solid rgb(226, 226, 226);
 border-radius: 4px;
@@ -241,3 +241,6 @@ padding: 12px;
     padding: 40px;
 }
 .red{color: #BE0707}
+#nzolengthmsg {cursor: pointer}
+#college-info {position: absolute;width: 91%;
+               }
