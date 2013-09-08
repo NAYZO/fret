@@ -186,3 +186,15 @@
     </div>
 </div>      
 {% endblock content %}
+ 
+ {% block js %}  
+    <script>
+        $(document).ready(function(){
+           $('#nzolengthmsg').on('click',function(){ 
+                $('#nzolengthmsg').remove();
+                $('#nzoblockfor').show();
+            });    
+        });
+    </script>
+
+{% endblock js %}
