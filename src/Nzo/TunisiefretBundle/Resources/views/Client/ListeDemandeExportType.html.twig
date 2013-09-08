@@ -34,7 +34,7 @@
                 <div class="row" style="padding-right: 14px;">
                     <div class=" pull-right">
                         <a href="{{path('client_reposter_demande_type', {'id':demande.id} )}}" class="btn btn-danger btn-xs"> Reposter</a>
-                        <a href="{{path('client_supprimer_demande_type', {'id':demande.id} )}}" class="btn btn-danger btn-xs close" data-dismiss="alert"> Supprimer</a>
+                        <a href="{{path('client_supprimer_demande_type', {'id':demande.id} )}}" class="btn btn-danger btn-xs"> Supprimer</a>
                     </div>
                 </div>
             </div>
@@ -57,8 +57,5 @@
     </div>
 </div>
 </div>
-<script>
-    $('.alert').alert('close');
-    </script>
 {% endblock content %} 
  
