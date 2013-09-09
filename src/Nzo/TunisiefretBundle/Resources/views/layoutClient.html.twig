@@ -33,8 +33,17 @@
                 <div class="collapse navbar-collapse navbar-ex1-collapse">
                     <ul class="nav navbar-nav navbar-right nav-style">
                         <li><a href="{{ path('nzo_tunisiefret_homepage') }}">Acceuil</a></li>
-                        <li><a href=""><span class="glyphicon glyphicon-bell"></span><span id='nzonotifnb' class="label label-danger label-style"></span></a></li>
-                        <li><a href=""><span class="glyphicon glyphicon-envelope"></span><span id='nzomsgnb' class="label label-danger label-style"></span></a></li>
+                        <li><a href=""><span class="glyphicon glyphicon-bell"></span><span id='nzonotifnb' class="label label-danger label-style"></span></a>
+                            <ul id="notif" class="right">
+                                <li>
+                                    <a href="#"><strong>Holy guacamole!</strong> Best check yo self, you're not looking too good.</a>
+                                </li>
+                                <li>
+                                    <a href="#"><strong>Holy guacamole!</strong> Best check yo self, you're not looking too good.</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li><a href="" id="notifclik"><span class="glyphicon glyphicon-envelope"></span><span id='nzomsgnb' class="label label-danger label-style"></span></a></li>
                         
                         {% include "NzoUserBundle::connexion.html.twig" %}
                     </ul>
@@ -105,6 +114,7 @@
      <script src="{{ asset('bundles/nzotunisiefret/js/bootstrap.js') }}"></script>
      <script src="{{ asset('bundles/nzotunisiefret/js/up.js') }}"></script>
      <script src="{{ asset('bundles/nzotunisiefret/js/modal.js') }}"></script>
+     <script src="{{ asset('bundles/nzotunisiefret/js/popover.js') }}"></script>
      <script>
          $(document).ready(function() {
             setInterval(function(){ 
@@ -132,6 +142,20 @@
                      }
                 });
             }, 8500);
+            
+            
+            
+            //dropdown notification 
+            //$("#notif").onclick('click',function(event) {return false;}
+            $("#notif").hide();
+
+            $("#notifclik").mouseover(function () {
+                $("#notif").slideDown('slow');
+            });
+
+            $("#notif").mouseleave(function () {
+                $("#notif").slideUp('slow');
+            });
          });
      </script>
      {% block js %}  {% endblock js %}
