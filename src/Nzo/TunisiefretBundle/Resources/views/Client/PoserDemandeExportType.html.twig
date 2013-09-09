@@ -11,12 +11,11 @@
 {% endblock banner %}
 {% block content %}
 <div class="padding">
-    <ol class="breadcrumb"> 
-      <li><a href="{{path('nzo_tunisiefret_homepage')}}">Accueil</a></li>
-      <li><a href="{{ path('client_list_demande_type') }}">Liste Demandes Export Type</a></li>
-      <li class="active">Reposter Demande Export type</li>
-    </ol>
-
+    <ul id="breadcrumbs-two">
+        <li><a href="{{path('nzo_tunisiefret_homepage')}}">Accueil</a></li>
+        <li><a href="{{ path('client_list_demande_type') }}">Liste Demandes Export Type</a></li>
+        <li class="current"><span>Reposter Demande Export type</span></li>
+    </ul>
 <form action="#" id="contactForm" method="post" {{ form_enctype(form) }} role="form" novalidate>
     <fieldset>
         <legend class="colorlegend"><strong>Reposter Votre Demande D'export Type</strong></legend>  

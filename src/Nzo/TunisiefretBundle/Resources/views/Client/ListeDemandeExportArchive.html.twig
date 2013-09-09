@@ -13,13 +13,13 @@
 
 {% block content %}
 <div class="padding">
-<div class="row" style="padding-right: 16px;padding-left: 16px;">
+<div class="row" style="padding-right: 16px;">
     <div class="col-md-9 pull-left">
-        <ol class="breadcrumb" style="margin: 17px -14px;">
+        <ul id="breadcrumbs-two" style="margin-top: 14px;">
             <li><a href="{{path('nzo_tunisiefret_homepage')}}">Accueil</a></li>
-            <li>Mes Demandes</li>
-            <li class="active">Archivé</li>
-        </ol>
+            <li><span>Mes Demandes</span></li>
+            <li class="current"><span>Archivé</span></li>
+        </ul>
     </div>
    <div class="pull-right">
         {{ knp_pagination_render(listedemandeexport) }}

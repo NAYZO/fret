@@ -12,11 +12,11 @@
 
 {% block content %}
 <div class="padding">
-    <ol class="breadcrumb">
+    <ul id="breadcrumbs-two">
       <li><a href="{{path('nzo_tunisiefret_homepage')}}">Accueil</a></li>
       <li><a href="{{ path('client_list_demande_type') }}">Liste Demandes Export Type</a></li>
-      <li class="active">Détails</li>
-    </ol>
+      <li class="current"><span>Détails</span></li>
+    </ul>
     <div class="legend bottom">
     <h4 class="pull-left"><strong>{{mydemande.titre}}</strong> </h4>
      <div class="row" style="padding-right: 14px;">
