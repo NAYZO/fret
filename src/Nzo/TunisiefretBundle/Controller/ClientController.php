@@ -424,5 +424,58 @@ class ClientController extends Controller {
         return $this->render('NzoTunisiefretBundle:Client:DonnerAvisExport.html.twig', array('demande' => $postule));
     }
     
+    /**
+     * @Secure(roles="ROLE_CLIENT")
+     */
+    public function AjaxGetNotifAction(Request $request) 
+    {
+        if ($request->isXmlHttpRequest()) {  
+            
+            $usr = $this->get('security.context')->getToken()->getUser();
+            $em = $this->getDoctrine()->getManager();
+        
+            $notifs = $em->getRepository('NzoTunisiefretBundle:Notification')->getListNotifClient($usr);
+
+           $i = 0;
+            foreach ($notifs as $res) {
+                $notifdate = $res->getDate()->format('d/m/Y H:i');
+                $val[$i] = array('date' =>$notifdate, 'notiftext' => $res->getText(), 'notifvu' => $res->getVu());
+                $i++;
+            }
+        return new Response(json_encode($val));
+        }
+    }
+    
+    /**
+     * @Secure(roles="ROLE_CLIENT")
+     */
+    public function AjaxGetNbNotifAction(Request $request) 
+    {
+        if ($request->isXmlHttpRequest()) {  
+            
+            $usr = $this->get('security.context')->getToken()->getUser();
+            $em = $this->getDoctrine()->getManager();
+        
+            $nbnotifs = $em->getRepository('NzoTunisiefretBundle:Notification')->getNbNotifClient($usr);
+
+        return new Response(json_encode( intval($nbnotifs) ));
+        }
+    }
+    
+    /**
+     * @Secure(roles="ROLE_CLIENT")
+     */
+    public function AjaxGetNbMsgAction(Request $request) 
+    {
+        if ($request->isXmlHttpRequest()) {  
+            
+            $usr = $this->get('security.context')->getToken()->getUser();
+            $em = $this->getDoctrine()->getManager();
+        
+            $nbmsgs = $em->getRepository('NzoTunisiefretBundle:NotifMsg')->getNbMsgClient($usr);
+
+        return new Response(json_encode( intval($nbmsgs) ));
+        }
+    }
    
 }

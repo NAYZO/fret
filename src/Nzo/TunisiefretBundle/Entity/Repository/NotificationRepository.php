@@ -12,4 +12,22 @@ use Doctrine\ORM\EntityRepository;
  */
 class NotificationRepository extends EntityRepository
 {
+    public function getListNotifClient($id)
+    {
+         $qb = $this->createQueryBuilder('a');
+         $qb->where('a.client = :client')              
+            ->setParameter('client', $id)
+            ->orderBy('a.date_depos', 'DESC');
+         return $qb->getQuery()->execute();
+    }
+    
+    public function getNbNotifClient($id)
+    {
+         $qb = $this->createQueryBuilder('a');
+         $qb->select('COUNT(a)')
+            ->where('a.client = :client')
+            ->andWhere('a.vu = 0')             
+            ->setParameter('client', $id);
+         return $qb->getQuery()->getSingleScalarResult();
+    } 
 }

@@ -33,8 +33,8 @@
                 <div class="collapse navbar-collapse navbar-ex1-collapse">
                     <ul class="nav navbar-nav navbar-right nav-style">
                         <li><a href="{{ path('nzo_tunisiefret_homepage') }}">Acceuil</a></li>
-                        <li><a href=""><span class="glyphicon glyphicon-bell"></span><span class="label label-danger label-style">47</span></a></li>
-                        <li><a href=""><span class="glyphicon glyphicon-envelope"></span><span class="label label-danger label-style">47</span></a></li>
+                        <li><a href=""><span class="glyphicon glyphicon-bell"></span><span id='nzonotifnb' class="label label-danger label-style"></span></a></li>
+                        <li><a href=""><span class="glyphicon glyphicon-envelope"></span><span id='nzomsgnb' class="label label-danger label-style"></span></a></li>
                         
                         {% include "NzoUserBundle::connexion.html.twig" %}
                     </ul>
@@ -105,6 +105,35 @@
      <script src="{{ asset('bundles/nzotunisiefret/js/bootstrap.js') }}"></script>
      <script src="{{ asset('bundles/nzotunisiefret/js/up.js') }}"></script>
      <script src="{{ asset('bundles/nzotunisiefret/js/modal.js') }}"></script>
+     <script>
+         $(document).ready(function() {
+            setInterval(function(){ 
+                $.ajax({
+                     url:'{{path("ajax_get_nb_notif_client")}}',
+                     type: 'GET',
+                     success: function(res){
+                            (res==0) ? $('#nzonotifnb').html('') : $('#nzonotifnb').html(res);      
+                     },
+                     error: function() {
+                            alert('error');
+                     }
+                });
+            }, 6000);
+            
+            setInterval(function(){ 
+                $.ajax({
+                     url:'{{path("ajax_get_nb_msg_client")}}',
+                     type: 'GET',
+                     success: function(res){
+                            (res==0) ? $('#nzomsgnb').html('') : $('#nzomsgnb').html(res);      
+                     },
+                     error: function() {
+                            alert('error');
+                     }
+                });
+            }, 8500);
+         });
+     </script>
      {% block js %}  {% endblock js %}
     </body>
     

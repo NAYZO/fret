@@ -12,4 +12,13 @@ use Doctrine\ORM\EntityRepository;
  */
 class NotifMsgRepository extends EntityRepository
 {
+    public function getNbMsgClient($id)
+    {
+         $qb = $this->createQueryBuilder('a');
+         $qb->select('COUNT(a)')
+            ->where('a.client = :client')
+            ->andWhere('a.vu = 0')             
+            ->setParameter('client', $id);
+         return $qb->getQuery()->getSingleScalarResult();
+    } 
 }
