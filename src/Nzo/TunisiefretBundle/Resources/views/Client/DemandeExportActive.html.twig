@@ -34,12 +34,26 @@
                     <h4 class="modal-title">Annuler la Demande</h4>
                   </div>
                   <div class="modal-body">
-                   Voulez vous annuler la demande ? 
-                  </div>
-                  <div class="modal-footer">
-                      <a href="{{path('client_annuler_demande', {'id':mydemande.id})}}" class="btn btn-primary">Confirmer</a>
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    
+                   <form action="{{path('client_annuler_demande', {'id':mydemande.id})}}" method="POST" role="form" >
+                          <div class="form-group">
+                            <label>Raison d'annulation</label>
+                            <select id="nzoraison" class="form-control" name="annuler_raison">
+                                <option value="vbn">raison 1</option>
+                                <option value="dd">raison 1</option>
+                                <option value="autres">autres</option>
+                            </select>
+                          </div>
+                          <div class="form-group" id="raison" style="display: none">
+                              <label>Autre Raison</label>
+                              <textarea id="nzotextarea" class="form-control" rows="4" name="annuler_description"></textarea>
+                          </div>
+                          <div class="row"style="margin-right: 0">
+                              <div class="pull-right">
+                                <button type="submit" class="btn btn-danger">Confirmer</button>
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
+                              </div>
+                          </div>
+                       </form> 
                   </div>
                 </div><!-- /.modal-content -->
               </div><!-- /.modal-dialog -->
@@ -101,5 +115,22 @@
     {% endfor %}
 </div>
 {% endblock content %}
+{% block js %}
+<script>
+    
+        $(document).ready(function(){ 
+            $("#nzoraison").change(function() {
+                if( $("#nzoraison option:selected").val() == "autres" ) 
+                     $("#raison").slideDown();
+                else {
+                  $("#raison").slideUp();
+                  $("#nzotextarea").val('');
+                }
+
+            });
+
+        });
+</script>
+{% endblock js %}
  
  
