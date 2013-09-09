@@ -33,16 +33,18 @@
                 <div class="collapse navbar-collapse navbar-ex1-collapse">
                     <ul class="nav navbar-nav navbar-right nav-style">
                         <li><a href="{{ path('nzo_tunisiefret_homepage') }}">Acceuil</a></li>
-                        <li><a href=""><span class="glyphicon glyphicon-bell"></span><span id='nzonotifnb' class="label label-danger label-style"></span></a>
-                            <ul id="notif" class="right">
-                                <li>
-                                    <a href="#"><strong>Holy guacamole!</strong> Best check yo self, you're not looking too good.</a>
-                                </li>
-                                <li>
-                                    <a href="#"><strong>Holy guacamole!</strong> Best check yo self, you're not looking too good.</a>
-                                </li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                <span class="glyphicon glyphicon-bell"></span>
+                                <span id='nzonotifnb' class="label label-danger label-style"></span>
+                            </a>
+                            <ul class="dropdown-menu  notification" style="margin-top: 26px;">
+                                <li class="nonlu"><a href="#"><strong>Holy guacamole!</strong> Best check yo self, you're not looking too good.</a></li>
+                              <li><a href="#"><strong>Holy guacamole!</strong> Best check yo self, you're not looking too good.</a></li>
                             </ul>
                         </li>
+                            
+                  
                         <li><a href="" id="notifclik"><span class="glyphicon glyphicon-envelope"></span><span id='nzomsgnb' class="label label-danger label-style"></span></a></li>
                         
                         {% include "NzoUserBundle::connexion.html.twig" %}
