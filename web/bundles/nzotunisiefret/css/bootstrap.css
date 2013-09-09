@@ -2395,6 +2395,7 @@ input[type="button"].btn-block {
 
 .glyphicon {
   position: relative;
+  font-size: 16px;
   top: 1px;
   display: inline-block;
   font-family: 'Glyphicons Halflings';
@@ -3835,7 +3836,7 @@ textarea.input-group-sm > .input-group-btn > .btn {
 .nav .open > a,
 .nav .open > a:hover,
 .nav .open > a:focus {
-  background-color: rgba(114, 114, 114, 0.36);
+/*  background-color: rgba(114, 114, 114, 0.36);*/
   border-color: #428bca;
 }
 
@@ -4924,14 +4925,14 @@ a.list-group-item.active > .badge,
 
 .jumbotron {
 /*  padding: 30px;*/
-  height: 110px;
+  height: 160px;
   display: inline-block;
   width: 100%;
   font-size: 21px;
   font-weight: 200;
   line-height: 2.1428571435;
   color: inherit;
-  background: #eeeeee url("../images/bg-banner.jpg") 0% 23%;
+  background: #eeeeee url("../images/wallpaper2.jpg") 30% 55%;;
 }
 
 .jumbotron h1 {

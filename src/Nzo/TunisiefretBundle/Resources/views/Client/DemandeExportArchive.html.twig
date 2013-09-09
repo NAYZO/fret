@@ -12,12 +12,12 @@
 
 {% block content %}
 <div class="padding">
-    <ol class="breadcrumb">
-      <li><a href="{{path('nzo_tunisiefret_homepage')}}">Accueil</a></li>
-      <li>Mes Demandes</li>
-      <li><a href="{{ path('nzo_voirlistedemande_export_archive') }}">Archive</a></li>
-      <li class="active">Détails</li>
-    </ol>
+    <ul id="breadcrumbs-two">
+        <li><a href="{{path('nzo_tunisiefret_homepage')}}">Accueil</a></li>
+        <li><span>Mes Demandes</span></li>
+        <li><a href="{{ path('nzo_voirlistedemande_export_archive') }}">Archive</a></li>
+        <li class="current"><span>Détails</span></li>
+    </ul>
         
     <h4 class="legend2"><strong>{{mydemande.titre}}</strong> </h4>
     

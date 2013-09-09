@@ -14,12 +14,12 @@
 {% block content %}
 <div class="padding" style="margin-bottom: 177px;">
     {#----------------breadcrumb----------------#}
-    <ol class="breadcrumb">
+    <ul id="breadcrumbs-two">
       <li><a href="{{path('nzo_tunisiefret_homepage')}}">Accueil</a></li>
-      <li>Mes Demandes</li>
+      <li><span>Mes Demandes</span></li>
       <li><a href="{{path('nzo_voirlistedemande_export_active')}}">Active</a></li>
-      <li class="active">Détails</li>
-    </ol>
+      <li class="current"><span>Détails</span></li>
+    </ul>
     
     {#----------------Titre de la page----------------#}
     <div class="legend2">
