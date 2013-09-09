@@ -40,7 +40,8 @@
                             </a>
                             <ul class="dropdown-menu  notification" style="margin-top: 26px;">
                                 <li class="nonlu"><a href="#"><strong>Holy guacamole!</strong> Best check yo self, you're not looking too good.</a></li>
-                              <li><a href="#"><strong>Holy guacamole!</strong> Best check yo self, you're not looking too good.</a></li>
+                                <li><a href="#"><strong>Holy guacamole!</strong> Best check yo self, you're not looking too good.</a></li>
+                                <li class="all"><a href="#" class="text-center">Voir toute les notifications</a></li>
                             </ul>
                         </li>
                             
@@ -116,7 +117,6 @@
      <script src="{{ asset('bundles/nzotunisiefret/js/bootstrap.js') }}"></script>
      <script src="{{ asset('bundles/nzotunisiefret/js/up.js') }}"></script>
      <script src="{{ asset('bundles/nzotunisiefret/js/modal.js') }}"></script>
-     <script src="{{ asset('bundles/nzotunisiefret/js/popover.js') }}"></script>
      <script>
          $(document).ready(function() {
             setInterval(function(){ 
@@ -144,20 +144,6 @@
                      }
                 });
             }, 8500);
-            
-            
-            
-            //dropdown notification 
-            //$("#notif").onclick('click',function(event) {return false;}
-            $("#notif").hide();
-
-            $("#notifclik").mouseover(function () {
-                $("#notif").slideDown('slow');
-            });
-
-            $("#notif").mouseleave(function () {
-                $("#notif").slideUp('slow');
-            });
          });
      </script>
      {% block js %}  {% endblock js %}
