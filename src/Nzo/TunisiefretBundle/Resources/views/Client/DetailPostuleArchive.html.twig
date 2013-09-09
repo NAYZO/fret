@@ -41,29 +41,31 @@
                 {#----------------Détails demande Export----------------#}
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        <h4 class="panel-title">
-                            <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
+                        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseOne">    
+                            <h4 class="panel-title">
                                 Détail de la demande d'export
                                 <img src="{{ asset('bundles/nzotunisiefret/images') }}/down.png" alt="" class="pull-right"/>
-                            </a>
-                       </h4>
+                           </h4>
+                        </a>
                     </div>
                     <div id="collapseOne" class="panel-collapse collapse">
                         <div class="panel-body">
-                            <div class="media bottom">
-
-                                    <p><strong>Réf : </strong>{{postule.demandeexport.reference}} </p>
-                                    <p><strong>Prix : </strong>{{postule.demandeexport.prix}} </p>
-                                    <p><strong>Pays : </strong>{{postule.demandeexport.pays}} </p>
-                                    <p><strong>Ville : </strong>{{postule.demandeexport.ville}} </p>
-                    
-                                    <p><strong>Code Postal : </strong>{{postule.demandeexport.codepostal}} </p>
-                                    <p><strong>Adresse : </strong>{{postule.demandeexport.adresse}} </p>
-                                    <p><strong>Date Maximal : </strong>{{postule.demandeexport.datemax|date("d/m/Y")}} </p>
-                                    <p><strong>Date Pos : </strong>{{postule.demandeexport.datedepos|date("d/m/Y")}} </p>
-                                    <p><strong>Description : </strong>{{postule.demandeexport.description}} </p>
-                               
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <p><strong class="red">Réf : </strong>{{postule.demandeexport.reference}} </p>
+                                    <p><strong class="red">Prix : </strong>{{postule.demandeexport.prix}} </p>
+                                    <p><strong class="red">Pays : </strong>{{postule.demandeexport.pays}} </p>
+                                    <p><strong class="red">Ville : </strong>{{postule.demandeexport.ville}} </p>
+                                </div>
+                                <div class="col-md-6">
+                                    <p><strong class="red">Code Postal : </strong>{{postule.demandeexport.codepostal}} </p>
+                                    <p><strong class="red">Adresse : </strong>{{postule.demandeexport.adresse}} </p>
+                                    <p><strong class="red">Date Maximal : </strong>{{postule.demandeexport.datemax|date("d/m/Y")}} </p>
+                                    <p><strong class="red">Date Dépôt : </strong>{{postule.demandeexport.datedepos|date("d/m/Y")}} </p>
+                               </div>
                             </div>
+                            <hr>
+                            <p><strong class="red">Description : </strong>{{postule.demandeexport.description}} </p>      
                         </div>
                     </div>
                 </div>
@@ -71,17 +73,17 @@
                 {#----------------Détails Postule----------------#}
                 <div class="panel panel-default">
                   <div class="panel-heading">
-                    <h4 class="panel-title">
-                      <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseThree">
-                        Détails Postule
-                        <img src="{{ asset('bundles/nzotunisiefret/images') }}/down.png" alt="" class="pull-right"/>
-                      </a>
-                    </h4>
+                    <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseThree">
+                        <h4 class="panel-title">
+                          Détails Postule
+                            <img src="{{ asset('bundles/nzotunisiefret/images') }}/down.png" alt="" class="pull-right"/>
+                        </h4>
+                  </a>  
                   </div>
                   <div id="collapseThree" class="panel-collapse collapse">
                     <div class="panel-body">
-                      <p style="color: grey">Date de Postule : {{postule.datepostule|date("d/m/Y")}} | Durée : {{postule.duree}} | Prix : {{postule.prix}} </p>
-                        <p class="list-group-item-text cl-effect-1">
+                        <p style="color: grey"><span class="red">Date de Postule :</span> {{postule.datepostule|date("d/m/Y")}} | <span class="red">Durée :</span> {{postule.duree}} | <span class="red">Prix :</span> {{postule.prix}} </p>
+                        <p>
                           {{postule.description}}
                         </p> 
                     </div>
@@ -95,12 +97,31 @@
             <div class="panel panel-default">
                 <div class="panel-heading">Informations sur l'exportateur</div>
                     <div class="panel-body">
-                        Logo exportateur: <img class="media-object" src="{{ asset('exportateurfilesupload/')}}{{postule.exportateur.logoname}}" alt="{{postule.exportateur.logoname}}"  width="100" height="100" class="img-thumbnail">
-                        <br>
-                        Nom entreprise: {{postule.exportateur.nomentrop}} <br>
-                        Note: {{postule.exportateur.note}} <br>
-                        Contrat en cours:   {{postule.exportateur.nbcontratencours}} <br>
-                        Contrat Terminé: {{postule.exportateur.nbcontrattermine}}
+                               <div class="media">
+                            <div class="pull-left">
+                                <a href=""><img class="media-object img-thumbnail" src="{{ asset('exportateurfilesupload/')}}{{postule.exportateur.logoname}}" alt="" width="100" height="100"></a>
+                            </div>
+                          <div class="media-body">
+                              <div class="legend bottom" style="padding-bottom: 29px;">
+                                  <a href=""><h4 class="media-heading pull-left">{{postule.exportateur.nomentrop}}</h4></a>
+                                <span class="pull-right">
+                                    <img src="{{ asset('bundles/nzotunisiefret/images') }}/star.png">
+                                    <img src="{{ asset('bundles/nzotunisiefret/images') }}/star.png">
+                                    <img src="{{ asset('bundles/nzotunisiefret/images') }}/star.png">
+                                    <img src="{{ asset('bundles/nzotunisiefret/images') }}/star.png">
+                                    <img src="{{ asset('bundles/nzotunisiefret/images') }}/star.png">
+                                </span>
+                              </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <p class="red"><strong>Contrat en cours : </strong> {{postule.exportateur.nbcontratencours}}</p>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <p class="red"><strong>Contrat en terminé : </strong> {{postule.exportateur.nbcontrattermine}}</p>
+                                    </div>
+                                </div>
+                           </div>
+                        </div> 
                     </div>
                 </div>
             </div>
@@ -111,7 +132,6 @@
 
         {#----------------Liste des messges----------------#}
         <div class="row">
-            <div class="col-md-8"> 
                 {% if msgs|length <= 4 %}   
                     {% for msg in msgs %} 
                         <div class="panel panel-info" id="accordion">
@@ -181,8 +201,7 @@
                     <!-- END Last -->     
                 </div>       
                 {% endif %}
-        </div>
- 
+
     </div>
 </div>      
 {% endblock content %}

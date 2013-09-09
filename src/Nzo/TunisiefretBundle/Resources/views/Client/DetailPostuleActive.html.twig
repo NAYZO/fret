@@ -38,13 +38,28 @@
                     <h4 class="modal-title">Annuler la Demande</h4>
                   </div>
                   <div class="modal-body">
-                   Voulez vous annuler la demande ? 
+                      <form action="{{path('client_annuler_demande', {'id':postule.demandeexport.id})}}" method="POST" role="form" >
+                          <div class="form-group">
+                            <label>Raison d'annulation</label>
+                            <select id="nzoraison" class="form-control" name="annuler_raison">
+                                <option value="vbn">raison 1</option>
+                                <option value="dd">raison 1</option>
+                                <option value="autres">autres</option>
+                            </select>
+                          </div>
+                          <div class="form-group" id="raison" style="display: none">
+                              <label>Autre Raison</label>
+                              <textarea id="nzotextarea" class="form-control" rows="4" name="annuler_description"></textarea>
+                          </div>
+                          <div class="row"style="margin-right: 0">
+                              <div class="pull-right">
+                                <button type="submit" class="btn btn-danger">Confirmer</button>
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
+                              </div>
+                          </div>
+                       </form> 
                   </div>
-                  <div class="modal-footer">
-                      <a href="{{path('client_annuler_demande', {'id':postule.demandeexport.id})}}" class="btn btn-primary">Confirmer</a>
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    
-                  </div>
+                      
                 </div><!-- /.modal-content -->
               </div><!-- /.modal-dialog -->
             </div><!-- /.modal -->
@@ -62,15 +77,16 @@
         <div class="col-md-6">      
             <div class="panel-group" id="accordion1" style="margin-bottom: 10px">
                 {#----------------Détails demande Export----------------#}
-                <div class="panel panel-default">
+                <div class="panel panel-default">            
                     <div class="panel-heading">
+                      <a data-toggle="collapse" href="#collapseOne">
                         <h4 class="panel-title">
-                            <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion1" href="#collapseOne">
-                                Détail de la demande d'export
-                                <img src="{{ asset('bundles/nzotunisiefret/images') }}/down.png" alt="" class="pull-right"/>
-                            </a>
+                           Détail de la demande d'export
+                           <img src="{{ asset('bundles/nzotunisiefret/images') }}/down.png" alt="" class="pull-right"/>  
                        </h4>
+                      </a>
                     </div>
+                          
                     <div id="collapseOne" class="panel-collapse collapse">
                         <div class="panel-body">
                             <div class="row">
@@ -99,17 +115,17 @@
             {#----------------Détails Postule----------------#}
                 <div class="panel panel-default">
                   <div class="panel-heading">
-                    <h4 class="panel-title">
-                      <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseThree">
-                        Détails Postule de l'exportateur
-                        <img src="{{ asset('bundles/nzotunisiefret/images') }}/down.png" alt="" class="pull-right"/>
-                      </a>
-                    </h4>
+                    <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseThree">
+                        <h4 class="panel-title">
+                            Détails Postule de l'exportateur
+                            <img src="{{ asset('bundles/nzotunisiefret/images') }}/down.png" alt="" class="pull-right"/>
+                        </h4>
+                    </a>
                   </div>
                   <div id="collapseThree" class="panel-collapse collapse">
                     <div class="panel-body">
                         <p style="color: grey"><span class="red">Date de Postule :</span> {{postule.datepostule|date("d/m/Y")}} | <span class="red"> Durée :</span> {{postule.duree}} | <span class="red"> Prix :</span> {{postule.prix}} </p>
-                        <p class="list-group-item-text cl-effect-1">
+                        <p>
                           {{postule.description}}
                         </p> 
                     </div>
@@ -156,7 +172,7 @@
         <h4 class="legend2 bottom">Messages (<span id='nzonbmsg'>{{msgs|length}}</span>)</h4>
 
         {#----------------Liste des messges----------------#}
-        <div id="colleges-table" class="row" >
+        <div id="scroll" class="row" >
             <div class="col-md-8" id="nzomsgcontent"> 
                 {% if msgs|length <= 4 %}   
                     {% for msg in msgs %} 
@@ -227,21 +243,20 @@
                 {% endif %}
             </div>
                
-                    <div  class="col-md-4">
-            <div id="college-info">  
-            <form action="#" id="msgform" method="post" role="form">
-                <div class="form-group">
-                    <textarea id="nzomsgexp" required="required" class="form-control" rows="6"></textarea>
+            <div  class="col-md-4">
+                <div id="scrollbox">  
+                    <form action="#" id="msgform" method="post" role="form">
+                        <div class="form-group">
+                            <textarea id="nzomsgexp" required="required" class="form-control" rows="6"></textarea>
+                        </div>
+                        <div class="buttons-set">
+                            <button type="submit" class="btn btn-danger pull-right">Envoyez</button>
+                        </div>
+                    </form> 
                 </div>
-                <div class="buttons-set">
-                    <button type="submit" class="btn btn-danger pull-right">Envoyez</button>
-                </div>
-            </form> 
-                </div>
+            </div>
         </div>
-    </div>
-          
-</div>      
+    </div>      
 {% endblock content %}
  
  {% block js %}  
@@ -284,17 +299,31 @@
            $('#nzolengthmsg').on('click',function(){ 
                 $('#nzolengthmsg').remove();
                 $('#nzoblockfor').show();
-            });    
+            }); 
+            
+            
+            $("#nzoraison").change(function() {
+                if( $("#nzoraison option:selected").val() == "autres" ) 
+                     $("#raison").slideDown();
+                else {
+                  $("#raison").slideUp();
+                  $("#nzotextarea").val('');
+                }
+
+            });
+
         });
+        
+        
     </script>
     <script type="text/javascript">
 $(window).scroll(function () {
-	var ttop = $('#colleges-table').position().top;
-	var hcltb = $('#colleges-table').height();
+	var ttop = $('#scroll').position().top;
+	var hcltb = $('#scroll').height();
 	var mtop = $(window).scrollTop();
 	if(mtop > ttop) {
 	 if (mtop < (ttop+hcltb-200))
-	 { $('#college-info').css('top', (mtop-ttop-25));}
+	 { $('#scrollbox').css('top', (mtop-ttop-25));}
 	 }
  });
 </script>
