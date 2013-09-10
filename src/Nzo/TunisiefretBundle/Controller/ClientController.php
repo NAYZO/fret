@@ -458,7 +458,7 @@ class ClientController extends Controller {
         
             $nbnotifs = $em->getRepository('NzoTunisiefretBundle:Notification')->getNbNotifClient($usr);
 
-        return new Response(json_encode( intval($nbnotifs) ));
+        return new Response($nbnotifs);
         }
     }
     
@@ -474,7 +474,7 @@ class ClientController extends Controller {
         
             $nbmsgs = $em->getRepository('NzoTunisiefretBundle:NotifMsg')->getNbMsgClient($usr);
 
-        return new Response(json_encode( intval($nbmsgs) ));
+        return new Response($nbmsgs);
         }
     }
    

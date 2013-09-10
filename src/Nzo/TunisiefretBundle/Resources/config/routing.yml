@@ -38,7 +38,7 @@ ajax_get_nb_notif_client:
     
 ajax_get_nb_msg_client:
     pattern: /nb-msg-client/ajax/
-    defaults: {_controller: NzoTunisiefretBundle:Client:AjaxGetNbMsg}    
+    defaults: {_controller: NzoTunisiefretBundle:Client:AjaxGetNbMsg}            
     
 nzo_voirlistedemande_export_active:
     pattern: /liste-demande-export/active/

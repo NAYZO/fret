@@ -18,6 +18,7 @@ class NotificationRepository extends EntityRepository
          $qb->where('a.client = :client')              
             ->setParameter('client', $id)
             ->orderBy('a.date_depos', 'DESC');
+            //->setMaxResults(1);
          return $qb->getQuery()->execute();
     }
     
