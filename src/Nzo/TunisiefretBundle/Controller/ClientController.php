@@ -434,14 +434,15 @@ class ClientController extends Controller {
             $usr = $this->get('security.context')->getToken()->getUser();
             $em = $this->getDoctrine()->getManager();
         
-            $notifs = $em->getRepository('NzoTunisiefretBundle:Notification')->getListNotifClient($usr);
-
-           $i = 0;
+            $notifs = $em->getRepository('NzoTunisiefretBundle:Notification')->getListNotifClient($usr, 4);
+         
+            $i = 0;
             foreach ($notifs as $res) {
                 $notifdate = $res->getDate()->format('d/m/Y H:i');
                 $val[$i] = array('date' =>$notifdate, 'notiftext' => $res->getText(), 'notifvu' => $res->getVu());
                 $i++;
             }
+ 
         return new Response(json_encode($val));
         }
     }

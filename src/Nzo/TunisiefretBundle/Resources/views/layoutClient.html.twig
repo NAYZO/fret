@@ -39,8 +39,7 @@
                                 <span id='nzonotifnb' class="label label-danger label-style"></span>
                             </a>
                             <ul id='nzolistnotifajax' class="dropdown-menu  notification" style="margin-top: 26px;">
-                              {#  <li class="nonlu"><a href="#"><strong>Holy guacamole!</strong> Best check yo self, you're not looking too good.</a></li> #}
-        
+                              
                             </ul>
                         </li>
                             
@@ -155,7 +154,11 @@
                             var b='';
                             for(key in a)
                             {
-                                b+='<li>'+a[key]['notiftext']+'</li>';
+                               /* if(a[key]['notifvu']==0)
+                                    b+='<li class="nonlu">'+a[key]['notiftext']+'</li>';
+                                else
+                                */
+                                    b+='<li>'+a[key]['notiftext']+'</li>'; 
                             }
                             b+='<li class="all"><a href="#" class="text-center">Voir toute les notifications</a></li>';
                             $('#nzolistnotifajax').html(b);
