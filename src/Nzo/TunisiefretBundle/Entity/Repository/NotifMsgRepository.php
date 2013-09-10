@@ -22,7 +22,7 @@ class NotifMsgRepository extends EntityRepository
          return $qb->getQuery()->getSingleScalarResult();
     } 
     
-    public function getListNotifMsgClient($id)
+    public function getListMessagesClient($id)
     {
          $qb = $this->createQueryBuilder('a');
          $qb->where('a.client = :client')

@@ -62,6 +62,11 @@ class NotifMsg
      */
     private $url;
     
+    /**
+     * @ORM\Column(name="logo_emetteur", type="string", length=255, nullable=true)
+     */
+    private $logoemetteur;
+    
     
     public function __construct()
     {
@@ -266,5 +271,28 @@ class NotifMsg
     public function getExportateur()
     {
         return $this->exportateur;
+    }
+
+    /**
+     * Set logoemetteur
+     *
+     * @param string $logoemetteur
+     * @return NotifMsg
+     */
+    public function setLogoemetteur($logoemetteur)
+    {
+        $this->logoemetteur = $logoemetteur;
+    
+        return $this;
+    }
+
+    /**
+     * Get logoemetteur
+     *
+     * @return string 
+     */
+    public function getLogoemetteur()
+    {
+        return $this->logoemetteur;
     }
 }

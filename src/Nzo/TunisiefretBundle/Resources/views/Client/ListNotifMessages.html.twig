@@ -14,7 +14,8 @@
 {% block content %}
 
     {% for notif in listemessages %}
-        {{notif.text}} | {{notif.date|date("d/m/Y")}}    <br>
+<img class="media-object img-thumbnail" src="{{ asset('exportateurfilesupload/')}}{{notif.logoemetteur}}" width="80"> | 
+        {{notif.emetteur}} | {{notif.date|date("d/m/Y")}} | {{notif.titredemandeexport}} | {{notif.text}}   <br>
         -----------------------------------
         <br>
     {%endfor%}

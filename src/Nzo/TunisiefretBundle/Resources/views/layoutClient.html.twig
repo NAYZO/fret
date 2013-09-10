@@ -44,7 +44,7 @@
                         </li>
                             
                   
-                        <li><a href="" id="cliknotifmsg"><span class="glyphicon glyphicon-envelope"></span><span id='nzomsgnb' class="label label-danger label-style">{%if app.user.notifmsg|length > 0%} {{app.user.notifmsg|length}} {%endif%}</span></a></li>
+                        <li><a href="{{path('client_list_messages')}}" id="cliknotifmsg"><span class="glyphicon glyphicon-envelope"></span><span id='nzomsgnb' class="label label-danger label-style">{%if app.user.notifmsg|length > 0%} {{app.user.notifmsg|length}} {%endif%}</span></a></li>
                         
                         {% include "NzoUserBundle::connexion.html.twig" %}
                     </ul>
@@ -154,10 +154,9 @@
                             var b='';
                             for(key in a)
                             {
-                               /* if(a[key]['notifvu']==0)
+                                if(a[key]['notifvu']==0)
                                     b+='<li class="nonlu"><a href="#">'+a[key]['notiftext']+'</a></li>';
-                                else
-                                */
+                                else                      
                                     b+='<li><a href="#">'+a[key]['notiftext']+'</a></li>'; 
                             }
                             b+='<li class="all"><a href="{{path('client_list_notifications')}}" class="text-center">Voir toute les notifications</a></li>';
