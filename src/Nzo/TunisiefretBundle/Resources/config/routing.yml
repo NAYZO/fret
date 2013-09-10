@@ -29,7 +29,7 @@ ajax_send_msg_client:
     defaults: {_controller: NzoTunisiefretBundle:Client:MessageClientSend}
     
 ajax_get_notif_client:
-    pattern: /list-notif-client/ajax/
+    pattern: /liste-notif-client/ajax/
     defaults: {_controller: NzoTunisiefretBundle:Client:AjaxGetNotif}   
     
 ajax_get_nb_notif_client:
@@ -38,7 +38,15 @@ ajax_get_nb_notif_client:
     
 ajax_get_nb_msg_client:
     pattern: /nb-msg-client/ajax/
-    defaults: {_controller: NzoTunisiefretBundle:Client:AjaxGetNbMsg}            
+    defaults: {_controller: NzoTunisiefretBundle:Client:AjaxGetNbMsg}       
+    
+client_list_notifications:
+    pattern: /liste-notifications/
+    defaults: {_controller: NzoTunisiefretBundle:Client:ListeNotifications}        
+    
+client_list_messages:
+    pattern: /liste-messagess/
+    defaults: {_controller: NzoTunisiefretBundle:Client:Listemessages}    
     
 nzo_voirlistedemande_export_active:
     pattern: /liste-demande-export/active/

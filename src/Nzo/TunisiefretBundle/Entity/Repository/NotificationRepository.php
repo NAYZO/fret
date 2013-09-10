@@ -12,14 +12,23 @@ use Doctrine\ORM\EntityRepository;
  */
 class NotificationRepository extends EntityRepository
 {
-    public function getListNotifClient($id, $limit=99999999999)
+    public function getListNotifAjaxClient($id)
     {
          $qb = $this->createQueryBuilder('a');
          $qb->where('a.client = :client')
             ->orderBy('a.date', 'DESC')
             ->setParameter('client', $id)
-            ->setMaxResults($limit);
+            ->setMaxResults(4);
          return $qb->getQuery()->execute();
+    }
+    
+    public function getListNotifClient($id)
+    {
+         $qb = $this->createQueryBuilder('a');
+         $qb->where('a.client = :client')
+            ->orderBy('a.date', 'DESC')
+            ->setParameter('client', $id);
+         return $qb->getQuery();
     }
     
     public function getNbNotifClient($id)

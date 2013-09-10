@@ -46,6 +46,34 @@ class ClientController extends Controller {
         return $this->render('NzoTunisiefretBundle:Client:PoserDemandeExport.html.twig', array('form' => $form->createView()));
     }
     
+    /**
+    * @Secure(roles="ROLE_CLIENT")
+    */
+    public function ListeNotificationsAction()
+    {
+        $usr = $this->get('security.context')->getToken()->getUser();
+            $em = $this->getDoctrine()->getManager();        
+            $query = $em->getRepository('NzoTunisiefretBundle:Notification')->getListNotifClient($usr);
+            $paginator = $this->get('knp_paginator'); 
+            $listenotifications = $paginator->paginate($query,
+            $this->get('request')->query->get('page', 1), 8);         
+            return $this->render('NzoTunisiefretBundle:Client:ListNotifications.html.twig', array('listenotifications' => $listenotifications));
+    }
+    
+    /**
+    * @Secure(roles="ROLE_CLIENT")
+    */
+    public function ListeMessagesAction()
+    {
+        $usr = $this->get('security.context')->getToken()->getUser();
+            $em = $this->getDoctrine()->getManager();        
+            $query = $em->getRepository('NzoTunisiefretBundle:NotifMsg')->getListMessagesClient($usr);
+            $paginator = $this->get('knp_paginator'); 
+            $listemessages = $paginator->paginate($query,
+            $this->get('request')->query->get('page', 1), 8);         
+            return $this->render('NzoTunisiefretBundle:Client:ListNotifMessages.html.twig', array('listemessages' => $listemessages));
+    }
+    
    /**
     * @Secure(roles="ROLE_CLIENT")
     */
@@ -434,7 +462,7 @@ class ClientController extends Controller {
             $usr = $this->get('security.context')->getToken()->getUser();
             $em = $this->getDoctrine()->getManager();
         
-            $notifs = $em->getRepository('NzoTunisiefretBundle:Notification')->getListNotifClient($usr, 4);
+            $notifs = $em->getRepository('NzoTunisiefretBundle:Notification')->getListNotifAjaxClient($usr);
          
             $i = 0;
             foreach ($notifs as $res) {

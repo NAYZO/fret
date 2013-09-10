@@ -13,5 +13,14 @@
 
 {% block content %}
 
+    {% for notif in listenotifications %}
+        {{notif.text}} | {{notif.date|date("d/m/Y")}}    <br>
+        -----------------------------------
+        <br>
+    {%endfor%}
+
+<div class="navigation">
+    {{ knp_pagination_render(listenotifications) }}
+    </div>
 {% endblock content %} 
  

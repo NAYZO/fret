@@ -1,12 +1,11 @@
-
 {% extends "NzoTunisiefretBundle::layoutClient.html.twig" %}
-{% block title %} {{ parent() }} List Notification Messages {% endblock %}
+{% block title %} {{ parent() }} List Notifications Messages{% endblock %}
 
 {% block banner %}
 <div class="jumbotron">
     <div class="col-md-4"> 
         <div class="row">
-            <h4 class="title-banner" style="">List Notification Messages</h4>
+            <h4 class="title-banner" style="">List Notifications Messages</h4>
         </div>
     </div>
 </div>
@@ -14,5 +13,14 @@
 
 {% block content %}
 
+    {% for notif in listemessages %}
+        {{notif.text}} | {{notif.date|date("d/m/Y")}}    <br>
+        -----------------------------------
+        <br>
+    {%endfor%}
+
+<div class="navigation">
+    {{ knp_pagination_render(listemessages) }}
+    </div>
 {% endblock content %} 
  
