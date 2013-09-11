@@ -433,8 +433,9 @@ class ClientController extends Controller {
             $notifmsg = new NotifMsg();
             $notifmsg->setExportateur($exportateur);
             $notifmsg->setEmetteur($usr->getNomentrop());
+            $notifmsg->setLogoemetteur($usr->getLogoname());
             $notifmsg->setTitredemandeexport($postule->getDemandeexport()->getTitre());
-            $notifmsg->setText($msg);
+            $notifmsg->setText($msg);           
             $em->persist($notifmsg);
             $em->flush();
 
