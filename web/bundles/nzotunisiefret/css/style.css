@@ -334,3 +334,11 @@ padding: 12px;
 }
 .nonlu {background-color: rgba(163, 82, 82, 0.62);}
 .all{background-color: rgba(12, 22, 43, 0.68);}
+
+.alert-notif{
+    color: #88270F;
+background-color: #FFFEFC;
+border-color: #D8BFAF;
+padding-left: 25px;
+padding-right: 25px;
+}
