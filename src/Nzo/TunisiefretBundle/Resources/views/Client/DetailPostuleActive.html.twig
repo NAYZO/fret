@@ -317,13 +317,13 @@
     </script>
     <script type="text/javascript">
 $(window).scroll(function () {
-	var ttop = $('#scroll').position().top;
-	var hcltb = $('#scroll').height();
-	var mtop = $(window).scrollTop();
-	if(mtop > ttop) {
-	 if (mtop < (ttop+hcltb-200))
-	 { $('#scrollbox').css('top', (mtop-ttop-25));}
-	 }
+        var ttop = $('#scroll').position().top;
+        var hcltb = $('#scroll').height();
+        var mtop = $(window).scrollTop();
+        if(mtop > ttop) {
+         if (mtop < (ttop+hcltb-200))
+         { $('#scrollbox').css('top', (mtop-ttop-25));}
+         }
  });
-</script>
+        </script>
 {% endblock js %}
