@@ -10,19 +10,20 @@
     </div>
 {% endblock banner %}
 {% block content %}
- <form action="{{ path("fos_user_security_check") }}" method="post" class="well col-md-5 col-md-offset-3" style="padding: 40px" role="form">
+<div class="well col-md-5 col-md-offset-3 pading-login">
+ <form action="{{ path("fos_user_security_check") }}" method="post" style="padding: 40px" role="form">
 
   <fieldset>
-    <legend class="colorlegend"><strong>Se Connecter</strong></legend>
+    <legend><strong>Connectez Vous : </strong></legend>
     {% if error %}
-       <div class="alert alert-error text-center">{{ error|trans({}, 'FOSUserBundle') }}</div>
+       <div class="error-alert">{{ error|trans({}, 'FOSUserBundle') }}</div>
     {% endif %}
     <div class="form-group">
-      <label for="disabledTextInput">Nom D'utilisateur</label>
+        <label for="disabledTextInput"><strong>Nom D'utilisateur</strong> <span class="required">*</span></label>
       <input type="text" name="_username" value="{{ last_username }}" required="required" placeholder="Entrez Votre Nom D'utilisateur" class="form-control">              
     </div>
     <div class="form-group">
-      <label for="disabledSelect">Mot de Passe</label>
+        <label for="disabledSelect"><strong>Mot de Passe</strong> <span class="required">*</span></label>
         <input type="password" type="password" name="_password" required="required" placeholder="Entrez Votre Mot de Passe" class="form-control">
         <a href="{{path('fos_user_resetting_request')}}" class="pull-right">Forgot your password?</a>
     </div>
@@ -31,11 +32,11 @@
         <input type="checkbox" id="remember_me" name="_remember_me" value="on"> Se Souvenir de Moi
       </label>
     </div>
-    <button type="submit" class="btn btn-primary pull-right" name="_submit" >Se Connecter</button>
+    <button type="submit" class="btn btn-danger pull-right" name="_submit" >Se Connecter</button>
     <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
   </fieldset>
 </form>
-   
+    </div> 
 
     
 {% endblock content %}

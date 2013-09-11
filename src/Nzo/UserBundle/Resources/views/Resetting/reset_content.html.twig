@@ -1,21 +1,18 @@
-<form action="{{ path('fos_user_resetting_reset', {'token': token}) }}"  {{ form_enctype(form) }} method="POST" class="box login">
+<form action="{{ path('fos_user_resetting_reset', {'token': token}) }}"  {{ form_enctype(form) }} method="POST" style="padding: 40px">
     <fieldset>
-        <legend class="colorlegend"><strong>Nouveau Mot de passe</strong></legend>
-        <h6 class="style_h">S'il vous plaît entrez un nouveau mot de passe:</h6> 
+        <legend><strong>Nouveau Mot de passe : </strong></legend>
         {% if form_errors(form)  %}
-            <div class="alert alert-error text-center"> {{form_errors(form)}} </div> 
+            <div class="error-alert"> {{form_errors(form)}} </div> 
         {% endif %}        
-	
-        {#--New Password---#}
-        <div class="input-prepend">
-            <span class="add-on"><i class="icon-lock"></i></span>
-            {{ form_widget(form.plainPassword.first,{'attr': {'class': 'span3','placeholder': 'New Password'}})}}
-        </div>
-            
+	<div class="form-group">
+            {#--New Password---#}
+            <label><strong>Nouveau Mot de Passe</strong> <span class="required">*</span></label>
+            {{ form_widget(form.plainPassword.first,{'attr': {'class': 'form-control'}})}}
+        </div>   
         {#--New Password Confirm---#}
-        <div class="input-prepend">
-            <span class="add-on"><i class="icon-lock"></i></span> 
-            {{ form_widget(form.plainPassword.second,{'attr': {'class': 'span3','placeholder': 'New Password Confirmation'}})}}
+        <div class="form-group">
+            <label><strong>Confirmation Mot de Passe</strong> <span class="required">*</span></label>
+            {{ form_widget(form.plainPassword.second,{'attr': {'class': 'form-control'}})}}
         </div>
             
         {% if(form_errors(form.plainPassword.first)) %}
@@ -23,7 +20,7 @@
         {% endif %} 
 
         {{ form_rest(form) }}
-        <input type="submit" value="Edit Password" name="_submit" class="btn btn-primary pull-right">
+        <input type="submit" value="Edit Password" name="_submit" class="btn btn-danger pull-right">
     </fieldset>
    
 </form>
