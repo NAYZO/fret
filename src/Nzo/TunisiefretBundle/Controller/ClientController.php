@@ -11,7 +11,6 @@ use Nzo\TunisiefretBundle\Form\DemandeExportType;
 use Nzo\TunisiefretBundle\Entity\DemandeExport;
 use Nzo\TunisiefretBundle\Entity\DemandeExportPostule;
 
-use Nzo\TunisiefretBundle\Form\MsgDemandeExportType;
 use Nzo\TunisiefretBundle\Entity\MsgDemandeExport;
 
 use Nzo\TunisiefretBundle\Entity\NotifMsg;
@@ -51,12 +50,25 @@ class ClientController extends Controller {
      */
     public function AjaxGetNbNotifAction(Request $request) 
     {
-            $usr = $this->get('security.context')->getToken()->getUser();
-            $em = $this->getDoctrine()->getManager();
-        
-            $nbnotifs = $em->getRepository('NzoTunisiefretBundle:Notification')->getNbNotifClient($usr);
-
+        $usr = $this->get('security.context')->getToken()->getUser();
+        $em = $this->getDoctrine()->getManager();
+        $nbnotifs = $em->getRepository('NzoTunisiefretBundle:Notification')->getNbNotifClient($usr);
+        if ($request->isXmlHttpRequest()) 
         return new Response($nbnotifs);
+        return new Response($nbnotifs);
+    }
+    
+    /**
+     * @Secure(roles="ROLE_CLIENT")
+     */
+    public function AjaxGetNbMsgAction(Request $request) 
+    {
+        $usr = $this->get('security.context')->getToken()->getUser();
+            $em = $this->getDoctrine()->getManager();
+            $nbmsgs = $em->getRepository('NzoTunisiefretBundle:NotifMsg')->getNbMsgClient($usr);
+        if ($request->isXmlHttpRequest()) 
+        return new Response($nbmsgs);
+        return new Response($nbmsgs);
     }
     
     /**
@@ -81,6 +93,15 @@ class ClientController extends Controller {
         $usr = $this->get('security.context')->getToken()->getUser();
             $em = $this->getDoctrine()->getManager();        
             $query = $em->getRepository('NzoTunisiefretBundle:NotifMsg')->getListMessagesClient($usr);
+            // set Vu to True
+            foreach ($query->execute() as $res) {
+                if(!$res->getVu()){
+                $res->setVu(true);
+                $em->persist($res);           
+                }
+            }
+            $em->flush();
+            
             $paginator = $this->get('knp_paginator'); 
             $listemessages = $paginator->paginate($query,
             $this->get('request')->query->get('page', 1), 8);         
@@ -481,7 +502,7 @@ class ClientController extends Controller {
             foreach ($notifs as $res) {
                 $notifdate = $res->getDate()->format('d/m/Y H:i');
                 $vu = $res->getVu();
-                $val[$i] = array('date' =>$notifdate, 'notiftext' => $res->getText(), 'notifvu' => $vu);
+                $val[$i] = array('date' => $notifdate, 'notiftext' => $res->getText(), 'notifvu' => $vu);
                 // set Vu to True
                 if(!$vu){
                 $res->setVu(true);
@@ -493,21 +514,6 @@ class ClientController extends Controller {
         return new Response(json_encode($val));
         }
     }  
-    
-    /**
-     * @Secure(roles="ROLE_CLIENT")
-     */
-    public function AjaxGetNbMsgAction(Request $request) 
-    {
-        if ($request->isXmlHttpRequest()) {  
-            
-            $usr = $this->get('security.context')->getToken()->getUser();
-            $em = $this->getDoctrine()->getManager();
-        
-            $nbmsgs = $em->getRepository('NzoTunisiefretBundle:NotifMsg')->getNbMsgClient($usr);
 
-        return new Response($nbmsgs);
-        }
-    }
    
 }
