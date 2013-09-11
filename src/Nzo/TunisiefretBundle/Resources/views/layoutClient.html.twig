@@ -36,7 +36,7 @@
                         <li class="dropdown">
                             <a href="#" id="cliknotif" class="dropdown-toggle" data-toggle="dropdown">
                                 <span class="glyphicon glyphicon-bell"></span>
-                                <span id='nzonotifnb' class="label label-danger label-style">{%if app.user.notification|length > 0%} {{app.user.notification|length}} {%endif%}</span>
+                                <span id='nzonotifnb' class="label label-danger label-style">{%set nzonotificationnb = render(controller('NzoTunisiefretBundle:Client:AjaxGetNbNotif'))%}{%if nzonotificationnb > 0%}{{nzonotificationnb}}{%endif%}</span>
                             </a>
                             <ul id='nzolistnotifajax' class="dropdown-menu  notification" style="margin-top: 26px;">
                               
@@ -117,6 +117,7 @@
      <script src="{{ asset('bundles/nzotunisiefret/js/modal.js') }}"></script>
      <script>
          $(document).ready(function() {
+            nzostorage='';
             setInterval(function(){ 
                 $.ajax({
                      url:'{{path("ajax_get_nb_notif_client")}}',
@@ -145,27 +146,32 @@
          });
          
          $('#cliknotif').on('click', function(){
-            $('#nzonotifnb').html('');
-            $.ajax({
-                     url:'{{path("ajax_get_notif_client")}}',
-                     type:"POST",
-                     dataType:'json',
-                     success: function(a){
-                            var b='';
-                            for(key in a)
-                            {
-                                if(a[key]['notifvu']==0)
-                                    b+='<li class="nonlu"><a href="#">'+a[key]['notiftext']+'</a></li>';
-                                else                      
-                                    b+='<li><a href="#">'+a[key]['notiftext']+'</a></li>'; 
-                            }
-                            b+='<li class="all"><a href="{{path('client_list_notifications')}}" class="text-center">Voir toute les notifications</a></li>';
-                            $('#nzolistnotifajax').html(b);
-                     },
-                     error: function() {
-                            alert('error');
-                     }
-                }); 
+            if($('#nzonotifnb').html() !== '' || nzostorage ===''){                
+                $.ajax({
+                         url:'{{path("ajax_get_notif_client")}}',
+                         type:"POST",
+                         dataType:'json',
+                         success: function(a){
+                                var b='';
+                                for(key in a)
+                                {
+                                    if(a[key]['notifvu']==0)
+                                        b+='<li class="nonlu"><a href="#">'+a[key]['notiftext']+'</a></li>';
+                                    else                      
+                                        b+='<li><a href="#">'+a[key]['notiftext']+'</a></li>';                                    
+                                }
+                                b+='<li class="all"><a href="{{path('client_list_notifications')}}" class="text-center">Voir toute les notifications</a></li>';
+                                nzostorage = b;
+                                $('#nzolistnotifajax').html(b);
+                         },
+                         error: function() {
+                                alert('error');
+                         }
+                    });
+                    $('#nzonotifnb').html('');
+            }
+            $('#nzolistnotifajax').html(nzostorage);
+ 
          });
      </script>
      {% block js %}  {% endblock js %}

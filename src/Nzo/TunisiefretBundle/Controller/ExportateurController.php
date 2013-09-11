@@ -37,7 +37,7 @@ class ExportateurController extends Controller {
                 //Notification Client
                 $Notification = new Notification();
                 $Notification->setClient($DemandeExport->getClient());
-                $Notification->setText('Nouveau Postule sur la Demande '.$DemandeExport->getReference());
+                $Notification->setText('Nouveau Postule sur la Demande <span>'.$DemandeExport->getTitre().'</span>');
                 // end Notification
                 //augmente NB postule de l'Exportateur
                 $usr->setNbdemandeexportpostule($usr->getNbdemandeexportpostule()+1);   

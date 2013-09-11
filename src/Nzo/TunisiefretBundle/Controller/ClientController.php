@@ -47,6 +47,19 @@ class ClientController extends Controller {
     }
     
     /**
+     * @Secure(roles="ROLE_CLIENT")
+     */
+    public function AjaxGetNbNotifAction(Request $request) 
+    {
+            $usr = $this->get('security.context')->getToken()->getUser();
+            $em = $this->getDoctrine()->getManager();
+        
+            $nbnotifs = $em->getRepository('NzoTunisiefretBundle:Notification')->getNbNotifClient($usr);
+
+        return new Response($nbnotifs);
+    }
+    
+    /**
     * @Secure(roles="ROLE_CLIENT")
     */
     public function ListeNotificationsAction()
@@ -98,12 +111,12 @@ class ClientController extends Controller {
             {
                 if($postule->getDemandeAccepter())
                 {
-                    $notifmsg = new Notification();
-                    $notifmsg->setExportateur($postule->getExportateur());
+                    $notif = new Notification();
+                    $notif->setExportateur($postule->getExportateur());
                     //==================================================================================================================== lien exportateur pour info demande export + classe css
-                    $text = 'Demande Export <a href=""> <span>'.$mydemande->getTitre().'</span> </a> est Terminé!';
-                    $notifmsg->setText($text);
-                    $em->persist($notifmsg);
+                    $text = 'Demande Export <span>'.$mydemande->getTitre().'</span> est Terminé!';
+                    $notif->setText($text);
+                    $em->persist($notif);
                     $postuleexport = $postule;
                 }
             }
@@ -134,12 +147,12 @@ class ClientController extends Controller {
             $listepostules = $mydemande->getDemandeexportpostule();
             foreach($listepostules as $postule)
             {
-                $notifmsg = new Notification();
-                $notifmsg->setExportateur($postule->getExportateur());
+                $notif = new Notification();
+                $notif->setExportateur($postule->getExportateur());
                 //==================================================================================================================== lien exportateur pour info demande export + classe css
-                $text = 'Demande Export <a href=""> <span>'.$mydemande->getTitre().'</span> </a> est annulé!';
-                $notifmsg->setText($text);
-                $em->persist($notifmsg);
+                $text = 'Demande Export <span>'.$mydemande->getTitre().'</span> est annulé!';
+                $notif->setText($text);
+                $em->persist($notif);
             }
             
             $em->flush();
@@ -436,12 +449,12 @@ class ClientController extends Controller {
             $em->persist($avis);
             
             // notif Exportateur
-            $notifmsg = new Notification();
-            $notifmsg->setExportateur($postule->getExportateur());
+            $notif = new Notification();
+            $notif->setExportateur($postule->getExportateur());
             //==================================================================================================================== lien exportateur pour avis export + classe css
-            $text = 'Vous avez reçu un Avis sur le Contrat Export <a href=""> <span>'.$postule->getDemandeexport()->getTitre().'</span> </a>';
-            $notifmsg->setText($text);
-            $em->persist($notifmsg);
+            $text = 'Vous avez reçu un Avis sur le Contrat Export <span>'.$postule->getDemandeexport()->getTitre().'</span>';
+            $notif->setText($text);
+            $em->persist($notif);
             
             $em->flush();
             
@@ -467,29 +480,19 @@ class ClientController extends Controller {
             $i = 0;
             foreach ($notifs as $res) {
                 $notifdate = $res->getDate()->format('d/m/Y H:i');
-                $val[$i] = array('date' =>$notifdate, 'notiftext' => $res->getText(), 'notifvu' => $res->getVu());
+                $vu = $res->getVu();
+                $val[$i] = array('date' =>$notifdate, 'notiftext' => $res->getText(), 'notifvu' => $vu);
+                // set Vu to True
+                if(!$vu){
+                $res->setVu(true);
+                $em->persist($res);           
+                }
                 $i++;
             }
- 
+            $em->flush();
         return new Response(json_encode($val));
         }
-    }
-    
-    /**
-     * @Secure(roles="ROLE_CLIENT")
-     */
-    public function AjaxGetNbNotifAction(Request $request) 
-    {
-        if ($request->isXmlHttpRequest()) {  
-            
-            $usr = $this->get('security.context')->getToken()->getUser();
-            $em = $this->getDoctrine()->getManager();
-        
-            $nbnotifs = $em->getRepository('NzoTunisiefretBundle:Notification')->getNbNotifClient($usr);
-
-        return new Response($nbnotifs);
-        }
-    }
+    }  
     
     /**
      * @Secure(roles="ROLE_CLIENT")
