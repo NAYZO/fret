@@ -23,7 +23,7 @@
     
     {#----------------Titre de la page----------------#}
     <div class="legend2">
-        <h4 class="pull-left">Détails Demande Export Archive</h4>
+        <h4>Détails Demande Export Archive</h4>
     </div>
     
     {#----------------Etat de la demande----------------#}
@@ -34,7 +34,7 @@
     {#----------------Collapse----------------#}
     <div class="row">
         <div class="col-md-6">      
-            <div class="panel-group" id="accordion">
+            <div class="panel-group" id="accordion" style="margin-bottom: 10px">
                 {#----------------Détails demande Export----------------#}
                 <div class="panel panel-default">
                     <div class="panel-heading">
@@ -66,11 +66,12 @@
                         </div>
                     </div>
                 </div>
-                    
+            </div>
+            <div class="panel-group" id="accordion2">
                 {#----------------Détails Postule----------------#}
                 <div class="panel panel-default">
                   <div class="panel-heading">
-                    <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseThree">
+                    <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseThree">
                         <h4 class="panel-title">
                           Détails Postule
                             <img src="{{ asset('bundles/nzotunisiefret/images') }}/down.png" alt="" class="pull-right"/>
