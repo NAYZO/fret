@@ -76,13 +76,12 @@
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                     <h4 class="modal-title">Confirmation de Contrat d'embauche</h4>
                   </div>
-                  <div class="modal-body">
+                  <div class="modal-body" style="color: black">
                       <form action="{{path('client_contrat_confirmer', {'id':postule.id})}}" method="POST" role="form" >
-                          <div>
-                            <div><label>Demande d'exportation:</label> {{postule.demandeexport.titre}}</div>
-                            <div><label>Référence:</label> {{postule.demandeexport.reference}}</div>
-                            <label>Confirmez et commencez un contrat d'embauche d'exportation avec l'exportateur "<span>{{postule.exportateur.nomentrop}}<span>"</label>
-                          </div>
+                          <p><strong class="red">Demande d'exportation : </strong> {{postule.demandeexport.titre}}</p>
+                          <p><strong class="red">Référence : </strong> {{postule.demandeexport.reference}}</p>
+                          <p class="text-center">Confirmez et commencez un contrat d'embauche d'exportation avec l'exportateur " <strong class="red">{{postule.exportateur.nomentrop}}</strong> " </p>
+                      
                           <div class="row"style="margin-right: 0">
                               <div class="pull-right">
                                 <button type="submit" class="btn btn-danger">Confirmer</button>
@@ -179,7 +178,7 @@
                               <div class="legend bottom" style="padding-bottom: 29px;">
                                   <a href=""><h4 class="media-heading pull-left">{{postule.exportateur.nomentrop}}</h4></a>
                                 <span class="pull-right">
-                                    <div id="nzoratingstar"></div>({{postule.exportateur.note}})
+                                    <strong>({{postule.exportateur.note}}) </strong><span id="nzoratingstar"></span>
                                 </span>
                               </div>
                                 <div class="row">
