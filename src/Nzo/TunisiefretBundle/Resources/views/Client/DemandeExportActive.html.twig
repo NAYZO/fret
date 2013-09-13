@@ -23,7 +23,7 @@
         <div class="row" style="padding-right: 14px;">
             <div class=" pull-right">
             <!-- Button trigger modal -->
-            <a data-toggle="modal" href="#nzomyModal" class="btn btn-danger btn-sm" style="margin-top: 12px;">Annuler la Demande</a>
+            <a data-toggle="modal" href="#nzomyModal" class="btn btn-danger btn-sm" style="margin-top: 12px;">Annuler votre Demande</a>
 
             <!-- Modal -->
             <div class="modal fade" id="nzomyModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -31,16 +31,18 @@
                 <div class="modal-content">
                   <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title">Annuler la Demande</h4>
+                    <h4 class="modal-title">Annuler votre demande: {{mydemande.titre}}</h4>
                   </div>
                   <div class="modal-body">
                    <form action="{{path('client_annuler_demande', {'id':mydemande.id})}}" method="POST" role="form" >
                           <div class="form-group">
                             <label>Raison d'annulation</label>
                             <select id="nzoraison" class="form-control" name="annuler_raison">
-                                <option value="vbn">raison 1</option>
-                                <option value="dd">raison 1</option>
-                                <option value="autres">autres</option>
+                                
+                                <option value="Postules ne répondent pas au besoin">Postules ne répondent pas au besoin</option>
+                                <option value="Demande d'exportation expiré">Demande d'exportation expiré</option>
+                                <option value="Ajouté par erreur">Ajouté par erreur</option>
+                                <option value="Autre">Autre</option>
                             </select>
                           </div>
                           <div class="form-group" id="raison" style="display: none">
@@ -120,7 +122,7 @@
     
         $(document).ready(function(){ 
             $("#nzoraison").change(function() {
-                if( $("#nzoraison option:selected").val() == "autres" ) 
+                if( $("#nzoraison option:selected").val() == "Autre" ) 
                      $("#raison").slideDown();
                 else {
                   $("#raison").slideUp();

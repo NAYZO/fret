@@ -27,24 +27,27 @@
         <div class="row" style="padding-right: 14px;">
             <div class=" pull-right">
             <!-- Button trigger modal -->
-            <a data-toggle="modal" href="#nzomyModal" class="btn btn-danger btn-sm" style="margin-top: 12px;">Annuler la Demande</a>
+            <a data-toggle="modal" href="#nzoAnnulerModal" class="btn btn-danger btn-sm" style="margin-top: 12px;">Annuler votre Demande</a>
+            <a data-toggle="modal" href="#nzoEmbaucheModal" class="btn btn-success btn-sm" style="margin-top: 12px;">Embauchez "{{postule.exportateur.nomentrop}}"</a>
 
             <!-- Modal -->
-            <div class="modal fade" id="nzomyModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal fade" id="nzoAnnulerModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
               <div class="modal-dialog">
                 <div class="modal-content">
                   <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title">Annuler la Demande</h4>
+                    <h4 class="modal-title">Annuler votre demande: {{postule.demandeexport.titre}}</h4>
                   </div>
                   <div class="modal-body">
                       <form action="{{path('client_annuler_demande', {'id':postule.demandeexport.id})}}" method="POST" role="form" >
                           <div class="form-group">
                             <label>Raison d'annulation</label>
                             <select id="nzoraison" class="form-control" name="annuler_raison">
-                                <option value="vbn">raison 1</option>
-                                <option value="dd">raison 1</option>
-                                <option value="autres">autres</option>
+                                
+                                <option value="Postules ne répondent pas au besoin">Postules ne répondent pas au besoin</option>
+                                <option value="Demande d'exportation expiré">Demande d'exportation expiré</option>
+                                <option value="Ajouté par erreur">Ajouté par erreur</option>
+                                <option value="Autre">Autre</option>
                             </select>
                           </div>
                           <div class="form-group" id="raison" style="display: none">
@@ -63,6 +66,35 @@
                 </div><!-- /.modal-content -->
               </div><!-- /.modal-dialog -->
             </div><!-- /.modal -->
+            
+            
+           <!-- Modal Embauche-->
+            <div class="modal fade" id="nzoEmbaucheModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">Confirmation de Contrat d'embauche</h4>
+                  </div>
+                  <div class="modal-body">
+                      <form action="{{path('client_contrat_confirmer', {'id':postule.id})}}" method="POST" role="form" >
+                          <div>
+                            <div><label>Demande d'exportation:</label> {{postule.demandeexport.titre}}</div>
+                            <div><label>Référence:</label> {{postule.demandeexport.reference}}</div>
+                            <label>Confirmez et commencez un contrat d'embauche d'exportation avec l'exportateur "<span>{{postule.exportateur.nomentrop}}<span>"</label>
+                          </div>
+                          <div class="row"style="margin-right: 0">
+                              <div class="pull-right">
+                                <button type="submit" class="btn btn-danger">Confirmer</button>
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
+                              </div>
+                          </div>
+                      </form> 
+                  </div>
+                      
+                </div><!-- /.modal-content -->
+              </div><!-- /.modal-dialog -->
+            </div><!-- /.modal --> 
             </div>
         </div>
     </div>
@@ -147,15 +179,15 @@
                               <div class="legend bottom" style="padding-bottom: 29px;">
                                   <a href=""><h4 class="media-heading pull-left">{{postule.exportateur.nomentrop}}</h4></a>
                                 <span class="pull-right">
-                                    <div id="nzoratingstar"></div>
+                                    <div id="nzoratingstar"></div>({{postule.exportateur.note}})
                                 </span>
                               </div>
                                 <div class="row">
                                     <div class="col-md-6">
-                                        <p class="red"><strong>Contrat en cours : </strong> {{postule.exportateur.nbcontratencours}}</p>
+                                        <p class="red"><strong>Contrats en cours : </strong> {{postule.exportateur.nbcontratencours}}</p>
                                     </div>
                                     <div class="col-md-6">
-                                        <p class="red"><strong>Contrat en terminé : </strong> {{postule.exportateur.nbcontrattermine}}</p>
+                                        <p class="red"><strong>Contrats terminé : </strong> {{postule.exportateur.nbcontrattermine}}</p>
                                     </div>
                                 </div>
                            </div>
@@ -301,7 +333,7 @@
             
             
             $("#nzoraison").change(function() {
-                if( $("#nzoraison option:selected").val() == "autres" ) 
+                if( $("#nzoraison option:selected").val() == "Autre" ) 
                      $("#raison").slideDown();
                 else {
                   $("#raison").slideUp();

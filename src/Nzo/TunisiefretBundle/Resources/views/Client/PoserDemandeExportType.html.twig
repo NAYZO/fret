@@ -1,10 +1,10 @@
 {% extends "NzoTunisiefretBundle::layoutClient.html.twig" %}
-{% block title %} {{ parent() }} Reposter Demande D'export Type {% endblock %}
+{% block title %} {{ parent() }} Déposer Demande D'export{% endblock %}
 {% block banner %}
     <div class="jumbotron">
         <div class="col-md-4"> 
             <div class="row">
-                <h4 class="title-banner" style="">Repostez Demande D'export Type</h4>
+                <h4 class="title-banner" style="">Déposer Demande D'export</h4>
             </div>
         </div>
     </div>
@@ -13,12 +13,12 @@
 <div class="padding">
     <ul id="breadcrumbs-two">
         <li><a href="{{path('nzo_tunisiefret_homepage')}}">Accueil</a></li>
-        <li><a href="{{ path('client_list_demande_type') }}">Liste Demandes Export Type</a></li>
-        <li class="current"><span>Reposter Demande Export type</span></li>
+        <li><a href="{{ path('client_list_demande_type') }}">Liste Demandes D'export Type</a></li>
+        <li class="current"><span>Déposer Demande Export type</span></li>
     </ul>
 <form action="#" id="contactForm" method="post" {{ form_enctype(form) }} role="form" novalidate>
     <fieldset>
-        <legend class="colorlegend"><strong>Reposter Votre Demande D'export Type</strong></legend>  
+        <legend class="colorlegend"><strong>Déposez Votre Demande D'export</strong></legend>  
         {% if(form_errors(form)) %}
             <div class="error-alert"> {{ form_errors(form) }} </div>
         {% endif %}
@@ -104,7 +104,7 @@
             {{ form_widget(form.demandeexporttype) }} Demande Export Type
         </div>
           
-        <input type="submit" value="Reposter" name="_submit" class="btn btn-danger pull-right">
+        <input type="submit" value="Déposer" name="_submit" class="btn btn-danger pull-right">
         <p class="text-danger"><span class="required">*</span> Champs Obligatoire</p>
         {{ form_rest(form) }}
     </fieldset>

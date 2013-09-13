@@ -146,6 +146,35 @@ class ClientController extends Controller {
         return $this->redirect($this->generateUrl('client_donner_avis_demande_export', array('id' => $postuleexport)));   
   }
   
+  /**
+    * @Secure(roles="ROLE_CLIENT")
+    */
+    public function ConfirmerContratExportAction(DemandeExportPostule $postule, Request $request)
+    {
+        $usr = $this->get('security.context')->getToken()->getUser();
+       // security access     
+            if($postule->getDemandeexport()->getClient() != $usr || $postule->getDemandeexport()->getTacking() || $postule->getDemandeexport()->getAnnulerDemande() || $postule->getDemandeRefuser() || $postule->getAnnulerByExportateur()) return $this->redirect($this->generateUrl('nzo_tunisiefret_homepage'));
+       // security access 
+            $em = $this->getDoctrine()->getManager();
+            $postule->setDemandeAccepter(true);
+            $postule->getDemandeexport()->setDateTacking(new \DateTime('now'));
+            $postule->getDemandeexport()->setTacking(true);
+            $em->persist($postule);
+            
+            // notif Exportateur
+       
+                    $notif = new Notification();
+                    $notif->setExportateur($postule->getExportateur());
+                    //==================================================================================================================== lien exportateur pour info demande export + classe css
+                    $text = 'Votre contrat: <span>'.$postule->getDemandeexport()->getTitre()."</span> est commencé le ".$postule->getDemandeexport()->getDateTacking()->format('d/m/Y');
+                    $notif->setText($text);
+                    $em->persist($notif);
+            
+            $em->flush();
+            //==================================================================================================================== redirection ver le contrat en cours ..
+        return $this->redirect($this->generateUrl('nzo_tunisiefret_homepage'));   
+  }
+  
     /**
     * @Secure(roles="ROLE_CLIENT")
     */

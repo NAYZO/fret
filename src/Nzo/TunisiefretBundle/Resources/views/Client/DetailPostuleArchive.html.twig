@@ -103,19 +103,15 @@
                               <div class="legend bottom" style="padding-bottom: 29px;">
                                   <a href=""><h4 class="media-heading pull-left">{{postule.exportateur.nomentrop}}</h4></a>
                                 <span class="pull-right">
-                                    <img src="{{ asset('bundles/nzotunisiefret/images') }}/star.png">
-                                    <img src="{{ asset('bundles/nzotunisiefret/images') }}/star.png">
-                                    <img src="{{ asset('bundles/nzotunisiefret/images') }}/star.png">
-                                    <img src="{{ asset('bundles/nzotunisiefret/images') }}/star.png">
-                                    <img src="{{ asset('bundles/nzotunisiefret/images') }}/star.png">
+                                    <div id="nzoratingstar"></div>({{postule.exportateur.note}})
                                 </span>
                               </div>
                                 <div class="row">
                                     <div class="col-md-6">
-                                        <p class="red"><strong>Contrat en cours : </strong> {{postule.exportateur.nbcontratencours}}</p>
+                                        <p class="red"><strong>Contrats en cours : </strong> {{postule.exportateur.nbcontratencours}}</p>
                                     </div>
                                     <div class="col-md-6">
-                                        <p class="red"><strong>Contrat en terminé : </strong> {{postule.exportateur.nbcontrattermine}}</p>
+                                        <p class="red"><strong>Contrats en terminé : </strong> {{postule.exportateur.nbcontrattermine}}</p>
                                     </div>
                                 </div>
                            </div>
@@ -205,12 +201,15 @@
 {% endblock content %}
  
  {% block js %}  
+    <script src="{{ asset('bundles/nzotunisiefret/js/jquery.raty.min.js') }}"></script>
     <script>
         $(document).ready(function(){
            $('#nzolengthmsg').on('click',function(){ 
                 $('#nzolengthmsg').remove();
                 $('#nzoblockfor').show();
-            });    
+            }); 
+            //Rating Star
+            $('#nzoratingstar').raty({ path: '/bundles/nzotunisiefret/images', noRatedMsg: "aucune note associé!", readOnly: true, score: {{postule.exportateur.note}} });
         });
     </script>
 

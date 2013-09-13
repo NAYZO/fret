@@ -116,6 +116,10 @@ client_annuler_demande:
     requirements:
         id:  \d+     
 
+client_contrat_confirmer:
+    pattern: /contrat-export/{id}/confirmer/
+    defaults: {_controller: NzoTunisiefretBundle:Client:ConfirmerContratExport}
+    
 client_reposter_demande_terminer:
     pattern: /demande-terminé/{id}/reposter/
     defaults: {_controller: NzoTunisiefretBundle:Client:ReposterDemandeExportTerminer}  

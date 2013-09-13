@@ -1,10 +1,10 @@
 {% extends "NzoTunisiefretBundle::layoutClient.html.twig" %}
-{% block title %} {{ parent() }} Poster Demande D'export {% endblock %}
+{% block title %} {{ parent() }} Déposer Demande D'export {% endblock %}
 {% block banner %}
     <div class="jumbotron">
         <div class="col-md-4"> 
             <div class="row">
-                <h4 class="title-banner">Postez Votre Demande D'export</h4>
+                <h4 class="title-banner">Déposer Demande D'export</h4>
             </div>
         </div>
     </div>
@@ -14,11 +14,11 @@
 <div class="padding">
     <ul id="breadcrumbs-two">
         <li><a href="{{path('nzo_tunisiefret_homepage')}}">Accueil</a></li>
-        <li class="current"><span>Poster Demande Export</span></li>
+        <li class="current"><span>Déposer Demande Export</span></li>
     </ul>
     <form action="#" id="contactForm" method="post" {{ form_enctype(form) }} role="form">
     <fieldset>
-        <legend><strong>Postez Votre Demande D'export</strong></legend>  
+        <legend><strong>Déposez Votre Demande D'export</strong></legend>  
         {% if(form_errors(form)) %}
             <div class="error-alert"> {{ form_errors(form) }} </div>
         {% endif %}

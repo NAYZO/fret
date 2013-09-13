@@ -56,10 +56,8 @@
         {% block carrousel %}{% endblock carrousel %}
         {% block banner %}{% endblock banner %}
         {#2eme navigateur #}
-        <ul class="box nav nav-pills bottom cl-effect-1">
-            <li class="col-md-offset-3"><a href="{{ path('nzo_poserdemande_export') }}" >Poster Demande Export</a></li>
-            <li><a href="{{ path('client_list_demande_type') }}">Liste Demandes Export Type</a></li>
-            <li class="dropdown">
+        <ul class="box nav nav-pills bottom cl-effect-1">            
+            <li class="dropdown col-md-offset-3">
                 <a class="dropdown-toggle" data-toggle="dropdown" href="#">
                     Mes Demandes <span class="caret"></span>
                 </a>
@@ -75,9 +73,11 @@
                 </a>
                 <ul class="dropdown-menu">
                     <li><a href="{{ path('client_contrat_encours') }}" >En Cours</a></li>
-                    <li><a href="{{ path('client_contrat_terminer') }}" >Terminer</a></li>
+                    <li><a href="{{ path('client_contrat_terminer') }}" >Terminé</a></li>
                 </ul>
             </li>
+            <li><a href="{{ path('nzo_poserdemande_export') }}" >Déposer Demande Export</a></li>
+            <li><a href="{{ path('client_list_demande_type') }}">Liste Demandes Export Type</a></li>
         </ul>
         {#Container#}
         <section class="container">
