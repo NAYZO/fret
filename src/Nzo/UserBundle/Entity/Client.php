@@ -159,7 +159,7 @@ class Client extends User
         parent::__construct();
         $this->addRole('ROLE_CLIENT');
         
-        $this->note = 0;
+        $this->note = -1;
         $this->dateinscription = new \DateTime('now');
         $this->notifier = 0;
         $this->notifiermsg = 0;

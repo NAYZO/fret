@@ -111,11 +111,11 @@ class ClientController extends Controller {
    /**
     * @Secure(roles="ROLE_CLIENT")
     */
-    public function TerminerDemandeExportAction(DemandeExport $mydemande, Request $request)
+    public function TerminerDemandeExportAction(DemandeExportPostule $postule, Request $request)
     {
         $usr = $this->get('security.context')->getToken()->getUser();
        // security access     
-            if($mydemande->getClient() != $usr || !$mydemande->getTacking()) return $this->redirect($this->generateUrl('nzo_tunisiefret_homepage'));
+            if($postule->getDemandeExport()->getClient() != $usr || !$postule->getDemandeExport()->getTacking()) return $this->redirect($this->generateUrl('nzo_tunisiefret_homepage'));
        // security access 
             $em = $this->getDoctrine()->getManager();
             $terminer = new TerminerDemandeExport();
@@ -123,33 +123,27 @@ class ClientController extends Controller {
             $terminer->setDescription( $request->request->get('terminer_description') );
             $em->persist($terminer);
             // save Teminer object in DemandeExport
-            $mydemande->setTerminerDemande($terminer);
-            $em->persist($mydemande);
+            $postule->getDemandeExport()->setTerminerDemande($terminer);
+            // nbcontratterminer ++ exportateur
+            $postule->getExportateur()->setNbcontrattermine($postule->getExportateur()->getNbcontrattermine()+1);
+            $em->persist($postule);
             
-            // notif Exportateur
-            $listepostules = $mydemande->getDemandeexportpostule();
-            foreach($listepostules as $postule)
-            {
-                if($postule->getDemandeAccepter())
-                {
+            // notif Exportateur                   
                     $notif = new Notification();
                     $notif->setExportateur($postule->getExportateur());
                     //==================================================================================================================== lien exportateur pour info demande export + classe css
-                    $text = 'Demande Export <span>'.$mydemande->getTitre().'</span> est Terminé!';
+                    $text = 'Demande Export <span>'.$postule->getDemandeExport()->getTitre().'</span> est Terminé!';
                     $notif->setText($text);
                     $em->persist($notif);
-                    $postuleexport = $postule;
-                }
-            }
             
             $em->flush();
-        return $this->redirect($this->generateUrl('client_donner_avis_demande_export', array('id' => $postuleexport)));   
+        return $this->redirect($this->generateUrl('client_donner_avis_demande_export', array('id' => $postule->getId())));   
   }
   
   /**
     * @Secure(roles="ROLE_CLIENT")
     */
-    public function ConfirmerContratExportAction(DemandeExportPostule $postule, Request $request)
+    public function ConfirmerContratExportAction(DemandeExportPostule $postule)
     {
         $usr = $this->get('security.context')->getToken()->getUser();
        // security access     
@@ -159,8 +153,9 @@ class ClientController extends Controller {
             $postule->setDemandeAccepter(true);
             $postule->getDemandeexport()->setDateTacking(new \DateTime('now'));
             $postule->getDemandeexport()->setTacking(true);
+            // nbcontratencours ++ exportateur
+            $postule->getExportateur()->setNbcontratencours($postule->getExportateur()->getNbcontratencours()+1);
             $em->persist($postule);
-            
             // notif Exportateur
        
                     $notif = new Notification();
@@ -401,15 +396,19 @@ class ClientController extends Controller {
     /**
     * @Secure(roles="ROLE_CLIENT")
     */
-    public function DemandeExportEnCoursAction(DemandeExport $mydemande)
+    public function DemandeExportEnCoursDetailAction(DemandeExport $mydemande)
     {
         $usr = $this->get('security.context')->getToken()->getUser();
        // security access     
-           if($mydemande->getClient() != $usr) return $this->redirect($this->generateUrl('nzo_tunisiefret_homepage'));
+           if($mydemande->getClient() != $usr || !$mydemande->getTacking() || $mydemande->getAnnulerDemande() || $mydemande->getTerminerDemande()) return $this->redirect($this->generateUrl('nzo_tunisiefret_homepage'));          
        // security access 
-        $em = $this->getDoctrine()->getManager();
-        $postules = $em->getRepository('NzoTunisiefretBundle:DemandeExportPostule')->getDemandeExportPostuleByDemande($mydemande);
-        return $this->render('NzoTunisiefretBundle:Client:DemandeExportEnCours.html.twig', array('mydemande' => $mydemande, 'postules' => $postules));
+        $tt = $mydemande->getDemandeexportpostule();
+            foreach($tt as $res){
+               if($res->getDemandeAccepter())
+                  $em = $this->getDoctrine()->getManager();        
+        $msgs = $em->getRepository('NzoTunisiefretBundle:MsgDemandeExport')->findBy( array('demandeexportpostule' => $res)); 
+                  return $this->render('NzoTunisiefretBundle:Client:DetailPostuleEnCours.html.twig', array('postule' => $res, 'msgs' => $msgs));
+            }          
     }
     
     /**
@@ -490,14 +489,29 @@ class ClientController extends Controller {
         $usr = $this->get('security.context')->getToken()->getUser();
        // security access     
             if($postule->getDemandeexport()->getClient() != $usr || !$postule->getDemandeexport()->getTerminerDemande()) return $this->redirect($this->generateUrl('nzo_tunisiefret_homepage'));
+            if( $postule->getDemandeexport()->getAvisExport()){
+                if( $postule->getDemandeexport()->getAvisExport()->getNoteclient() != NULL)
+                    return $this->redirect($this->generateUrl('nzo_tunisiefret_homepage'));
+            }
        // security access 
         if($request->getMethod() === 'POST')
         {
             $em = $this->getDoctrine()->getManager();
-            ( $postule->getDemandeexport()->getAvisExport() ) ? $avis = $postule->getDemandeexport()->getAvisExport() : $avis = new AvisExport();
-            $avis->setAvisclient($request->request->get('avisclient'));
-            $avis->setNoteclient($request->request->get('noteclient'));
-            $em->persist($avis);
+            
+            if( $postule->getDemandeexport()->getAvisExport() ){
+                $avis = $postule->getDemandeexport()->getAvisExport();
+                $avis->setAvisclient($request->request->get('avisclient'));
+                $avis->setNoteclient($request->request->get('noteclient'));
+                $em->persist($avis);               
+            }
+            else{
+                $avis = new AvisExport();
+                $avis->setAvisclient($request->request->get('avisclient'));
+                $avis->setNoteclient($request->request->get('noteclient'));
+                $em->persist($avis);
+                $postule->getDemandeexport()->setAvisExport($avis);
+            }
+            
             
             // notif Exportateur
             $notif = new Notification();
@@ -508,12 +522,10 @@ class ClientController extends Controller {
             $em->persist($notif);
             
             $em->flush();
-            
-            $this->get('session')->getFlashBag()->add('notice', 'c boooonn!');
             return $this->redirect($this->generateUrl('nzo_tunisiefret_homepage'));
         }
 
-        return $this->render('NzoTunisiefretBundle:Client:DonnerAvisExport.html.twig', array('demande' => $postule));
+        return $this->render('NzoTunisiefretBundle:Client:DonnerAvisExport.html.twig', array('postule' => $postule));
     }
     
     /**

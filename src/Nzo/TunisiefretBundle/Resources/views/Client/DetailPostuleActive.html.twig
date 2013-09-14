@@ -23,7 +23,7 @@
     
     {#----------------Titre de la page----------------#}
     <div class="legend2">
-        <h4 class="pull-left">Détails Demande Export Active</h4>
+        <h4 class="pull-left">{{postule.demandeexport.titre}}</h4>
         <div class="row" style="padding-right: 14px;">
             <div class=" pull-right">
             <!-- Button trigger modal -->
@@ -74,13 +74,13 @@
                 <div class="modal-content">
                   <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title">Confirmation de Contrat d'embauche</h4>
+                    <h4 class="modal-title">Confirmation de Contrat d'exportation</h4>
                   </div>
                   <div class="modal-body" style="color: black">
                       <form action="{{path('client_contrat_confirmer', {'id':postule.id})}}" method="POST" role="form" >
                           <p><strong class="red">Demande d'exportation : </strong> {{postule.demandeexport.titre}}</p>
                           <p><strong class="red">Référence : </strong> {{postule.demandeexport.reference}}</p>
-                          <p class="text-center">Confirmez et commencez un contrat d'embauche d'exportation avec l'exportateur " <strong class="red">{{postule.exportateur.nomentrop}}</strong> " </p>
+                          <p>Confirmez et commencez cette mission avec <strong class="red">{{postule.exportateur.nomentrop}}</strong></p>
                       
                           <div class="row"style="margin-right: 0">
                               <div class="pull-right">
@@ -178,7 +178,7 @@
                               <div class="legend bottom" style="padding-bottom: 29px;">
                                   <a href=""><h4 class="media-heading pull-left">{{postule.exportateur.nomentrop}}</h4></a>
                                 <span class="pull-right">
-                                    <strong>({{postule.exportateur.note}}) </strong><span id="nzoratingstar"></span>
+                                    <span id="nzoratingstar"></span> {%if postule.exportateur.note > -1%} <strong>({{postule.exportateur.note}})</strong>{%endif%}
                                 </span>
                               </div>
                                 <div class="row">
@@ -341,7 +341,7 @@
 
             });
             //Rating Star
-            $('#nzoratingstar').raty({ path: '/bundles/nzotunisiefret/images', noRatedMsg: "aucune note associé!", readOnly: true, score: {{postule.exportateur.note}} });
+            $('#nzoratingstar').raty({ path: '/bundles/nzotunisiefret/images', noRatedMsg: "aucune note associé!", hints: ['', '', '', '', ''], readOnly: true, score: {{postule.exportateur.note}} });
         });
         
         

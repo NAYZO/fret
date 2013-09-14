@@ -157,6 +157,16 @@ class DemandeExport
         $this->reference = uniqid($this->getId());
     }
 
+    //*************************************************************************
+    public function getContratEnCoursPostule() 
+    {            
+            $tt = $this->getDemandeexportpostule();
+            foreach($tt as $res){
+               if($res->getDemandeAccepter())
+                   return $res;
+            }   
+    }
+    //*************************************************************************
 
     /**
      * Get id

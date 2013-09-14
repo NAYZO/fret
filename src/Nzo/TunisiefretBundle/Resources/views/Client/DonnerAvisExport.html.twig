@@ -11,8 +11,52 @@
 {% endblock banner %}
 {% block content %}
 
-formulaire d'Donner Avis Export : <br>
-3 etoiles et description. avec verif en js
+    <label>Donnez une note et votre Avis sur le travail du <strong class="red">{{postule.exportateur.nomentrop}}</strong></label>
+    <form action="{{path('client_donner_avis_demande_export', {'id':postule.id})}}" method="POST" role="form" id='avisform'>
+        <div class="form-group">         
+            <div><label>Donnez une note</label></div>
+          <div>Qualité du service:<span id="nzoratingstar1"></span></div>
+          <div>Respect du delai: <span id="nzoratingstar2"></span></div>
+          <div>Communication: <span id="nzoratingstar3"></span></div>
+          <input type="hidden" name="noteclient" id="nzonoteclient" value='0'>
+        </div>
+        <div class="form-group">
+            <label>Donnez Votre Avis</label>
+            <textarea class="form-control" rows="4" id='nzoavisclient' name="avisclient"></textarea>
+        </div>
+        <div class="row"style="margin-right: 0">
+            <div class="pull-right">
+              <button type="submit" class="btn btn-danger">Enregistrer</button>
+
+            </div>
+        </div>
+     </form> 
+
 {% endblock content %}
 
- 
+  {% block js %} 
+    <script src="{{ asset('bundles/nzotunisiefret/js/jquery.raty.min.js') }}"></script>
+    <script>
+        $(document).ready(function(){
+
+            $('#avisform').on('submit',function(c){
+            //     c.preventDefault();
+            if($('#nzoavisclient').val() === ''){
+                c.preventDefault();
+                alert('Description ne dois pas etre vide!');
+                //return false;
+            }
+            var note = ( $('#nzoratingstar1').raty('score') + $('#nzoratingstar2').raty('score') + $('#nzoratingstar3').raty('score'))/3;
+               $('#nzonoteclient').val(note);
+            });
+            
+           
+            //Rating Star
+            $('#nzoratingstar1').raty({ cancel: true, path: '/bundles/nzotunisiefret/images', hints: ['', '', '', '', '']});
+            $('#nzoratingstar2').raty({ cancel: true, path: '/bundles/nzotunisiefret/images', hints: ['', '', '', '', '']});
+            $('#nzoratingstar3').raty({ cancel: true, path: '/bundles/nzotunisiefret/images', hints: ['', '', '', '', '']});
+        });
+   
+    </script>
+
+{% endblock js %}

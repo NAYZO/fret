@@ -92,9 +92,9 @@ client_postule_archive_detail:
     requirements:
         id:  \d+ 
 
-client_demande_export_encours:
-    pattern: /demande-export/{id}/encours/
-    defaults: {_controller: NzoTunisiefretBundle:Client:DemandeExportEnCours}  
+client_demande_export_encours_detail:
+    pattern: /demande-export/{id}/encours/detail/
+    defaults: {_controller: NzoTunisiefretBundle:Client:DemandeExportEnCoursDetail}  
     requirements:
         id:  \d+
         
@@ -106,7 +106,7 @@ client_postule_encours_detail:
         
 client_terminer_demande:        
     pattern: /terminer-demande-export/{id}
-    defaults: {_controller: NzoTunisiefretBundle:Client:TerminertDemandeExport}  
+    defaults: {_controller: NzoTunisiefretBundle:Client:TerminerDemandeExport}  
     requirements:
         id:  \d+
         

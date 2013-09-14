@@ -20,26 +20,22 @@ class AvisExport
     protected $id;   
     
     /** 
-     * @ORM\Column(name="avis_client", type="text")
-     * @Assert\NotBlank()
+     * @ORM\Column(name="avis_client", type="text", nullable=true)
      */
     protected $avisclient;
     
     /** 
-     * @ORM\Column(name="avis_exportateur", type="text")
-     * @Assert\NotBlank()
+     * @ORM\Column(name="avis_exportateur", type="text", nullable=true)
      */
     protected $avisexportateur;   
     
     /**
-     * @ORM\Column(name="note_client", type="float")
-     * @Assert\NotBlank()
+     * @ORM\Column(name="note_client", type="float", nullable=true)
      */
     protected $noteclient;
     
     /**
-     * @ORM\Column(name="note_exportateur", type="float")
-     * @Assert\NotBlank()
+     * @ORM\Column(name="note_exportateur", type="float", nullable=true)
      */
     protected $noteexportateur;
 

@@ -60,7 +60,7 @@ class DemandeExportRepository extends EntityRepository
             ->andWhere('a.tacking = 1')     
             ->andWhere('a.terminer_demande is NULL')                             
             ->setParameter('client', $id)
-            ->orderBy('a.date_depos', 'DESC');
+            ->orderBy('a.date_tacking', 'DESC');
          return $qb->getQuery();            
     } 
     
