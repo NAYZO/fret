@@ -133,22 +133,41 @@
                         <div class="media">
                           <div class="media-body">
                               <div>{{postule.demandeexport.client.nomentrop}}</div>
-                              {%if postule.demandeexport.avisexport.noteclient == null%}
-                                  <span>Aucun Avis Associer</span>
+                              {%if postule.demandeexport.avisexport.noteclient == null%}                                 
+                                  <span>Avis pas encore associer</span>
+                              {%else%}
+                                  {%if postule.demandeexport.avisexport.noteexportateur == null%}
+                                    <p>Vous devez associez un Avis afin de voir votre note donner par "{{postule.exportateur.nomentrop}}"</p> 
                                   {%else%}
-                                  Note Reçu: <span id="nzoratingstarclient"></span> <strong>({{postule.demandeexport.avisexport.noteclient}})</strong>
-                                  <br>Avis Reçu:
-                                  <p>{{postule.demandeexport.avisexport.avisclient}}</p>
-                               {%endif%}   
+                                    Note Reçu: <span id="nzoratingstarclient"></span> <strong>({{postule.demandeexport.avisexport.noteclient}})</strong>
+                                    <br>Avis Reçu:
+                                    <p>{{postule.demandeexport.avisexport.avisclient}}</p>
+                                  {%endif%}  
+                              {%endif%}   
                                   <br>------------------------- <br>
                                 <div>{{postule.exportateur.nomentrop}}</div>
                               {%if postule.demandeexport.avisexport.noteexportateur == null%}
-                                  <span>Aucun Avis Associer</span>
-                                  {%else%}
-                                  Note Reçu: <span id="nzoratingstarexportateur"></span> <strong>({{postule.demandeexport.avisexport.noteexportateur}})</strong>
-                                  <br>Avis Reçu:
-                                  <p>{{postule.demandeexport.avisexport.avisexportateur}}</p>
-                               {%endif%}     
+                                 <p>{{postule.demandeexport.avisexport.avisclient}}</p>
+                              {%else%}   
+                                 Note Associer: <span id="nzoratingstarexportateur"></span> <strong>({{postule.demandeexport.avisexport.noteexportateur}})</strong>
+                                 <br>Avis Associer:
+                                 <p>{{postule.demandeexport.avisexport.avisexportateur}}</p>
+                              {%endif%}      
+                           </div>
+                        </div> 
+                    </div>
+                </div>
+                {#----------------Resultat et Description----------------#}  
+               <div class="panel panel-default">
+                <div class="panel-heading">Resultat et Synthèse</div>
+                    <div class="panel-body">
+                        <div class="media">
+                          <div class="media-body">
+                              <p>Date fin Mission: <span>{{postule.demandeexport.terminerdemande.datejobend|date('d/m/Y')}}</span></p>
+                              <p>Résultat: {{postule.demandeexport.terminerdemande.resultat}}</p>
+                              {%if postule.demandeexport.terminerdemande.description is not null %}
+                              <p>Synthèse du Mission: {{postule.demandeexport.terminerdemande.description}}</p>
+                              {%endif%}
                            </div>
                         </div> 
                     </div>

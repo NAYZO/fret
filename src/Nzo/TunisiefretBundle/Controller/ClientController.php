@@ -563,20 +563,23 @@ class ClientController extends Controller {
             $em = $this->getDoctrine()->getManager();
         
             $notifs = $em->getRepository('NzoTunisiefretBundle:Notification')->getListNotifAjaxClient($usr);
-         
-            $i = 0;
-            foreach ($notifs as $res) {
-                $notifdate = $res->getDate()->format('d/m/Y H:i');
-                $vu = $res->getVu();
-                $val[$i] = array('date' => $notifdate, 'notiftext' => $res->getText(), 'notifvu' => $vu);
-                // set Vu to True
-                if(!$vu){
-                $res->setVu(true);
-                $em->persist($res);           
+            if($notifs != NULL){
+                $i = 0;
+                foreach ($notifs as $res) {
+                    $notifdate = $res->getDate()->format('d/m/Y H:i');
+                    $vu = $res->getVu();
+                    $val[$i] = array('date' => $notifdate, 'notiftext' => $res->getText(), 'notifvu' => $vu);
+                    // set Vu to True
+                    if(!$vu){
+                    $res->setVu(true);
+                    $em->persist($res);           
+                    }
+                    $i++;
                 }
-                $i++;
+                $em->flush();
             }
-            $em->flush();
+            else
+                $val = array('vide');
         return new Response(json_encode($val));
         }
     }  

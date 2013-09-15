@@ -152,18 +152,23 @@
                          type:"POST",
                          dataType:'json',
                          success: function(a){
-                                var b='';
-                                for(key in a)
-                                {
-                                    if(a[key]['notifvu'] == 0)
-                                        b+='<li class="nonlu"><a href="#">'+a[key]['notiftext']+'</a></li>';
-                                    else                      
-                                        b+='<li><a href="#">'+a[key]['notiftext']+'</a></li>';                                    
+                                if(a[0] == 'vide'){
+                                    $('#nzolistnotifajax').html('<li class="nonlu"><a href="#"><strong>Aucune Notification trouver!</strong></a></li>');
                                 }
-                                b+='<li class="all"><a href="{{path('client_list_notifications')}}" class="text-center">Voir toute les notifications</a></li>';
-                                nzostorage = b;
-                                $('#nzolistnotifajax').html(b);
-                                $('#nzonotifnb').html('');
+                                else{
+                                    var b='';
+                                    for(key in a)
+                                    {
+                                        if(a[key]['notifvu'] == 0)
+                                            b+='<li class="nonlu"><a href="#">'+a[key]['notiftext']+'</a></li>';
+                                        else                      
+                                            b+='<li><a href="#">'+a[key]['notiftext']+'</a></li>';                                    
+                                    }
+                                    b+='<li class="all"><a href="{{path('client_list_notifications')}}" class="text-center">Voir toute les notifications</a></li>';
+                                    nzostorage = b;
+                                    $('#nzolistnotifajax').html(b);
+                                    $('#nzonotifnb').html('');
+                                    }
                          },
                          error: function() {
                                 alert('error');
