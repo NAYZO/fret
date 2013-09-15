@@ -1,27 +1,40 @@
 {% extends "NzoTunisiefretBundle::layoutClient.html.twig" %}
-{% block title %} {{ parent() }} Donner Avis Export {% endblock %}
+{% block title %} {{ parent() }} Avis D'exportation {% endblock %}
 {% block banner %}
     <div class="jumbotron">
         <div class="col-md-4"> 
             <div class="row">
-                <h4 class="title-banner" style="">Donner Avis Export</h4>
+                <h4 class="title-banner" style="">Avis D'exportation</h4>
             </div>
         </div>
     </div>
 {% endblock banner %}
 {% block content %}
-
-    <label>Donnez une note et votre Avis sur le travail du <strong class="red">{{postule.exportateur.nomentrop}}</strong></label>
+<div class="padding">
+    <ul id="breadcrumbs-two" class="bottom">
+        <li><a href="{{path('nzo_tunisiefret_homepage')}}">Accueil</a></li>
+        <li><span>Mes Contrats</span></li>
+        <li><a href="{{ path('client_contrat_encours') }}">En Cours</a></li>
+        <li class="current"><span>Avis D'exportation</span></li>
+    </ul>
+    <h4 class="legend2">Donnez une note et votre Avis sur le travail du <strong class="red">{{postule.exportateur.nomentrop}}</strong></h4>
+    
     <form action="{{path('client_donner_avis_demande_export', {'id':postule.id})}}" method="POST" role="form" id='avisform'>
-        <div class="form-group">         
-            <div><label>Donnez une note</label></div>
-          <div>Qualité du service:<span id="nzoratingstar1"></span></div>
-          <div>Respect du delai: <span id="nzoratingstar2"></span></div>
-          <div>Communication: <span id="nzoratingstar3"></span></div>
+        <legend>Donnez une note</legend>
+          <div class="form-group col-md-4">    
+              <label class="red">Qualité du service : <span id="nzoratingstar1"></span></label>
+          </div>
+          <div class="form-group col-md-4">   
+              <label class="red">Respect du delais : <span id="nzoratingstar2"></span></label>
+          </div>
+        
+          <div class="form-group col-md-4">   
+              <label class="red">Communication: <span id="nzoratingstar3"></span></label>
+          </div>
+        
           <input type="hidden" name="noteclient" id="nzonoteclient" value='0'>
-        </div>
         <div class="form-group">
-            <label>Donnez Votre Avis</label>
+            <label class="red">Donnez Votre Avis</label>
             <textarea class="form-control" rows="4" id='nzoavisclient' name="avisclient"></textarea>
         </div>
         <div class="row"style="margin-right: 0">
@@ -31,7 +44,7 @@
             </div>
         </div>
      </form> 
-
+</div>
 {% endblock content %}
 
   {% block js %} 
