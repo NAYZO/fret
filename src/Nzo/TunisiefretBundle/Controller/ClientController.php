@@ -414,6 +414,24 @@ class ClientController extends Controller {
     /**
     * @Secure(roles="ROLE_CLIENT")
     */
+    public function DemandeExportTermineDetailAction(DemandeExport $mydemande)
+    {
+        $usr = $this->get('security.context')->getToken()->getUser();
+       // security access     
+           if($mydemande->getClient() != $usr || !$mydemande->getTacking() || $mydemande->getAnnulerDemande() || !$mydemande->getTerminerDemande()) return $this->redirect($this->generateUrl('nzo_tunisiefret_homepage'));          
+       // security access 
+        $tt = $mydemande->getDemandeexportpostule();
+            foreach($tt as $res){
+               if($res->getDemandeAccepter())
+                  $em = $this->getDoctrine()->getManager();        
+        $msgs = $em->getRepository('NzoTunisiefretBundle:MsgDemandeExport')->findBy( array('demandeexportpostule' => $res)); 
+                  return $this->render('NzoTunisiefretBundle:Client:DetailPostuleTermine.html.twig', array('postule' => $res, 'msgs' => $msgs));
+            }          
+    }
+    
+    /**
+    * @Secure(roles="ROLE_CLIENT")
+    */
     public function DetailPostuleEnCoursAction(DemandeExportPostule $postule)
     {
         $usr = $this->get('security.context')->getToken()->getUser();
@@ -490,7 +508,7 @@ class ClientController extends Controller {
        // security access     
             if($postule->getDemandeexport()->getClient() != $usr || !$postule->getDemandeexport()->getTerminerDemande()) return $this->redirect($this->generateUrl('nzo_tunisiefret_homepage'));
             if( $postule->getDemandeexport()->getAvisExport()){
-                if( $postule->getDemandeexport()->getAvisExport()->getNoteclient() != NULL)
+                if( $postule->getDemandeexport()->getAvisExport()->getNoteexportateur() != NULL)
                     return $this->redirect($this->generateUrl('nzo_tunisiefret_homepage'));
             }
        // security access 
@@ -500,19 +518,25 @@ class ClientController extends Controller {
             
             if( $postule->getDemandeexport()->getAvisExport() ){
                 $avis = $postule->getDemandeexport()->getAvisExport();
-                $avis->setAvisclient($request->request->get('avisclient'));
-                $avis->setNoteclient($request->request->get('noteclient'));
+                $avis->setAvisexportateur($request->request->get('avisclient'));
+                $avis->setNoteexportateur( round($request->request->get('noteclient'),2) );
                 $em->persist($avis);               
             }
             else{
                 $avis = new AvisExport();
-                $avis->setAvisclient($request->request->get('avisclient'));
-                $avis->setNoteclient($request->request->get('noteclient'));
+                $avis->setAvisexportateur($request->request->get('avisclient'));
+                $avis->setNoteexportateur( round($request->request->get('noteclient'),2) );
                 $em->persist($avis);
                 $postule->getDemandeexport()->setAvisExport($avis);
             }
-            
-            
+            // update note Exportateur
+            if($postule->getExportateur()->getNote() == -1){
+                $postule->getExportateur()->setNote( $avis->getNoteexportateur() );
+            }
+            else{
+                $notefinal = ( $postule->getExportateur()->getNote() + $avis->getNoteexportateur() )/2;
+                $postule->getExportateur()->setNote( round($notefinal,2) );
+            }
             // notif Exportateur
             $notif = new Notification();
             $notif->setExportateur($postule->getExportateur());
