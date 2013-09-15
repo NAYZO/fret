@@ -30,11 +30,11 @@
         <div class="list-group-item" style="padding: 30px;">
             <div class="legend list-group-item-heading">
                 <h4 class="cl-effect-1"><a href="{{path('client_demande_export_termine_detail', {'id':demande.id} )}}">{{demande.titre}}</a></h4>  
-                <a class="pull-right" href=""><img class="media-object img-thumbnail" src="{{ asset('exportateurfilesupload/')}}{{demande.ContratEnCoursPostule.exportateur.logoname}}" alt="" width="100" height="100"></a>
-                <span class="pull-right">{{demande.ContratEnCoursPostule.exportateur.nomentrop}}</span>
-            </div>
+           </div>
+                
             <p style="color: grey;">Nombre de Postule: {{demande.nombredepostule}} | Déposé le {{demande.datedepos|date("d/m/Y")}}</p>
-            <p class="list-group-item-text">
+             <div class="row">
+            <p class="list-group-item-text col-md-10">
                 {% if demande.description|length > 150 %}
                     {{demande.description|slice(0, 150)}}...
                 {%else%}
@@ -42,7 +42,11 @@
                 {% endif %}
                 <a href="{{path('client_demande_export_termine_detail', {'id':demande.id} )}}" class="pull-right"> Voir détails </a>
             </p>
-              
+            <div class="col-md-2 media" style="margin-top: 0;border-left: 1px solid rgb(218, 213, 213)">
+                   <a href="" class="pull-left"><img class="media-object img-thumbnail" src="{{ asset('exportateurfilesupload/')}}{{demande.ContratEnCoursPostule.exportateur.logoname}}" alt="" width="50" height="100"></a>
+                   <span class="media-body">{{demande.ContratEnCoursPostule.exportateur.nomentrop}}</span>
+               </div>
+            </div>
         </div>
     {% endfor %}
 </div>
