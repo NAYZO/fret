@@ -5,13 +5,19 @@ namespace Nzo\TunisiefretBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Httpfoundation\Response;
-
-use Nzo\TunisiefretBundle\Form\DemandeExportPostuleType;
-use Nzo\TunisiefretBundle\Entity\DemandeExportPostule;
-use Nzo\TunisiefretBundle\Entity\DemandeExport;
-use Nzo\TunisiefretBundle\Entity\Notification;
-
 use JMS\SecurityExtraBundle\Annotation\Secure;
+
+use Nzo\TunisiefretBundle\Form\DemandeExportType;
+use Nzo\TunisiefretBundle\Entity\DemandeExport;
+use Nzo\TunisiefretBundle\Entity\DemandeExportPostule;
+
+use Nzo\TunisiefretBundle\Entity\MsgDemandeExport;
+
+use Nzo\TunisiefretBundle\Entity\NotifMsg;
+use Nzo\TunisiefretBundle\Entity\Notification;
+use Nzo\TunisiefretBundle\Entity\AnnulerDemandeExport;
+use Nzo\TunisiefretBundle\Entity\TerminerDemandeExport;
+use Nzo\TunisiefretBundle\Entity\AvisExport;
 
 class ExportateurController extends Controller {
     
@@ -52,6 +58,32 @@ class ExportateurController extends Controller {
         $res = $em->getRepository('NzoTunisiefretBundle:DemandeExportPostule')->findBy( array('exportateur' => $usr, 'demandeexport' => $DemandeExport));
         ($res != NULL)? $val='true' : $val='false';
         return $this->render('NzoTunisiefretBundle:Exportateur:PostuleDemandeExport.html.twig', array('val' => $val, 'demandeexport' =>$DemandeExport, 'form' => $form->createView()));
+    }
+    
+    /**
+     * @Secure(roles="ROLE_EXPORTATEUR")
+     */
+    public function AjaxGetNbNotifAction(Request $request) 
+    {
+        $usr = $this->get('security.context')->getToken()->getUser();
+        $em = $this->getDoctrine()->getManager();
+        $nbnotifs = $em->getRepository('NzoTunisiefretBundle:Notification')->getNbNotifExportateur($usr);
+        if ($request->isXmlHttpRequest()) 
+        return new Response($nbnotifs);
+        return new Response($nbnotifs);
+    }
+    
+    /**
+     * @Secure(roles="ROLE_EXPORTATEUR")
+     */
+    public function AjaxGetNbMsgAction(Request $request) 
+    {
+        $usr = $this->get('security.context')->getToken()->getUser();
+            $em = $this->getDoctrine()->getManager();
+            $nbmsgs = $em->getRepository('NzoTunisiefretBundle:NotifMsg')->getNbMsgExportateur($usr);
+        if ($request->isXmlHttpRequest()) 
+        return new Response($nbmsgs);
+        return new Response($nbmsgs);
     }
     
    /**
@@ -128,7 +160,7 @@ class ExportateurController extends Controller {
     public function DetailPostuleActiveAction(DemandeExportPostule $postule)
     {
        // security access     
-            if($postule->getDemandeexport()->getTacking() || $postule->getDemandeexport()->getAnnulerDemande() ) return $this->redirect($this->generateUrl('nzo_tunisiefret_homepage'));
+            if($postule->getDemandeexport()->getTacking() || $postule->getDemandeexport()->getAnnulerDemande() || $postule->getAnnulerByExportateur() || $postule->getDemandeRefuser()) return $this->redirect($this->generateUrl('nzo_tunisiefret_homepage'));
        // security access 
      
 //        $etat='';
@@ -138,7 +170,11 @@ class ExportateurController extends Controller {
 //            $etat = 'annuler_par_client';
 //        else if ($postule->getDemandeexport()->getTacking() && !$postule->getDemandeexport()->getTerminerDemande() )
             
-        return $this->render('NzoTunisiefretBundle:Exportateur:DetailPostuleActive.html.twig', array('postule' => $postule));
+            
+        $em = $this->getDoctrine()->getManager();        
+        $msgs = $em->getRepository('NzoTunisiefretBundle:MsgDemandeExport')->findBy( array('demandeexportpostule' => $postule));
+   
+        return $this->render('NzoTunisiefretBundle:Exportateur:DetailPostuleActive.html.twig', array('postule' => $postule, 'msgs' => $msgs));    
     }
     
 //============================================================================================================================================================= nn terminer
@@ -154,4 +190,102 @@ class ExportateurController extends Controller {
        return $etat;
     }
 
+    /**
+     * @Secure(roles="ROLE_EXPORTATEUR")
+     */
+    public function AjaxGetNotifAction(Request $request) 
+    {
+        if ($request->isXmlHttpRequest()) {  
+            
+            $usr = $this->get('security.context')->getToken()->getUser();
+            $em = $this->getDoctrine()->getManager();
+        
+            $notifs = $em->getRepository('NzoTunisiefretBundle:Notification')->getListNotifAjaxExportateur($usr);
+            if($notifs != NULL){
+                $i = 0;
+                foreach ($notifs as $res) {
+                    $notifdate = $res->getDate()->format('d/m/Y H:i');
+                    $vu = $res->getVu();
+                    $val[$i] = array('date' => $notifdate, 'notiftext' => $res->getText(), 'notifvu' => $vu);
+                    // set Vu to True
+                    if(!$vu){
+                    $res->setVu(true);
+                    $em->persist($res);           
+                    }
+                    $i++;
+                }
+                $em->flush();
+            }
+            else
+                $val = array('vide');
+        return new Response(json_encode($val));
+        }
+    }  
+    
+    /**
+     * @Secure(roles="ROLE_EXPORTATEUR")
+     */
+    public function MessageExportateurSendAction(Request $request) 
+    {
+        if ($request->isXmlHttpRequest()) {
+            // save msg
+            $msg = $request->request->get('msg');
+            $id = $request->request->get('id');                    
+            $em = $this->getDoctrine()->getManager();
+            $usr = $this->get('security.context')->getToken()->getUser();
+            $MsgForm = new MsgDemandeExport();    
+            $MsgForm->setExportateur($usr);                
+            $postule = $em->find('NzoTunisiefretBundle:DemandeExportPostule', $id);
+            $MsgForm->setDemandeexportpostule($postule);
+            $MsgForm->setMessage($msg);
+                $em->persist($MsgForm);
+                $em->flush();
+            // notif Client
+            $client = $postule->getDemandeexport()->getClient();
+            $notifmsg = new NotifMsg();
+            $notifmsg->setClient($client);
+            $notifmsg->setEmetteur($usr->getNomentrop());
+            $notifmsg->setLogoemetteur($usr->getLogoname());
+            $notifmsg->setTitredemandeexport($postule->getDemandeexport()->getTitre());
+            $notifmsg->setText($msg);           
+            $em->persist($notifmsg);
+            $em->flush();
+
+           //  recuperation liste msg
+           $msgs = $em->getRepository('NzoTunisiefretBundle:MsgDemandeExport')->findBy( array('demandeexportpostule' => $postule));
+
+           $i = 0;
+            foreach ($msgs as $res) {
+                $msgdate = $res->getDate()->format('d/m/Y H:i');
+                if($usr==$res->getExportateur() ) $msguser='Moi'; else $msguser=$postule->getDemandeexport()->getClient()->getNomentrop();
+                $val[$i] = array('date' =>$msgdate, 'msg' => $res->getMessage(), 'user' => $msguser);
+                $i++;
+            }
+        return new Response(json_encode($val));
+        }
+    }
+    
+    /**
+    * @Secure(roles="ROLE_EXPORTATEUR")
+    */
+    public function AnnulerPostuleAction(DemandeExportPostule $postule)
+    {
+        $usr = $this->get('security.context')->getToken()->getUser();
+       // security access     
+            if($postule->getExportateur() != $usr) return $this->redirect($this->generateUrl('nzo_tunisiefret_homepage'));
+       // security access
+            $em = $this->getDoctrine()->getManager();
+            $postule->setAnnulerByExportateur(true);
+
+            // notif Client
+                $notif = new Notification();
+                $notif->setClient($postule->getDemandeexport()->getClient());
+                //==================================================================================================================== lien exportateur pour info demande export + classe css
+                $text = $postule->getExportateur()->getNomentrop().'a annulé son postule pour la Demande <span>'.$postule->getDemandeexport()->getTitre().'</span>';
+                $notif->setText($text);
+                $em->persist($notif);
+            
+            $em->flush();
+        return $this->redirect($this->generateUrl('exp_liste_postule_active'));   
+  }
 } 

@@ -132,8 +132,9 @@ class ClientController extends Controller {
                     $notif = new Notification();
                     $notif->setExportateur($postule->getExportateur());
                     //==================================================================================================================== lien exportateur pour info demande export + classe css
-                    $text = 'Demande Export <span>'.$postule->getDemandeExport()->getTitre().'</span> est Terminé!';
+                    $text = 'Demande Export <span class="text-primary">'.$postule->getDemandeExport()->getTitre().'</span> est Terminé!';
                     $notif->setText($text);
+                    //$notif->setUrl($this->get('router')->generate('blog_show', array('slug' => 'my-blog-post'), true));
                     $em->persist($notif);
             
             $em->flush();
@@ -491,7 +492,7 @@ class ClientController extends Controller {
            $i = 0;
             foreach ($msgs as $res) {
                 $msgdate = $res->getDate()->format('d/m/Y H:i');
-                if($usr==$res->getClient() ) $msguser='Moi'; else $msguser=$res->getExportateur()->getNomentrop();
+                if($usr==$res->getClient() ) $msguser='Moi'; else $msguser=$postule->getExportateur()->getNomentrop();
                 $val[$i] = array('date' =>$msgdate, 'msg' => $res->getMessage(), 'user' => $msguser);
                 $i++;
             }

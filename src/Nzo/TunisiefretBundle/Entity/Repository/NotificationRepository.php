@@ -40,4 +40,24 @@ class NotificationRepository extends EntityRepository
             ->setParameter('client', $id);
          return $qb->getQuery()->getSingleScalarResult();
     } 
+    
+    public function getNbNotifExportateur($id)
+    {
+         $qb = $this->createQueryBuilder('a');
+         $qb->select('COUNT(a)')
+            ->where('a.exportateur = :exportateur')
+            ->andWhere('a.vu = 0')             
+            ->setParameter('exportateur', $id);
+         return $qb->getQuery()->getSingleScalarResult();
+    } 
+    
+    public function getListNotifAjaxExportateur($id)
+    {
+         $qb = $this->createQueryBuilder('a');
+         $qb->where('a.exportateur = :exportateur')
+            ->orderBy('a.date', 'DESC')
+            ->setParameter('exportateur', $id)
+            ->setMaxResults(4);
+         return $qb->getQuery()->execute();
+    }
 }

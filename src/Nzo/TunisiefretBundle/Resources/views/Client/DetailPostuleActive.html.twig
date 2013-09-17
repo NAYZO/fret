@@ -207,7 +207,7 @@
                         <div class="panel panel-info">
                             <div class="panel-heading">
                                 <h3 class="panel-title">
-                                    {%if msg.client != null %} Moi {%else%} {{msg.exportateur.prenom}} {{msg.exportateur.nom}} {%endif%}
+                                    {%if msg.client != null %} Moi {%else%} {{msg.exportateur.nomentrop}}{%endif%}
                                     <p class="pull-right">{{msg.date|date("d/m/Y H:i")}}</p>
                                 </h3>
                             </div>
@@ -221,7 +221,7 @@
                     <div class="panel panel-info">
                         <div class="panel-heading">
                             <h3 class="panel-title">
-                               {%if msgs|first.client != null %} Moi {%else%} {{msgs|first.exportateur.prenom}} {{msgs|first.exportateur.nom}} {%endif%}
+                               {%if msgs|first.client != null %} Moi {%else%} {{msgs|first.exportateur.nomentrop}}{%endif%}
                                 <p class="pull-right">{{msgs|first.date|date("d/m/Y H:i")}}</p>
                             </h3>
                         </div>
@@ -244,7 +244,7 @@
                         <div class="panel panel-info">
                             <div class="panel-heading">
                                 <h3 class="panel-title">
-                                    {%if msg.client != null %} Moi {%else%} {{msg.exportateur.prenom}} {{msg.exportateur.nom}} {%endif%}
+                                    {%if msg.client != null %} Moi {%else%} {{msg.exportateur.nomentrop}}{%endif%}
                                     <p class="pull-right">{{msg.date|date("d/m/Y H:i")}}</p>
                                 </h3>
                             </div>
@@ -259,7 +259,7 @@
                     <div class="panel panel-info">
                         <div class="panel-heading">
                             <h3 class="panel-title">
-                                {%if msgs|last.client != null %} Moi {%else%} {{msgs|last.exportateur.prenom}} {{msgs|last.exportateur.nom}} {%endif%}
+                                {%if msgs|last.client != null %} Moi {%else%} {{msgs|last.exportateur.nomentrop}}{%endif%}
                                 <p class="pull-right">{{msgs|last.date|date("d/m/Y H:i")}}</p>
                             </h3>
                         </div>

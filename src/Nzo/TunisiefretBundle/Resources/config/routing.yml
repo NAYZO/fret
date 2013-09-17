@@ -158,6 +158,18 @@ nzo_postuledemande_export:
     requirements:
         id:  \d+       
 
+ajax_get_nb_notif_exportateur:
+    pattern: /nb-notif-exportateur/ajax/
+    defaults: {_controller: NzoTunisiefretBundle:Exportateur:AjaxGetNbNotif}    
+    
+ajax_get_nb_msg_exportateur:
+    pattern: /nb-msg-exportateur/ajax/
+    defaults: {_controller: NzoTunisiefretBundle:Exportateur:AjaxGetNbMsg}     
+    
+ajax_get_notif_exportateur:
+    pattern: /liste-notif-exportateur/ajax/
+    defaults: {_controller: NzoTunisiefretBundle:Exportateur:AjaxGetNotif}    
+    
 exp_liste_postule_active:
     pattern: /liste-postule-active/
     defaults: {_controller: NzoTunisiefretBundle:Exportateur:ListePostuleActive}
@@ -172,6 +184,12 @@ exp_detail_postule_active:
     requirements:
         id:  \d+         
 
+exp_annuler_postule:        
+    pattern: /annuler-postule/{id}
+    defaults: {_controller: NzoTunisiefretBundle:Exportateur:AnnulerPostule}  
+    requirements:
+        id:  \d+
+        
 exp_liste_travail_en_cours:
     pattern: /liste-travail-encours/
     defaults: {_controller: NzoTunisiefretBundle:Exportateur:ListeTravailEnCours}
@@ -179,6 +197,10 @@ exp_liste_travail_en_cours:
 exp_liste_travail_termine:
     pattern: /liste-travail-termine/
     defaults: {_controller: NzoTunisiefretBundle:Exportateur:ListeTravailTermine}
+    
+ajax_send_msg_exportateur:
+    pattern: /message-exportateur-send/
+    defaults: {_controller: NzoTunisiefretBundle:Exportateur:MessageExportateurSend}    
     
 #--------------------------- FosUserBundle -----------------------------------
 client_registration:

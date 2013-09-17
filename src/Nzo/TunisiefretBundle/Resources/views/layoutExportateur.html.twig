@@ -9,10 +9,14 @@
         <!-- CSS -->
         <link href="{{ asset('bundles/nzotunisiefret/css/bootstrap.css') }}" rel="stylesheet" media="screen">
         <link href="{{ asset('bundles/nzotunisiefret/css/style.css') }}" rel="stylesheet" media="screen">
+        <!--FONT-->
+        <link href='http://fonts.googleapis.com/css?family=Istok+Web' rel='stylesheet' type='text/css'>
+        
+        <script src="{{asset('bundles/nzotunisiefret/js/jquery-2.0.3.min.js') }}"></script>
         {% block head %}  {% endblock head %}
     </head>
     <body>
-           <nav class="bg-menu navbar" role="navigation">
+        <nav class="bg-menu navbar" role="navigation">
             <div class="container">
                 <!-- Brand and toggle get grouped for better mobile display -->
                 <div class="navbar-header">
@@ -28,41 +32,61 @@
                 <div class="collapse navbar-collapse navbar-ex1-collapse">
                     <ul class="nav navbar-nav navbar-right nav-style">
                         <li><a href="{{ path('nzo_tunisiefret_homepage') }}">Acceuil</a></li>
+                        <li class="dropdown">
+                            <a href="#" id="cliknotif" class="dropdown-toggle" data-toggle="dropdown">
+                                <span class="glyphicon glyphicon-bell"></span>
+                                <span id='nzonotifnb' class="label label-danger label-style">{%set nzonotificationnb = render(controller('NzoTunisiefretBundle:Exportateur:AjaxGetNbNotif'))%}{%if nzonotificationnb > 0%}{{nzonotificationnb}}{%endif%}</span>
+                            </a>
+                            <ul id='nzolistnotifajax' class="dropdown-menu  notification" style="margin-top: 26px;">
+                              
+                            </ul>
+                        </li>
+                            
+                  
+                        <li><a href="{{path('client_list_messages')}}" id="cliknotifmsg"><span class="glyphicon glyphicon-envelope"></span><span id='nzomsgnb' class="label label-danger label-style">{%set nzonotifmsgsnb = render(controller('NzoTunisiefretBundle:Exportateur:AjaxGetNbMsg'))%}{%if nzonotifmsgsnb > 0%}{{nzonotifmsgsnb}}{%endif%}</span></a></li>
+                        
                         {% include "NzoUserBundle::connexion.html.twig" %}
                     </ul>
                 </div><!-- /.navbar-collapse -->
             </div>
         </nav>
+       
     {% block body %}
         {% block carrousel %}{% endblock carrousel %}
         {% block banner %}{% endblock banner %}
+    
+        {#2eme navigateur #}
+        <ul class="box nav nav-pills bottom cl-effect-1">    
+            <li class="col-md-offset-3"><a href="{{path('nzo_tunisiefret_homepage')}}" >Liste Demandes</a></li>
+            <li class="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                    Mes Postules <span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu">
+                    <li><a href="{{ path('exp_liste_postule_active') }}" >Active</a></li>
+                    <li><a href="{{ path('exp_liste_postule_archive') }}" >Archivé</a></li>
+                </ul>
+            </li>
+
+            <li class="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                    Mes Contrats <span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu">
+                    <li><a href="{{ path('exp_liste_travail_en_cours') }}" >En Cours</a></li>
+                    <li><a href="{{ path('exp_liste_travail_termine') }}" >Terminé</a></li>
+                </ul>
+            </li>
+            <li><a href="#" >Statistique</a></li>
+        </ul>
+        {#Container#}
         <section class="container">
             <div class="row">
-                <ul class="nav nav-tabs bottom">
-                    <li class="dropdown">
-                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                            Liste Postule <span class="caret"></span>
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li><a href="{{ path('exp_liste_postule_active') }}" >Active</a></li>
-                            <li><a href="{{ path('exp_liste_postule_archive') }}" >Archivé</a></li>
-                        </ul>
-                    </li>
-                    
-                    <li class="dropdown">
-                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                            Mes Traveaux <span class="caret"></span>
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li><a href="{{ path('exp_liste_travail_en_cours') }}" >En Cours</a></li>
-                            <li><a href="{{ path('exp_liste_travail_termine') }}" >Terminer</a></li>
-                        </ul>
-                    </li>
-                </ul>
-              {% block content %}{% endblock content %}
+                <div class="col-md-12 well">
+                    {% block content %}{% endblock content %}
+                </div>
             </div>
         </section>   
-        
         {% block footer %}
             <footer class="footer-bg">
             <div class="container">
@@ -86,10 +110,73 @@
 
     {% endblock body %} 
     <!--JAVASCRIPT-->
-     <script src="{{asset('bundles/nzotunisiefret/js/jquery-2.0.3.min.js') }}"></script>
      <script src="{{ asset('bundles/nzotunisiefret/js/bootstrap.js') }}"></script>
      <script src="{{ asset('bundles/nzotunisiefret/js/up.js') }}"></script>
-     <script src="{{ asset('bundles/nzotunisiefret/js/modal.js') }}"></script>
+     <script src="{{ asset('bundles/nzotunisiefret/js/modal.js') }}"></script>     
+     <script>
+         $(document).ready(function() {
+            nzostorage='';
+            setInterval(function(){ 
+                $.ajax({
+                     url:'{{path("ajax_get_nb_notif_exportateur")}}',
+                     type: 'GET',
+                     success: function(nbnotif){
+                            (nbnotif==0) ? $('#nzonotifnb').html('') : $('#nzonotifnb').html(nbnotif);      
+                     },
+                     error: function() {
+                            alert('error');
+                     }
+                });
+            }, 6000);
+            
+            setInterval(function(){ 
+                $.ajax({
+                     url:'{{path("ajax_get_nb_msg_exportateur")}}',
+                     type: 'GET',
+                     success: function(nbmsg){
+                            (nbmsg==0) ? $('#nzomsgnb').html('') : $('#nzomsgnb').html(nbmsg);      
+                     },
+                     error: function() {
+                            alert('error');
+                     }
+                });
+            }, 8500);
+         });
+         
+         $('#cliknotif').on('click', function(){
+            if($('#nzonotifnb').html() != '' || nzostorage == ''){                
+                $.ajax({
+                         url:'{{path("ajax_get_notif_exportateur")}}',
+                         type:"POST",
+                         dataType:'json',
+                         success: function(a){
+                                if(a[0] == 'vide'){
+                                    $('#nzolistnotifajax').html('<li class="nonlu"><a href="#"><strong>Aucune Notification trouver!</strong></a></li>');
+                                }
+                                else{
+                                    var b='';
+                                    for(key in a)
+                                    {
+                                        if(a[key]['notifvu'] == 0)
+                                            b+='<li class="nonlu"><a href="#">'+a[key]['notiftext']+'</a></li>';
+                                        else                      
+                                            b+='<li><a href="#">'+a[key]['notiftext']+'</a></li>';                                    
+                                    }
+                                    b+='<li class="all"><a href="{{path('client_list_notifications')}}" class="text-center">Voir toute les notifications</a></li>';
+                                    nzostorage = b;
+                                    $('#nzolistnotifajax').html(b);
+                                    $('#nzonotifnb').html('');
+                                    }
+                         },
+                         error: function() {
+                                alert('error');
+                         }
+                    });              
+            }
+            $('#nzolistnotifajax').html(nzostorage);
+ 
+         });
+     </script>
      {% block js %}  {% endblock js %}
     </body>
     

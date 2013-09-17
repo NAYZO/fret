@@ -30,4 +30,14 @@ class NotifMsgRepository extends EntityRepository
             ->setParameter('client', $id);
          return $qb->getQuery();
     }
+    
+    public function getNbMsgExportateur($id)
+    {
+         $qb = $this->createQueryBuilder('a');
+         $qb->select('COUNT(a)')
+            ->where('a.exportateur = :exportateur')
+            ->andWhere('a.vu = 0')             
+            ->setParameter('exportateur', $id);
+         return $qb->getQuery()->getSingleScalarResult();
+    } 
 }

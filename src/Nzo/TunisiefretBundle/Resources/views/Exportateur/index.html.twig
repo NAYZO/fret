@@ -1,46 +1,59 @@
 {% extends "NzoTunisiefretBundle::layoutExportateur.html.twig" %}
 
-{% block title %} {{ parent() }} Exportateur {% endblock %}
+{% block title %} {{ parent() }} Liste Des Demandes Export Active {% endblock %}
+
 {% block banner %}
-    <div class="jumbotron">
-        <div class="col-md-4"> 
-            <div class="row">
-                <h4 class="title-banner" style="">liste Demande Export</h4>
-            </div>
+<div class="jumbotron">
+    <div class="col-md-4"> 
+        <div class="row">
+            <h4 class="title-banner" style="">Liste Des Demandes Export Active</h4>
         </div>
     </div>
+</div>
 {% endblock banner %}
 
 {% block content %}
-<div class="col-md-8 col-md-offset-2 well">
-{% for demande in demandeexport %}
-<div class="panel panel-primary">
-  <div class="panel-heading">
-    <h3 class="panel-title">
-        <a href="{{path('nzo_postuledemande_export', {'id':demande.id} )}}"> {{demande.titre}} </a>
-        <span class="pull-right">{{demande.datedepos|date("d/m/Y H:i")}}</span>
-    </h3>
-    
-  </div>
-  <div class="panel-body">
-    {%if render(controller('NzoTunisiefretBundle:Exportateur:GetEtat', {'id': demande}))=='true'%}
-        Déja Posté
-    {%else%}
-        Pas Encore Poster
-    {%endif%}
-    
-    <br>
-    {%if demande.description|length > 150%}
-        {{ demande.description|slice(0, 150) }}...
-    {%else%}
-        {{demande.description}}
-    {%endif%}
-  </div>
+<div class="padding">
+<div class="row" style="padding-right: 16px;">
+    <div class="col-md-9 pull-left">
+        <ul id="breadcrumbs-two" style="margin-top: 14px;">
+            <li><a href="{{path('nzo_tunisiefret_homepage')}}">Liste Des Demandes</a></li>
+            <li class="current"><span>Active</span></li>
+        </ul>
+    </div>
+   <div class="pull-right">
+        {{ knp_pagination_render(demandeexport) }}
+    </div>
 </div>
-{% endfor %}
-
-    <div class="navigation">
-    {{ knp_pagination_render(demandeexport) }}
+<div class="list-group">
+    {% for demande in demandeexport %}
+        <div class="list-group-item" style="padding: 30px;">
+            <div class="legend list-group-item-heading">
+                <h4 class="cl-effect-1"><a href="{{path('nzo_postuledemande_export', {'id':demande.id} )}}">{{demande.titre}}</a></h4>  
+            </div>
+            <p style="color: grey;">Etat: 
+                {%if render(controller('NzoTunisiefretBundle:Exportateur:GetEtat', {'id': demande}))=='true'%}
+                    Déja Posté
+                {%else%}
+                    Pas Encore Poster
+                {%endif%}
+                    | Déposer le {{demande.datedepos|date("d/m/Y")}}</p>
+            <p class="list-group-item-text">
+                {% if demande.description|length > 150 %}
+                    {{demande.description|slice(0, 150)}}...
+                {%else%}
+                    {{demande.description}}
+                {% endif %}
+                <a href="{{path('nzo_postuledemande_export', {'id':demande.id} )}}" class="pull-right"> Voir détails </a>
+            </p>
+              
+        </div>
+    {% endfor %}
+</div>
+<div class="row" style="padding-right: 16px;">
+    <div class="pull-right">
+        {{ knp_pagination_render(demandeexport) }}
     </div>
-    </div>
-{% endblock content %}
+</div>
+{% endblock content %} 
+ 
