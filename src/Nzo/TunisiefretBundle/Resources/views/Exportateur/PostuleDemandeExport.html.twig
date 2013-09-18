@@ -1,51 +1,170 @@
 {% extends "NzoTunisiefretBundle::layoutExportateur.html.twig" %}
 
-{% block title %} {{ parent() }} Détail Demande Export {% endblock %}
+{% block title %} {{ parent() }} Postuler {% endblock %}
 
-{% block head %}
-{% endblock head %}
-
-{% block body %}
+{% block banner %}
+<div class="jumbotron">
+    <div class="col-md-4"> 
+        <div class="row">
+            <h4 class="title-banner" style="">Postuler</h4>
+        </div>
+    </div>
+</div>
+{% endblock banner %}
 
 {% block content %}
-
-<br> Détail Demande Export
-<br>
-    titre demande export:  {{demandeexport.titre}} <br>
-    Date dépos: {{demandeexport.datedepos|date("d/m/Y H:i")}}  | 
-    {%if val=='true'%}
-        Déja Posté
-    {%else%}
-        Pas Encore Poster
-    {%endif%}
+<div class="padding">
+    {#----------------breadcrumb----------------#}
+    <ul id="breadcrumbs-two">
+      <li><a href="{{path('nzo_tunisiefret_homepage')}}">Accueil</a></li>
+      <li><span>Demande Export</span></li>
+      <li class="current"><span>Postuler</span></li>
+    </ul>
     
-    <br>
-        {{demandeexport.description}}
-    <br>
-    -----------------------------------------------------
-<br>    
-Client: <br>
-Nom Entreprise: {{demandeexport.client.nomentrop}} <br>
-Nombre de Demande export déposé: {{demandeexport.client.nbdemandeexportdepose}} <br>
-Logo: <img class="media-object" src="{{ asset('clientfilesupload/')}}{{demandeexport.client.logoname}}" width="100" height="100" class="img-thumbnail"> <br>
-Note: {{demandeexport.client.note}} <br>
-
-<br>
-{%if val=='false'%}   
-<form action="#" id="contactForm" method="post" {{ form_enctype(form) }}>
-
-  {{ form_widget(form) }}
-
-    <!--bouton enregistrer-->
-    <div class="buttons-set">
-        <p class="required">* Obligatoire</p>
-        <button type="submit" class="button"><span><span>Enregistrer</span></span></button>
+    {#----------------Titre de la page----------------#}
+    <div class="legend2">
+        <h4 class="pull-left">{{demandeexport.titre}}</h4>
+        <div class="row" style="padding-right: 14px;">
+            <div class=" pull-right">
+            </div>
+        </div>
     </div>
-</form>
-{%endif%} 
+    
+    {#----------------Etat de la demande----------------#}
+    <div class="row" style="padding-right: 14px;">
+        <h4 class="pull-right red">Etat de la Demande: Pas encore postuler</h4>
+    </div>
+    
+    {#----------------Collapse----------------#}
+    <div class="row">
+        <div class="col-md-6">      
+            <div class="panel-group" id="accordion1" style="margin-bottom: 10px">
+                {#----------------Détails demande Export----------------#}
+                <div class="panel panel-default">            
+                    <div class="panel-heading">
+                      <a data-toggle="collapse" href="#collapseOne">
+                        <h4 class="panel-title">
+                           Détail de la demande d'export
+                           <img src="{{ asset('bundles/nzotunisiefret/images') }}/down.png" alt="" class="pull-right"/>  
+                       </h4>
+                      </a>
+                    </div>
+                          
+                    <div id="collapseOne" class="panel-collapse collapse">
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <p><strong class="red">Réf : </strong>{{demandeexport.reference}} </p>
+                                    <p><strong class="red">Prix : </strong>{{demandeexport.prix}} </p>
+                                    <p><strong class="red">Pays : </strong>{{demandeexport.pays}} </p>
+                                    <p><strong class="red">Ville : </strong>{{demandeexport.ville}} </p>
+                                </div>
+                                <div class="col-md-6">
+                                    <p><strong class="red">Code Postal : </strong>{{demandeexport.codepostal}} </p>
+                                    <p><strong class="red">Date Maximal : </strong>{{demandeexport.datemax|date("d/m/Y")}} </p>
+                                    <p><strong class="red">Date Dépot : </strong>{{demandeexport.datedepos|date("d/m/Y")}} </p>
+                                </div>
+                            </div>
+                            <hr>
+                                <p><strong class="red">Adresse : </strong>{{demandeexport.adresse}}</p>
+                            <hr>
+                            <p><strong class="red">Description : </strong>{{demandeexport.description}} </p>
+                        </div>       
+                    </div>
+                </div> 
+            </div>
+            
+          </div>
+            
+                    {#----------------Information sur le Client----------------#}
+        <div class="col-md-6 pull-right">
+            <div class="panel panel-default">
+                <div class="panel-heading">Informations sur le Client</div>
+                    <div class="panel-body">
+                        <div class="media">
+                            <div class="pull-left">
+                                <a href=""><img class="media-object img-thumbnail" src="{{ asset('clientfilesupload/')}}{{demandeexport.client.logoname}}" alt="" width="100" height="100"></a>
+                            </div>
+                          <div class="media-body">
+                              <div class="legend bottom" style="padding-bottom: 29px;">
+                                  <a href=""><h4 class="media-heading pull-left">{{demandeexport.client.nomentrop}}</h4></a>
+                                <span class="pull-right">
+                                    <span id="nzoratingstar"></span> {%if demandeexport.client.note > -1%} <strong>({{demandeexport.client.note}})</strong>{%endif%}
+                                </span>
+                              </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <p class="red"><strong>Contrats en cours : </strong> {{demandeexport.client.nbcontratencours}}</p>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <p class="red"><strong>Contrats terminé : </strong> {{demandeexport.client.nbcontrattermine}}</p>
+                                    </div>
+                                </div>
+                           </div>
+                        </div> 
+                    </div>
+                </div>
+            </div>
+        </div>
+            
+
+   </div>
+        {#----------------Postuler votre offre----------------#}
+        <div id="scroll" class="row" >
+            <div class="col-md-8"> 
+                <form action="#" id="contactForm" method="post" {{ form_enctype(form) }}>
+                    <fieldset>
+                        <legend class="colorlegend"><strong>Postuler votre offre</strong></legend>  
+        {% if(form_errors(form)) %}
+                        <div class="error-alert"> {{ form_errors(form) }} </div>
+        {% endif %}
+                        <div class="col-md-6">
+                            <div class="row">
+                {#--duree---#}
+                                    <div class="form-group">
+                                        <label>Durée <span class="required">*</span></label>
+                    {{ form_widget(form.duree,{'attr': {'class': 'form-control'}}) }}
+                                    </div>
+                {% if(form_errors(form.duree)) %}
+                                    <div class="error-input">{{ form_errors(form.duree) }}</div>
+                {% endif %}
+
+                 {#--prix---#}
+                                    <div class="form-group">
+                                        <label>Prix <span class="required">*</span></label>
+                    {{ form_widget(form.prix,{'attr': {'class': 'form-control'}}) }}
+                                    </div>
+                {% if(form_errors(form.prix)) %}
+                                    <div class="error-input">{{ form_errors(form.prix) }}</div>
+                {% endif %} 
+
+                {#--description---#}
+                                    <div class="form-group">
+                                        <label>Description <span class="required">*</span></label>
+                    {{ form_widget(form.description,{'attr': {'class': 'form-control', 'rows': '5', 'style': 'resize:none;height: 119px;'}}) }}
+                                    </div>
+                {% if(form_errors(form.description)) %}
+                                    <div class="error-input">{{ form_errors(form.description) }}</div>
+                {% endif %}
+
+                                    <input type="submit" value="Déposer" name="_submit" class="btn btn-danger pull-right">
+                                    <p class="text-danger"><span class="required">*</span> Champs Obligatoire</p>
+        {{ form_rest(form) }}
+                                    </fieldset>
+                                    </form>
+   
+            </div>
+               
+        </div>
+     
 {% endblock content %}
-
-{% block footer %}
-{% endblock footer %}
-
-{% endblock body %}  
+ 
+ {% block js %} 
+<script src="{{ asset('bundles/nzotunisiefret/js/jquery.raty.min.js') }}"></script>
+<script>
+    $(document).ready(function(){
+        //Rating Star
+            $('#nzoratingstar').raty({ path: '/bundles/nzotunisiefret/images', noRatedMsg: "aucune note associé!", hints: ['', '', '', '', ''], readOnly: true, score: {{demandeexport.client.note}} });
+        });
+</script>    
+{% endblock js %}

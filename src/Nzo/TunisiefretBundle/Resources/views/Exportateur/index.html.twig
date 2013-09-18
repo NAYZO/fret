@@ -27,15 +27,22 @@
 </div>
 <div class="list-group">
     {% for demande in demandeexport %}
+        {%set djp = render(controller('NzoTunisiefretBundle:Exportateur:GetEtat', {'id': demande}))%}
         <div class="list-group-item" style="padding: 30px;">
             <div class="legend list-group-item-heading">
-                <h4 class="cl-effect-1"><a href="{{path('nzo_postuledemande_export', {'id':demande.id} )}}">{{demande.titre}}</a></h4>  
+                <h4 class="cl-effect-1">
+                    {%if djp == 'false'%}
+                    <a href="{{path('nzo_postuledemande_export', {'id':demande.id} )}}">{{demande.titre}}</a></h4>    
+                    {%else%}
+                    <a href="{{path('exp_detail_postule_active', {'id':djp} )}}">{{demande.titre}}</a></h4>    
+                    {%endif%}
+                      
             </div>
             <p style="color: grey;">Etat: 
-                {%if render(controller('NzoTunisiefretBundle:Exportateur:GetEtat', {'id': demande}))=='true'%}
-                    Déja Posté
+                {%if djp == 'false'%}
+                    Pas Encore Poster  
                 {%else%}
-                    Pas Encore Poster
+                    Déja Posté
                 {%endif%}
                     | Déposer le {{demande.datedepos|date("d/m/Y")}}</p>
             <p class="list-group-item-text">
@@ -43,8 +50,12 @@
                     {{demande.description|slice(0, 150)}}...
                 {%else%}
                     {{demande.description}}
-                {% endif %}
-                <a href="{{path('nzo_postuledemande_export', {'id':demande.id} )}}" class="pull-right"> Voir détails </a>
+                {% endif %}                
+                {%if djp == 'false'%}
+                    <a href="{{path('nzo_postuledemande_export', {'id':demande.id} )}}" class="pull-right"> Voir détails </a>
+                {%else%}
+                    <a href="{{path('exp_detail_postule_active', {'id':djp} )}}" class="pull-right"> Voir détails </a>
+                {%endif%}
             </p>
               
         </div>

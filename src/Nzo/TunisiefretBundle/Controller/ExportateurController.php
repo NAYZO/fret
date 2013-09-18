@@ -95,7 +95,12 @@ class ExportateurController extends Controller {
         $em = $this->getDoctrine()->getManager();
         $usr = $this->get('security.context')->getToken()->getUser();
         $res = $em->getRepository('NzoTunisiefretBundle:DemandeExportPostule')->findBy( array('exportateur' => $usr, 'demandeexport' => $id));
-        ($res != NULL)? $val='true' : $val='false';
+        
+        if($res != NULL){
+            $val= $res[0]->getId();
+        }
+        else
+            $val='false';
         return new Response($val);
     }
     

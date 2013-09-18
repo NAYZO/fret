@@ -139,7 +139,7 @@
                               <div class="legend bottom" style="padding-bottom: 29px;">
                                   <a href=""><h4 class="media-heading pull-left">{{postule.demandeexport.client.nomentrop}}</h4></a>
                                 <span class="pull-right">
-                                    <span id="nzoratingstar"></span> {%if postule.exportateur.note > -1%} <strong>({{postule.demandeexport.client.note}})</strong>{%endif%}
+                                    <span id="nzoratingstar"></span> {%if postule.demandeexport.client.note > -1%} <strong>({{postule.demandeexport.client.note}})</strong>{%endif%}
                                 </span>
                               </div>
                                 <div class="row">
@@ -252,7 +252,8 @@
     <script src="{{ asset('bundles/nzotunisiefret/js/jquery.raty.min.js') }}"></script>
     <script>
         $(document).ready(function(){
-        
+            if({{msgs|length}} == 0)
+                $('#scroll').html('');
             $('#msgform').on('submit',function(c){
                 c.preventDefault();
            

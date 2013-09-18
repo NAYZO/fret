@@ -16,7 +16,7 @@
         <li><a href="{{ path('client_list_demande_type') }}">Liste Demandes D'export Type</a></li>
         <li class="current"><span>Déposer Demande Export type</span></li>
     </ul>
-<form action="#" id="contactForm" method="post" {{ form_enctype(form) }} role="form" novalidate>
+<form action="#" id="contactForm" method="post" {{ form_enctype(form) }} role="form">
     <fieldset>
         <legend class="colorlegend"><strong>Déposez Votre Demande D'export</strong></legend>  
         {% if(form_errors(form)) %}
