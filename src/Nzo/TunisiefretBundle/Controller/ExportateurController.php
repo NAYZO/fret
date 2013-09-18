@@ -7,6 +7,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Httpfoundation\Response;
 use JMS\SecurityExtraBundle\Annotation\Secure;
 
+use Nzo\TunisiefretBundle\Form\DemandeExportPostuleType;
 use Nzo\TunisiefretBundle\Form\DemandeExportType;
 use Nzo\TunisiefretBundle\Entity\DemandeExport;
 use Nzo\TunisiefretBundle\Entity\DemandeExportPostule;
