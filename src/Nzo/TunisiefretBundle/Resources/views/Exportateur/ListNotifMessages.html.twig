@@ -1,4 +1,4 @@
-{% extends "NzoTunisiefretBundle::layoutClient.html.twig" %}
+{% extends "NzoTunisiefretBundle::layoutExportateur.html.twig" %}
 {% block title %} {{ parent() }} Liste des Notifications Messages{% endblock %}
 
 {% block banner %}
@@ -39,7 +39,7 @@
         <div class="panel-body">
             <div class="media">
                 <span class="pull-left">
-                    <img class="media-object img-thumbnail" src="{{ asset('exportateurfilesupload/')}}{{notif.logoemetteur}}" alt="image"  width="80">
+                    <img class="media-object img-thumbnail" src="{{ asset('clientfilesupload/')}}{{notif.logoemetteur}}" alt="image"  width="80">
                 </span>
                 <div class="media-body">
                     <h4 class="media-heading"><strong>{{notif.emetteur}}</strong></h4>

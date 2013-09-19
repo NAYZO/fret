@@ -1,12 +1,12 @@
 {% extends "NzoTunisiefretBundle::layoutExportateur.html.twig" %}
 
-{% block title %} {{ parent() }} Détails Postule Active {% endblock %}
+{% block title %} {{ parent() }} Détails Postule En Cours {% endblock %}
 
 {% block banner %}
 <div class="jumbotron">
     <div class="col-md-4"> 
         <div class="row">
-            <h4 class="title-banner" style="">Détails Postule Active</h4>
+            <h4 class="title-banner" style="">Détails Postule En Cours</h4>
         </div>
     </div>
 </div>
@@ -18,7 +18,7 @@
     <ul id="breadcrumbs-two">
       <li><a href="{{path('nzo_tunisiefret_homepage')}}">Accueil</a></li>
       <li><span>Liste Postules</span></li>
-      <li><a href="{{path('exp_liste_postule_active')}}">Active</a></li>
+      <li><a href="{{path('exp_liste_contrats_en_cours')}}">En Cours</a></li>
       <li class="current"><span>Détails</span></li>
     </ul>
     
@@ -27,41 +27,13 @@
         <h4 class="pull-left">{{postule.demandeexport.titre}}</h4>
         <div class="row" style="padding-right: 14px;">
             <div class=" pull-right">
-            <!-- Button trigger modal -->
-            <a data-toggle="modal" href="#nzoAnnulerModal" class="btn btn-danger btn-sm" style="margin-top: 12px;">Supprimer votre Postule</a>
-           
-            <!-- Modal -->
-            <div class="modal fade" id="nzoAnnulerModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-              <div class="modal-dialog">
-                <div class="modal-content">
-                  <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title">Supprimer votre Postule: {{postule.demandeexport.titre}}</h4>
-                  </div>
-                  <div class="modal-body">
-                      <form action="{{path('exp_annuler_postule', {'id':postule.id})}}" method="POST" role="form" >
-                          <div class="form-group">
-                              Supprimer votre Postule pour la demande d'export {{postule.demandeexport.titre}} ?
-                          </div>
-                          <div class="row"style="margin-right: 0">
-                              <div class="pull-right">
-                                <button type="submit" class="btn btn-danger">Confirmer</button>
-                                <button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
-                              </div>
-                          </div>
-                       </form> 
-                  </div>
-                      
-                </div><!-- /.modal-content -->
-              </div><!-- /.modal-dialog -->
-            </div><!-- /.modal -->
             </div>
         </div>
     </div>
     
     {#----------------Etat de la demande----------------#}
     <div class="row" style="padding-right: 14px;">
-        <h4 class="pull-right red">Etat de la postule: Active</h4>
+        <h4 class="pull-right red">Etat de la Contrat: En Cours</h4>
     </div>
     
     {#----------------Collapse----------------#}

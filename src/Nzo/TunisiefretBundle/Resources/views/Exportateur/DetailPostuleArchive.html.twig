@@ -1,12 +1,12 @@
 {% extends "NzoTunisiefretBundle::layoutExportateur.html.twig" %}
 
-{% block title %} {{ parent() }} Détails Postule Active {% endblock %}
+{% block title %} {{ parent() }} Détails Postule Archivé {% endblock %}
 
 {% block banner %}
 <div class="jumbotron">
     <div class="col-md-4"> 
         <div class="row">
-            <h4 class="title-banner" style="">Détails Postule Active</h4>
+            <h4 class="title-banner" style="">Détails Postule Archivé</h4>
         </div>
     </div>
 </div>
@@ -18,7 +18,7 @@
     <ul id="breadcrumbs-two">
       <li><a href="{{path('nzo_tunisiefret_homepage')}}">Accueil</a></li>
       <li><span>Liste Postules</span></li>
-      <li><a href="{{path('exp_liste_postule_active')}}">Active</a></li>
+      <li><a href="{{path('exp_liste_postule_archive')}}">Archivé</a></li>
       <li class="current"><span>Détails</span></li>
     </ul>
     
@@ -27,41 +27,13 @@
         <h4 class="pull-left">{{postule.demandeexport.titre}}</h4>
         <div class="row" style="padding-right: 14px;">
             <div class=" pull-right">
-            <!-- Button trigger modal -->
-            <a data-toggle="modal" href="#nzoAnnulerModal" class="btn btn-danger btn-sm" style="margin-top: 12px;">Supprimer votre Postule</a>
-           
-            <!-- Modal -->
-            <div class="modal fade" id="nzoAnnulerModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-              <div class="modal-dialog">
-                <div class="modal-content">
-                  <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title">Supprimer votre Postule: {{postule.demandeexport.titre}}</h4>
-                  </div>
-                  <div class="modal-body">
-                      <form action="{{path('exp_annuler_postule', {'id':postule.id})}}" method="POST" role="form" >
-                          <div class="form-group">
-                              Supprimer votre Postule pour la demande d'export {{postule.demandeexport.titre}} ?
-                          </div>
-                          <div class="row"style="margin-right: 0">
-                              <div class="pull-right">
-                                <button type="submit" class="btn btn-danger">Confirmer</button>
-                                <button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
-                              </div>
-                          </div>
-                       </form> 
-                  </div>
-                      
-                </div><!-- /.modal-content -->
-              </div><!-- /.modal-dialog -->
-            </div><!-- /.modal -->
             </div>
         </div>
     </div>
     
     {#----------------Etat de la demande----------------#}
     <div class="row" style="padding-right: 14px;">
-        <h4 class="pull-right red">Etat de la postule: Active</h4>
+        <h4 class="pull-right red">Etat de la postule: Archivé</h4>
     </div>
     
     {#----------------Collapse----------------#}
@@ -232,19 +204,6 @@
                     <!-- END Last -->
                 {% endif %}
             </div>
-               
-            <div  class="col-md-4">
-                <div id="scrollbox">  
-                    <form action="#" id="msgform" method="post" role="form">
-                        <div class="form-group">
-                            <textarea id="nzomsgexp" required="required" class="form-control" rows="6"></textarea>
-                        </div>
-                        <div class="buttons-set">
-                            <button type="submit" class="btn btn-danger pull-right">Envoyez</button>
-                        </div>
-                    </form> 
-                </div>
-            </div>
         </div>
      </div>   
     </div>      
@@ -254,71 +213,16 @@
     <script src="{{ asset('bundles/nzotunisiefret/js/jquery.raty.min.js') }}"></script>
     <script>
         $(document).ready(function(){
-            if({{msgs|length}} == 0)
-                $('#nzoblockmsg').html('');
-            $('#msgform').on('submit',function(c){
-                c.preventDefault();
-           
-            if( $('#nzomsgexp').val() !== '' )             
-            {
-                $.ajax({
-                    url:"{{ path('ajax_send_msg_exportateur') }}",
-                    type:"POST",
-                    data:{ id:{{postule.id}}, msg:$('#nzomsgexp').val() },
-                    dataType:'json',
-                    success:function(a)
-                    {
-                        $('#nzomsgexp').val('');
-                        var b='';
-                        for(key in a)
-                        {
-                            b+='<div class="panel panel-info"><div class="panel-heading"><h3 class="panel-title">'
-                                +a[key]['user']+'<p class="pull-right">'+a[key]['date']+'</p></h3></div><div class="panel-body">'
-                                +a[key]['msg']+'</div></div>';
-                        }
-                        $('#nzomsgcontent').html(b);
-                        $('#nzonbmsg').html( parseInt(key) +1 );
-                    },
-                    error:function()
-                    {
-                        alert('erreur');
-                    }   
-                });
-            }
-            else alert('champs vide!');
-            
-            });
             
            $('#nzolengthmsg').on('click',function(){ 
                 $('#nzolengthmsg').remove();
                 $('#nzoblockfor').show();
             }); 
-            
-            
-            $("#nzoraison").change(function() {
-                if( $("#nzoraison option:selected").val() == "Autre" ) 
-                     $("#raison").slideDown();
-                else {
-                  $("#raison").slideUp();
-                  $("#nzotextarea").val('');
-                }
 
-            });
             //Rating Star
             $('#nzoratingstar').raty({ path: '/bundles/nzotunisiefret/images', noRatedMsg: "aucune note associé!", hints: ['', '', '', '', ''], readOnly: true, score: {{postule.demandeexport.client.note}} });
         });
         
         
     </script>
-    <script type="text/javascript">
-$(window).scroll(function () {
-        var ttop = $('#scroll').position().top;
-        var hcltb = $('#scroll').height();
-        var mtop = $(window).scrollTop();
-        if(mtop > ttop) {
-         if (mtop < (ttop+hcltb-200))
-         { $('#scrollbox').css('top', (mtop-ttop-25));}
-         }
- });
-        </script>
 {% endblock js %}

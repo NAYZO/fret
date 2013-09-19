@@ -43,7 +43,7 @@
                         </li>
                             
                   
-                        <li><a href="{{path('client_list_messages')}}" id="cliknotifmsg"><span class="glyphicon glyphicon-envelope"></span><span id='nzomsgnb' class="label label-danger label-style">{%set nzonotifmsgsnb = render(controller('NzoTunisiefretBundle:Exportateur:AjaxGetNbMsg'))%}{%if nzonotifmsgsnb > 0%}{{nzonotifmsgsnb}}{%endif%}</span></a></li>
+                        <li><a href="{{path('exp_list_messages')}}" id="cliknotifmsg"><span class="glyphicon glyphicon-envelope"></span><span id='nzomsgnb' class="label label-danger label-style">{%set nzonotifmsgsnb = render(controller('NzoTunisiefretBundle:Exportateur:AjaxGetNbMsg'))%}{%if nzonotifmsgsnb > 0%}{{nzonotifmsgsnb}}{%endif%}</span></a></li>
                         
                         {% include "NzoUserBundle::connexion.html.twig" %}
                     </ul>
@@ -73,8 +73,8 @@
                     Mes Contrats <span class="caret"></span>
                 </a>
                 <ul class="dropdown-menu">
-                    <li><a href="{{ path('exp_liste_travail_en_cours') }}" >En Cours</a></li>
-                    <li><a href="{{ path('exp_liste_travail_termine') }}" >Terminé</a></li>
+                    <li><a href="{{ path('exp_liste_contrats_en_cours') }}" >En Cours</a></li>
+                    <li><a href="{{ path('exp_liste_contrats_termine') }}" >Terminé</a></li>
                 </ul>
             </li>
             <li><a href="#" >Statistique</a></li>

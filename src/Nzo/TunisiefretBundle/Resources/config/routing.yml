@@ -45,7 +45,7 @@ client_list_notifications:
     defaults: {_controller: NzoTunisiefretBundle:Client:ListeNotifications}        
     
 client_list_messages:
-    pattern: /liste-messagess/
+    pattern: /liste-messages/
     defaults: {_controller: NzoTunisiefretBundle:Client:Listemessages}    
     
 nzo_voirlistedemande_export_active:
@@ -182,21 +182,43 @@ exp_detail_postule_active:
     pattern: /detail-postule/{id}/active/
     defaults: {_controller: NzoTunisiefretBundle:Exportateur:DetailPostuleActive}  
     requirements:
-        id:  \d+         
+        id:  \d+   
+
+exp_list_messages:
+    pattern: /exportateur/liste-messages/
+    defaults: {_controller: NzoTunisiefretBundle:Exportateur:Listemessages}
+    
+exp_detail_postule_archive:    
+    pattern: /detail-postule/{id}/archive/
+    defaults: {_controller: NzoTunisiefretBundle:Exportateur:DetailPostuleArchive}  
+    requirements:
+        id:  \d+                 
 
 exp_annuler_postule:        
-    pattern: /annuler-postule/{id}
+    pattern: /supprimer-postule/{id}
     defaults: {_controller: NzoTunisiefretBundle:Exportateur:AnnulerPostule}  
     requirements:
         id:  \d+
         
-exp_liste_travail_en_cours:
-    pattern: /liste-travail-encours/
-    defaults: {_controller: NzoTunisiefretBundle:Exportateur:ListeTravailEnCours}
+exp_contrat_encours_detail:        
+    pattern: /contrat-encours/{id}/detail/
+    defaults: {_controller: NzoTunisiefretBundle:Exportateur:ContratEnCoursDetail}  
+    requirements:
+        id:  \d+        
+
+exp_contrat_termine_detail:  
+    pattern: /contrat-termine/{id}/detail/
+    defaults: {_controller: NzoTunisiefretBundle:Exportateur:ContratTermineDetail}  
+    requirements:
+        id:  \d+  
+        
+exp_liste_contrats_en_cours:
+    pattern: /liste-contrat/encours/
+    defaults: {_controller: NzoTunisiefretBundle:Exportateur:ListeContratEnCours}
     
-exp_liste_travail_termine:
-    pattern: /liste-travail-termine/
-    defaults: {_controller: NzoTunisiefretBundle:Exportateur:ListeTravailTermine}
+exp_liste_contrats_termine:
+    pattern: /liste-contrat/termine/
+    defaults: {_controller: NzoTunisiefretBundle:Exportateur:ListeContratTermine}
     
 ajax_send_msg_exportateur:
     pattern: /message-exportateur-send/

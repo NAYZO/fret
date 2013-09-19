@@ -34,6 +34,11 @@ class NotifMsg
      * @ORM\Column(name="vu", type="boolean")
      */
     private $vu;
+    
+     /**
+     * @ORM\Column(name="vumsg", type="boolean")
+     */
+    private $vumsg;
 
     /**
      * @var datetime $date
@@ -71,6 +76,7 @@ class NotifMsg
     public function __construct()
     {
         $this->vu = false; 
+        $this->vumsg = false; 
         $this->date = new \DateTime('now');        
     }
  
@@ -294,5 +300,28 @@ class NotifMsg
     public function getLogoemetteur()
     {
         return $this->logoemetteur;
+    }
+
+    /**
+     * Set vumsg
+     *
+     * @param boolean $vumsg
+     * @return NotifMsg
+     */
+    public function setVumsg($vumsg)
+    {
+        $this->vumsg = $vumsg;
+    
+        return $this;
+    }
+
+    /**
+     * Get vumsg
+     *
+     * @return boolean 
+     */
+    public function getVumsg()
+    {
+        return $this->vumsg;
     }
 }

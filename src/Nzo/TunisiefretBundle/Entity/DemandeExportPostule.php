@@ -30,6 +30,11 @@ class DemandeExportPostule
     private $demandeexport;
     
     /**
+     * @ORM\OneToMany(targetEntity="Nzo\TunisiefretBundle\Entity\MsgDemandeExport", mappedBy="demandeexportpostule", cascade={"remove"})
+     */
+    private $MsgDemandeExport;
+    
+    /**
      * @ORM\Column(name="date_postule", type="datetime")
      * @Assert\NotBlank()
      */
@@ -73,8 +78,7 @@ class DemandeExportPostule
      * @ORM\Column(name="annuler_by_exportateur", type="boolean")
      */
     private $annuler_by_exportateur;
-    
- 
+
     
     public function __construct()
     {
@@ -82,6 +86,7 @@ class DemandeExportPostule
         $this->demande_refuser = false;  
         $this->annuler_by_exportateur = false;  
         $this->datepostule = new \DateTime('now');
+        $this->MsgDemandeExport = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
 
@@ -300,5 +305,39 @@ class DemandeExportPostule
     public function getAnnulerByExportateur()
     {
         return $this->annuler_by_exportateur;
+    }
+    
+    
+    /**
+     * Add MsgDemandeExport
+     *
+     * @param \Nzo\TunisiefretBundle\Entity\MsgDemandeExport $msgDemandeExport
+     * @return DemandeExportPostule
+     */
+    public function addMsgDemandeExport(\Nzo\TunisiefretBundle\Entity\MsgDemandeExport $msgDemandeExport)
+    {
+        $this->MsgDemandeExport[] = $msgDemandeExport;
+    
+        return $this;
+    }
+
+    /**
+     * Remove MsgDemandeExport
+     *
+     * @param \Nzo\TunisiefretBundle\Entity\MsgDemandeExport $msgDemandeExport
+     */
+    public function removeMsgDemandeExport(\Nzo\TunisiefretBundle\Entity\MsgDemandeExport $msgDemandeExport)
+    {
+        $this->MsgDemandeExport->removeElement($msgDemandeExport);
+    }
+
+    /**
+     * Get MsgDemandeExport
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getMsgDemandeExport()
+    {
+        return $this->MsgDemandeExport;
     }
 }

@@ -104,6 +104,29 @@ class ExportateurController extends Controller {
         return new Response($val);
     }
     
+    /**
+    * @Secure(roles="ROLE_EXPORTATEUR")
+    */
+    public function ListeMessagesAction()
+    {
+        $usr = $this->get('security.context')->getToken()->getUser();
+            $em = $this->getDoctrine()->getManager();        
+            $query = $em->getRepository('NzoTunisiefretBundle:NotifMsg')->getListMessagesExportateur($usr);
+            // set Vu to True
+            foreach ($query->execute() as $res) {
+                if(!$res->getVu()){
+                $res->setVu(true);
+                $em->persist($res);           
+                }
+            }
+            $em->flush();
+            
+            $paginator = $this->get('knp_paginator'); 
+            $listemessages = $paginator->paginate($query,
+            $this->get('request')->query->get('page', 1), 8);         
+            return $this->render('NzoTunisiefretBundle:Exportateur:ListNotifMessages.html.twig', array('listemessages' => $listemessages));
+    }
+    
    /**
     * @Secure(roles="ROLE_EXPORTATEUR")
     */
@@ -135,7 +158,7 @@ class ExportateurController extends Controller {
    /**
     * @Secure(roles="ROLE_EXPORTATEUR")
     */
-    public function ListeTravailEnCoursAction()
+    public function ListeContratEnCoursAction()
     {
         $usr = $this->get('security.context')->getToken()->getUser();
         $em = $this->getDoctrine()->getManager();   
@@ -143,13 +166,13 @@ class ExportateurController extends Controller {
         $paginator = $this->get('knp_paginator'); 
         $listepostules = $paginator->paginate($query,
         $this->get('request')->query->get('page', 1), 6);         
-        return $this->render('NzoTunisiefretBundle:Exportateur:ListeTravailEnCours.html.twig', array('listepostules' => $listepostules));
+        return $this->render('NzoTunisiefretBundle:Exportateur:ListeContratEnCours.html.twig', array('listepostules' => $listepostules));
     }
     
     /**
     * @Secure(roles="ROLE_EXPORTATEUR")
     */
-    public function ListeTravailTermineAction()
+    public function ListeContratTermineAction()
     {
         $usr = $this->get('security.context')->getToken()->getUser();
         $em = $this->getDoctrine()->getManager();   
@@ -157,7 +180,7 @@ class ExportateurController extends Controller {
         $paginator = $this->get('knp_paginator'); 
         $listepostules = $paginator->paginate($query,
         $this->get('request')->query->get('page', 1), 6);         
-        return $this->render('NzoTunisiefretBundle:Exportateur:ListeTravailTermine.html.twig', array('listepostules' => $listepostules));
+        return $this->render('NzoTunisiefretBundle:Exportateur:ListeContratTermine.html.twig', array('listepostules' => $listepostules));
     }
     
    /**
@@ -165,8 +188,57 @@ class ExportateurController extends Controller {
     */
     public function DetailPostuleActiveAction(DemandeExportPostule $postule)
     {
+        $usr = $this->get('security.context')->getToken()->getUser();
        // security access     
-            if($postule->getDemandeexport()->getTacking() || $postule->getDemandeexport()->getAnnulerDemande() || $postule->getAnnulerByExportateur() || $postule->getDemandeRefuser()) return $this->redirect($this->generateUrl('nzo_tunisiefret_homepage'));
+            if($postule->getExportateur() != $usr || $postule->getDemandeexport()->getTacking() || $postule->getDemandeexport()->getAnnulerDemande() || $postule->getAnnulerByExportateur() || $postule->getDemandeRefuser()) return $this->redirect($this->generateUrl('nzo_tunisiefret_homepage'));
+       // security access 
+
+        $em = $this->getDoctrine()->getManager();        
+        $msgs = $em->getRepository('NzoTunisiefretBundle:MsgDemandeExport')->findBy( array('demandeexportpostule' => $postule));
+   
+        return $this->render('NzoTunisiefretBundle:Exportateur:DetailPostuleActive.html.twig', array('postule' => $postule, 'msgs' => $msgs));    
+    }
+    
+    /**
+    * @Secure(roles="ROLE_EXPORTATEUR")
+    */
+    public function ContratEnCoursDetailAction(DemandeExportPostule $postule)
+    {
+        $usr = $this->get('security.context')->getToken()->getUser();
+       // security access     
+            if($postule->getExportateur() != $usr || $postule->getDemandeexport()->getAnnulerDemande() || $postule->getAnnulerByExportateur() || $postule->getDemandeRefuser()) return $this->redirect($this->generateUrl('nzo_tunisiefret_homepage'));
+       // security access 
+
+        $em = $this->getDoctrine()->getManager();        
+        $msgs = $em->getRepository('NzoTunisiefretBundle:MsgDemandeExport')->findBy( array('demandeexportpostule' => $postule));
+   
+        return $this->render('NzoTunisiefretBundle:Exportateur:DetailPostuleEnCours.html.twig', array('postule' => $postule, 'msgs' => $msgs));    
+    }
+    
+    /**
+    * @Secure(roles="ROLE_EXPORTATEUR")
+    */
+    public function ContratTermineDetailAction(DemandeExportPostule $postule)
+    {
+        $usr = $this->get('security.context')->getToken()->getUser();
+       // security access     
+            if($postule->getExportateur() != $usr || !$postule->getDemandeexport()->getTerminerDemande() || $postule->getDemandeexport()->getAnnulerDemande() || $postule->getAnnulerByExportateur() || $postule->getDemandeRefuser()) return $this->redirect($this->generateUrl('nzo_tunisiefret_homepage'));
+       // security access 
+
+        $em = $this->getDoctrine()->getManager();        
+        $msgs = $em->getRepository('NzoTunisiefretBundle:MsgDemandeExport')->findBy( array('demandeexportpostule' => $postule));
+   
+        return $this->render('NzoTunisiefretBundle:Exportateur:DetailPostuleTermine.html.twig', array('postule' => $postule, 'msgs' => $msgs));    
+    }
+    
+    /**
+    * @Secure(roles="ROLE_EXPORTATEUR")
+    */
+    public function DetailPostuleArchiveAction(DemandeExportPostule $postule)
+    {
+        $usr = $this->get('security.context')->getToken()->getUser();
+       // security access     
+            if($postule->getExportateur() != $usr) return $this->redirect($this->generateUrl('nzo_tunisiefret_homepage'));
        // security access 
      
 //        $etat='';
@@ -180,7 +252,7 @@ class ExportateurController extends Controller {
         $em = $this->getDoctrine()->getManager();        
         $msgs = $em->getRepository('NzoTunisiefretBundle:MsgDemandeExport')->findBy( array('demandeexportpostule' => $postule));
    
-        return $this->render('NzoTunisiefretBundle:Exportateur:DetailPostuleActive.html.twig', array('postule' => $postule, 'msgs' => $msgs));    
+        return $this->render('NzoTunisiefretBundle:Exportateur:DetailPostuleArchive.html.twig', array('postule' => $postule, 'msgs' => $msgs));    
     }
     
 //============================================================================================================================================================= nn terminer
@@ -281,13 +353,13 @@ class ExportateurController extends Controller {
             if($postule->getExportateur() != $usr) return $this->redirect($this->generateUrl('nzo_tunisiefret_homepage'));
        // security access
             $em = $this->getDoctrine()->getManager();
-            $postule->setAnnulerByExportateur(true);
+            $em->remove($postule);
 
             // notif Client
                 $notif = new Notification();
                 $notif->setClient($postule->getDemandeexport()->getClient());
                 //==================================================================================================================== lien exportateur pour info demande export + classe css
-                $text = $postule->getExportateur()->getNomentrop().'a annulé son postule pour la Demande <span>'.$postule->getDemandeexport()->getTitre().'</span>';
+                $text = $postule->getExportateur()->getNomentrop().' a supprimé son postule pour la Demande <span>'.$postule->getDemandeexport()->getTitre().'</span>';
                 $notif->setText($text);
                 $em->persist($notif);
             
