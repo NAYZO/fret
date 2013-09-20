@@ -129,8 +129,7 @@
             </div>
         </div>
         
-        {#----------------Nombre de message----------------#}
-<div id='nzoblockmsg'>        
+        {#----------------Nombre de message----------------#}       
         <h4 class="legend2 bottom">Messages (<span id='nzonbmsg'>{{msgs|length}}</span>)</h4>
 
         {#----------------Liste des messges----------------#}
@@ -218,7 +217,7 @@
                 </div>
             </div>
         </div>
-     </div>   
+ 
     </div>      
 {% endblock content %}
  
@@ -226,8 +225,6 @@
     <script src="{{ asset('bundles/nzotunisiefret/js/jquery.raty.min.js') }}"></script>
     <script>
         $(document).ready(function(){
-            if({{msgs|length}} == 0)
-                $('#nzoblockmsg').html('');
             $('#msgform').on('submit',function(c){
                 c.preventDefault();
            

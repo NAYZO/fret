@@ -219,6 +219,10 @@ exp_liste_contrats_en_cours:
 exp_liste_contrats_termine:
     pattern: /liste-contrat/termine/
     defaults: {_controller: NzoTunisiefretBundle:Exportateur:ListeContratTermine}
+
+exp_list_notifications:
+    pattern: /exportateur/liste-notifications/
+    defaults: {_controller: NzoTunisiefretBundle:Exportateur:ListeNotifications}
     
 ajax_send_msg_exportateur:
     pattern: /message-exportateur-send/

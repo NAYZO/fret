@@ -136,7 +136,8 @@ class ClientController extends Controller {
                     //==================================================================================================================== lien exportateur pour info demande export + classe css
                     $text = 'Demande Export <span class="text-primary">'.$postule->getDemandeExport()->getTitre().'</span> est Terminé!';
                     $notif->setText($text);
-                    //$notif->setUrl($this->get('router')->generate('blog_show', array('slug' => 'my-blog-post'), true));
+                    $url = $this->get('router')->generate('exp_contrat_termine_detail', array('id' => $postule->getId()));                  
+                    $notif->setUrl($url);
                     $em->persist($notif);
             
             $em->flush();
@@ -166,8 +167,10 @@ class ClientController extends Controller {
                     $notif = new Notification();
                     $notif->setExportateur($postule->getExportateur());
                     //==================================================================================================================== lien exportateur pour info demande export + classe css
-                    $text = 'Votre contrat: <span>'.$postule->getDemandeexport()->getTitre()."</span> est commencé le ".$postule->getDemandeexport()->getDateTacking()->format('d/m/Y');
+                    $text = 'Votre contrat: <span class="text-primary">'.$postule->getDemandeexport()->getTitre()."</span> est commencé le ".$postule->getDemandeexport()->getDateTacking()->format('d/m/Y');
                     $notif->setText($text);
+                    $url = $this->get('router')->generate('exp_contrat_encours_detail', array('id' => $postule->getId()));                  
+                    $notif->setUrl($url);
                     $em->persist($notif);
             
             $em->flush();
@@ -202,6 +205,8 @@ class ClientController extends Controller {
                 //==================================================================================================================== lien exportateur pour info demande export + classe css
                 $text = 'Demande Export <span>'.$mydemande->getTitre().'</span> est annulé!';
                 $notif->setText($text);
+                $url = $this->get('router')->generate('exp_detail_postule_archive', array('id' => $postule->getId()));                  
+                $notif->setUrl($url);
                 $em->persist($notif);
             }
             
@@ -486,7 +491,12 @@ class ClientController extends Controller {
             $notifmsg->setEmetteur($usr->getNomentrop());
             $notifmsg->setLogoemetteur($usr->getLogoname());
             $notifmsg->setTitredemandeexport($postule->getDemandeexport()->getTitre());
-            $notifmsg->setText($msg);           
+            $notifmsg->setText($msg); 
+            if($postule->getDemandeexport()->getTacking())
+            $url = $this->get('router')->generate('exp_contrat_encours_detail', array('id' => $postule->getId()));
+            else
+            $url = $this->get('router')->generate('exp_detail_postule_active', array('id' => $postule->getId()));                  
+            $notifmsg->setUrl($url);
             $em->persist($notifmsg);
             $em->flush();
 
@@ -548,6 +558,8 @@ class ClientController extends Controller {
             //==================================================================================================================== lien exportateur pour avis export + classe css
             $text = 'Vous avez reçu un Avis sur le Contrat Export <span>'.$postule->getDemandeexport()->getTitre().'</span>';
             $notif->setText($text);
+            $url = $this->get('router')->generate('exp_contrat_termine_detail', array('id' => $postule->getId()));                  
+            $notif->setUrl($url);
             $em->persist($notif);
             
             $em->flush();
@@ -565,29 +577,29 @@ class ClientController extends Controller {
         if ($request->isXmlHttpRequest()) {  
             
             $usr = $this->get('security.context')->getToken()->getUser();
-            $em = $this->getDoctrine()->getManager();
-        
-            $notifs = $em->getRepository('NzoTunisiefretBundle:Notification')->getListNotifAjaxClient($usr);
-            if($notifs != NULL){
+            $em = $this->getDoctrine()->getManager();           
+                
+            $notifstotal = $em->getRepository('NzoTunisiefretBundle:Notification')->getListNotifAjaxClient($usr);    
+            if($notifstotal != NULL){
                 $i = 0;
-                foreach ($notifs as $res) {
+                foreach ($notifstotal as $res) {
                     $notifdate = $res->getDate()->format('d/m/Y H:i');
-                    $vu = $res->getVu();
-                    $val[$i] = array('date' => $notifdate, 'notiftext' => $res->getText(), 'notifvu' => $vu);
-                    // set Vu to True
-                    if(!$vu){
-                    $res->setVu(true);
-                    $em->persist($res);           
-                    }
+                    $val[$i] = array('date' => $notifdate, 'notiftext' => $res->getText(), 'notifvu' => $res->getVu(), 'url' => $res->getUrl());
                     $i++;
                 }
-                $em->flush();
             }
             else
                 $val = array('vide');
+            
+            // set Vu to True
+            $notifs = $em->getRepository('NzoTunisiefretBundle:Notification')->getListNotifAjaxClientNonVu($usr);
+            foreach ($notifs as $res) {
+                    $res->setVu(true);
+                    $em->persist($res);           
+                }
+                $em->flush();
         return new Response(json_encode($val));
         }
     }  
-
    
 }

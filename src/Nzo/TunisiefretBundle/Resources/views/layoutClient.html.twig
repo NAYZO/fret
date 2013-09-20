@@ -160,9 +160,9 @@
                                     for(key in a)
                                     {
                                         if(a[key]['notifvu'] == 0)
-                                            b+='<li class="nonlu"><a href="#">'+a[key]['notiftext']+'</a></li>';
+                                            b+='<li class="nonlu"><a href="'+a[key]['url']+'">'+a[key]['notiftext']+'</a></li>';
                                         else                      
-                                            b+='<li><a href="#">'+a[key]['notiftext']+'</a></li>';                                    
+                                            b+='<li><a href="'+a[key]['url']+'">'+a[key]['notiftext']+'</a></li>';                                    
                                     }
                                     b+='<li class="all"><a href="{{path('client_list_notifications')}}" class="text-center">Voir toute les notifications</a></li>';
                                     nzostorage = b;

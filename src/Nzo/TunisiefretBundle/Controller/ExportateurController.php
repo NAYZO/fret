@@ -41,15 +41,19 @@ class ExportateurController extends Controller {
             if ($form->isValid()) {                
                 //augmente NB postule sur la Demande
                 $DemandeExport->setNombredepostule($DemandeExport->getNombredepostule()+1);
+                $em->persist($PostuleExport);
+                $em->flush();
                 //Notification Client
                 $Notification = new Notification();
                 $Notification->setClient($DemandeExport->getClient());
                 $Notification->setText('Nouveau Postule sur la Demande <span>'.$DemandeExport->getTitre().'</span>');
+                $url = $this->get('router')->generate('client_postule_active_detail', array('id' => $PostuleExport->getId()));
+                $Notification->setUrl($url);
+                
                 // end Notification
                 //augmente NB postule de l'Exportateur
                 $usr->setNbdemandeexportpostule($usr->getNbdemandeexportpostule()+1);   
-                $em->persist($Notification);
-                $em->persist($PostuleExport);
+                $em->persist($Notification);   
                 $em->flush();
 
                 $this->get('session')->getFlashBag()->add('notice', 'c boooonn!');
@@ -255,17 +259,18 @@ class ExportateurController extends Controller {
         return $this->render('NzoTunisiefretBundle:Exportateur:DetailPostuleArchive.html.twig', array('postule' => $postule, 'msgs' => $msgs));    
     }
     
-//============================================================================================================================================================= nn terminer
-    public function EtatExport(DemandeExportPostule $postule)
+    /**
+    * @Secure(roles="ROLE_EXPORTATEUR")
+    */
+    public function ListeNotificationsAction()
     {
-        $etat='';
-        if ($postule->getDemandeexport()->getTerminerDemande())
-            $etat = 'terminer';
-        else if ($postule->getDemandeexport()->getAnnulerDemande())
-            $etat = 'annuler_par_client';
-        else if ($postule->getDemandeexport()->getTacking() && !$postule->getDemandeexport()->getTerminerDemande() )
-            
-       return $etat;
+        $usr = $this->get('security.context')->getToken()->getUser();
+            $em = $this->getDoctrine()->getManager();        
+            $query = $em->getRepository('NzoTunisiefretBundle:Notification')->getListNotifExportateur($usr);
+            $paginator = $this->get('knp_paginator'); 
+            $listenotifications = $paginator->paginate($query,
+            $this->get('request')->query->get('page', 1), 8);         
+            return $this->render('NzoTunisiefretBundle:Exportateur:ListNotifications.html.twig', array('listenotifications' => $listenotifications));
     }
 
     /**
@@ -276,26 +281,27 @@ class ExportateurController extends Controller {
         if ($request->isXmlHttpRequest()) {  
             
             $usr = $this->get('security.context')->getToken()->getUser();
-            $em = $this->getDoctrine()->getManager();
-        
-            $notifs = $em->getRepository('NzoTunisiefretBundle:Notification')->getListNotifAjaxExportateur($usr);
-            if($notifs != NULL){
+            $em = $this->getDoctrine()->getManager();           
+                
+            $notifstotal = $em->getRepository('NzoTunisiefretBundle:Notification')->getListNotifAjaxExportateur($usr);    
+            if($notifstotal != NULL){
                 $i = 0;
-                foreach ($notifs as $res) {
+                foreach ($notifstotal as $res) {
                     $notifdate = $res->getDate()->format('d/m/Y H:i');
-                    $vu = $res->getVu();
-                    $val[$i] = array('date' => $notifdate, 'notiftext' => $res->getText(), 'notifvu' => $vu);
-                    // set Vu to True
-                    if(!$vu){
-                    $res->setVu(true);
-                    $em->persist($res);           
-                    }
+                    $val[$i] = array('date' => $notifdate, 'notiftext' => $res->getText(), 'notifvu' => $res->getVu(), 'url' => $res->getUrl());
                     $i++;
                 }
-                $em->flush();
             }
             else
                 $val = array('vide');
+            
+            // set Vu to True
+            $notifs = $em->getRepository('NzoTunisiefretBundle:Notification')->getListNotifAjaxExportateurNonVu($usr);
+            foreach ($notifs as $res) {
+                    $res->setVu(true);
+                    $em->persist($res);           
+                }
+                $em->flush();
         return new Response(json_encode($val));
         }
     }  
@@ -325,7 +331,14 @@ class ExportateurController extends Controller {
             $notifmsg->setEmetteur($usr->getNomentrop());
             $notifmsg->setLogoemetteur($usr->getLogoname());
             $notifmsg->setTitredemandeexport($postule->getDemandeexport()->getTitre());
-            $notifmsg->setText($msg);           
+            $notifmsg->setText($msg);   
+            
+            if($postule->getDemandeexport()->getTacking())
+            $url = $this->get('router')->generate('client_demande_export_encours_detail', array('id' => $postule->getDemandeexport()->getId()));
+            else
+            $url = $this->get('router')->generate('client_postule_active_detail', array('id' => $postule->getId()));                  
+            $notifmsg->setUrl($url);
+            
             $em->persist($notifmsg);
             $em->flush();
 
@@ -360,7 +373,8 @@ class ExportateurController extends Controller {
                 $notif->setClient($postule->getDemandeexport()->getClient());
                 //==================================================================================================================== lien exportateur pour info demande export + classe css
                 $text = $postule->getExportateur()->getNomentrop().' a supprimé son postule pour la Demande <span>'.$postule->getDemandeexport()->getTitre().'</span>';
-                $notif->setText($text);
+                $notif->setText($text);                  
+                $notif->setUrl('#');
                 $em->persist($notif);
             
             $em->flush();

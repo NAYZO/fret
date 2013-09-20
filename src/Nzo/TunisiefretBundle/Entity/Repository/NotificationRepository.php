@@ -12,13 +12,23 @@ use Doctrine\ORM\EntityRepository;
  */
 class NotificationRepository extends EntityRepository
 {
-    public function getListNotifAjaxClient($id)
+    public function getListNotifAjaxClientNonVu($id)
     {
          $qb = $this->createQueryBuilder('a');
          $qb->where('a.client = :client')
+            ->andWhere('a.vu = 0')          
+            ->orderBy('a.date', 'DESC')
+            ->setParameter('client', $id);
+         return $qb->getQuery()->execute();
+    }
+    
+    public function getListNotifAjaxClient($id)
+    {
+         $qb = $this->createQueryBuilder('a');
+         $qb->where('a.client = :client')        
             ->orderBy('a.date', 'DESC')
             ->setParameter('client', $id)
-            ->setMaxResults(4);
+            ->setMaxResults(4);     
          return $qb->getQuery()->execute();
     }
     
@@ -51,6 +61,7 @@ class NotificationRepository extends EntityRepository
          return $qb->getQuery()->getSingleScalarResult();
     } 
     
+    
     public function getListNotifAjaxExportateur($id)
     {
          $qb = $this->createQueryBuilder('a');
@@ -59,5 +70,24 @@ class NotificationRepository extends EntityRepository
             ->setParameter('exportateur', $id)
             ->setMaxResults(4);
          return $qb->getQuery()->execute();
+    }
+    
+    public function getListNotifAjaxExportateurNonVu($id)
+    {
+         $qb = $this->createQueryBuilder('a');
+         $qb->where('a.exportateur = :exportateur')
+            ->andWhere('a.vu = 0')     
+            ->orderBy('a.date', 'DESC')
+            ->setParameter('exportateur', $id);
+         return $qb->getQuery()->execute();
+    }
+    
+    public function getListNotifExportateur($id)
+    {
+         $qb = $this->createQueryBuilder('a');
+         $qb->where('a.exportateur = :exportateur')
+            ->orderBy('a.date', 'DESC')
+            ->setParameter('exportateur', $id);
+         return $qb->getQuery();
     }
 }
