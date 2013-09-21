@@ -492,7 +492,10 @@ class ClientController extends Controller {
             $notifmsg->setLogoemetteur($usr->getLogoname());
             $notifmsg->setTitredemandeexport($postule->getDemandeexport()->getTitre());
             $notifmsg->setText($msg); 
-            if($postule->getDemandeexport()->getTacking())
+            
+            if($postule->getDemandeexport()->getTerminerDemande())
+            $url = $this->get('router')->generate('exp_contrat_termine_detail', array('id' => $postule->getId()));    
+            else if($postule->getDemandeexport()->getTacking())
             $url = $this->get('router')->generate('exp_contrat_encours_detail', array('id' => $postule->getId()));
             else
             $url = $this->get('router')->generate('exp_detail_postule_active', array('id' => $postule->getId()));                  

@@ -333,7 +333,9 @@ class ExportateurController extends Controller {
             $notifmsg->setTitredemandeexport($postule->getDemandeexport()->getTitre());
             $notifmsg->setText($msg);   
             
-            if($postule->getDemandeexport()->getTacking())
+            if($postule->getDemandeexport()->getTerminerDemande())
+            $url = $this->get('router')->generate('client_demande_export_termine_detail', array('id' => $postule->getDemandeexport()->getId()));    
+            else if ($postule->getDemandeexport()->getTacking())    
             $url = $this->get('router')->generate('client_demande_export_encours_detail', array('id' => $postule->getDemandeexport()->getId()));
             else
             $url = $this->get('router')->generate('client_postule_active_detail', array('id' => $postule->getId()));                  
@@ -380,4 +382,59 @@ class ExportateurController extends Controller {
             $em->flush();
         return $this->redirect($this->generateUrl('exp_liste_postule_active'));   
   }
+  
+   /**
+    * @Secure(roles="ROLE_EXPORTATEUR")
+    */
+    public function DonnerAvisDemandeExportAction(DemandeExportPostule $postule, Request $request)
+    {
+        $usr = $this->get('security.context')->getToken()->getUser();
+       // security access     
+            if($postule->getExportateur() != $usr || !$postule->getDemandeexport()->getTerminerDemande()) return $this->redirect($this->generateUrl('nzo_tunisiefret_homepage'));
+            if( $postule->getDemandeexport()->getAvisExport()){
+                if( $postule->getDemandeexport()->getAvisExport()->getNoteclient() != NULL)
+                    return $this->redirect($this->generateUrl('nzo_tunisiefret_homepage'));
+            }
+       // security access 
+        if($request->getMethod() === 'POST')
+        {
+            $em = $this->getDoctrine()->getManager();
+            
+            if( $postule->getDemandeexport()->getAvisExport() ){
+                $avis = $postule->getDemandeexport()->getAvisExport();
+                $avis->setAvisclient($request->request->get('avisexportateur'));
+                $avis->setNoteclient( round($request->request->get('noteexportateur'),2) );
+                $em->persist($avis);               
+            }
+            else{
+                $avis = new AvisExport();
+                $avis->setAvisclient($request->request->get('avisexportateur'));
+                $avis->setNoteclient( round($request->request->get('noteexportateur'),2) );
+                $em->persist($avis);
+                $postule->getDemandeexport()->setAvisExport($avis);
+            }
+            // update note Client
+            if($postule->getDemandeexport()->getClient()->getNote() == -1){
+                $postule->getDemandeexport()->getClient()->setNote( $avis->getNoteclient() );
+            }
+            else{
+                $notefinal = ( $postule->getDemandeexport()->getClient()->getNote() + $avis->getNoteclient() )/2;
+                $postule->getDemandeexport()->getClient()->setNote( round($notefinal,2) );
+            }
+            // notif Client
+            $notif = new Notification();
+            $notif->setClient($postule->getDemandeexport()->getClient());
+            //==================================================================================================================== lien exportateur pour avis export + classe css
+            $text = 'Vous avez reçu un Avis sur le Contrat Export <span>'.$postule->getDemandeexport()->getTitre().'</span>';
+            $notif->setText($text);
+            $url = $this->get('router')->generate('client_demande_export_termine_detail', array('id' => $postule->getDemandeexport()->getId()));                  
+            $notif->setUrl($url);
+            $em->persist($notif);
+            
+            $em->flush();
+            return $this->redirect($this->generateUrl('nzo_tunisiefret_homepage'));
+        }
+
+        return $this->render('NzoTunisiefretBundle:Exportateur:DonnerAvisExport.html.twig', array('postule' => $postule));
+    }
 } 

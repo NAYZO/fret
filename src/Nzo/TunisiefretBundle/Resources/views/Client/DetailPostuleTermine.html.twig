@@ -144,7 +144,7 @@
                           <hr>
                           <h4 class="legend2">{{postule.exportateur.nomentrop}}</h4>
                           {%if postule.demandeexport.avisexport.noteexportateur == null%}
-                          <p>{{postule.demandeexport.avisexport.avisclient}}</p>
+                          <p class="text-success">Vous n'avez pas encore associer un Avis à "{{postule.exportateur.nomentrop}}".</p>
                           {%else%}   
                           <p><strong class="red">Note Associer : </strong> <span id="nzoratingstarexportateur"></span> <strong>({{postule.demandeexport.avisexport.noteexportateur}})</strong></p>
                           <p><strong class="red">Avis Associer : </strong> {{postule.demandeexport.avisexport.avisexportateur}}</p>

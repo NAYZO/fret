@@ -228,6 +228,12 @@ ajax_send_msg_exportateur:
     pattern: /message-exportateur-send/
     defaults: {_controller: NzoTunisiefretBundle:Exportateur:MessageExportateurSend}    
     
+exp_donner_avis_demande_export:  
+    pattern: /exportateur/demande-export/{id}/ajout-avis/
+    defaults: {_controller: NzoTunisiefretBundle:Exportateur:DonnerAvisDemandeExport}  
+    requirements:
+        id:  \d+    
+    
 #--------------------------- FosUserBundle -----------------------------------
 client_registration:
     pattern:  /inscription/client
