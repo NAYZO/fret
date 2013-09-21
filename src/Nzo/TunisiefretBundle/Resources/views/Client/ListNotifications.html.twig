@@ -37,7 +37,7 @@
     {% for notif in listenotifications %}
         <div class="list-group-item alert-notif bottom">
             <div class="list-group-item-heading">
-                <h5 class="pull-left">{{notif.text}}</h5>
+               <a href="{{notif.url}}"> <h5 class="pull-left">{{notif.text|raw}}</h5></a>
                 <div class="row" style="padding-right: 14px;">
                     <div class=" pull-right">
                         <strong>{{notif.date|date("d/m/Y")}}</strong> 

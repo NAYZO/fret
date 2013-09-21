@@ -210,7 +210,7 @@ class ExportateurController extends Controller {
     {
         $usr = $this->get('security.context')->getToken()->getUser();
        // security access     
-            if($postule->getExportateur() != $usr || $postule->getDemandeexport()->getAnnulerDemande() || $postule->getAnnulerByExportateur() || $postule->getDemandeRefuser()) return $this->redirect($this->generateUrl('nzo_tunisiefret_homepage'));
+            if($postule->getExportateur() != $usr || $postule->getDemandeexport()->getTerminerDemande() || $postule->getDemandeexport()->getAnnulerDemande() || $postule->getAnnulerByExportateur() || $postule->getDemandeRefuser()) return $this->redirect($this->generateUrl('nzo_tunisiefret_homepage'));
        // security access 
 
         $em = $this->getDoctrine()->getManager();        
@@ -368,6 +368,7 @@ class ExportateurController extends Controller {
             if($postule->getExportateur() != $usr) return $this->redirect($this->generateUrl('nzo_tunisiefret_homepage'));
        // security access
             $em = $this->getDoctrine()->getManager();
+            $postule->getDemandeexport()->setNombredepostule($postule->getDemandeexport()->getNombredepostule()-1);
             $em->remove($postule);
 
             // notif Client

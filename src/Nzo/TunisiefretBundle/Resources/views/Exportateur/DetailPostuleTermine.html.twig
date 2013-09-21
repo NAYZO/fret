@@ -138,7 +138,7 @@
                                 <p class="text-success">Vous devez associez un Avis afin de voir votre note donner par <strong class="red">"{{postule.demandeexport.client.nomentrop}}"</strong></p> 
                             {%else%}
                                 <p><strong class="red">Note Reçu : </strong> <span id="nzoratingstarexportateur"></span> <strong>({{postule.demandeexport.avisexport.noteexportateur}})</strong>
-                                <p><strong class="red">Avis Reçu:</strong>{{postule.demandeexport.avisexport.avisexportateur}}</p>
+                                <p><strong class="red">Avis Reçu : </strong>{{postule.demandeexport.avisexport.avisexportateur}}</p>
                               {%endif%}  
                           {%endif%}   
                           <hr>
@@ -169,7 +169,7 @@
         </div>
         
         {#----------------Nombre de message----------------#}
-        <h4 class="legend2 bottom">Messages (<span id='nzonbmsg'>{{msgs|length}}</span>)</h4>
+        <h4 class="legend2 bottom">Messages ( <span id='nzonbmsg'>{{msgs|length}}</span> )</h4>
 
         {#----------------Liste des messges----------------#}
         <div id="scroll" class="row" >
