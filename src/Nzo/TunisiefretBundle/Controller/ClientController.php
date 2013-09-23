@@ -20,6 +20,16 @@ use Nzo\TunisiefretBundle\Entity\TerminerDemandeExport;
 use Nzo\TunisiefretBundle\Entity\AvisExport;
 
 class ClientController extends Controller {
+    
+    /**
+     * @Secure(roles="ROLE_CLIENT")
+     */
+    public function GetPostuleEncoursByDemandeAction($id) 
+    {
+            $em = $this->getDoctrine()->getManager();
+            $postule = $em->getRepository('NzoTunisiefretBundle:DemandeExportPostule')->GetPostuleEncoursByDemande($id);
+        return new Response($postule);
+    }
 
    /**
     * @Secure(roles="ROLE_CLIENT")

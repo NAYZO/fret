@@ -21,16 +21,14 @@ class DemandeExportPostuleRepository extends EntityRepository
          return $qb->getQuery()->execute();
     }   
     
-//    public function getMyListePostule($id)
-//    {
-//         $qb = $this->createQueryBuilder('a');
-//         $qb 
-//            ->innerjoin('NzoTunisiefretBundle:DemandeExport', 'd', 'WITH', 'a.demandeexport = d.id AND d.tacking = 0')
-//            ->where('a.exportateur = :exportateur')
-//            ->andWhere('a.demande_refuser = 0 ')
-//            ->andWhere('a.demande_accepter = 0 ')           
-//            ->setParameter('exportateur', $id)
-//            ->orderBy('a.datepostule', 'DESC');
-//         return $qb->getQuery();    
-//    } 
+
+    public function GetPostuleEncoursByDemande($id)
+    {
+         $qb = $this->createQueryBuilder('a');
+         $qb->select('a.id')
+            ->where('a.demandeexport = :demandeexport')
+            ->andWhere('a.demande_accepter = 1')
+            ->setParameter('demandeexport', $id);
+         return $qb->getQuery()->getSingleScalarResult();
+    }   
 }

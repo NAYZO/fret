@@ -167,6 +167,7 @@ class Client extends User
         $this->nbdemandeexportdepose = 0;   
         $this->nbcontratencours = 0;   
         $this->nbcontrattermine = 0;   
+        $this->logoname = 'default-user-icon-profile.png';
         $this->demandeexport = new \Doctrine\Common\Collections\ArrayCollection();
         $this->notification = new \Doctrine\Common\Collections\ArrayCollection();
         $this->notifmsg = new \Doctrine\Common\Collections\ArrayCollection();

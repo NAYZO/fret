@@ -73,12 +73,28 @@ class DemandeExportRepository extends EntityRepository
             ->orderBy('a.date_depos', 'DESC');
          return $qb->getQuery();            
     } 
+
+    public function getClientNbDemandeExportArchive($id)
+    {
+         $qb = $this->createQueryBuilder('a');
+         $qb->select('COUNT(a)')
+            ->where('a.client = :client')
+            ->andWhere('a.tacking = 0')                 
+            ->andWhere('a.annuler_demande is NOT NULL')              
+            ->setParameter('client', $id);
+         return $qb->getQuery()->getSingleScalarResult();
+    } 
     
-//    public function getDemandeExportById($id)
-//    {
-//         $qb = $this->createQueryBuilder('a');
-//         $qb->where('a.id = :id')
-//            ->setParameter('id', $id);            
-//         return $qb->getQuery()->execute();
-//    } 
+    public function getClientContratEncoursTrois($id)
+    {
+         $qb = $this->createQueryBuilder('a');
+         $qb->where('a.client = :client')
+            ->andWhere('a.tacking = 1')     
+            ->andWhere('a.terminer_demande is NULL')                             
+            ->setParameter('client', $id)
+            ->orderBy('a.date_tacking', 'DESC')
+            ->setMaxResults(3);     
+         return $qb->getQuery()->execute();  
+    } 
+ 
 }

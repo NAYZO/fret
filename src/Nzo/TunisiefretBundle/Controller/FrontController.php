@@ -14,8 +14,13 @@ class FrontController extends Controller
             return $this->render('NzoTunisiefretBundle:Admin:index.html.twig');
         } 
         else if ($this->get('security.context')->isGranted('ROLE_CLIENT')) 
-        {                      
-            return $this->render('NzoTunisiefretBundle:Client:index.html.twig');
+        {     
+            $usr = $this->get('security.context')->getToken()->getUser();
+            $em = $this->getDoctrine()->getManager();        
+            $active = $em->getRepository('NzoTunisiefretBundle:DemandeExport')->getClientDemandeExportActive($usr->getId());
+            $nbarchive = $em->getRepository('NzoTunisiefretBundle:DemandeExport')->getClientNbDemandeExportArchive($usr->getId());
+            $encours = $em->getRepository('NzoTunisiefretBundle:DemandeExport')->getClientContratEncoursTrois($usr->getId());
+            return $this->render('NzoTunisiefretBundle:Client:index.html.twig', array('depose' => $active->execute(), 'nbarchive' => $nbarchive, 'encours' => $encours )); 
         }
         else if ($this->get('security.context')->isGranted('ROLE_EXPORTATEUR')) 
         {            

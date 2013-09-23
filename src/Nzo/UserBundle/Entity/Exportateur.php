@@ -169,6 +169,7 @@ class Exportateur extends User
         $this->nbdemandeexportpostule = 0;
         $this->nbcontratencours = 0;   
         $this->nbcontrattermine = 0;
+        $this->logoname = 'default-user-icon-profile.png';
         $this->demandeexportpostule = new \Doctrine\Common\Collections\ArrayCollection();
         $this->notification = new \Doctrine\Common\Collections\ArrayCollection();
         $this->notifmsg = new \Doctrine\Common\Collections\ArrayCollection();
