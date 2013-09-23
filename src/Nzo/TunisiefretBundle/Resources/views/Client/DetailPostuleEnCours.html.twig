@@ -172,6 +172,9 @@
         {#----------------Liste des messges----------------#}
         <div id="scroll" class="row" >
             <div class="col-md-8" id="nzomsgcontent"> 
+                {% if msgs is empty %}
+                <p class="alert alert-info">Vous n'avez aucun message pour le moment !</p>
+                {%else%}
                 {% if msgs|length <= 4 %}   
                     {% for msg in msgs %} 
                         <div class="panel panel-info">
@@ -238,6 +241,7 @@
                         </div>
                     </div>
                     <!-- END Last -->
+                {% endif %}
                 {% endif %}
             </div>
                
