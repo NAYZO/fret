@@ -25,6 +25,10 @@
         {{ knp_pagination_render(listecontratencours) }}
     </div>
 </div>
+{% if listecontratencours is empty %}
+   <hr>
+   <p class="alert alert-info">Il n'existe aucun Contrat en cours pour le moment !</p>
+{%else%}
 <div class="list-group">
     {% for demande in listecontratencours %}      
         <div class="list-group-item" style="padding: 30px;">
@@ -47,6 +51,7 @@
                    <span class="media-body">{{demande.ContratEnCoursPostule.exportateur.nomentrop}}</span>
                </div>
             </div>
+         </div>
     {% endfor %}
 </div>
 <div class="row" style="padding-right: 16px;">
@@ -54,4 +59,5 @@
         {{ knp_pagination_render(listecontratencours) }}
     </div>
 </div>
+{%endif%}
 {% endblock content %}
