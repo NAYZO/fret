@@ -318,6 +318,19 @@ class ClientController extends Controller {
     /**
     * @Secure(roles="ROLE_CLIENT")
     */
+    public function ContratEncoursAction(DemandeExportPostule $postule)
+    {
+            $em = $this->getDoctrine()->getManager();        
+            $query = $em->getRepository('NzoTunisiefretBundle:DemandeExportPostule')->getDemandeExportPostuleByDemande($postule->getDemandeexport());
+            $paginator = $this->get('knp_paginator'); 
+            $listepostules = $paginator->paginate($query,
+            $this->get('request')->query->get('page', 1), 6);         
+            return $this->render('NzoTunisiefretBundle:Client:DemandeExportEnCours.html.twig', array('listepostules' => $listepostules, 'mydemande' => $postule->getDemandeexport()));
+    }
+    
+    /**
+    * @Secure(roles="ROLE_CLIENT")
+    */
     public function ListeContratTerminerAction()
     {
         $usr = $this->get('security.context')->getToken()->getUser();
@@ -378,7 +391,7 @@ class ClientController extends Controller {
     {
         $usr = $this->get('security.context')->getToken()->getUser();
        // security access     
-           if($postule->getDemandeexport()->getClient() != $usr) return $this->redirect($this->generateUrl('nzo_tunisiefret_homepage'));
+           if($postule->getDemandeexport()->getClient() != $usr || $postule->getDemandeexport()->getTacking() || $postule->getDemandeexport()->getAnnulerDemande() ) return $this->redirect($this->generateUrl('nzo_tunisiefret_homepage'));
        // security access 
         $em = $this->getDoctrine()->getManager();        
         $msgs = $em->getRepository('NzoTunisiefretBundle:MsgDemandeExport')->findBy( array('demandeexportpostule' => $postule));
@@ -461,6 +474,20 @@ class ClientController extends Controller {
         $em = $this->getDoctrine()->getManager();        
         $msgs = $em->getRepository('NzoTunisiefretBundle:MsgDemandeExport')->findBy( array('demandeexportpostule' => $postule));
         return $this->render('NzoTunisiefretBundle:Client:DetailPostuleEnCours.html.twig', array('postule' => $postule, 'msgs' => $msgs));
+    }
+    
+     /**
+    * @Secure(roles="ROLE_CLIENT")
+    */
+    public function DetailPostuleEnCoursAfterDoneAction(DemandeExportPostule $postule)
+    {
+        $usr = $this->get('security.context')->getToken()->getUser();
+       // security access     
+           if($postule->getDemandeexport()->getClient() != $usr) return $this->redirect($this->generateUrl('nzo_tunisiefret_homepage'));
+       // security access 
+        $em = $this->getDoctrine()->getManager();        
+        $msgs = $em->getRepository('NzoTunisiefretBundle:MsgDemandeExport')->findBy( array('demandeexportpostule' => $postule));
+        return $this->render('NzoTunisiefretBundle:Client:DetailPostuleEnCoursAfterDone.html.twig', array('postule' => $postule, 'msgs' => $msgs));
     }
     
    /**

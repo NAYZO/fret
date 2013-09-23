@@ -22,6 +22,22 @@ use Nzo\TunisiefretBundle\Entity\AvisExport;
 
 class ExportateurController extends Controller {
     
+    /**
+     * @Secure(roles="ROLE_EXPORTATEUR")
+     */
+    public function HomeAction(Request $request) 
+    {
+        $usr = $this->get('security.context')->getToken()->getUser();
+            $em = $this->getDoctrine()->getManager();        
+            $query = $em->getRepository('NzoTunisiefretBundle:DemandeExport')->getAllDemandeExport();
+            $paginator = $this->get('knp_paginator'); 
+            $demandeexport = $paginator->paginate($query,
+            $request->query->get('page', 1), 6);        
+            $nbactive = $em->createQuery("SELECT COUNT(a) FROM NzoTunisiefretBundle:DemandeExportPostule a JOIN a.demandeexport d WHERE d.tacking = 0 AND d.annuler_demande is NULL AND a.demande_refuser = 0 AND a.annuler_by_exportateur = 0 AND a.exportateur = ".$usr->getId());
+            $nbarchive = $em->createQuery("SELECT COUNT(a) FROM NzoTunisiefretBundle:DemandeExportPostule a JOIN a.demandeexport d WHERE d.tacking = 0 OR d.annuler_demande is NOT NULL OR a.demande_refuser = 1 OR a.annuler_by_exportateur = 1 AND a.exportateur = ".$usr->getId());
+            return $this->render('NzoTunisiefretBundle:Exportateur:index.html.twig', array('demandeexport' => $demandeexport, 'nbactive' => $nbactive, 'nbarchive' => $nbarchive));
+    }
+    
    /**
     * @Secure(roles="ROLE_EXPORTATEUR")
     */
@@ -210,7 +226,6 @@ class ExportateurController extends Controller {
     {
         $usr = $this->get('security.context')->getToken()->getUser();
        // security access     
-            if($postule->getExportateur() != $usr || $postule->getDemandeexport()->getTerminerDemande() || $postule->getDemandeexport()->getAnnulerDemande() || $postule->getAnnulerByExportateur() || $postule->getDemandeRefuser()) return $this->redirect($this->generateUrl('nzo_tunisiefret_homepage'));
        // security access 
 
         $em = $this->getDoctrine()->getManager();        

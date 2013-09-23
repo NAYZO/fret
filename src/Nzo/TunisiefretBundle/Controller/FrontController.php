@@ -24,12 +24,7 @@ class FrontController extends Controller
         }
         else if ($this->get('security.context')->isGranted('ROLE_EXPORTATEUR')) 
         {            
-            $em = $this->getDoctrine()->getManager();        
-            $query = $em->getRepository('NzoTunisiefretBundle:DemandeExport')->getAllDemandeExport();
-            $paginator = $this->get('knp_paginator'); 
-            $demandeexport = $paginator->paginate($query,
-            $this->get('request')->query->get('page', 1), 6);         
-            return $this->render('NzoTunisiefretBundle:Exportateur:index.html.twig', array('demandeexport' => $demandeexport));
+            return $this->redirect($this->generateUrl('exp_home'));
         }        
         else
             return $this->render('NzoTunisiefretBundle:Front:index.html.twig');

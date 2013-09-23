@@ -68,6 +68,12 @@ client_contrat_terminer:
     pattern: /liste-contrat-terminé/
     defaults: {_controller: NzoTunisiefretBundle:Client:ListeContratTerminer}
     
+client_liste_contrat_encours:  
+    pattern: /liste-contrats/{id}/encours/
+    defaults: {_controller: NzoTunisiefretBundle:Client:ContratEncours}  
+    requirements:
+        id:  \d+     
+    
 client_demande_export_termine_detail:  
     pattern: /demande-export/{id}/termine/
     defaults: {_controller: NzoTunisiefretBundle:Client:DemandeExportTermineDetail}  
@@ -109,6 +115,12 @@ client_postule_encours_detail:
     defaults: {_controller: NzoTunisiefretBundle:Client:DetailPostuleEnCours}  
     requirements:
         id:  \d+         
+        
+client_postule_encours_detail_afterdone:
+    pattern: /postule/encours/{id}/detail/
+    defaults: {_controller: NzoTunisiefretBundle:Client:DetailPostuleEnCoursAfterDone}  
+    requirements:
+        id:  \d+        
         
 client_terminer_demande:        
     pattern: /terminer-demande-export/{id}
@@ -152,6 +164,10 @@ client_donner_avis_demande_export:
   
   
 #EXPORTATEUR ROUTE
+exp_home:
+    pattern: /liste-demande-export/
+    defaults: {_controller: NzoTunisiefretBundle:Exportateur:Home}
+
 nzo_postuledemande_export:
     pattern: /postule-demande-export/{id}
     defaults: {_controller: NzoTunisiefretBundle:Exportateur:PostuleDemandeExport}  

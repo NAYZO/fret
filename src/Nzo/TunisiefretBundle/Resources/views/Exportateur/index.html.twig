@@ -1,12 +1,12 @@
 {% extends "NzoTunisiefretBundle::layoutExportateur.html.twig" %}
 
-{% block title %} {{ parent() }} Liste Des Demandes Export Active {% endblock %}
+{% block title %} {{ parent() }} Liste Des Demandes Export{% endblock %}
 
 {% block banner %}
 <div class="jumbotron">
     <div class="col-md-4"> 
         <div class="row">
-            <h4 class="title-banner" style="">Liste Des Demandes Export Active</h4>
+            <h4 class="title-banner" style="">Liste Des Demandes Export</h4>
         </div>
     </div>
 </div>
@@ -17,8 +17,7 @@
 <div class="row" style="padding-right: 16px;">
     <div class="col-md-9 pull-left">
         <ul id="breadcrumbs-two" style="margin-top: 14px;">
-            <li><a href="{{path('nzo_tunisiefret_homepage')}}">Liste Des Demandes</a></li>
-            <li class="current"><span>Active</span></li>
+            <li class="current"><a href="{{path('nzo_tunisiefret_homepage')}}">Liste Demandes Export</a></li>
         </ul>
     </div>
    <div class="pull-right">
@@ -26,6 +25,27 @@
     </div>
 </div>
 <div class="list-group">
+    
+    
+    
+<a href=""><img class="media-object img-thumbnail" src="{{ asset('exportateurfilesupload/')}}{{app.user.logoname}}" alt="" width="100" height="100"></a>
+<span id="nzoratingstar"></span> {%if app.user.note > -1%} <strong>({{app.user.note}})</strong>{%endif%}
+{{app.user.nomentrop}}
+<br> <a href="{{ path('fos_user_profile_show') }}">Voir Profil</a>
+<br> <a href="{{ path('fos_user_profile_edit') }}" > Modifier Profil</a>
+
+<br> <br>
+Analyse:
+<br>Nombre Demande active: {{nbactive}}
+<br>Nombre Postules: {{app.user.nbdemandeexportpostule}}
+<br>Nombre Contrat En Cours: {{app.user.nbcontratencours}}
+<br>Nombre Contrat Terminé: {{app.user.nbcontrattermine}}
+<br>Nombre Demande Archivé: {{nbarchive}}
+
+<br> <br>  
+    
+    
+    
     {% for demande in demandeexport %}
         {%set djp = render(controller('NzoTunisiefretBundle:Exportateur:GetEtat', {'id': demande}))%}
         <div class="list-group-item" style="padding: 30px;">
@@ -67,4 +87,12 @@
     </div>
 </div>
 {% endblock content %} 
- 
+
+{% block js %} 
+    <script src="{{ asset('bundles/nzotunisiefret/js/jquery.raty.min.js') }}"></script>
+    <script>
+        $(document).ready(function(){
+            $('#nzoratingstar').raty({ path: '/bundles/nzotunisiefret/images', noRatedMsg: "aucune note associé!", hints: ['', '', '', '', ''], readOnly: true, score: {{app.user.note}} });
+        });   
+    </script>
+{% endblock js %} 
