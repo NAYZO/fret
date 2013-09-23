@@ -25,6 +25,10 @@
         {{ knp_pagination_render(listedemandeexport) }}
     </div>
 </div>
+{% if listedemandeexport is empty %}
+   <hr>
+   <p class="alert alert-info">Aucune demande d'export archivé existante pour le moment !</p>
+{%else%}
 <div class="list-group">
      {% for demande in listedemandeexport %}
         <div class="list-group-item" style="padding: 30px;">
@@ -51,5 +55,6 @@
         {{ knp_pagination_render(listedemandeexport) }}
     </div>
 </div>
+{%endif%}
 {% endblock content %} 
  
