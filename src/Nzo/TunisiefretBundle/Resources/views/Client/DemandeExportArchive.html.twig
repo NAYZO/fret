@@ -57,6 +57,9 @@
     <h4 class="legend2 bottom"><strong>Liste Postule: </strong>( {{postules|length}} )</h4>
     
     {#-------Liste postuler------------#}
+    {% if postules is empty %}
+       <p class="alert alert-info">Il n'existe aucun poste sur cette demande d'export !</p>
+    {%else%}
     {% for postule in postules %} 
     <div class="panel panel-default bottom">
         <div class="panel-body">
@@ -80,6 +83,7 @@
         </div>
     </div>
     {% endfor %}
+    {% endif %}
 </div>
 {% endblock content %}
  
