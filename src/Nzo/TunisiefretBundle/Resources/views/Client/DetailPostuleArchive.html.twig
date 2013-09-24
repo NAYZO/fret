@@ -126,6 +126,9 @@
 
         {#----------------Liste des messges----------------#}
         <div class="row">
+            {% if msgs is empty %}
+                <p class="alert alert-info">Vous n'avez réçu aucun message sur cette demande d'export !</p>
+            {%else%}
                 {% if msgs|length <= 4 %}   
                     {% for msg in msgs %} 
                         <div class="panel panel-info" id="accordion">
@@ -195,6 +198,8 @@
                     <!-- END Last -->     
                 </div>       
                 {% endif %}
+                {% endif %}
+                
 
     </div>
 </div>      

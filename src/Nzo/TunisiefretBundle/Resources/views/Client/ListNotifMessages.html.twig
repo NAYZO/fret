@@ -34,6 +34,9 @@
     </div>
     
     {#----------------Liste des notificaitons----------------#} 
+    {% if listemessages is empty %}
+        <p class="alert alert-info">Vous n'avez aucun message.</p>
+    {%else%}
     {% for notif in listemessages %}
     <div class="panel panel-info bottom">
         <div class="panel-body">
@@ -43,15 +46,21 @@
                 </span>
                 <div class="media-body">
                     <h4 class="media-heading"><strong>{{notif.emetteur}}</strong></h4>
-                    <p style="color: grey">{{notif.date|date("d/m/Y")}}</p>
-                    <p>{{notif.titredemandeexport}}</p>
-                    <p>{{notif.text}}</p>
-                    <a href="{{notif.url}}">voir</a>
+                    <p style="color: grey"><span class="red">Envoyer le : </span>{{notif.date|date("d/m/Y")}} | <span class="red">De la part de :</span> {{notif.titredemandeexport}}</p>
+                    <p class="list-group-item-text">
+                        {% if notif.text|length > 100 %}
+                            {{notif.text|slice(0, 100)}}...
+                        {%else%}
+                            {{notif.text}}
+                        {% endif %}
+                        <a href="{{notif.url}}" class="pull-right"> Voir détails </a>
+                    </p>
                </div>
             </div>
         </div>
     </div>
     {%endfor%}
+    {% endif %}
     {#----------------Pagination----------------#} 
     <div class="navigation">
         {{ knp_pagination_render(listemessages) }}

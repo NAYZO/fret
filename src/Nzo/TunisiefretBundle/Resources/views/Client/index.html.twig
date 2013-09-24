@@ -12,41 +12,94 @@
 
 {% endblock banner %}
 {% block content %}
+<div class="padding">
+    <div class="row">
+    <div class=" col-md-3">
+        <div class="panel panel-default bottom">
+            <div class="panel-heading"><strong>Profile</strong></div>
+            <div class="panel-body">
+                <a href="{{ path('fos_user_profile_show') }}">
+                    <img class="media-object img-thumbnail col-md-offset-3" src="{{ asset('clientfilesupload/')}}{{app.user.logoname}}" alt="" width="100" height="100">
+                    <p class="text-center"><strong>{{app.user.nomentrop}}</strong></p>
+                </a>
+                <span id="nzoratingstar" class="col-md-offset-2"></span> {%if app.user.note > -1%} <strong>({{app.user.note}})</strong>{%endif%}
+                <hr>
+                <div class="cl-effect-1">
+                    <p><a href="{{ path('fos_user_profile_show') }}">Voir votre Profil</a></p>
+                    <p><a href="{{ path('fos_user_profile_edit') }}" >Modifier votre Profil</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-9">
+        <div class="panel panel-default bottom">
+            <div class="panel-heading"><strong>Analyse</strong></div>
+            <div class="panel-body">
+                <div class="row">
+                   <div class="col-md-5">
+                        <p><span class="red">Nombre Demande déposé: </span>{{app.user.nbdemandeexportdepose}}</p>
+                        <p><span class="red">Nombre Demande active: </span>{{depose|length}}</p>
+                        <p><span class="red">Nombre Contrat En Cours: </span>{{app.user.nbcontratencours}}</p>
+                   </div>
+                   <div class="col-md-5">
+                       <p><span class="red">Nombre Contrat Terminé: </span>{{app.user.nbcontrattermine}}</p>
+                       <p><span class="red">Nombre Demande Archivé: </span>{{nbarchive}}</p>
+                   </div>
+                </div>
+             </div>
+        </div>
+        <div class="panel panel-default bottom">
+            <div class="panel-heading"><strong>Dernière Demandes déposé</strong></div>
+            <div class="panel-body">
+                {% if depose is empty %}
+                    <p class="text-success">Aucune demande déposé !</p>
+                {% else %}
+                
+                {%for key,demande in depose if key<3 %}
+                    <div class="row">
+                        <div class="col-md-12">
+                            <span class="pull-left" ><a href="{{path('client_demande_export_active', {'id':demande.id} )}}">{{demande.titre}}</a> ( {{demande.demandeexportpostule|length}} ) </span>
+                            <span class="pull-right" style="color: grey">Déposé le {{demande.datedepos|date("d/m/Y")}} </span>
+                        </div>
+                    </div>
+                {%endfor%}
+                <hr>
+                <div class="row">
+                    <div class="col-md-12">
+                        <p class="pull-right"> <a href="{{ path('nzo_voirlistedemande_export_active') }}" >Voir tout</a></p>
+                    </div>
+                </div>
+            {% endif %}
+            </div>
+        </div>
 
-<a href=""><img class="media-object img-thumbnail" src="{{ asset('clientfilesupload/')}}{{app.user.logoname}}" alt="" width="100" height="100"></a>
-<span id="nzoratingstar"></span> {%if app.user.note > -1%} <strong>({{app.user.note}})</strong>{%endif%}
-{{app.user.nomentrop}}
-<br> <a href="{{ path('fos_user_profile_show') }}">Voir Profil</a>
-<br> <a href="{{ path('fos_user_profile_edit') }}" > Modifier Profil</a>
-
-<br> <br>
-Analyse: 
-<br>Nombre Demande dépodé: {{app.user.nbdemandeexportdepose}}
-<br>Nombre Demande active: {{depose|length}}
-<br>Nombre Contrat En Cours: {{app.user.nbcontratencours}}
-<br>Nombre Contrat Terminé: {{app.user.nbcontrattermine}}
-<br>Nombre Demande Archivé: {{nbarchive}}
-
-<br> <br>  
-
-Dernier Demandes déposé:<br>
-{%for key,demande in depose if key<3 %}
-  <a href="{{path('client_demande_export_active', {'id':demande.id} )}}">{{demande.titre}}</a> ( {{demande.demandeexportpostule|length}} ) | Déposé le {{demande.datedepos|date("d/m/Y")}} <br>
-{%endfor%}
-    <a href="{{ path('nzo_voirlistedemande_export_active') }}" >Voir tout</a>
-    
-<br> <br>
-
-Dernier Demandes En Cours:<br>
-{%for demande in encours %}
-
-{%set idpostule = render(controller('NzoTunisiefretBundle:Client:GetPostuleEncoursByDemande', {'id': demande}))%}
-<a href="{{path('client_postule_encours_detail', {'id':idpostule} )}}">{{demande.titre}}</a> | Déposé le {{demande.datedepos|date("d/m/Y")}} <br>
-  
-{%endfor%}
-    <a href="{{ path('client_contrat_encours') }}" >Voir tout</a>
-    
-    
+        <div class="panel panel-default bottom">
+            <div class="panel-heading"><strong>Dernier contrat En Cours</strong></div>
+                <div class="panel-body">
+                    {% if encours is empty %}
+                        <p class="text-success">Aucun contrat en cours !</p>
+                    {% else %}
+                    {%for demande in encours %}
+                        {%set idpostule = render(controller('NzoTunisiefretBundle:Client:GetPostuleEncoursByDemande', {'id': demande}))%}
+                        <div class="row">
+                            <div class="col-md-12">
+                                <span class="pull-left" ><a href="{{path('client_postule_encours_detail', {'id':idpostule} )}}">{{demande.titre}}</a> </span>
+                                <span class="pull-right" style="color: grey">Déposé le {{demande.datedepos|date("d/m/Y")}} </span>
+                            </div>
+                        </div>
+                    {%endfor%}
+                    
+                    <hr>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <p class="pull-right"> <a href="{{ path('client_contrat_encours') }}">Voir tout</a></p>
+                        </div>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>   
+        </div>
+</div>   
 {% endblock content %}
 
 {% block js %} 
