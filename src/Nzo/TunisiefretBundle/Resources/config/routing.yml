@@ -68,6 +68,18 @@ client_contrat_terminer:
     pattern: /liste-contrat-terminé/
     defaults: {_controller: NzoTunisiefretBundle:Client:ListeContratTerminer}
     
+client_notifmsg_url_val:  
+    pattern: /client/message/{id}/valeur/
+    defaults: {_controller: NzoTunisiefretBundle:Client:MessageUrlValeur}  
+    requirements:
+        id:  \d+    
+        
+client_notif_url_val:  
+    pattern: /client/notification/{id}/valeur/
+    defaults: {_controller: NzoTunisiefretBundle:Client:NotificationUrlValeur}  
+    requirements:
+        id:  \d+        
+    
 client_liste_contrat_encours:  
     pattern: /liste-contrats/{id}/encours/
     defaults: {_controller: NzoTunisiefretBundle:Client:ContratEncours}  
@@ -193,7 +205,19 @@ exp_liste_postule_active:
 exp_liste_postule_archive:
     pattern: /liste-postule-archive/
     defaults: {_controller: NzoTunisiefretBundle:Exportateur:ListePostuleArchive}
-    
+
+exp_notifmsg_url_val:  
+    pattern: /exportateur/message/{id}/valeur/
+    defaults: {_controller: NzoTunisiefretBundle:Exportateur:MessageUrlValeur}  
+    requirements:
+        id:  \d+ 
+      
+exp_notif_url_val:  
+    pattern: /exportateur/notification/{id}/valeur/
+    defaults: {_controller: NzoTunisiefretBundle:Client:NotificationUrlValeur}  
+    requirements:
+        id:  \d+         
+        
 exp_detail_postule_active:    
     pattern: /detail-postule/{id}/active/
     defaults: {_controller: NzoTunisiefretBundle:Exportateur:DetailPostuleActive}  

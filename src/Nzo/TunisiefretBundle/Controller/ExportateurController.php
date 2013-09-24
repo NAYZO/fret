@@ -8,7 +8,6 @@ use Symfony\Component\Httpfoundation\Response;
 use JMS\SecurityExtraBundle\Annotation\Secure;
 
 use Nzo\TunisiefretBundle\Form\DemandeExportPostuleType;
-use Nzo\TunisiefretBundle\Form\DemandeExportType;
 use Nzo\TunisiefretBundle\Entity\DemandeExport;
 use Nzo\TunisiefretBundle\Entity\DemandeExportPostule;
 
@@ -16,8 +15,6 @@ use Nzo\TunisiefretBundle\Entity\MsgDemandeExport;
 
 use Nzo\TunisiefretBundle\Entity\NotifMsg;
 use Nzo\TunisiefretBundle\Entity\Notification;
-use Nzo\TunisiefretBundle\Entity\AnnulerDemandeExport;
-use Nzo\TunisiefretBundle\Entity\TerminerDemandeExport;
 use Nzo\TunisiefretBundle\Entity\AvisExport;
 
 class ExportateurController extends Controller {
@@ -37,6 +34,23 @@ class ExportateurController extends Controller {
             $nbarchive = $em->createQuery("SELECT COUNT(a) FROM NzoTunisiefretBundle:DemandeExportPostule a JOIN a.demandeexport d WHERE d.tacking = 0 OR d.annuler_demande is NOT NULL OR a.demande_refuser = 1 OR a.annuler_by_exportateur = 1 AND a.exportateur = ".$usr->getId());
             return $this->render('NzoTunisiefretBundle:Exportateur:index.html.twig', array('demandeexport' => $demandeexport, 'nbactive' => $nbactive->getSingleScalarResult(), 'nbarchive' => $nbarchive->getSingleScalarResult() ));
     }
+    
+   /**
+    * @Secure(roles="ROLE_EXPORTATEUR")
+    */
+    public function NotificationUrlValeurAction(DemandeExportPostule $postule)
+    {
+            if($postule->getDemandeexport()->getTerminerDemande())
+            $url = $this->get('router')->generate('exp_contrat_termine_detail', array('id' => $postule->getId()));    
+            else if($postule->getDemandeexport()->getTacking())
+            $url = $this->get('router')->generate('exp_contrat_encours_detail', array('id' => $postule->getId()));
+            else if($postule->getDemandeexport()->getAnnulerDemande())
+            $url = $this->get('router')->generate('exp_detail_postule_archive', array('id' => $postule->getId()));                      
+            else    
+            $url = $this->get('router')->generate('exp_detail_postule_active', array('id' => $postule->getId()));                  
+            
+            return $this->redirect($url);
+     }
     
    /**
     * @Secure(roles="ROLE_EXPORTATEUR")
@@ -63,7 +77,7 @@ class ExportateurController extends Controller {
                 $Notification = new Notification();
                 $Notification->setClient($DemandeExport->getClient());
                 $Notification->setText('Nouveau Postule sur la Demande <span>'.$DemandeExport->getTitre().'</span>');
-                $url = $this->get('router')->generate('client_postule_active_detail', array('id' => $PostuleExport->getId()));
+                $url = $this->get('router')->generate('client_notif_url_val', array('id' => $PostuleExport->getId()));              
                 $Notification->setUrl($url);
                 
                 // end Notification
@@ -258,16 +272,7 @@ class ExportateurController extends Controller {
         $usr = $this->get('security.context')->getToken()->getUser();
        // security access     
             if($postule->getExportateur() != $usr) return $this->redirect($this->generateUrl('nzo_tunisiefret_homepage'));
-       // security access 
-     
-//        $etat='';
-//        if ($postule->getDemandeexport()->getTerminerDemande())
-//            $etat = 'terminer';
-//        else if ($postule->getDemandeexport()->getAnnulerDemande())
-//            $etat = 'annuler_par_client';
-//        else if ($postule->getDemandeexport()->getTacking() && !$postule->getDemandeexport()->getTerminerDemande() )
-            
-            
+       // security access   
         $em = $this->getDoctrine()->getManager();        
         $msgs = $em->getRepository('NzoTunisiefretBundle:MsgDemandeExport')->findBy( array('demandeexportpostule' => $postule));
    
@@ -347,13 +352,7 @@ class ExportateurController extends Controller {
             $notifmsg->setLogoemetteur($usr->getLogoname());
             $notifmsg->setTitredemandeexport($postule->getDemandeexport()->getTitre());
             $notifmsg->setText($msg);   
-            
-            if($postule->getDemandeexport()->getTerminerDemande())
-            $url = $this->get('router')->generate('client_demande_export_termine_detail', array('id' => $postule->getDemandeexport()->getId()));    
-            else if ($postule->getDemandeexport()->getTacking())    
-            $url = $this->get('router')->generate('client_demande_export_encours_detail', array('id' => $postule->getDemandeexport()->getId()));
-            else
-            $url = $this->get('router')->generate('client_postule_active_detail', array('id' => $postule->getId()));                  
+            $url = $this->get('router')->generate('client_notifmsg_url_val', array('id' => $postule->getId()));              
             $notifmsg->setUrl($url);
             
             $em->persist($notifmsg);
@@ -372,6 +371,23 @@ class ExportateurController extends Controller {
         return new Response(json_encode($val));
         }
     }
+    
+     /**
+    * @Secure(roles="ROLE_EXPORTATEUR")
+    */
+    public function MessageUrlValeurAction(DemandeExportPostule $postule)
+    {
+            if($postule->getDemandeexport()->getTerminerDemande())
+            $url = $this->get('router')->generate('exp_contrat_termine_detail', array('id' => $postule->getId()));    
+            else if($postule->getDemandeexport()->getTacking())
+            $url = $this->get('router')->generate('exp_contrat_encours_detail', array('id' => $postule->getId()));
+            else if($postule->getDemandeexport()->getAnnulerDemande())
+            $url = $this->get('router')->generate('exp_detail_postule_archive', array('id' => $postule->getId()));                      
+            else    
+            $url = $this->get('router')->generate('exp_detail_postule_active', array('id' => $postule->getId()));                  
+            
+            return $this->redirect($url);
+     }
     
     /**
     * @Secure(roles="ROLE_EXPORTATEUR")
@@ -443,7 +459,7 @@ class ExportateurController extends Controller {
             //==================================================================================================================== lien exportateur pour avis export + classe css
             $text = 'Vous avez reçu un Avis sur le Contrat Export <span>'.$postule->getDemandeexport()->getTitre().'</span>';
             $notif->setText($text);
-            $url = $this->get('router')->generate('client_demande_export_termine_detail', array('id' => $postule->getDemandeexport()->getId()));                  
+            $url = $this->get('router')->generate('client_notif_url_val', array('id' => $postule->getId()));              
             $notif->setUrl($url);
             $em->persist($notif);
             
