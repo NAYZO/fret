@@ -543,6 +543,7 @@ class ClientController extends Controller {
             $exportateur = $postule->getExportateur();
             $notifmsg = new NotifMsg();
             $notifmsg->setExportateur($exportateur);
+            $notifmsg->setDemandeexportpostule($postule);
             $notifmsg->setEmetteur($usr->getNomentrop());
             $notifmsg->setLogoemetteur($usr->getLogoname());
             $notifmsg->setTitredemandeexport($postule->getDemandeexport()->getTitre());
@@ -571,7 +572,15 @@ class ClientController extends Controller {
     */
     public function MessageUrlValeurAction(DemandeExportPostule $postule)
     {
+            $em = $this->getDoctrine()->getManager();   
+            $query = $em->getRepository('NzoTunisiefretBundle:NotifMsg')->findBy(array('client' => $postule->getDemandeexport()->getClient(), 'demandeexportpostule' => $postule->getId()));
 
+            foreach($query as $res){
+                if(!$res->getVumsg())
+                    $res->setVumsg(true);
+                    $em->persist($res);
+            }
+            $em->flush();
             if($postule->getDemandeexport()->getTerminerDemande())
             $url = $this->get('router')->generate('client_demande_export_termine_detail', array('id' => $postule->getDemandeexport()->getId()));    
             else if ($postule->getDemandeexport()->getTacking())    

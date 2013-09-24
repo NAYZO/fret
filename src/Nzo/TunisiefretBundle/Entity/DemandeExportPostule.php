@@ -35,6 +35,11 @@ class DemandeExportPostule
     private $MsgDemandeExport;
     
     /**
+     * @ORM\OneToMany(targetEntity="Nzo\TunisiefretBundle\Entity\NotifMsg", mappedBy="demandeexportpostule", cascade={"remove"})
+     */
+    private $notifmsg;
+    
+    /**
      * @ORM\Column(name="date_postule", type="datetime")
      * @Assert\NotBlank()
      */
@@ -87,6 +92,7 @@ class DemandeExportPostule
         $this->annuler_by_exportateur = false;  
         $this->datepostule = new \DateTime('now');
         $this->MsgDemandeExport = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->notifmsg = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
 
@@ -339,5 +345,38 @@ class DemandeExportPostule
     public function getMsgDemandeExport()
     {
         return $this->MsgDemandeExport;
+    }
+
+    /**
+     * Add notifmsg
+     *
+     * @param \Nzo\TunisiefretBundle\Entity\NotifMsg $notifmsg
+     * @return DemandeExportPostule
+     */
+    public function addNotifmsg(\Nzo\TunisiefretBundle\Entity\NotifMsg $notifmsg)
+    {
+        $this->notifmsg[] = $notifmsg;
+    
+        return $this;
+    }
+
+    /**
+     * Remove notifmsg
+     *
+     * @param \Nzo\TunisiefretBundle\Entity\NotifMsg $notifmsg
+     */
+    public function removeNotifmsg(\Nzo\TunisiefretBundle\Entity\NotifMsg $notifmsg)
+    {
+        $this->notifmsg->removeElement($notifmsg);
+    }
+
+    /**
+     * Get notifmsg
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getNotifmsg()
+    {
+        return $this->notifmsg;
     }
 }

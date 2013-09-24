@@ -19,6 +19,10 @@ class NotifMsg
      */
     private $id;
     
+    /**
+     * @ORM\ManyToOne(targetEntity="Nzo\TunisiefretBundle\Entity\DemandeExportPostule")
+     */
+    private $demandeexportpostule;
     
     /**
      * @ORM\ManyToOne(targetEntity="Nzo\UserBundle\Entity\Client")
@@ -323,5 +327,28 @@ class NotifMsg
     public function getVumsg()
     {
         return $this->vumsg;
+    }
+
+    /**
+     * Set demandeexportpostule
+     *
+     * @param \Nzo\TunisiefretBundle\Entity\DemandeExportPostule $demandeexportpostule
+     * @return NotifMsg
+     */
+    public function setDemandeexportpostule(\Nzo\TunisiefretBundle\Entity\DemandeExportPostule $demandeexportpostule = null)
+    {
+        $this->demandeexportpostule = $demandeexportpostule;
+    
+        return $this;
+    }
+
+    /**
+     * Get demandeexportpostule
+     *
+     * @return \Nzo\TunisiefretBundle\Entity\DemandeExportPostule 
+     */
+    public function getDemandeexportpostule()
+    {
+        return $this->demandeexportpostule;
     }
 }
