@@ -35,7 +35,7 @@ class ExportateurController extends Controller {
             $request->query->get('page', 1), 6);        
             $nbactive = $em->createQuery("SELECT COUNT(a) FROM NzoTunisiefretBundle:DemandeExportPostule a JOIN a.demandeexport d WHERE d.tacking = 0 AND d.annuler_demande is NULL AND a.demande_refuser = 0 AND a.annuler_by_exportateur = 0 AND a.exportateur = ".$usr->getId());
             $nbarchive = $em->createQuery("SELECT COUNT(a) FROM NzoTunisiefretBundle:DemandeExportPostule a JOIN a.demandeexport d WHERE d.tacking = 0 OR d.annuler_demande is NOT NULL OR a.demande_refuser = 1 OR a.annuler_by_exportateur = 1 AND a.exportateur = ".$usr->getId());
-            return $this->render('NzoTunisiefretBundle:Exportateur:index.html.twig', array('demandeexport' => $demandeexport, 'nbactive' => $nbactive, 'nbarchive' => $nbarchive));
+            return $this->render('NzoTunisiefretBundle:Exportateur:index.html.twig', array('demandeexport' => $demandeexport, 'nbactive' => $nbactive->getSingleScalarResult(), 'nbarchive' => $nbarchive->getSingleScalarResult() ));
     }
     
    /**
