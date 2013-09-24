@@ -124,9 +124,7 @@
                      success: function(nbnotif){
                             (nbnotif==0) ? $('#nzonotifnb').html('') : $('#nzonotifnb').html(nbnotif);      
                      },
-                     error: function() {
-                            alert('error');
-                     }
+                     error:function(){}  
                 });
             }, 6000);
             
@@ -137,9 +135,7 @@
                      success: function(nbmsg){
                             (nbmsg==0) ? $('#nzomsgnb').html('') : $('#nzomsgnb').html(nbmsg);      
                      },
-                     error: function() {
-                            alert('error');
-                     }
+                     error:function(){}  
                 });
             }, 8500);
          });
@@ -169,9 +165,7 @@
                                     $('#nzonotifnb').html('');
                                     }
                          },
-                         error: function() {
-                                alert('error');
-                         }
+                         error:function(){}  
                     });              
             }
             $('#nzolistnotifajax').html(nzostorage);
