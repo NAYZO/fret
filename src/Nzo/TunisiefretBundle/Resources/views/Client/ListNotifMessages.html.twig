@@ -38,7 +38,7 @@
         <p class="alert alert-info">Vous n'avez aucun message.</p>
     {%else%}
     {% for notif in listemessages %}
-    <div class="panel panel-info bottom">
+        <div class="panel panel-info bottom" {%if not notif.vumsg %} style="border-color: rgb(230, 173, 173);background-color: rgb(253, 242, 242)" {% endif %}>
         <div class="panel-body">
             <div class="media">
                 <span class="pull-left">
