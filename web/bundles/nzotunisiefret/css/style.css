@@ -205,7 +205,7 @@
 }
 legend strong{color: #3079a2;}
 .required{color: rgb(197, 2, 2);font-size: 18px;}
-.error-alert ul{
+.error-login, .error-alert ul{
     padding: 15px;
     margin-bottom: 20px;
     border: 1px solid #E4ACB4;
@@ -230,17 +230,7 @@ legend strong{color: #3079a2;}
     padding-bottom: 14px;
     border-bottom: 1px dashed #74A5C5;
 }
-/*.col-md-6 > p {
-    font-size: 16px;
-}
-.col-md-6 > p strong{
-    color: rgb(86, 164, 216);
-}*/
-/*.media{
-    border: 1px solid rgb(226, 226, 226);
-border-radius: 4px;
-padding: 12px;
-}*/
+
 .breadcrumb a { color: #CC333F}
 .breadcrumb a:hover { color: #EB6841}
 .padding{
@@ -256,6 +246,7 @@ padding: 12px;
 }
 
 #breadcrumbs-two li{
+    list-style: none;
     float: left;
     margin: 0 0 0 19px;
 }

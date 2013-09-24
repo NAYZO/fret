@@ -38,7 +38,6 @@
                           <div class="form-group">
                             <label>Raison d'annulation</label>
                             <select id="nzoraison" class="form-control" name="annuler_raison">
-                                
                                 <option value="Postules ne répondent pas au besoin">Postules ne répondent pas au besoin</option>
                                 <option value="Demande d'exportation expiré">Demande d'exportation expiré</option>
                                 <option value="Ajouté par erreur">Ajouté par erreur</option>
@@ -92,6 +91,9 @@
     <h4 class="legend2 bottom"><strong>Liste Postule: </strong>( {{postules|length}} )</h4>
     
     {#-------Liste postuler------------#}
+    {% if postules is empty %}
+       <p class="alert alert-info">Il n'existe aucun poste sur cette demande d'export pour le moment !</p>
+    {%else%}
     {% for postule in postules %} 
     <div class="panel panel-default bottom">
         <div class="panel-body">
@@ -115,6 +117,7 @@
         </div>
     </div>
     {% endfor %}
+    {% endif %}
 </div>
 {% endblock content %}
 {% block js %}
