@@ -214,7 +214,7 @@ exp_notifmsg_url_val:
       
 exp_notif_url_val:  
     pattern: /exportateur/notification/{id}/valeur/
-    defaults: {_controller: NzoTunisiefretBundle:Client:NotificationUrlValeur}  
+    defaults: {_controller: NzoTunisiefretBundle:Exportateur:NotificationUrlValeur}  
     requirements:
         id:  \d+         
         
