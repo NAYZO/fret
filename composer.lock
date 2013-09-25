@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "a7efd1a6832a021515721fd4d081e623",
+    "hash": "145c0548f0f61d76dad0841753995a41",
     "packages": [
         {
             "name": "doctrine/annotations",
@@ -1337,6 +1337,57 @@
             "time": "2013-07-28 22:38:30"
         },
         {
+            "name": "nzo/url-encryptor-bundle",
+            "version": "dev-master",
+            "target-dir": "Nzo/UrlEncryptorBundle",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/NAYZO/NzoUrlEncryptorBundle.git",
+                "reference": "b5865c2ea505fbacbe9202784540e9376886762b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/NAYZO/NzoUrlEncryptorBundle/zipball/b5865c2ea505fbacbe9202784540e9376886762b",
+                "reference": "b5865c2ea505fbacbe9202784540e9376886762b",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.2",
+                "symfony/framework-bundle": "~2.1"
+            },
+            "require-dev": {
+                "symfony/yaml": "~2.1",
+                "twig/twig": "~1.5"
+            },
+            "type": "symfony-bundle",
+            "autoload": {
+                "psr-0": {
+                    "Nzo\\UrlEncryptorBundle": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Ala Eddine Khefifi",
+                    "email": "alakhefifi@gmail.com"
+                }
+            ],
+            "description": "The UrlEncryptorBundle is a Symfony2 Bundle used to Encrypt and Decrypt the variables in url and links and to more secure the access to your project",
+            "homepage": "https://github.com/NAYZO/NzoUrlEncryptorBundle",
+            "keywords": [
+                "decryption",
+                "encryption",
+                "id",
+                "link",
+                "security",
+                "url"
+            ],
+            "time": "2013-09-25 15:30:08"
+        },
+        {
             "name": "phpoption/phpoption",
             "version": "1.3.0",
             "source": {
@@ -2257,7 +2308,8 @@
     "stability-flags": {
         "friendsofsymfony/user-bundle": 20,
         "pugx/multi-user-bundle": 20,
-        "knplabs/knp-paginator-bundle": 20
+        "knplabs/knp-paginator-bundle": 20,
+        "nzo/url-encryptor-bundle": 20
     },
     "platform": {
         "php": ">=5.3.3"

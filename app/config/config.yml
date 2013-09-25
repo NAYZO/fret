@@ -65,6 +65,9 @@ swiftmailer:
     password:  %mailer_password%
     spool:     { type: memory }
     
+nzo_url_encryptor:
+    secret: 123456
+    
 #FILE UPLOAD     
 vich_uploader:
     db_driver: orm
