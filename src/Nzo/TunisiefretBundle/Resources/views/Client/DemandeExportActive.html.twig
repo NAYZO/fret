@@ -9,7 +9,57 @@
     </div>
 </div>
 {% endblock banner %}
+{#---------------------2eme menu-------------------#}
+{% block menu %}
+<div class="nav-container">
+    <div class="box">
+        <ul id="bignav" class="nav nav-pills bottom cl-effect-1">     
+            <li class="col-md-offset-2"><a href="{{path('nzo_tunisiefret_homepage')}}" >Dashboard</a></li>
+            <li class="actives dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                    Mes Demandes <span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu">
+                    <li><a href="{{ path('nzo_voirlistedemande_export_active') }}" >Active</a></li>
+                    <li><a href="{{ path('nzo_voirlistedemande_export_archive') }}" >Archivé</a></li>
+                </ul>
+            </li>
 
+            <li class="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                    Mes Contrats <span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu">
+                    <li><a href="{{ path('client_contrat_encours') }}" >En Cours</a></li>
+                    <li><a href="{{ path('client_contrat_terminer') }}" >Terminé</a></li>
+                </ul>
+            </li>
+            <li><a href="{{ path('nzo_poserdemande_export') }}" >Déposer Demande Export</a></li>
+            <li><a href="{{ path('client_list_demande_type') }}">Liste Demandes Export Type</a></li>
+        </ul>
+
+        <div id="dd" class="wrapper-dropdown-5" tabindex="1">MENU
+            <ul class="dropdownd">
+                <li><a href="{{path('nzo_tunisiefret_homepage')}}" >Dashboard</a></li>
+                <li class="sanslien"><strong>Mes demandes</strong>
+                    <ul class="second-drop">
+                        <li class="activedrop"><a href="{{ path('nzo_voirlistedemande_export_active') }}">Active</a></li>
+                        <li><a href="{{ path('nzo_voirlistedemande_export_archive') }}" >Archivé</a></li>  
+                    </ul>
+                </li>
+                <li class="sanslien"><strong>Mes Contrats</strong>
+                    <ul class="second-drop">
+                        <li><a href="{{ path('client_contrat_encours') }}" >En Cours</a></li>
+                        <li><a href="{{ path('client_contrat_terminer') }}" >Terminé</a></li>
+                    </ul>
+                </li>
+                <li><a href="{{ path('nzo_poserdemande_export') }}" >Déposer Demande Export</a></li>
+                <li><a href="{{ path('client_list_demande_type') }}">Liste Demandes Export Type</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+{% endblock menu %}
 {% block content %}
 <div class="padding">	
     <ul id="breadcrumbs-two">
@@ -92,7 +142,7 @@
     
     {#-------Liste postuler------------#}
     {% if postules is empty %}
-       <p class="alert alert-info">Il n'existe aucun poste sur cette demande d'export pour le moment !</p>
+       <p class="alert alert-info">Il n'existe aucun poste sur cette demande d'export !</p>
     {%else%}
     {% for postule in postules %} 
     <div class="panel panel-default bottom">
