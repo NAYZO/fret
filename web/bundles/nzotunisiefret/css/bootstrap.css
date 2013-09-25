@@ -3925,8 +3925,9 @@ textarea.input-group-sm > .input-group-btn > .btn {
 .nav-pills > li.active > a,
 .nav-pills > li.active > a:hover,
 .nav-pills > li.active > a:focus {
-  color: #ffffff;
-  background-color: #428bca;
+    background-color: #3299BB;
+    color : white;
+    border-radius: 0;
 }
 
 .nav-stacked > li {
