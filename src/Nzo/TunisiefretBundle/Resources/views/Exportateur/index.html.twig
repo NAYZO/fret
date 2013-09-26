@@ -4,86 +4,150 @@
 
 {% block banner %}
 <div class="jumbotron">
-    <div class="col-md-4"> 
+    <div class="col-md-4 col-sm-11 col-xs-11"> 
         <div class="row">
             <h4 class="title-banner" style="">Liste Des Demandes Export</h4>
         </div>
     </div>
 </div>
-{% endblock banner %}
 
+{% endblock banner %}
+{#---------------------2eme menu-------------------#}
+{% block menu %}
+<div class="nav-container">
+    <div class="box">
+        <ul id="bignav" class="nav nav-pills bottom cl-effect-1">     
+            <li class="col-md-offset-3 actives"><a href="{{path('nzo_tunisiefret_homepage')}}">Liste Demandes</a></li>
+            <li class="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                    Mes Postules <span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu">
+                    <li><a href="{{ path('exp_liste_postule_active') }}" >Active</a></li>
+                    <li><a href="{{ path('exp_liste_postule_archive') }}" >Archivé</a></li>
+                </ul>
+            </li>
+            <li class="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                    Mes Contrats <span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu">
+                    <li><a href="{{ path('exp_liste_contrats_en_cours') }}" >En Cours</a></li>
+                    <li><a href="{{ path('exp_liste_contrats_termine') }}" >Terminé</a></li>
+                </ul>
+            </li>
+            <li><a href="#" >Statistique</a></li>
+        </ul>
+
+        <div id="dd" class="wrapper-dropdown-5" tabindex="1">MENU
+            <ul class="dropdownd">
+                <li class="activedrop"><a href="{{path('nzo_tunisiefret_homepage')}}">Liste Demandes</a></li>
+                <li class="sanslien"><strong>Mes Postules</strong>
+                    <ul class="second-drop">
+                        <li><a href="{{ path('exp_liste_postule_active') }}" >Active</a></li>
+                        <li><a href="{{ path('exp_liste_postule_archive') }}" >Archivé</a></li>
+                    </ul>
+                </li>
+                <li class="sanslien"><strong>Mes Contrats</strong>
+                    <ul class="second-drop">
+                        <li><a href="{{ path('exp_liste_contrats_en_cours') }}" >En Cours</a></li>
+                        <li><a href="{{ path('exp_liste_contrats_termine') }}" >Terminé</a></li>
+                    </ul>
+                </li>
+                <li><a href="#" >Statistique</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+{% endblock menu %}
 {% block content %}
 <div class="padding">
-<div class="row" style="padding-right: 16px;">
-    <div class="col-md-9 pull-left">
-        <ul id="breadcrumbs-two" style="margin-top: 14px;">
-            <li class="current"><a href="{{path('nzo_tunisiefret_homepage')}}">Liste Demandes Export</a></li>
-        </ul>
-    </div>
-   <div class="pull-right">
-        {{ knp_pagination_render(demandeexport) }}
-    </div>
-</div>
-<div class="list-group">
+    {#---------arboresence------------#}
+    <ul id="breadcrumbs-two" style="margin-top: 14px;">
+        <li class="current"><a href="{{path('nzo_tunisiefret_homepage')}}">Liste Demandes Export</a></li>
+    </ul>
+    <hr>
     
-    
-    
-<a href=""><img class="media-object img-thumbnail" src="{{ asset('exportateurfilesupload/')}}{{app.user.logoname}}" alt="" width="100" height="100"></a>
-<span id="nzoratingstar"></span> {%if app.user.note > -1%} <strong>({{app.user.note}})</strong>{%endif%}
-{{app.user.nomentrop}}
-<br> <a href="{{ path('fos_user_profile_show') }}">Voir Profil</a>
-<br> <a href="{{ path('fos_user_profile_edit') }}" > Modifier Profil</a>
-
-<br> <br>
-Analyse:
-<br>Nombre Demande active: {{nbactive}}
-<br>Nombre Postules: {{app.user.nbdemandeexportpostule}}
-<br>Nombre Contrat En Cours: {{app.user.nbcontratencours}}
-<br>Nombre Contrat Terminé: {{app.user.nbcontrattermine}}
-<br>Nombre Demande Archivé: {{nbarchive}}
-
-<br> <br>  
-    
-    
-    
-    {% for demande in demandeexport %}
-        {%set djp = render(controller('NzoTunisiefretBundle:Exportateur:GetEtat', {'id': demande}))%}
-        <div class="list-group-item" style="padding: 30px;">
-            <div class="legend list-group-item-heading">
-                <h4 class="cl-effect-1">
-                    {%if djp == 'false'%}
-                    <a href="{{path('nzo_postuledemande_export', {'id':demande.id} )}}">{{demande.titre}}</a></h4>    
-                    {%else%}
-                    <a href="{{path('exp_detail_postule_active', {'id':djp} )}}">{{demande.titre}}</a></h4>    
-                    {%endif%}
-                      
+    <div class="row">
+        {#---------dashboard------------#}
+        <div class=" col-md-3">
+            <div class="panel panel-default bottom">
+                <div class="panel-heading"><strong>Profil</strong></div>
+                <div class="panel-body">
+                   <a href="{{ path('fos_user_profile_show') }}">
+                        <img class="media-object img-thumbnail col-md-offset-3" src="{{ asset('exportateurfilesupload/')}}{{app.user.logoname}}" alt="" width="100" height="100">
+                        <p class="text-center"><strong>{{app.user.nomentrop}}</strong></p>
+                    </a>
+                    <span id="nzoratingstar" class="col-md-offset-2"></span> {%if app.user.note > -1%} <strong>({{app.user.note}})</strong>{%endif%}
+                    <hr>
+                    <div class="cl-effect-1">
+                        <p><a href="{{ path('fos_user_profile_show') }}">Voir votre Profil</a></p>
+                        <p><a href="{{ path('fos_user_profile_edit') }}" >Modifier votre Profil</a></p>
+                    </div> 
+                 </div>
             </div>
-            <p style="color: grey;">Etat: 
-                {%if djp == 'false'%}
-                    Pas Encore Poster  
-                {%else%}
-                    Déja Posté
-                {%endif%}
-                    | Déposer le {{demande.datedepos|date("d/m/Y")}}</p>
-            <p class="list-group-item-text">
-                {% if demande.description|length > 150 %}
-                    {{demande.description|slice(0, 150)}}...
-                {%else%}
-                    {{demande.description}}
-                {% endif %}                
-                {%if djp == 'false'%}
-                    <a href="{{path('nzo_postuledemande_export', {'id':demande.id} )}}" class="pull-right"> Voir détails </a>
-                {%else%}
-                    <a href="{{path('exp_detail_postule_active', {'id':djp} )}}" class="pull-right"> Voir détails </a>
-                {%endif%}
-            </p>
-              
+            <div class="panel panel-default bottom">
+                <div class="panel-heading"><strong>Analyse</strong></div>
+                <div class="panel-body">
+                    <p><span class="red">Nombre Demande active: </span>{{nbactive}}</p>
+                    <p><span class="red">Nombre Postules: </span>{{app.user.nbdemandeexportpostule}}</p>
+                    <p><span class="red">Nombre Contrat En Cours: </span>{{app.user.nbcontratencours}}</p>
+                    <p><span class="red">Nombre Contrat Terminé: </span>{{app.user.nbcontrattermine}}</p>
+                    <p><span class="red">Nombre Demande Archivé: </span>{{nbarchive}}</p>
+                </div>
+            </div>
         </div>
-    {% endfor %}
-</div>
-<div class="row" style="padding-right: 16px;">
-    <div class="pull-right">
-        {{ knp_pagination_render(demandeexport) }}
+        <div class="col-md-9">
+            <div class="row" style="padding-right: 16px;">
+                <div class="pull-right">
+                     {{ knp_pagination_render(demandeexport) }}
+                 </div>
+            </div>
+            <div class="list-group">
+                {% if demandeexport is empty %}
+                <p class="alert alert-info">Il n'existe aucune demamnde d'exportation !</p>
+                {%else%}
+                {% for demande in demandeexport %}
+                    {%set djp = render(controller('NzoTunisiefretBundle:Exportateur:GetEtat', {'id': demande}))%}
+                    <div class="list-group-item" style="padding: 30px;">
+                        <div class="legend list-group-item-heading">
+                            <h4 class="cl-effect-1">
+                                {%if djp == 'false'%}
+                                <a href="{{path('nzo_postuledemande_export', {'id':demande.id} )}}">{{demande.titre}}</a>
+                            </h4>    
+                                {%else%}
+                                <a href="{{path('exp_detail_postule_active', {'id':djp} )}}">{{demande.titre}}</a></h4>    
+                                {%endif%}
+                        </div>
+                        <p style="color: grey;">Etat: 
+                            {%if djp == 'false'%}
+                                Pas Encore Poster  
+                            {%else%}
+                                Déja Posté
+                            {%endif%}
+                                | Déposer le {{demande.datedepos|date("d/m/Y")}}</p>
+                        <p class="list-group-item-text">
+                            {% if demande.description|length > 150 %}
+                                {{demande.description|slice(0, 150)}}...
+                            {%else%}
+                                {{demande.description}}
+                            {% endif %}                
+                            {%if djp == 'false'%}
+                                <a href="{{path('nzo_postuledemande_export', {'id':demande.id} )}}" class="pull-right"> Voir détails </a>
+                            {%else%}
+                                <a href="{{path('exp_detail_postule_active', {'id':djp} )}}" class="pull-right"> Voir détails </a>
+                            {%endif%}
+                        </p>
+                    </div>
+                {% endfor %}
+                {% endif %}
+                </div>
+                <div class="row" style="padding-right: 16px;">
+                    <div class="pull-right">
+                        {{ knp_pagination_render(demandeexport) }}
+                    </div>
+                </div>
+            </div>
     </div>
 </div>
 {% endblock content %} 

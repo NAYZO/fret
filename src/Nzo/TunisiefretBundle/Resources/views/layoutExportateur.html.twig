@@ -9,6 +9,7 @@
         <!-- CSS -->
         <link href="{{ asset('bundles/nzotunisiefret/css/bootstrap.css') }}" rel="stylesheet" media="screen">
         <link href="{{ asset('bundles/nzotunisiefret/css/style.css') }}" rel="stylesheet" media="screen">
+        <link href="{{ asset('bundles/nzotunisiefret/css/component.css') }}" rel="stylesheet" media="screen">
         <!--FONT-->
         <link href='http://fonts.googleapis.com/css?family=Istok+Web' rel='stylesheet' type='text/css'>
         
@@ -53,33 +54,9 @@
         </nav>
        
     {% block body %}
-        {% block carrousel %}{% endblock carrousel %}
         {% block banner %}{% endblock banner %}
-    
-        {#2eme navigateur #}
-        <ul class="box nav nav-pills bottom cl-effect-1">    
-            <li class="col-md-offset-3"><a href="{{path('nzo_tunisiefret_homepage')}}" >Liste Demandes</a></li>
-            <li class="dropdown">
-                <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                    Mes Postules <span class="caret"></span>
-                </a>
-                <ul class="dropdown-menu">
-                    <li><a href="{{ path('exp_liste_postule_active') }}" >Active</a></li>
-                    <li><a href="{{ path('exp_liste_postule_archive') }}" >Archivé</a></li>
-                </ul>
-            </li>
-
-            <li class="dropdown">
-                <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                    Mes Contrats <span class="caret"></span>
-                </a>
-                <ul class="dropdown-menu">
-                    <li><a href="{{ path('exp_liste_contrats_en_cours') }}" >En Cours</a></li>
-                    <li><a href="{{ path('exp_liste_contrats_termine') }}" >Terminé</a></li>
-                </ul>
-            </li>
-            <li><a href="#" >Statistique</a></li>
-        </ul>
+        {% block menu %} {% endblock menu %}
+            
         {#Container#}
         <section class="container">
             <div class="row">
@@ -172,6 +149,49 @@
  
          });
      </script>
+     {#-----------menu-scroll---------#}
+     <script>
+        jQuery("document").ready(function($){
+            var nav = $('.nav-container');
+            $(window).scroll(function () {
+                if ($(this).scrollTop() > 136) {
+                    nav.addClass("f-nav");
+                } else {
+                    nav.removeClass("f-nav");
+                }
+            });
+        });    
+     </script>
+     {#-------------respensive-menu-------------#}
+     <script type="text/javascript">
+
+                        function DropDown(el) {
+                                this.dd = el;
+                                this.initEvents();
+                        }
+                        DropDown.prototype = {
+                                initEvents : function() {
+                                        var obj = this;
+
+                                        obj.dd.on('click', function(event){
+                                                $(this).toggleClass('active');
+                                                event.stopPropagation();
+                                        });	
+                                }
+                        }
+
+                        $(function() {
+
+                                var dd = new DropDown( $('#dd') );
+
+                                $(document).click(function() {
+                                        // all dropdowns
+					
+                                });
+
+                        });
+
+         </script>
      {% block js %}  {% endblock js %}
     </body>
     
