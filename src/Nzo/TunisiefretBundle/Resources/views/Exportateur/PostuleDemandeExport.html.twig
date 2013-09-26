@@ -11,7 +11,54 @@
     </div>
 </div>
 {% endblock banner %}
+{#---------------------2eme menu-------------------#}
+{% block menu %}
+<div class="nav-container">
+    <div class="box">
+        <ul id="bignav" class="nav nav-pills bottom cl-effect-1">     
+            <li class="col-md-offset-3 active"><a href="{{path('nzo_tunisiefret_homepage')}}">Liste Demandes</a></li>
+            <li class="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                    Mes Postules <span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu">
+                    <li><a href="{{ path('exp_liste_postule_active') }}" >Active</a></li>
+                    <li><a href="{{ path('exp_liste_postule_archive') }}" >Archivé</a></li>
+                </ul>
+            </li>
+            <li class="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                    Mes Contrats <span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu">
+                    <li><a href="{{ path('exp_liste_contrats_en_cours') }}" >En Cours</a></li>
+                    <li><a href="{{ path('exp_liste_contrats_termine') }}" >Terminé</a></li>
+                </ul>
+            </li>
+            <li><a href="#" >Statistique</a></li>
+        </ul>
 
+        <div id="dd" class="wrapper-dropdown-5" tabindex="1">MENU
+            <ul class="dropdownd">
+                <li class="activedrop"><a href="{{path('nzo_tunisiefret_homepage')}}">Liste Demandes</a></li>
+                <li class="sanslien"><strong>Mes Postules</strong>
+                    <ul class="second-drop">
+                        <li><a href="{{ path('exp_liste_postule_active') }}" >Active</a></li>
+                        <li><a href="{{ path('exp_liste_postule_archive') }}" >Archivé</a></li>
+                    </ul>
+                </li>
+                <li class="sanslien"><strong>Mes Contrats</strong>
+                    <ul class="second-drop">
+                        <li><a href="{{ path('exp_liste_contrats_en_cours') }}" >En Cours</a></li>
+                        <li><a href="{{ path('exp_liste_contrats_termine') }}" >Terminé</a></li>
+                    </ul>
+                </li>
+                <li><a href="#" >Statistique</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+{% endblock menu %}
 {% block content %}
 <div class="padding">
     {#----------------breadcrumb----------------#}
@@ -73,10 +120,9 @@
                     </div>
                 </div> 
             </div>
-            
           </div>
             
-                    {#----------------Information sur le Client----------------#}
+        {#----------------Information sur le Client----------------#}
         <div class="col-md-6 pull-right">
             <div class="panel panel-default">
                 <div class="panel-heading">Informations sur le Client</div>
@@ -107,56 +153,50 @@
             </div>
         </div>
             
-
-   </div>
-        {#----------------Postuler votre offre----------------#}
-        <div id="scroll" class="row" >
-            <div class="col-md-8"> 
-                <form action="#" id="contactForm" method="post" {{ form_enctype(form) }}>
-                    <fieldset>
-                        <legend class="colorlegend"><strong>Postuler votre offre</strong></legend>  
-        {% if(form_errors(form)) %}
+       {#----------------Postuler votre offre----------------#}
+        <form action="#" id="contactForm" method="post" {{ form_enctype(form) }}>
+            <fieldset>
+                <legend class="colorlegend"><strong>Postulez votre offre</strong></legend>  
+                    {% if(form_errors(form)) %}
                         <div class="error-alert"> {{ form_errors(form) }} </div>
-        {% endif %}
-                        <div class="col-md-6">
-                            <div class="row">
-                {#--duree---#}
-                                    <div class="form-group">
-                                        <label>Durée <span class="required">*</span></label>
-                    {{ form_widget(form.duree,{'attr': {'class': 'form-control'}}) }}
-                                    </div>
-                {% if(form_errors(form.duree)) %}
-                                    <div class="error-input">{{ form_errors(form.duree) }}</div>
-                {% endif %}
+                    {% endif %}
+                <div class="col-md-6 col-md-offset-3">
+                    <div class="row">
+                        {#--duree---#}
+                        <div class="form-group">
+                            <label>Durée <span class="required">*</span></label>
+                            {{ form_widget(form.duree,{'attr': {'class': 'form-control'}}) }}
+                        </div>
+                        {% if(form_errors(form.duree)) %}
+                            <div class="error-input">{{ form_errors(form.duree) }}</div>
+                        {% endif %}
 
-                 {#--prix---#}
-                                    <div class="form-group">
-                                        <label>Prix <span class="required">*</span></label>
-                    {{ form_widget(form.prix,{'attr': {'class': 'form-control'}}) }}
-                                    </div>
-                {% if(form_errors(form.prix)) %}
-                                    <div class="error-input">{{ form_errors(form.prix) }}</div>
-                {% endif %} 
+                        {#--prix---#}
+                        <div class="form-group">
+                            <label>Prix <span class="required">*</span></label>
+                            {{ form_widget(form.prix,{'attr': {'class': 'form-control'}}) }}
+                        </div>
+                        {% if(form_errors(form.prix)) %}
+                        <div class="error-input">{{ form_errors(form.prix) }}</div>
+                        {% endif %} 
 
-                {#--description---#}
-                                    <div class="form-group">
-                                        <label>Description <span class="required">*</span></label>
-                    {{ form_widget(form.description,{'attr': {'class': 'form-control', 'rows': '5', 'style': 'resize:none;height: 119px;'}}) }}
-                                    </div>
-                {% if(form_errors(form.description)) %}
-                                    <div class="error-input">{{ form_errors(form.description) }}</div>
-                {% endif %}
+                       {#--description---#}
+                        <div class="form-group">
+                            <label>Description <span class="required">*</span></label>
+                            {{ form_widget(form.description,{'attr': {'class': 'form-control', 'rows': '5', 'style': 'resize:none;height: 119px;'}}) }}
+                        </div>
+                        {% if(form_errors(form.description)) %}
+                        <div class="error-input">{{ form_errors(form.description) }}</div>
+                        {% endif %}
 
-                                    <input type="submit" value="Déposer" name="_submit" class="btn btn-danger pull-right">
-                                    <p class="text-danger"><span class="required">*</span> Champs Obligatoire</p>
-        {{ form_rest(form) }}
-                                    </fieldset>
-                                    </form>
-   
-            </div>
-               
-        </div>
-     
+                        <input type="submit" value="Postuler" name="_submit" class="btn btn-danger pull-right">
+                        <p class="text-danger"><span class="required">*</span> Champs Obligatoire</p>
+                        {{ form_rest(form) }}
+                     </div>
+                 </div>
+                 </fieldset>
+          </form>   
+   </div>
 {% endblock content %}
  
  {% block js %} 

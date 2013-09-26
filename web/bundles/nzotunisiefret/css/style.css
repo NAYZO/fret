@@ -1,15 +1,12 @@
 .f-nav{ z-index: 9999; position: fixed; left: 0; top: 0; width: 100%;}
 
 .nav-pills > .actives > a, .nav-pills > .actives .open > a, .actives .open > a:focus {
-  background-color: #5FB2CE;
-color: white;
-border-radius: 0;
-padding-right: 4px;
-padding-left: 4px;
+    border: 1px solid #5FB2CE;
+    border-radius: 0;
 }
 .actives .caret{
     border-top-color: #FFFFFF;
-border-bottom-color: #FFFFFF;
+    border-bottom-color: #FFFFFF;
 }
 #carousel .carousel-inner > .item > img{
     height: 553px;
@@ -159,7 +156,7 @@ border-bottom-color: #FFFFFF;
     margin-bottom: 20px;
 }
 .title-banner{
-    margin-top: 56px;
+    margin-top: 55px;
     color: #ffffff;
     text-align: right;
     text-shadow: 0 1px 2px rgba(0, 0, 0, 0.6);
@@ -169,7 +166,7 @@ border-bottom-color: #FFFFFF;
 }
 .title-banner:after {
     position: absolute;
-    top: 56px;
+    top: 55px;
     left: 100%;
     display: inline-block;
     border-right: 31px solid transparent;
@@ -214,7 +211,7 @@ border-bottom-color: #FFFFFF;
 
 .box .open > a, .box .open > a:hover, .box .open > a:focus {
     border-radius: 0;
-/*    background: none;  */
+    /*    background: none;  */
 }
 legend strong{color: #3079a2;}
 .required{color: rgb(197, 2, 2);font-size: 18px;}
@@ -341,10 +338,10 @@ legend strong{color: #3079a2;}
 
 .alert-notif{
     color: #88270F;
-background-color: #FFFEFC;
-border-color: #D8BFAF;
-padding-left: 25px;
-padding-right: 25px;
+    background-color: #FFFEFC;
+    border-color: #D8BFAF;
+    padding-left: 25px;
+    padding-right: 25px;
 }
 .pading-login {
     padding: 0px 20px 0px 20px;
@@ -417,7 +414,7 @@ padding-right: 25px;
     padding: 10px 0;
     transition: all 0.3s ease-out;
     padding-left: 17px;
-    
+
 }
 
 .wrapper-dropdown-5 .dropdownd li:last-of-type a, .second-drop li:last-of-type a {
@@ -467,17 +464,17 @@ padding-right: 25px;
 }
 .second-drop{
     border-left: 1px solid rgb(221, 221, 221);
-padding-left: 0px;
-margin-left: 13px;
+    padding-left: 0px;
+    margin-left: 13px;
 }
 .second-drop li {list-style: none}
 .second-drop li a {
     list-style: none;
-display: block;
-text-decoration: none;
-color: #333;
-padding: 10px 10px;
-transition: all 0.3s ease-out;
+    display: block;
+    text-decoration: none;
+    color: #333;
+    padding: 10px 10px;
+    transition: all 0.3s ease-out;
 }
 
 @media (max-width: 1125px) {
@@ -485,4 +482,8 @@ transition: all 0.3s ease-out;
         display: block;
     }
     #bignav{display: none}
+}
+@media (max-width: 767px){
+    .title-banner{ margin-top: 121px;}
+    .title-banner:after {top: 121px}
 }

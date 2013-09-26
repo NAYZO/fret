@@ -11,7 +11,54 @@
     </div>
 </div>
 {% endblock banner %}
+{#---------------------2eme menu-------------------#}
+{% block menu %}
+<div class="nav-container">
+    <div class="box">
+        <ul id="bignav" class="nav nav-pills bottom cl-effect-1">     
+            <li class="col-md-offset-3"><a href="{{path('nzo_tunisiefret_homepage')}}">Liste Demandes</a></li>
+            <li class="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                    Mes Postules <span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu">
+                    <li><a href="{{ path('exp_liste_postule_active') }}" >Active</a></li>
+                    <li><a href="{{ path('exp_liste_postule_archive') }}" >Archivé</a></li>
+                </ul>
+            </li>
+            <li class="dropdown actives">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                    Mes Contrats <span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu">
+                    <li><a href="{{ path('exp_liste_contrats_en_cours') }}" >En Cours</a></li>
+                    <li><a href="{{ path('exp_liste_contrats_termine') }}" >Terminé</a></li>
+                </ul>
+            </li>
+            <li><a href="#" >Statistique</a></li>
+        </ul>
 
+        <div id="dd" class="wrapper-dropdown-5" tabindex="1">MENU
+            <ul class="dropdownd">
+                <li><a href="{{path('nzo_tunisiefret_homepage')}}">Liste Demandes</a></li>
+                <li class="sanslien"><strong>Mes Postules</strong>
+                    <ul class="second-drop">
+                        <li><a href="{{ path('exp_liste_postule_active') }}" >Active</a></li>
+                        <li><a href="{{ path('exp_liste_postule_archive') }}" >Archivé</a></li>
+                    </ul>
+                </li>
+                <li class="sanslien"><strong>Mes Contrats</strong>
+                    <ul class="second-drop">
+                        <li><a href="{{ path('exp_liste_contrats_en_cours') }}" >En Cours</a></li>
+                        <li class="activedrop"><a href="{{ path('exp_liste_contrats_termine') }}" >Terminé</a></li>
+                    </ul>
+                </li>
+                <li><a href="#" >Statistique</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+{% endblock menu %}
 {% block content %}
 <div class="padding" style="margin-bottom: 177px;">
     {#----------------breadcrumb----------------#}
@@ -174,6 +221,9 @@
         {#----------------Liste des messges----------------#}
         <div id="scroll" class="row" >
             <div class="col-md-8" id="nzomsgcontent"> 
+                {% if msgs is empty %}
+                <p class="alert alert-info">Vous n'avez aucun message !</p>
+                {%else%}
                 {% if msgs|length <= 4 %}   
                     {% for msg in msgs %} 
                         <div class="panel panel-info">
@@ -240,6 +290,7 @@
                         </div>
                     </div>
                     <!-- END Last -->
+                {% endif %}
                 {% endif %}
             </div>
                
