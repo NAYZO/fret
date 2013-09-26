@@ -4,10 +4,7 @@
     border: 1px solid #5FB2CE;
     border-radius: 0;
 }
-.actives .caret{
-    border-top-color: #FFFFFF;
-    border-bottom-color: #FFFFFF;
-}
+
 #carousel .carousel-inner > .item > img{
     height: 553px;
     width: 100%;  
@@ -288,9 +285,6 @@ legend strong{color: #3079a2;}
     left: -1em;
 }
 
-/*#breadcrumbs-two a:hover::before{
-  border-color: #C9E3F8 #C9E3F8 #C9E3F8 transparent;
-}*/
 
 #breadcrumbs-two a::after, #breadcrumbs-two span::after{
     content: "";
@@ -303,9 +297,6 @@ legend strong{color: #3079a2;}
     right: -1em;
 }
 
-/*#breadcrumbs-two a:hover::after{
-  border-left-color: #C9E3F8;
-}*/
 
 #breadcrumbs-two .current span,
 #breadcrumbs-two .current span:hover{
