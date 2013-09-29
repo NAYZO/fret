@@ -35,8 +35,8 @@
                     <li><a href="{{ path('client_contrat_terminer') }}" >Terminé</a></li>
                 </ul>
             </li>
-            <li><a href="{{ path('nzo_poserdemande_export') }}" >Déposer Demande Export</a></li>
-            <li><a href="{{ path('client_list_demande_type') }}">Liste Demandes Export Type</a></li>
+            <li><a href="{{ path('nzo_poserdemande_export') }}" >Déposer Demande Fret</a></li>
+            <li><a href="{{ path('client_list_demande_type') }}">Liste Demandes Fret Type</a></li>
         </ul>
         {#-----------select-menu--------------#}
         <div id="dd" class="wrapper-dropdown-5" tabindex="1">MENU
@@ -54,8 +54,8 @@
                         <li><a href="{{ path('client_contrat_terminer') }}" >Terminé</a></li>
                     </ul>
                 </li>
-                <li><a href="{{ path('nzo_poserdemande_export') }}">Déposer Demande Export</a></li>
-                <li><a href="{{ path('client_list_demande_type') }}">Liste Demandes Export Type</a></li>
+                <li><a href="{{ path('nzo_poserdemande_export') }}">Déposer Demande Fret</a></li>
+                <li><a href="{{ path('client_list_demande_type') }}">Liste Demandes Fret Type</a></li>
             </ul>
         </div>
     </div>
@@ -89,7 +89,7 @@
                     <h4 class="modal-title">Annuler votre demande: {{postule.demandeexport.titre}}</h4>
                   </div>
                   <div class="modal-body">
-                      <form action="{{path('client_annuler_demande', {'id':postule.demandeexport.id})}}" method="POST" role="form" >
+                      <form action="{{path('client_annuler_demande', {'id':postule.demandeexport.id | urlencrypt})}}" method="POST" role="form" >
                           <div class="form-group">
                             <label>Raison d'annulation</label>
                             <select id="nzoraison" class="form-control" name="annuler_raison">
@@ -127,7 +127,7 @@
                     <h4 class="modal-title">Confirmation de Contrat d'exportation</h4>
                   </div>
                   <div class="modal-body" style="color: black">
-                      <form action="{{path('client_contrat_confirmer', {'id':postule.id})}}" method="POST" role="form" >
+                      <form action="{{path('client_contrat_confirmer', {'id':postule.id | urlencrypt})}}" method="POST" role="form" >
                           <p><strong class="red">Demande d'exportation : </strong> {{postule.demandeexport.titre}}</p>
                           <p><strong class="red">Référence : </strong> {{postule.demandeexport.reference}}</p>
                           <p>Confirmez et commencez cette mission avec <strong class="red">{{postule.exportateur.nomentrop}}</strong></p>
@@ -355,7 +355,7 @@
                 $.ajax({
                     url:"{{ path('ajax_send_msg_client') }}",
                     type:"POST",
-                    data:{ id:{{postule.id}}, msg:$('#nzomsgexp').val() },
+                    data:{ idmsg:{{postule.id}}, msg:$('#nzomsgexp').val() },
                     dataType:'json',
                     success:function(a)
                     {

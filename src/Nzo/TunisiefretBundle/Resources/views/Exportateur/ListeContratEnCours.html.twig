@@ -76,12 +76,12 @@
 <div class="list-group">
     {% if listepostules is empty %}
         <hr>
-        <p class="alert alert-info">Il n'existe aucune demande d'export en cours !</p>
+        <p class="alert alert-info">Il n'existe aucune demande de fret en cours !</p>
     {%else%}
     {% for postule in listepostules %}      
         <div class="list-group-item" style="padding: 30px;">
             <div class="legend list-group-item-heading">
-                <h4 class="cl-effect-1"><a href="{{path('exp_contrat_encours_detail', {'id':postule.id} )}}">{{postule.demandeexport.titre}}</a></h4>  
+                <h4 class="cl-effect-1"><a href="{{path('exp_contrat_encours_detail', {'id':postule.id | urlencrypt} )}}">{{postule.demandeexport.titre}}</a></h4>  
                 
             </div>
             <p style="color: grey;">Postulé le {{postule.datepostule|date("d/m/Y")}}</p>
@@ -92,7 +92,7 @@
                     {%else%}
                         {{postule.demandeexport.description}}
                     {% endif %}
-                    <a href="{{path('exp_contrat_encours_detail', {'id':postule.id} )}}" class="pull-right"> Voir détails </a>
+                    <a href="{{path('exp_contrat_encours_detail', {'id':postule.id | urlencrypt} )}}" class="pull-right"> Voir détails </a>
                 </span>
                 <div class="col-md-2 media" style="margin-top: 0;border-left: 1px solid rgb(218, 213, 213)">
                    <a href="" class="pull-left"><img class="media-object img-thumbnail" src="{{ asset('clientfilesupload/')}}{{postule.demandeexport.client.logoname}}" alt="" width="50" height="100"></a>

@@ -1,11 +1,11 @@
 {% extends "NzoTunisiefretBundle::layoutClient.html.twig" %}
-{% block title %} {{ parent() }} Liste Des Demandes Export Type {% endblock %}
+{% block title %} {{ parent() }} Liste Des Demandes Fret Type {% endblock %}
 
 {% block banner %}
 <div class="jumbotron">
     <div class="col-md-4"> 
         <div class="row">
-            <h4 class="title-banner" style="">Liste Des Demandes Export Type</h4>
+            <h4 class="title-banner" style="">Liste Des Demandes Fret Type</h4>
         </div>
     </div>
 </div>
@@ -35,8 +35,8 @@
                     <li><a href="{{ path('client_contrat_terminer') }}" >Terminé</a></li>
                 </ul>
             </li>
-            <li><a href="{{ path('nzo_poserdemande_export') }}" >Déposer Demande Export</a></li>
-            <li class="actives"><a href="{{ path('client_list_demande_type') }}">Liste Demandes Export Type</a></li>
+            <li><a href="{{ path('nzo_poserdemande_export') }}" >Déposer Demande Fret</a></li>
+            <li class="actives"><a href="{{ path('client_list_demande_type') }}">Liste Demandes Fret Type</a></li>
         </ul>
         {#-----------select-menu--------------#}
         <div id="dd" class="wrapper-dropdown-5" tabindex="1">MENU
@@ -54,8 +54,8 @@
                         <li><a href="{{ path('client_contrat_terminer') }}" >Terminé</a></li>
                     </ul>
                 </li>
-                <li><a href="{{ path('nzo_poserdemande_export') }}">Déposer Demande Export</a></li>
-                <li class="activedrop"><a href="{{ path('client_list_demande_type') }}">Liste Demandes Export Type</a></li>
+                <li><a href="{{ path('nzo_poserdemande_export') }}">Déposer Demande Fret</a></li>
+                <li class="activedrop"><a href="{{ path('client_list_demande_type') }}">Liste Demandes Fret Type</a></li>
             </ul>
         </div>
     </div>
@@ -76,18 +76,18 @@
 </div>
 {% if listedemandeexporttype is empty %}
    <hr>
-   <p class="alert alert-info">Il n'existe aucune demande d'export type !</p>
+   <p class="alert alert-info">Il n'existe aucune demande de fret type !</p>
 {%else%}
 <div class="list-group">
     {% for demande in listedemandeexporttype %}
         <div class="list-group-item" style="padding: 30px;">
             <div class="legend list-group-item-heading">
                 <h4 class="pull-left cl-effect-1">
-                    <strong><a href="{{path('nzo_detaildemande_export_type', {'id':demande.id} )}}">{{demande.titre}}</a></strong>
+                    <strong><a href="{{path('nzo_detaildemande_export_type', {'id':demande.id | urlencrypt} )}}">{{demande.titre}}</a></strong>
                 </h4>
                 <div class="row" style="padding-right: 14px;">
                     <div class=" pull-right">
-                        <a href="{{path('client_reposter_demande_type', {'id':demande.id} )}}" class="btn btn-danger btn-xs">Déposer</a>
+                        <a href="{{path('client_reposter_demande_type', {'id':demande.id | urlencrypt} )}}" class="btn btn-danger btn-xs">Déposer</a>
                         <!-- Button trigger modal -->
                         <a data-toggle="modal" href="#nzomyModal" class="btn btn-danger btn-xs" >Supprimer</a>
 
@@ -103,7 +103,7 @@
                                Voulez vous supprimer la demande ? 
                               </div>
                               <div class="modal-footer">
-                                <a href="{{path('client_supprimer_demande_type', {'id':demande.id} )}}" class="btn btn-primary">Confirmer</a>
+                                <a href="{{path('client_supprimer_demande_type', {'id':demande.id | urlencrypt} )}}" class="btn btn-primary">Confirmer</a>
                                 <button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
                               </div>
                             </div><!-- /.modal-content -->
@@ -119,7 +119,7 @@
                 {%else%}
                     {{demande.description}}
                 {% endif %}
-                <a href="{{path('nzo_detaildemande_export_type', {'id':demande.id} )}}" class="pull-right"> Voir détails </a>
+                <a href="{{path('nzo_detaildemande_export_type', {'id':demande.id | urlencrypt} )}}" class="pull-right"> Voir détails </a>
             </p>
               
         </div>

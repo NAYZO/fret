@@ -59,6 +59,14 @@ class DemandeExport
     protected $titre;
     
     /**
+     * @var string $type
+     *
+     * @ORM\Column(name="type", type="string", length=50)
+     * @Assert\NotBlank()
+     */
+    protected $type;
+    
+    /**
      * @var text $description
      *
      * @ORM\Column(name="description", type="text")
@@ -623,5 +631,28 @@ class DemandeExport
     public function getAvisExport()
     {
         return $this->avis_export;
+    }
+
+    /**
+     * Set type
+     *
+     * @param string $type
+     * @return DemandeExport
+     */
+    public function setType($type)
+    {
+        $this->type = $type;
+    
+        return $this;
+    }
+
+    /**
+     * Get type
+     *
+     * @return string 
+     */
+    public function getType()
+    {
+        return $this->type;
     }
 }

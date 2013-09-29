@@ -1,10 +1,10 @@
 {% extends "NzoTunisiefretBundle::layoutClient.html.twig" %}
-{% block title %} {{ parent() }} Demandes Export Active{% endblock %}
+{% block title %} {{ parent() }} Demandes Fret Active{% endblock %}
 {% block banner %}
 <div class="jumbotron">
     <div class="col-md-4"> 
         <div class="row">
-            <h4 class="title-banner" style=""> Demandes Export Active </h4>
+            <h4 class="title-banner" style=""> Demandes Fret Active </h4>
         </div>
     </div>
 </div>
@@ -34,8 +34,8 @@
                     <li><a href="{{ path('client_contrat_terminer') }}" >Terminé</a></li>
                 </ul>
             </li>
-            <li><a href="{{ path('nzo_poserdemande_export') }}" >Déposer Demande Export</a></li>
-            <li><a href="{{ path('client_list_demande_type') }}">Liste Demandes Export Type</a></li>
+            <li><a href="{{ path('nzo_poserdemande_export') }}" >Déposer Demande Fret</a></li>
+            <li><a href="{{ path('client_list_demande_type') }}">Liste Demandes Fret Type</a></li>
         </ul>
 
         <div id="dd" class="wrapper-dropdown-5" tabindex="1">MENU
@@ -53,8 +53,8 @@
                         <li><a href="{{ path('client_contrat_terminer') }}" >Terminé</a></li>
                     </ul>
                 </li>
-                <li><a href="{{ path('nzo_poserdemande_export') }}" >Déposer Demande Export</a></li>
-                <li><a href="{{ path('client_list_demande_type') }}">Liste Demandes Export Type</a></li>
+                <li><a href="{{ path('nzo_poserdemande_export') }}" >Déposer Demande Fret</a></li>
+                <li><a href="{{ path('client_list_demande_type') }}">Liste Demandes Fret Type</a></li>
             </ul>
         </div>
     </div>
@@ -84,12 +84,12 @@
                     <h4 class="modal-title">Annuler votre demande: {{mydemande.titre}}</h4>
                   </div>
                   <div class="modal-body">
-                   <form action="{{path('client_annuler_demande', {'id':mydemande.id})}}" method="POST" role="form" >
+                   <form action="{{path('client_annuler_demande', {'id':mydemande.id | urlencrypt})}}" method="POST" role="form" >
                           <div class="form-group">
                             <label>Raison d'annulation</label>
                             <select id="nzoraison" class="form-control" name="annuler_raison">
                                 <option value="Postules ne répondent pas au besoin">Postules ne répondent pas au besoin</option>
-                                <option value="Demande d'exportation expiré">Demande d'exportation expiré</option>
+                                <option value="Demande d'exportation expiré">Demande de fret expiré</option>
                                 <option value="Ajouté par erreur">Ajouté par erreur</option>
                                 <option value="Autre">Autre</option>
                             </select>
@@ -142,7 +142,7 @@
     
     {#-------Liste postuler------------#}
     {% if postules is empty %}
-       <p class="alert alert-info">Il n'existe aucun poste sur cette demande d'export !</p>
+       <p class="alert alert-info">Il n'existe aucun postule sur cette demande de fret !</p>
     {%else%}
     {% for postule in postules %} 
     <div class="panel panel-default bottom">
@@ -152,7 +152,7 @@
                     <img class="media-object img-thumbnail" src="{{ asset('exportateurfilesupload/')}}{{postule.exportateur.logoname}}" alt="{{postule.exportateur.logoname}}"  width="80">
                 </span>
                 <div class="media-body">
-                    <h4 class="media-heading"><strong>{{postule.exportateur.nomentrop}}</strong></h4>
+                    <h4 class="media-heading"><a href="{{path('client_profil_exportateur', {'id':postule.exportateur.id | urlencrypt} )}}"><strong>{{postule.exportateur.nomentrop}}</strong></a></h4>
                     <p style="color: grey">{{postule.datepostule|date("d/m/Y")}}</p>
                     <p class="list-group-item-text cl-effect-1">
                         {% if postule.description|length > 130 %}
@@ -160,7 +160,7 @@
                         {%else%}
                             {{postule.description}}
                         {% endif %}
-                        <a href="{{path('client_postule_active_detail', {'id':postule.id} )}}" class="pull-right"> Voir détails </a>
+                        <a href="{{path('client_postule_active_detail', {'id':postule.id | urlencrypt} )}}" class="pull-right"> Voir détails </a>
                     </p>
                </div>
             </div>

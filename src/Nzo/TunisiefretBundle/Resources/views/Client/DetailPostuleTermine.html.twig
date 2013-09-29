@@ -1,11 +1,11 @@
 {% extends "NzoTunisiefretBundle::layoutClient.html.twig" %}
-{% block title %} {{ parent() }} Détails Demande Export Terminé {% endblock %}
+{% block title %} {{ parent() }} Détails Demande Fret Terminé {% endblock %}
 
 {% block banner %}
 <div class="jumbotron">
     <div class="col-md-4"> 
         <div class="row">
-            <h4 class="title-banner" style="">Détails Demande Export Terminé</h4>
+            <h4 class="title-banner" style="">Détails Demande Fret Terminé</h4>
         </div>
     </div>
 </div>
@@ -35,8 +35,8 @@
                     <li><a href="{{ path('client_contrat_terminer') }}" >Terminé</a></li>
                 </ul>
             </li>
-            <li><a href="{{ path('nzo_poserdemande_export') }}" >Déposer Demande Export</a></li>
-            <li><a href="{{ path('client_list_demande_type') }}">Liste Demandes Export Type</a></li>
+            <li><a href="{{ path('nzo_poserdemande_export') }}" >Déposer Demande Fret</a></li>
+            <li><a href="{{ path('client_list_demande_type') }}">Liste Demandes Fret Type</a></li>
         </ul>
         {#-----------select-menu--------------#}
         <div id="dd" class="wrapper-dropdown-5" tabindex="1">MENU
@@ -54,8 +54,8 @@
                         <li class="activedrop"><a href="{{ path('client_contrat_terminer') }}" >Terminé</a></li>
                     </ul>
                 </li>
-                <li><a href="{{ path('nzo_poserdemande_export') }}">Déposer Demande Export</a></li>
-                <li><a href="{{ path('client_list_demande_type') }}">Liste Demandes Export Type</a></li>
+                <li><a href="{{ path('nzo_poserdemande_export') }}">Déposer Demande Fret</a></li>
+                <li><a href="{{ path('client_list_demande_type') }}">Liste Demandes Fret Type</a></li>
             </ul>
         </div>
     </div>
@@ -90,12 +90,12 @@
     <div class="row">
         <div class="col-md-6">      
             <div class="panel-group" id="accordion1" style="margin-bottom: 10px">
-                {#----------------Détails demande Export----------------#}
+                {#----------------Détails demande Fret----------------#}
                 <div class="panel panel-default">            
                     <div class="panel-heading">
                       <a data-toggle="collapse" href="#collapseOne">
                         <h4 class="panel-title">
-                           Détail de la demande d'export
+                           Détail de la demande de fret
                            <img src="{{ asset('bundles/nzotunisiefret/images') }}/down.png" alt="" class="pull-right"/>  
                        </h4>
                       </a>
@@ -195,7 +195,7 @@
                           <h4 class="legend2">{{postule.exportateur.nomentrop}}</h4>
                           {%if postule.demandeexport.avisexport.noteexportateur == null%}
                           <p class="text-success">Vous n'avez pas encore associer un Avis à "{{postule.exportateur.nomentrop}}".</p>
-                          <p><a href="{{path('client_donner_avis_demande_export', {'id':postule.id})}}">Donnez un Avis</a></p>
+                          <p><a href="{{path('client_donner_avis_demande_export', {'id':postule.id | urlencrypt})}}">Donnez un Avis</a></p>
                           {%else%}   
                           <p><strong class="red">Note Associer : </strong> <span id="nzoratingstarexportateur"></span> <strong>({{postule.demandeexport.avisexport.noteexportateur}})</strong></p>
                           <p><strong class="red">Avis Associer : </strong> {{postule.demandeexport.avisexport.avisexportateur}}</p>
@@ -321,7 +321,7 @@
                 $.ajax({
                     url:"{{ path('ajax_send_msg_client') }}",
                     type:"POST",
-                    data:{ id:{{postule.id}}, msg:$('#nzomsgexp').val() },
+                    data:{ idmsg:{{postule.id}}, msg:$('#nzomsgexp').val() },
                     dataType:'json',
                     success:function(a)
                     {

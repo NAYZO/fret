@@ -1,11 +1,11 @@
 {% extends "NzoTunisiefretBundle::layoutClient.html.twig" %}
-{% block title %} {{ parent() }} Liste Des Demandes Export Archive {% endblock %}
+{% block title %} {{ parent() }} Liste Des Demandes Fret Archive {% endblock %}
 
 {% block banner %}
 <div class="jumbotron">
     <div class="col-md-4"> 
         <div class="row">
-            <h4 class="title-banner" style="">Liste Des Demandes Export Archive</h4>
+            <h4 class="title-banner" style="">Liste Des Demandes Fret Archive</h4>
         </div>
     </div>
 </div>
@@ -35,8 +35,8 @@
                     <li><a href="{{ path('client_contrat_terminer') }}" >Terminé</a></li>
                 </ul>
             </li>
-            <li><a href="{{ path('nzo_poserdemande_export') }}" >Déposer Demande Export</a></li>
-            <li><a href="{{ path('client_list_demande_type') }}">Liste Demandes Export Type</a></li>
+            <li><a href="{{ path('nzo_poserdemande_export') }}" >Déposer Demande Fret</a></li>
+            <li><a href="{{ path('client_list_demande_type') }}">Liste Demandes Fret Type</a></li>
         </ul>
         {#-----------select-menu--------------#}
         <div id="dd" class="wrapper-dropdown-5" tabindex="1">MENU
@@ -54,8 +54,8 @@
                         <li><a href="{{ path('client_contrat_terminer') }}" >Terminé</a></li>
                     </ul>
                 </li>
-                <li><a href="{{ path('nzo_poserdemande_export') }}">Déposer Demande Export</a></li>
-                <li><a href="{{ path('client_list_demande_type') }}">Liste Demandes Export Type</a></li>
+                <li><a href="{{ path('nzo_poserdemande_export') }}">Déposer Demande Fret</a></li>
+                <li><a href="{{ path('client_list_demande_type') }}">Liste Demandes Fret Type</a></li>
             </ul>
         </div>
     </div>
@@ -77,14 +77,14 @@
 </div>
 {% if listedemandeexport is empty %}
    <hr>
-   <p class="alert alert-info">Aucune demande d'export archivé existante !</p>
+   <p class="alert alert-info">Aucune demande de fret archivé existante !</p>
 {%else%}
 <div class="list-group">
      {% for demande in listedemandeexport %}
         <div class="list-group-item" style="padding: 30px;">
             <div class="legend list-group-item-heading">
                 <h4 class="cl-effect-1">
-                    <strong><a href="{{path('client_demande_export_archive', {'id':demande.id} )}}">{{demande.titre}}</a></strong>
+                    <strong><a href="{{path('client_demande_export_archive', {'id':demande.id | urlencrypt} )}}">{{demande.titre}}</a></strong>
                 </h4>  
             </div>
             <p style="color: grey;">Nombre de Postule: {{demande.nombredepostule}} | Déposer le {{demande.datedepos|date("d/m/Y")}}</p>
@@ -94,7 +94,7 @@
                 {%else%}
                     {{demande.description}}
                 {% endif %}
-                <a href="{{path('client_demande_export_archive', {'id':demande.id} )}}" class="pull-right"> Voir détails </a>
+                <a href="{{path('client_demande_export_archive', {'id':demande.id | urlencrypt} )}}" class="pull-right"> Voir détails </a>
             </p>
               
         </div>

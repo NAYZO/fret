@@ -64,9 +64,9 @@ swiftmailer:
     username:  %mailer_user%
     password:  %mailer_password%
     spool:     { type: memory }
-    
+
 nzo_url_encryptor:
-    secret: 123456
+    secret: 96734272
     
 #FILE UPLOAD     
 vich_uploader:

@@ -11,7 +11,7 @@ class DemandeExportType extends AbstractType
 
     {
 	    $builder
-                ->add('titre')  
+               ->add('titre')  
                 ->add('description')    
                 ->add('pays', 'country', array('preferred_choices' => array('TN') ) )        
                 ->add('ville')
@@ -21,7 +21,14 @@ class DemandeExportType extends AbstractType
                                         'widget' => 'single_text',
                                         ))         
                 ->add('prix')   
-                ->add('demandeexporttype')    
+                ->add('demandeexporttype')   
+                ->add('type', 'choice', array(                   
+                    'choices' => array(
+                        'Import'=>'Import',                                           
+                        'Export'=>'Export'),
+                    'expanded' => false,
+                    'multiple' => false 
+                    ))              
             ;            
            
     }

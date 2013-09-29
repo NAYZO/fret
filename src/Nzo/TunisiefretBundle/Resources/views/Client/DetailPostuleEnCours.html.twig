@@ -1,11 +1,11 @@
 {% extends "NzoTunisiefretBundle::layoutClient.html.twig" %}
-{% block title %} {{ parent() }} Détails Demande Export En Cours {% endblock %}
+{% block title %} {{ parent() }} Détails Demande Fret En Cours {% endblock %}
 
 {% block banner %}
 <div class="jumbotron">
     <div class="col-md-4"> 
         <div class="row">
-            <h4 class="title-banner" style="">Détails Demande Export En Cours</h4>
+            <h4 class="title-banner" style="">Détails Demande Fret En Cours</h4>
         </div>
     </div>
 </div>
@@ -35,8 +35,8 @@
                     <li><a href="{{ path('client_contrat_terminer') }}" >Terminé</a></li>
                 </ul>
             </li>
-            <li><a href="{{ path('nzo_poserdemande_export') }}" >Déposer Demande Export</a></li>
-            <li><a href="{{ path('client_list_demande_type') }}">Liste Demandes Export Type</a></li>
+            <li><a href="{{ path('nzo_poserdemande_export') }}" >Déposer Demande Fret</a></li>
+            <li><a href="{{ path('client_list_demande_type') }}">Liste Demandes Fret Type</a></li>
         </ul>
         {#-----------select-menu--------------#}
         <div id="dd" class="wrapper-dropdown-5" tabindex="1">MENU
@@ -54,8 +54,8 @@
                         <li><a href="{{ path('client_contrat_terminer') }}" >Terminé</a></li>
                     </ul>
                 </li>
-                <li><a href="{{ path('nzo_poserdemande_export') }}">Déposer Demande Export</a></li>
-                <li><a href="{{ path('client_list_demande_type') }}">Liste Demandes Export Type</a></li>
+                <li><a href="{{ path('nzo_poserdemande_export') }}">Déposer Demande Fret</a></li>
+                <li><a href="{{ path('client_list_demande_type') }}">Liste Demandes Fret Type</a></li>
             </ul>
         </div>
     </div>
@@ -77,7 +77,7 @@
         <div class="row" style="padding-right: 14px;">
             <div class=" pull-right">
             <!-- Button trigger modal -->
-            <a href="{{path('client_liste_contrat_encours', {'id':postule.id})}}" class="btn btn-success btn-sm" style="margin-top: 12px;">Liste des postules</a>
+            <a href="{{path('client_liste_contrat_encours', {'id':postule.id | urlencrypt})}}" class="btn btn-success btn-sm" style="margin-top: 12px;">Liste des postules</a>
             <a data-toggle="modal" href="#nzoTerminerModal" class="btn btn-danger btn-sm" style="margin-top: 12px;">Terminer Contrat</a>
    
            <!-- Modal Terminer Contrat-->
@@ -86,10 +86,10 @@
                 <div class="modal-content">
                   <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title">Terminer le Contrat d'exportation</h4>
+                    <h4 class="modal-title">Terminer le Contrat de fret</h4>
                   </div>
                   <div class="modal-body" style="color: black">
-                      <form action="{{path('client_terminer_demande', {'id':postule.id})}}" method="POST" role="form" >
+                      <form action="{{path('client_terminer_demande', {'id':postule.id | urlencrypt})}}" method="POST" role="form" >
                           <p>Terminer votre contrat avec <strong class="red">{{postule.exportateur.nomentrop}}</strong></p>
                           <div class="form-group">
                             <label>Resultat du Contrat</label>
@@ -128,12 +128,12 @@
     <div class="row">
         <div class="col-md-6">      
             <div class="panel-group" id="accordion1" style="margin-bottom: 10px">
-                {#----------------Détails demande Export----------------#}
+                {#----------------Détails demande Fret----------------#}
                 <div class="panel panel-default">            
                     <div class="panel-heading">
                       <a data-toggle="collapse" href="#collapseOne">
                         <h4 class="panel-title">
-                           Détail de la demande d'export
+                           Détail de la demande de fret
                            <img src="{{ asset('bundles/nzotunisiefret/images') }}/down.png" alt="" class="pull-right"/>  
                        </h4>
                       </a>
@@ -325,7 +325,7 @@
                 $.ajax({
                     url:"{{ path('ajax_send_msg_client') }}",
                     type:"POST",
-                    data:{ id:{{postule.id}}, msg:$('#nzomsgexp').val() },
+                    data:{ idmsg:{{postule.id}}, msg:$('#nzomsgexp').val() },
                     dataType:'json',
                     success:function(a)
                     {

@@ -1,11 +1,11 @@
 {% extends "NzoTunisiefretBundle::layoutClient.html.twig" %}
-{% block title %} {{ parent() }} Liste Demandes Export Terminé{% endblock %}
+{% block title %} {{ parent() }} Liste Demandes Fret Terminé{% endblock %}
 
 {% block banner %}
 <div class="jumbotron">
     <div class="col-md-4"> 
         <div class="row">
-            <h4 class="title-banner" style="">Liste Demandes Export Terminé</h4>
+            <h4 class="title-banner" style="">Liste Demandes Fret Terminé</h4>
         </div>
     </div>
 </div>
@@ -35,8 +35,8 @@
                     <li><a href="{{ path('client_contrat_terminer') }}" >Terminé</a></li>
                 </ul>
             </li>
-            <li><a href="{{ path('nzo_poserdemande_export') }}" >Déposer Demande Export</a></li>
-            <li><a href="{{ path('client_list_demande_type') }}">Liste Demandes Export Type</a></li>
+            <li><a href="{{ path('nzo_poserdemande_export') }}" >Déposer Demande Fret</a></li>
+            <li><a href="{{ path('client_list_demande_type') }}">Liste Demandes Fret Type</a></li>
         </ul>
         {#-----------select-menu--------------#}
         <div id="dd" class="wrapper-dropdown-5" tabindex="1">MENU
@@ -54,8 +54,8 @@
                         <li class="activedrop"><a href="{{ path('client_contrat_terminer') }}" >Terminé</a></li>
                     </ul>
                 </li>
-                <li><a href="{{ path('nzo_poserdemande_export') }}">Déposer Demande Export</a></li>
-                <li><a href="{{ path('client_list_demande_type') }}">Liste Demandes Export Type</a></li>
+                <li><a href="{{ path('nzo_poserdemande_export') }}">Déposer Demande Fret</a></li>
+                <li><a href="{{ path('client_list_demande_type') }}">Liste Demandes Fret Type</a></li>
             </ul>
         </div>
     </div>
@@ -83,7 +83,7 @@
     {% for demande in listecontratterminer %}      
         <div class="list-group-item" style="padding: 30px;">
             <div class="legend list-group-item-heading">
-                <h4 class="cl-effect-1"><a href="{{path('client_demande_export_termine_detail', {'id':demande.id} )}}">{{demande.titre}}</a></h4>  
+                <h4 class="cl-effect-1"><a href="{{path('client_demande_export_termine_detail', {'id':demande.id|urlencrypt} )}}">{{demande.titre}}</a></h4>  
            </div>
                 
             <p style="color: grey;">Nombre de Postule: {{demande.nombredepostule}} | Déposé le {{demande.datedepos|date("d/m/Y")}}</p>
@@ -94,7 +94,7 @@
                 {%else%}
                     {{demande.description}}
                 {% endif %}
-                <a href="{{path('client_demande_export_termine_detail', {'id':demande.id} )}}" class="pull-right"> Voir détails </a>
+                <a href="{{path('client_demande_export_termine_detail', {'id':demande.id|urlencrypt} )}}" class="pull-right"> Voir détails </a>
             </p>
             <div class="col-md-2 media" style="margin-top: 0;border-left: 1px solid rgb(218, 213, 213)">
                    <a href="" class="pull-left"><img class="media-object img-thumbnail" src="{{ asset('exportateurfilesupload/')}}{{demande.ContratEnCoursPostule.exportateur.logoname}}" alt="" width="50" height="100"></a>

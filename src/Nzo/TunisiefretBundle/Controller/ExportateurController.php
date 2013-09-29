@@ -22,6 +22,21 @@ class ExportateurController extends Controller {
     /**
      * @Secure(roles="ROLE_EXPORTATEUR")
      */
+    public function preExecute()
+    {
+        if( $this->getRequest()->attributes->has('id') ){     
+            $decrypted = $this->get('nzo_url_encryptor')->decrypt( $this->getRequest()->attributes->get('id') );
+            $this->getRequest()->attributes->set('id', $decrypted);
+        }
+        elseif ($this->getRequest()->request->has('id')) {
+            $decrypted = $this->get('nzo_url_encryptor')->decrypt( $this->getRequest()->request->get('id') );
+            $this->getRequest()->request->set('id', $decrypted);
+        }
+    }
+    
+    /**
+     * @Secure(roles="ROLE_EXPORTATEUR")
+     */
     public function HomeAction(Request $request) 
     {
         $usr = $this->get('security.context')->getToken()->getUser();
@@ -41,13 +56,13 @@ class ExportateurController extends Controller {
     public function NotificationUrlValeurAction(DemandeExportPostule $postule)
     {
             if($postule->getDemandeexport()->getTerminerDemande())
-            $url = $this->get('router')->generate('exp_contrat_termine_detail', array('id' => $postule->getId()));    
+            $url = $this->get('router')->generate('exp_contrat_termine_detail', array('id' => $this->get('nzo_url_encryptor')->encrypt($postule->getId())));    
             else if($postule->getDemandeexport()->getTacking())
-            $url = $this->get('router')->generate('exp_contrat_encours_detail', array('id' => $postule->getId()));
+            $url = $this->get('router')->generate('exp_contrat_encours_detail', array('id' => $this->get('nzo_url_encryptor')->encrypt($postule->getId())));    
             else if($postule->getDemandeexport()->getAnnulerDemande())
-            $url = $this->get('router')->generate('exp_detail_postule_archive', array('id' => $postule->getId()));                      
+            $url = $this->get('router')->generate('exp_detail_postule_archive', array('id' => $this->get('nzo_url_encryptor')->encrypt($postule->getId())));    
             else    
-            $url = $this->get('router')->generate('exp_detail_postule_active', array('id' => $postule->getId()));                  
+            $url = $this->get('router')->generate('exp_detail_postule_active', array('id' => $this->get('nzo_url_encryptor')->encrypt($postule->getId())));    
             
             return $this->redirect($url);
      }
@@ -77,7 +92,7 @@ class ExportateurController extends Controller {
                 $Notification = new Notification();
                 $Notification->setClient($DemandeExport->getClient());
                 $Notification->setText('Nouveau Postule sur la Demande <span>'.$DemandeExport->getTitre().'</span>');
-                $url = $this->get('router')->generate('client_notif_url_val', array('id' => $PostuleExport->getId()));              
+                $url = $this->get('router')->generate('client_notif_url_val', array('id' => $this->get('nzo_url_encryptor')->encrypt($PostuleExport->getId())));              
                 $Notification->setUrl($url);
                 
                 // end Notification
@@ -126,6 +141,7 @@ class ExportateurController extends Controller {
     */
     public function GetEtatAction($id)
     {
+        $id = $this->get('nzo_url_encryptor')->decrypt( $id );
         $em = $this->getDoctrine()->getManager();
         $usr = $this->get('security.context')->getToken()->getUser();
         $res = $em->getRepository('NzoTunisiefretBundle:DemandeExportPostule')->findBy( array('exportateur' => $usr, 'demandeexport' => $id));
@@ -334,7 +350,7 @@ class ExportateurController extends Controller {
         if ($request->isXmlHttpRequest()) {
             // save msg
             $msg = $request->request->get('msg');
-            $id = $request->request->get('id');                    
+            $id = $request->request->get('idmsg');                    
             $em = $this->getDoctrine()->getManager();
             $usr = $this->get('security.context')->getToken()->getUser();
             $MsgForm = new MsgDemandeExport();    
@@ -353,7 +369,7 @@ class ExportateurController extends Controller {
             $notifmsg->setLogoemetteur($usr->getLogoname());
             $notifmsg->setTitredemandeexport($postule->getDemandeexport()->getTitre());
             $notifmsg->setText($msg);   
-            $url = $this->get('router')->generate('client_notifmsg_url_val', array('id' => $postule->getId()));              
+            $url = $this->get('router')->generate('client_notifmsg_url_val', array('id' => $this->get('nzo_url_encryptor')->encrypt($postule->getId())));              
             $notifmsg->setUrl($url);
             
             $em->persist($notifmsg);
@@ -388,13 +404,13 @@ class ExportateurController extends Controller {
             }
             $em->flush();
             if($postule->getDemandeexport()->getTerminerDemande())
-            $url = $this->get('router')->generate('exp_contrat_termine_detail', array('id' => $postule->getId()));    
+            $url = $this->get('router')->generate('exp_contrat_termine_detail', array('id' => $this->get('nzo_url_encryptor')->encrypt( $postule->getId())));    
             else if($postule->getDemandeexport()->getTacking())
-            $url = $this->get('router')->generate('exp_contrat_encours_detail', array('id' => $postule->getId()));
+            $url = $this->get('router')->generate('exp_contrat_encours_detail', array('id' => $this->get('nzo_url_encryptor')->encrypt( $postule->getId())));
             else if($postule->getDemandeexport()->getAnnulerDemande())
-            $url = $this->get('router')->generate('exp_detail_postule_archive', array('id' => $postule->getId()));                      
+            $url = $this->get('router')->generate('exp_detail_postule_archive', array('id' => $this->get('nzo_url_encryptor')->encrypt( $postule->getId())));
             else    
-            $url = $this->get('router')->generate('exp_detail_postule_active', array('id' => $postule->getId()));                  
+            $url = $this->get('router')->generate('exp_detail_postule_active', array('id' => $this->get('nzo_url_encryptor')->encrypt( $postule->getId())));
             
             return $this->redirect($url);
      }
@@ -469,7 +485,7 @@ class ExportateurController extends Controller {
             //==================================================================================================================== lien exportateur pour avis export + classe css
             $text = 'Vous avez reçu un Avis sur le Contrat Export <span>'.$postule->getDemandeexport()->getTitre().'</span>';
             $notif->setText($text);
-            $url = $this->get('router')->generate('client_notif_url_val', array('id' => $postule->getId()));              
+            $url = $this->get('router')->generate('client_notif_url_val', array('id' => $this->get('nzo_url_encryptor')->encrypt($postule->getId())));              
             $notif->setUrl($url);
             $em->persist($notif);
             

@@ -1,10 +1,10 @@
 {% extends "NzoTunisiefretBundle::layoutClient.html.twig" %}
-{% block title %} {{ parent() }} Déposer Demande D'export{% endblock %}
+{% block title %} {{ parent() }} Déposer Demande de Fret{% endblock %}
 {% block banner %}
     <div class="jumbotron">
         <div class="col-md-4"> 
             <div class="row">
-                <h4 class="title-banner" style="">Déposer Demande D'export</h4>
+                <h4 class="title-banner" style="">Déposer Demande de Fret</h4>
             </div>
         </div>
     </div>
@@ -34,8 +34,8 @@
                     <li><a href="{{ path('client_contrat_terminer') }}" >Terminé</a></li>
                 </ul>
             </li>
-            <li><a href="{{ path('nzo_poserdemande_export') }}" >Déposer Demande Export</a></li>
-            <li class="actives"><a href="{{ path('client_list_demande_type') }}">Liste Demandes Export Type</a></li>
+            <li><a href="{{ path('nzo_poserdemande_export') }}" >Déposer Demande Fret</a></li>
+            <li class="actives"><a href="{{ path('client_list_demande_type') }}">Liste Demandes Fret Type</a></li>
         </ul>
         {#-----------select-menu--------------#}
         <div id="dd" class="wrapper-dropdown-5" tabindex="1">MENU
@@ -53,8 +53,8 @@
                         <li><a href="{{ path('client_contrat_terminer') }}" >Terminé</a></li>
                     </ul>
                 </li>
-                <li><a href="{{ path('nzo_poserdemande_export') }}">Déposer Demande Export</a></li>
-                <li class="activedrop"><a href="{{ path('client_list_demande_type') }}">Liste Demandes Export Type</a></li>
+                <li><a href="{{ path('nzo_poserdemande_export') }}">Déposer Demande Fret</a></li>
+                <li class="activedrop"><a href="{{ path('client_list_demande_type') }}">Liste Demandes Fret Type</a></li>
             </ul>
         </div>
     </div>
@@ -64,17 +64,26 @@
 <div class="padding">
     <ul id="breadcrumbs-two">
         <li><a href="{{path('nzo_tunisiefret_homepage')}}">Accueil</a></li>
-        <li><a href="{{ path('client_list_demande_type') }}">Liste Demandes D'export Type</a></li>
+        <li><a href="{{ path('client_list_demande_type') }}">Liste Demandes de Fret Type</a></li>
         <li class="current"><span>Déposer Demande Export type</span></li>
     </ul>
 <form action="#" id="contactForm" method="post" {{ form_enctype(form) }} role="form">
     <fieldset>
-        <legend class="colorlegend"><strong>Déposez Votre Demande D'export</strong></legend>  
+        <legend class="colorlegend"><strong>Déposez Votre Demande de Fret</strong></legend>  
         {% if(form_errors(form)) %}
             <div class="error-alert"> {{ form_errors(form) }} </div>
         {% endif %}
         <div class="col-md-6">
             <div class="row">
+                {#--type---#}
+                <div class="form-group">
+                    <label>Type <span class="required">*</span></label>
+                    {{ form_widget(form.type,{'attr': {'class': 'form-control'}}) }}
+                </div>
+                {% if(form_errors(form.type)) %}
+                  <div class="error-input">{{ form_errors(form.type) }}</div>
+                {% endif %}
+                
                 {#--titre---#}
                 <div class="form-group">
                     <label>Titre <span class="required">*</span></label>
@@ -150,9 +159,9 @@
           <div class="error-input">{{ form_errors(form.description) }}</div>
         {% endif %}
           
-        {#--Demande Export Type---#}
+        {#--Demande Fret Type---#}
         <div class="form-group">
-            {{ form_widget(form.demandeexporttype) }} Demande Export Type
+            {{ form_widget(form.demandeexporttype) }} Demande Fret Type
         </div>
           
         <input type="submit" value="Déposer" name="_submit" class="btn btn-danger pull-right">

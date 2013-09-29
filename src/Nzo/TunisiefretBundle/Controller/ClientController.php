@@ -24,8 +24,24 @@ class ClientController extends Controller {
     /**
      * @Secure(roles="ROLE_CLIENT")
      */
+    public function preExecute()
+    {
+        if( $this->getRequest()->attributes->has('id') ){     
+            $decrypted = $this->get('nzo_url_encryptor')->decrypt( $this->getRequest()->attributes->get('id') );
+            $this->getRequest()->attributes->set('id', $decrypted);
+        }
+        elseif ($this->getRequest()->request->has('id')) {
+            $decrypted = $this->get('nzo_url_encryptor')->decrypt( $this->getRequest()->request->get('id') );
+            $this->getRequest()->request->set('id', $decrypted);
+        }
+    }
+    
+    /**
+     * @Secure(roles="ROLE_CLIENT")
+     */
     public function GetPostuleEncoursByDemandeAction($id) 
     {
+        $id = $this->get('nzo_url_encryptor')->decrypt($id);
             $em = $this->getDoctrine()->getManager();
             $postule = $em->getRepository('NzoTunisiefretBundle:DemandeExportPostule')->GetPostuleEncoursByDemande($id);
         return new Response($postule);
@@ -38,13 +54,13 @@ class ClientController extends Controller {
     {
 
             if($postule->getDemandeexport()->getTerminerDemande())
-            $url = $this->get('router')->generate('client_demande_export_termine_detail', array('id' => $postule->getDemandeexport()->getId()));    
+            $url = $this->get('router')->generate('client_demande_export_termine_detail', array('id' => $this->get('nzo_url_encryptor')->encrypt($postule->getDemandeexport()->getId())));    
             else if ($postule->getDemandeexport()->getTacking())    
-            $url = $this->get('router')->generate('client_demande_export_encours_detail', array('id' => $postule->getDemandeexport()->getId()));
+            $url = $this->get('router')->generate('client_demande_export_encours_detail', array('id' => $this->get('nzo_url_encryptor')->encrypt($postule->getDemandeexport()->getId())));
             else if($postule->getDemandeexport()->getAnnulerDemande())
-            $url = $this->get('router')->generate('client_postule_archive_detail', array('id' => $postule->getId()));                      
+            $url = $this->get('router')->generate('client_postule_archive_detail', array('id' => $this->get('nzo_url_encryptor')->encrypt($postule->getId())));                      
             else
-            $url = $this->get('router')->generate('client_postule_active_detail', array('id' => $postule->getId()));                  
+            $url = $this->get('router')->generate('client_postule_active_detail', array('id' => $this->get('nzo_url_encryptor')->encrypt($postule->getId())));                  
             
             return $this->redirect($url);
      }
@@ -136,7 +152,19 @@ class ClientController extends Controller {
             return $this->render('NzoTunisiefretBundle:Client:ListNotifMessages.html.twig', array('listemessages' => $listemessages));
     }
     
-   /**
+    /**
+    * @Secure(roles="ROLE_CLIENT")
+    */
+    public function ProfilExportateurAction($id)
+    {
+        $em = $this->getDoctrine()->getManager();   
+        $exportateur = $em->getRepository('NzoUserBundle:Exportateur')->find($id);
+        $postules = $em->getRepository('NzoTunisiefretBundle:DemandeExportPostule')->findBy(array('exportateur' => $id, 'demande_accepter' => 1));
+        return $this->render('NzoTunisiefretBundle:Client:ProfilExportateur.html.twig', array('exportateur' => $exportateur, 'postules' => $postules));
+    }
+
+
+    /**
     * @Secure(roles="ROLE_CLIENT")
     */
     public function TerminerDemandeExportAction(DemandeExportPostule $postule, Request $request)
@@ -164,12 +192,12 @@ class ClientController extends Controller {
                     //==================================================================================================================== lien exportateur pour info demande export + classe css
                     $text = 'Demande Export <span class="text-primary">'.$postule->getDemandeExport()->getTitre().'</span> est Terminé!';
                     $notif->setText($text);
-                    $url = $this->get('router')->generate('exp_contrat_termine_detail', array('id' => $postule->getId()));                  
+                    $url = $this->get('router')->generate('exp_contrat_termine_detail', array('id' => $this->get('nzo_url_encryptor')->encrypt($postule->getId())));                  
                     $notif->setUrl($url);
                     $em->persist($notif);
             
             $em->flush();
-        return $this->redirect($this->generateUrl('client_donner_avis_demande_export', array('id' => $postule->getId())));   
+        return $this->redirect($this->generateUrl('client_donner_avis_demande_export', array('id' => $this->get('nzo_url_encryptor')->encrypt($postule->getId()))));   
   }
   
   /**
@@ -197,7 +225,7 @@ class ClientController extends Controller {
                     //==================================================================================================================== lien exportateur pour info demande export + classe css
                     $text = 'Votre contrat: <span class="text-primary">'.$postule->getDemandeexport()->getTitre()."</span> est commencé le ".$postule->getDemandeexport()->getDateTacking()->format('d/m/Y');
                     $notif->setText($text);
-                    $url = $this->get('router')->generate('exp_notif_url_val', array('id' => $postule->getId()));    
+                    $url = $this->get('router')->generate('exp_notif_url_val', array('id' => $this->get('nzo_url_encryptor')->encrypt($postule->getId())));    
                     $notif->setUrl($url);
                     $em->persist($notif);
             
@@ -233,7 +261,7 @@ class ClientController extends Controller {
                 //==================================================================================================================== lien exportateur pour info demande export + classe css
                 $text = 'Demande Export <span>'.$mydemande->getTitre().'</span> est annulé!';
                 $notif->setText($text);
-                $url = $this->get('router')->generate('exp_notif_url_val', array('id' => $postule->getId()));    
+                $url = $this->get('router')->generate('exp_notif_url_val', array('id' => $this->get('nzo_url_encryptor')->encrypt($postule->getId())));    
                 $notif->setUrl($url);
                 $em->persist($notif);
             }
@@ -392,12 +420,12 @@ class ClientController extends Controller {
     * @Secure(roles="ROLE_CLIENT")
     */
     public function DemandeExportActiveAction(DemandeExport $mydemande)
-    {
+    { 
         $usr = $this->get('security.context')->getToken()->getUser();
        // security access     
            if($mydemande->getClient() != $usr) return $this->redirect($this->generateUrl('nzo_tunisiefret_homepage'));
        // security access 
-        $em = $this->getDoctrine()->getManager();
+        $em = $this->getDoctrine()->getManager();        
         $postules = $em->getRepository('NzoTunisiefretBundle:DemandeExportPostule')->getDemandeExportPostuleByDemande($mydemande);
         return $this->render('NzoTunisiefretBundle:Client:DemandeExportActive.html.twig', array('mydemande' => $mydemande, 'postules' => $postules));
     }
@@ -529,7 +557,7 @@ class ClientController extends Controller {
         if ($request->isXmlHttpRequest()) {
             // save msg
             $msg = $request->request->get('msg');
-            $id = $request->request->get('id');                    
+            $id = $request->request->get('idmsg');                    
             $em = $this->getDoctrine()->getManager();
             $usr = $this->get('security.context')->getToken()->getUser();
             $MsgForm = new MsgDemandeExport();    
@@ -548,7 +576,7 @@ class ClientController extends Controller {
             $notifmsg->setLogoemetteur($usr->getLogoname());
             $notifmsg->setTitredemandeexport($postule->getDemandeexport()->getTitre());
             $notifmsg->setText($msg); 
-            $url = $this->get('router')->generate('exp_notifmsg_url_val', array('id' => $postule->getId()));    
+            $url = $this->get('router')->generate('exp_notifmsg_url_val', array('id' => $this->get('nzo_url_encryptor')->encrypt($postule->getId())));    
             $notifmsg->setUrl($url);
             $em->persist($notifmsg);
             $em->flush();
@@ -582,13 +610,13 @@ class ClientController extends Controller {
             }
             $em->flush();
             if($postule->getDemandeexport()->getTerminerDemande())
-            $url = $this->get('router')->generate('client_demande_export_termine_detail', array('id' => $postule->getDemandeexport()->getId()));    
+            $url = $this->get('router')->generate('client_demande_export_termine_detail', array('id' => $this->get('nzo_url_encryptor')->encrypt($postule->getDemandeexport()->getId())));    
             else if ($postule->getDemandeexport()->getTacking())    
-            $url = $this->get('router')->generate('client_demande_export_encours_detail', array('id' => $postule->getDemandeexport()->getId()));
+            $url = $this->get('router')->generate('client_demande_export_encours_detail', array('id' => $this->get('nzo_url_encryptor')->encrypt($postule->getDemandeexport()->getId())));
             else if($postule->getDemandeexport()->getAnnulerDemande())
-            $url = $this->get('router')->generate('client_postule_archive_detail', array('id' => $postule->getId()));                      
+            $url = $this->get('router')->generate('client_postule_archive_detail', array('id' => $this->get('nzo_url_encryptor')->encrypt($postule->getId())));                      
             else
-            $url = $this->get('router')->generate('client_postule_active_detail', array('id' => $postule->getId()));                  
+            $url = $this->get('router')->generate('client_postule_active_detail', array('id' => $this->get('nzo_url_encryptor')->encrypt($postule->getId())));                  
             
             return $this->redirect($url);
      }
@@ -637,7 +665,7 @@ class ClientController extends Controller {
             //==================================================================================================================== lien exportateur pour avis export + classe css
             $text = 'Vous avez reçu un Avis sur le Contrat Export <span>'.$postule->getDemandeexport()->getTitre().'</span>';
             $notif->setText($text);
-            $url = $this->get('router')->generate('exp_notif_url_val', array('id' => $postule->getId()));    
+            $url = $this->get('router')->generate('exp_notif_url_val', array('id' => $this->get('nzo_url_encryptor')->encrypt($postule->getId())));    
             $notif->setUrl($url);
             $em->persist($notif);
             

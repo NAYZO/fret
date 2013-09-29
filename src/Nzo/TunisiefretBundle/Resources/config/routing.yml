@@ -21,7 +21,7 @@ nzo_apropos:
         
 #CLIENT ROUTE    
 nzo_poserdemande_export:
-    pattern: /poser-demande-export/
+    pattern: /deposer-demande-fret/
     defaults: {_controller: NzoTunisiefretBundle:Client:PoserDemandeExport}
     
 ajax_send_msg_client:
@@ -49,11 +49,11 @@ client_list_messages:
     defaults: {_controller: NzoTunisiefretBundle:Client:Listemessages}    
     
 nzo_voirlistedemande_export_active:
-    pattern: /liste-demande-export/active/
+    pattern: /liste-demande-fret/active/
     defaults: {_controller: NzoTunisiefretBundle:Client:ListeDemandeExportActive}
     
 nzo_voirlistedemande_export_archive:
-    pattern: /liste-demande-export/archive/
+    pattern: /liste-demande-fret/archive/
     defaults: {_controller: NzoTunisiefretBundle:Client:ListeDemandeExportArchive}    
     
 client_list_demande_type:
@@ -69,110 +69,83 @@ client_contrat_terminer:
     defaults: {_controller: NzoTunisiefretBundle:Client:ListeContratTerminer}
     
 client_notifmsg_url_val:  
-    pattern: /client/message/{id}/valeur/
-    defaults: {_controller: NzoTunisiefretBundle:Client:MessageUrlValeur}  
-    requirements:
-        id:  \d+    
+    pattern: /Client-Message_~{id}/Valeur/
+    defaults: {_controller: NzoTunisiefretBundle:Client:MessageUrlValeur}      
         
 client_notif_url_val:  
-    pattern: /client/notification/{id}/valeur/
+    pattern: /Client-Notification_~{id}/Valeur/
     defaults: {_controller: NzoTunisiefretBundle:Client:NotificationUrlValeur}  
-    requirements:
-        id:  \d+        
+        
     
 client_liste_contrat_encours:  
-    pattern: /liste-contrats/{id}/encours/
-    defaults: {_controller: NzoTunisiefretBundle:Client:ContratEncours}  
-    requirements:
-        id:  \d+     
+    pattern: /Liste-Contrats_~{id}/EnCours/
+    defaults: {_controller: NzoTunisiefretBundle:Client:ContratEncours}       
     
 client_demande_export_termine_detail:  
-    pattern: /demande-export/{id}/termine/
-    defaults: {_controller: NzoTunisiefretBundle:Client:DemandeExportTermineDetail}  
-    requirements:
-        id:  \d+   
+    pattern: /Demande-Fret_~{id}/Terminé/
+    defaults: {_controller: NzoTunisiefretBundle:Client:DemandeExportTermineDetail}     
 
 client_demande_export_active:    
-    pattern: /demande-export/{id}/active/
+    pattern: /Demande-Fret-Active_~{id}
     defaults: {_controller: NzoTunisiefretBundle:Client:DemandeExportActive}  
-    requirements:
-        id:  \d+ 
+#    requirements:
+#        id:  \d+ 
 
 client_postule_active_detail:
-    pattern: /postule-active/{id}/detail/
-    defaults: {_controller: NzoTunisiefretBundle:Client:DetailPostuleActive}  
-    requirements:
-        id:  \d+ 
+    pattern: /Postule-Active_~{id}/Detail/
+    defaults: {_controller: NzoTunisiefretBundle:Client:DetailPostuleActive}   
         
 client_demande_export_archive:    
-    pattern: /demande-export/{id}/archive/
-    defaults: {_controller: NzoTunisiefretBundle:Client:DemandeExportArchive}  
-    requirements:
-        id:  \d+ 
+    pattern: /Demande-Fret_~{id}/Archive/
+    defaults: {_controller: NzoTunisiefretBundle:Client:DemandeExportArchive}   
         
 client_postule_archive_detail:
-    pattern: /postule-archive/{id}/detail/
-    defaults: {_controller: NzoTunisiefretBundle:Client:DetailPostuleArchive}  
-    requirements:
-        id:  \d+ 
+    pattern: /Postule-Archive_~{id}/Detail/
+    defaults: {_controller: NzoTunisiefretBundle:Client:DetailPostuleArchive}   
+        
+client_profil_exportateur:
+    pattern: /Profil-Exportateur_~{id}
+    defaults: {_controller: NzoTunisiefretBundle:Client:ProfilExportateur}   
 
 client_demande_export_encours_detail:
-    pattern: /demande-export/{id}/encours/detail/
+    pattern: /Demande-Fret_~{id}/EnCours/Detail/
     defaults: {_controller: NzoTunisiefretBundle:Client:DemandeExportEnCoursDetail}  
-    requirements:
-        id:  \d+
         
 client_postule_encours_detail:
-    pattern: /postule-encours/{id}/detail/
-    defaults: {_controller: NzoTunisiefretBundle:Client:DetailPostuleEnCours}  
-    requirements:
-        id:  \d+         
+    pattern: /Postule-EnCours_~{id}/Detail/
+    defaults: {_controller: NzoTunisiefretBundle:Client:DetailPostuleEnCours}           
         
 client_postule_encours_detail_afterdone:
-    pattern: /postule/encours/{id}/detail/
-    defaults: {_controller: NzoTunisiefretBundle:Client:DetailPostuleEnCoursAfterDone}  
-    requirements:
-        id:  \d+        
+    pattern: /Postule-EnCours-Detail_~{id}
+    defaults: {_controller: NzoTunisiefretBundle:Client:DetailPostuleEnCoursAfterDone}         
         
 client_terminer_demande:        
-    pattern: /terminer-demande-export/{id}
+    pattern: /Terminer-Demande-Fret_~{id}
     defaults: {_controller: NzoTunisiefretBundle:Client:TerminerDemandeExport}  
-    requirements:
-        id:  \d+
         
 client_annuler_demande:        
-    pattern: /annuler-demande-export/{id}
+    pattern: /Annuler-Demande-Fret_~{id}
     defaults: {_controller: NzoTunisiefretBundle:Client:AnnulerDemandeExport}  
-    requirements:
-        id:  \d+     
 
 client_contrat_confirmer:
-    pattern: /contrat-export/{id}/confirmer/
+    pattern: /Contrat-Fret_~{id}/Confirmer/
     defaults: {_controller: NzoTunisiefretBundle:Client:ConfirmerContratExport}     
         
 nzo_detaildemande_export_type:    
-    pattern: /detail-demande-export/{id}/type/
-    defaults: {_controller: NzoTunisiefretBundle:Client:DetailDemandeExportType}  
-    requirements:
-        id:  \d+          
+    pattern: /Demande-Fret-Detail_~{id}/Type/
+    defaults: {_controller: NzoTunisiefretBundle:Client:DetailDemandeExportType}            
                
 client_supprimer_demande_type:    
-    pattern: /demande-export-type/{id}/supprimer/
+    pattern: /Demande-Fret-Type_~{id}/Supprimer/
     defaults: {_controller: NzoTunisiefretBundle:Client:SupprimerDemandeExportType}  
-    requirements:
-        id:  \d+            
   
 client_reposter_demande_type:  
-    pattern: /demande-export-type/{id}/reposter/
+    pattern: /Demande-Fret-Type_~{id}/Deposer/
     defaults: {_controller: NzoTunisiefretBundle:Client:ReposterDemandeExportType}  
-    requirements:
-        id:  \d+             
   
 client_donner_avis_demande_export:  
-    pattern: /demande-export/{id}/ajout-avis/
-    defaults: {_controller: NzoTunisiefretBundle:Client:DonnerAvisDemandeExport}  
-    requirements:
-        id:  \d+  
+    pattern: /Demande-Fret_~{id}/Ajout-Avis/
+    defaults: {_controller: NzoTunisiefretBundle:Client:DonnerAvisDemandeExport} 
   
   
 #EXPORTATEUR ROUTE
@@ -181,10 +154,8 @@ exp_home:
     defaults: {_controller: NzoTunisiefretBundle:Exportateur:Home}
 
 nzo_postuledemande_export:
-    pattern: /postule-demande-export/{id}
+    pattern: /Postule-Demande-Fret_~{id}
     defaults: {_controller: NzoTunisiefretBundle:Exportateur:PostuleDemandeExport}  
-    requirements:
-        id:  \d+       
 
 ajax_get_nb_notif_exportateur:
     pattern: /nb-notif-exportateur/ajax/
@@ -207,50 +178,36 @@ exp_liste_postule_archive:
     defaults: {_controller: NzoTunisiefretBundle:Exportateur:ListePostuleArchive}
 
 exp_notifmsg_url_val:  
-    pattern: /exportateur/message/{id}/valeur/
+    pattern: /Exportateur-Message_~{id}/Valeur/
     defaults: {_controller: NzoTunisiefretBundle:Exportateur:MessageUrlValeur}  
-    requirements:
-        id:  \d+ 
       
 exp_notif_url_val:  
-    pattern: /exportateur/notification/{id}/valeur/
+    pattern: /Exportateur-Notification_~{id}/Valeur/
     defaults: {_controller: NzoTunisiefretBundle:Exportateur:NotificationUrlValeur}  
-    requirements:
-        id:  \d+         
         
 exp_detail_postule_active:    
-    pattern: /detail-postule/{id}/active/
+    pattern: /Detail-Postule-Active_~{id}
     defaults: {_controller: NzoTunisiefretBundle:Exportateur:DetailPostuleActive}  
-    requirements:
-        id:  \d+   
 
 exp_list_messages:
     pattern: /exportateur/liste-messages/
     defaults: {_controller: NzoTunisiefretBundle:Exportateur:Listemessages}
     
 exp_detail_postule_archive:    
-    pattern: /detail-postule/{id}/archive/
+    pattern: /Detail-Postule_~{id}/Archive/
     defaults: {_controller: NzoTunisiefretBundle:Exportateur:DetailPostuleArchive}  
-    requirements:
-        id:  \d+                 
 
 exp_annuler_postule:        
-    pattern: /supprimer-postule/{id}
+    pattern: /Supprimer-Postule_~{id}
     defaults: {_controller: NzoTunisiefretBundle:Exportateur:AnnulerPostule}  
-    requirements:
-        id:  \d+
         
 exp_contrat_encours_detail:        
-    pattern: /contrat-encours/{id}/detail/
+    pattern: /Contrat-EnCours_~{id}/Detail/
     defaults: {_controller: NzoTunisiefretBundle:Exportateur:ContratEnCoursDetail}  
-    requirements:
-        id:  \d+        
 
 exp_contrat_termine_detail:  
-    pattern: /contrat-termine/{id}/detail/
+    pattern: /Contrat-Terminé_~{id}/Detail/
     defaults: {_controller: NzoTunisiefretBundle:Exportateur:ContratTermineDetail}  
-    requirements:
-        id:  \d+  
         
 exp_liste_contrats_en_cours:
     pattern: /liste-contrat/encours/
@@ -269,10 +226,8 @@ ajax_send_msg_exportateur:
     defaults: {_controller: NzoTunisiefretBundle:Exportateur:MessageExportateurSend}    
     
 exp_donner_avis_demande_export:  
-    pattern: /exportateur/demande-export/{id}/ajout-avis/
+    pattern: /Exportateur-Demande-Fret_~{id}/Ajout-Avis/
     defaults: {_controller: NzoTunisiefretBundle:Exportateur:DonnerAvisDemandeExport}  
-    requirements:
-        id:  \d+    
     
 #--------------------------- FosUserBundle -----------------------------------
 client_registration:
@@ -293,7 +248,7 @@ fos_user_security:
 
 fos_user_profile:
     resource: "@FOSUserBundle/Resources/config/routing/profile.xml"
-    prefix: /profile
+    prefix: /profil
 
    
 

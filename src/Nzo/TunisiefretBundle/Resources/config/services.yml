@@ -2,6 +2,7 @@ parameters:
 #    nzo_tunisiefret.example.class: Nzo\TunisiefretBundle\Example
 
 services:
-#    nzo_tunisiefret.example:
-#        class: %nzo_tunisiefret.example.class%
-#        arguments: [@service_id, "plain_value", %parameter%]
+  controller.pre_execute_listener:
+    class: Nzo\TunisiefretBundle\Listener\ControllerListener
+    tags:
+      -  { name: kernel.event_listener, event: kernel.controller, method: onCoreController }

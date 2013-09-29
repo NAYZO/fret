@@ -36,8 +36,8 @@
                     <li><a href="{{ path('client_contrat_terminer') }}" >Terminé</a></li>
                 </ul>
             </li>
-            <li><a href="{{ path('nzo_poserdemande_export') }}" >Déposer Demande Export</a></li>
-            <li><a href="{{ path('client_list_demande_type') }}">Liste Demandes Export Type</a></li>
+            <li><a href="{{ path('nzo_poserdemande_export') }}" >Déposer Demande Fret</a></li>
+            <li><a href="{{ path('client_list_demande_type') }}">Liste Demandes Fret Type</a></li>
         </ul>
         {#-----------select-menu--------------#}
         <div id="dd" class="wrapper-dropdown-5" tabindex="1">MENU
@@ -55,8 +55,8 @@
                         <li><a href="{{ path('client_contrat_terminer') }}" >Terminé</a></li>
                     </ul>
                 </li>
-                <li><a href="{{ path('nzo_poserdemande_export') }}" >Déposer Demande Export</a></li>
-                <li><a href="{{ path('client_list_demande_type') }}">Liste Demandes Export Type</a></li>
+                <li><a href="{{ path('nzo_poserdemande_export') }}" >Déposer Demande Fret</a></li>
+                <li><a href="{{ path('client_list_demande_type') }}">Liste Demandes Fret Type</a></li>
             </ul>
         </div>
     </div>
@@ -110,7 +110,7 @@
                 {%for key,demande in depose if key<3 %}
                     <div class="row">
                         <div class="col-md-12">
-                            <span class="pull-left" ><a href="{{path('client_demande_export_active', {'id':demande.id} )}}">{{demande.titre}}</a> ( {{demande.demandeexportpostule|length}} ) </span>
+                            <span class="pull-left" ><a href="{{path('client_demande_export_active', {'id':demande.id | urlencrypt} )}}">{{demande.titre}}</a> ( {{demande.demandeexportpostule|length}} ) </span>
                             <span class="pull-right" style="color: grey">Déposé le {{demande.datedepos|date("d/m/Y")}} </span>
                         </div>
                     </div>
@@ -132,10 +132,10 @@
                         <p class="text-success">Aucun contrat en cours !</p>
                     {% else %}
                     {%for demande in encours %}
-                        {%set idpostule = render(controller('NzoTunisiefretBundle:Client:GetPostuleEncoursByDemande', {'id': demande}))%}
+                        {%set idpostule = render(controller('NzoTunisiefretBundle:Client:GetPostuleEncoursByDemande', {'id': demande.id | urlencrypt}))%}
                         <div class="row">
                             <div class="col-md-12">
-                                <span class="pull-left" ><a href="{{path('client_postule_encours_detail', {'id':idpostule} )}}">{{demande.titre}}</a> </span>
+                                <span class="pull-left" ><a href="{{path('client_postule_encours_detail', {'id':idpostule | urlencrypt} )}}">{{demande.titre}}</a> </span>
                                 <span class="pull-right" style="color: grey">Déposé le {{demande.datedepos|date("d/m/Y")}} </span>
                             </div>
                         </div>

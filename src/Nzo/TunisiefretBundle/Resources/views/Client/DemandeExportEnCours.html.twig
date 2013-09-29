@@ -34,8 +34,8 @@
                     <li><a href="{{ path('client_contrat_terminer') }}" >Terminé</a></li>
                 </ul>
             </li>
-            <li><a href="{{ path('nzo_poserdemande_export') }}" >Déposer Demande Export</a></li>
-            <li><a href="{{ path('client_list_demande_type') }}">Liste Demandes Export Type</a></li>
+            <li><a href="{{ path('nzo_poserdemande_export') }}" >Déposer Demande Fret</a></li>
+            <li><a href="{{ path('client_list_demande_type') }}">Liste Demandes Fret Type</a></li>
         </ul>
         {#-----------select-menu--------------#}
         <div id="dd" class="wrapper-dropdown-5" tabindex="1">MENU
@@ -53,8 +53,8 @@
                         <li><a href="{{ path('client_contrat_terminer') }}" >Terminé</a></li>
                     </ul>
                 </li>
-                <li><a href="{{ path('nzo_poserdemande_export') }}">Déposer Demande Export</a></li>
-                <li><a href="{{ path('client_list_demande_type') }}">Liste Demandes Export Type</a></li>
+                <li><a href="{{ path('nzo_poserdemande_export') }}">Déposer Demande Fret</a></li>
+                <li><a href="{{ path('client_list_demande_type') }}">Liste Demandes Fret Type</a></li>
             </ul>
         </div>
     </div>
@@ -104,7 +104,7 @@
     
     {#-------Liste postuler------------#}
     {% if listepostules is empty %}
-       <p class="alert alert-info">Il n'existe aucun poste sur cette demande d'export !</p>
+       <p class="alert alert-info">Il n'existe aucun postule sur cette demande de fret !</p>
     {%else%}
     {% for postule in listepostules %} 
     <div class="panel panel-default bottom">
@@ -122,7 +122,7 @@
                         {%else%}
                             {{postule.description}}
                         {% endif %}
-                        <a href="{{path('client_postule_encours_detail_afterdone', {'id':postule.id} )}}" class="pull-right"> Voir détails </a>
+                        <a href="{{path('client_postule_encours_detail_afterdone', {'id':postule.id | urlencrypt} )}}" class="pull-right"> Voir détails </a>
                     </p>
                </div>
             </div>

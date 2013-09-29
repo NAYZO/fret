@@ -1,10 +1,10 @@
 {% extends "NzoTunisiefretBundle::layoutClient.html.twig" %}
-{% block title %} {{ parent() }} Détails Demande Export Type {% endblock %}
+{% block title %} {{ parent() }} Détails Demande Fret Type {% endblock %}
 {% block banner %}
 <div class="jumbotron">
     <div class="col-md-4"> 
         <div class="row">
-            <h4 class="title-banner" style="">Détails Demande Export Type</h4>
+            <h4 class="title-banner" style="">Détails Demande Fret Type</h4>
         </div>
     </div>
 </div>
@@ -34,8 +34,8 @@
                     <li><a href="{{ path('client_contrat_terminer') }}" >Terminé</a></li>
                 </ul>
             </li>
-            <li><a href="{{ path('nzo_poserdemande_export') }}" >Déposer Demande Export</a></li>
-            <li class="actives"><a href="{{ path('client_list_demande_type') }}">Liste Demandes Export Type</a></li>
+            <li><a href="{{ path('nzo_poserdemande_export') }}" >Déposer Demande Fret</a></li>
+            <li class="actives"><a href="{{ path('client_list_demande_type') }}">Liste Demandes Fret Type</a></li>
         </ul>
         {#-----------select-menu--------------#}
         <div id="dd" class="wrapper-dropdown-5" tabindex="1">MENU
@@ -53,8 +53,8 @@
                         <li><a href="{{ path('client_contrat_terminer') }}" >Terminé</a></li>
                     </ul>
                 </li>
-                <li><a href="{{ path('nzo_poserdemande_export') }}">Déposer Demande Export</a></li>
-                <li class="activedrop"><a href="{{ path('client_list_demande_type') }}">Liste Demandes Export Type</a></li>
+                <li><a href="{{ path('nzo_poserdemande_export') }}">Déposer Demande Fret</a></li>
+                <li class="activedrop"><a href="{{ path('client_list_demande_type') }}">Liste Demandes Fret Type</a></li>
             </ul>
         </div>
     </div>
@@ -64,14 +64,14 @@
 <div class="padding">
     <ul id="breadcrumbs-two">
       <li><a href="{{path('nzo_tunisiefret_homepage')}}">Accueil</a></li>
-      <li><a href="{{ path('client_list_demande_type') }}">Liste Demandes Export Type</a></li>
+      <li><a href="{{ path('client_list_demande_type') }}">Liste Demandes Fret Type</a></li>
       <li class="current"><span>Détails</span></li>
     </ul>
     <div class="legend bottom">
     <h4 class="pull-left"><strong>{{mydemande.titre}}</strong> </h4>
      <div class="row" style="padding-right: 14px;">
         <div class=" pull-right">
-            <a href="{{path('client_reposter_demande_type', {'id':mydemande.id} )}}" class="btn btn-danger btn-xs">Déposer</a>
+            <a href="{{path('client_reposter_demande_type', {'id':mydemande.id | urlencrypt} )}}" class="btn btn-danger btn-xs">Déposer</a>
             <a data-toggle="modal" href="#nzomyModal" class="btn btn-danger btn-xs" >Supprimer</a>
             <!-- Modal -->
             <div class="modal fade" id="nzomyModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -85,7 +85,7 @@
                    Voulez vous supprimer la demande ? 
                   </div>
                   <div class="modal-footer">
-                    <a href="{{path('client_supprimer_demande_type', {'id':mydemande.id} )}}" class="btn btn-primary">Confirmer</a>
+                    <a href="{{path('client_supprimer_demande_type', {'id':mydemande.id | urlencrypt} )}}" class="btn btn-primary">Confirmer</a>
                     <button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
                   </div>
                 </div><!-- /.modal-content -->

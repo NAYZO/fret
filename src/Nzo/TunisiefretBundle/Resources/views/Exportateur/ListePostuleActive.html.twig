@@ -75,12 +75,12 @@
 <div class="list-group">
     {% if listepostules is empty %}
         <hr>
-        <p class="alert alert-info">Il n'existe aucune demande d'export active !</p>
+        <p class="alert alert-info">Il n'existe aucune demande de fret active !</p>
     {%else%}
     {% for postule in listepostules %}
         <div class="list-group-item" style="padding: 30px;">
             <div class="legend list-group-item-heading">
-                <h4 class="cl-effect-1"><a href="{{path('exp_detail_postule_active', {'id':postule.id} )}}">{{postule.demandeexport.titre}}</a></h4>  
+                <h4 class="cl-effect-1"><a href="{{path('exp_detail_postule_active', {'id':postule.id | urlencrypt} )}}">{{postule.demandeexport.titre}}</a></h4>  
             </div>
             <p style="color: grey;">Postulé le {{postule.datepostule|date("d/m/Y")}}</p>
             <p class="list-group-item-text">
@@ -89,7 +89,7 @@
                 {%else%}
                     {{postule.demandeexport.description}}
                 {% endif %}
-                <a href="{{path('exp_detail_postule_active', {'id':postule.id} )}}" class="pull-right"> Voir détails </a>
+                <a href="{{path('exp_detail_postule_active', {'id':postule.id | urlencrypt} )}}" class="pull-right"> Voir détails </a>
             </p>
               
         </div>

@@ -35,8 +35,8 @@
                     <li><a href="{{ path('client_contrat_terminer') }}" >Terminé</a></li>
                 </ul>
             </li>
-            <li><a href="{{ path('nzo_poserdemande_export') }}" >Déposer Demande Export</a></li>
-            <li><a href="{{ path('client_list_demande_type') }}">Liste Demandes Export Type</a></li>
+            <li><a href="{{ path('nzo_poserdemande_export') }}" >Déposer Demande Fret</a></li>
+            <li><a href="{{ path('client_list_demande_type') }}">Liste Demandes Fret Type</a></li>
         </ul>
         {#-----------select-menu--------------#}
         <div id="dd" class="wrapper-dropdown-5" tabindex="1">MENU
@@ -54,8 +54,8 @@
                         <li><a href="{{ path('client_contrat_terminer') }}" >Terminé</a></li>
                     </ul>
                 </li>
-                <li><a href="{{ path('nzo_poserdemande_export') }}">Déposer Demande Export</a></li>
-                <li><a href="{{ path('client_list_demande_type') }}">Liste Demandes Export Type</a></li>
+                <li><a href="{{ path('nzo_poserdemande_export') }}">Déposer Demande Fret</a></li>
+                <li><a href="{{ path('client_list_demande_type') }}">Liste Demandes Fret Type</a></li>
             </ul>
         </div>
     </div>
@@ -85,12 +85,12 @@
     <div class="row">
         <div class="col-md-6">      
             <div class="panel-group" id="accordion" style="margin-bottom: 10px">
-                {#----------------Détails demande Export----------------#}
+                {#----------------Détails demande Fret----------------#}
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseOne">    
                             <h4 class="panel-title">
-                                Détail de la demande d'export
+                                Détail de la demande de fret
                                 <img src="{{ asset('bundles/nzotunisiefret/images') }}/down.png" alt="" class="pull-right"/>
                            </h4>
                         </a>
@@ -140,7 +140,7 @@
             </div>
         </div>
         
-        {#----------------Information sue l'exportateur----------------#}
+        {#----------------Information sur l'exportateur----------------#}
         <div class="col-md-6">
             <div class="panel panel-default">
                 <div class="panel-heading">Informations sur l'exportateur</div>
@@ -177,7 +177,7 @@
         {#----------------Liste des messges----------------#}
         <div class="row">
             {% if msgs is empty %}
-                <p class="alert alert-info">Vous n'avez réçu aucun message sur cette demande d'export !</p>
+                <p class="alert alert-info">Vous n'avez réçu aucun message sur cette demande de fret!</p>
             {%else%}
                 {% if msgs|length <= 4 %}   
                     {% for msg in msgs %} 
