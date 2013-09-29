@@ -198,7 +198,7 @@
                   <div class="panel-heading">
                     <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseThree">
                         <h4 class="panel-title">
-                            Détails Postule de l'exportateur
+                            Détails Postule de l'Affreteur
                             <img src="{{ asset('bundles/nzotunisiefret/images') }}/down.png" alt="" class="pull-right"/>
                         </h4>
                     </a>
@@ -215,10 +215,10 @@
               </div>
         </div>
             
-        {#----------------Information sue l'exportateur----------------#}
+        {#----------------Information sue l'Affreteur----------------#}
         <div class="col-md-6">
             <div class="panel panel-default">
-                <div class="panel-heading">Informations sur l'exportateur</div>
+                <div class="panel-heading">Informations sur l'Affreteur</div>
                     <div class="panel-body">
                         <div class="media">
                             <div class="pull-left">
@@ -226,7 +226,8 @@
                             </div>
                           <div class="media-body">
                               <div class="legend bottom" style="padding-bottom: 29px;">
-                                  <a href=""><h4 class="media-heading pull-left">{{postule.exportateur.nomentrop}}</h4></a>
+                                  
+                                  <a href="{{path('client_profil_exportateur', {'id':postule.exportateur.id | urlencrypt} )}}"><h4 class="media-heading pull-left">{{postule.exportateur.nomentrop}}</h4></a>
                                 <span class="pull-right">
                                     <span id="nzoratingstar"></span> {%if postule.exportateur.note > -1%} <strong>({{postule.exportateur.note}})</strong>{%endif%}
                                 </span>

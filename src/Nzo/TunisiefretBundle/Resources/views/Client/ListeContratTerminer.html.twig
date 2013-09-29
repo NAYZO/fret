@@ -97,8 +97,8 @@
                 <a href="{{path('client_demande_export_termine_detail', {'id':demande.id|urlencrypt} )}}" class="pull-right"> Voir détails </a>
             </p>
             <div class="col-md-2 media" style="margin-top: 0;border-left: 1px solid rgb(218, 213, 213)">
-                   <a href="" class="pull-left"><img class="media-object img-thumbnail" src="{{ asset('exportateurfilesupload/')}}{{demande.ContratEnCoursPostule.exportateur.logoname}}" alt="" width="50" height="100"></a>
-                   <span class="media-body">{{demande.ContratEnCoursPostule.exportateur.nomentrop}}</span>
+                   <a href="{{path('client_profil_exportateur', {'id':demande.ContratEnCoursPostule.exportateur.id | urlencrypt} )}}" class="pull-left"><img class="media-object img-thumbnail" src="{{ asset('exportateurfilesupload/')}}{{demande.ContratEnCoursPostule.exportateur.logoname}}" alt="" width="50" height="100"></a>
+                    <a href="{{path('client_profil_exportateur', {'id':demande.ContratEnCoursPostule.exportateur.id | urlencrypt} )}}"><span class="media-body">{{demande.ContratEnCoursPostule.exportateur.nomentrop}}</span></a>
                </div>
             </div>
         </div>

@@ -140,10 +140,10 @@
             </div>
         </div>
         
-        {#----------------Information sur l'exportateur----------------#}
+        {#----------------Information sur l'Affreteur----------------#}
         <div class="col-md-6">
             <div class="panel panel-default">
-                <div class="panel-heading">Informations sur l'exportateur</div>
+                <div class="panel-heading">Informations sur l'Affreteur</div>
                     <div class="panel-body">
                                <div class="media">
                             <div class="pull-left">
@@ -151,7 +151,8 @@
                             </div>
                           <div class="media-body">
                               <div class="legend bottom" style="padding-bottom: 29px;">
-                                  <a href=""><h4 class="media-heading pull-left">{{postule.exportateur.nomentrop}}</h4></a>
+                                  
+                                  <a href="{{path('client_profil_exportateur', {'id':postule.exportateur.id | urlencrypt} )}}"><h4 class="media-heading pull-left">{{postule.exportateur.nomentrop}}</h4></a>
                                 <span class="pull-right">
                                     <span id="nzoratingstar"></span> <strong>({{postule.exportateur.note}}) </strong>
                                 </span>

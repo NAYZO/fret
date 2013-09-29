@@ -190,7 +190,7 @@ class ClientController extends Controller {
                     $notif = new Notification();
                     $notif->setExportateur($postule->getExportateur());
                     //==================================================================================================================== lien exportateur pour info demande export + classe css
-                    $text = 'Demande Export <span class="text-primary">'.$postule->getDemandeExport()->getTitre().'</span> est Terminé!';
+                    $text = 'Demande Export <span>'.$postule->getDemandeExport()->getTitre().'</span> est Terminé!';
                     $notif->setText($text);
                     $url = $this->get('router')->generate('exp_contrat_termine_detail', array('id' => $this->get('nzo_url_encryptor')->encrypt($postule->getId())));                  
                     $notif->setUrl($url);
@@ -223,7 +223,7 @@ class ClientController extends Controller {
                     $notif = new Notification();
                     $notif->setExportateur($postule->getExportateur());
                     //==================================================================================================================== lien exportateur pour info demande export + classe css
-                    $text = 'Votre contrat: <span class="text-primary">'.$postule->getDemandeexport()->getTitre()."</span> est commencé le ".$postule->getDemandeexport()->getDateTacking()->format('d/m/Y');
+                    $text = 'Votre contrat: <span>'.$postule->getDemandeexport()->getTitre()."</span> est commencé le ".$postule->getDemandeexport()->getDateTacking()->format('d/m/Y');
                     $notif->setText($text);
                     $url = $this->get('router')->generate('exp_notif_url_val', array('id' => $this->get('nzo_url_encryptor')->encrypt($postule->getId())));    
                     $notif->setUrl($url);

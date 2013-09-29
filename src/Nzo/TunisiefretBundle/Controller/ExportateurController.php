@@ -233,6 +233,17 @@ class ExportateurController extends Controller {
         return $this->render('NzoTunisiefretBundle:Exportateur:ListeContratTermine.html.twig', array('listepostules' => $listepostules));
     }
     
+    /**
+    * @Secure(roles="ROLE_EXPORTATEUR")
+    */
+    public function ProfilClientAction($id)
+    {
+        $em = $this->getDoctrine()->getManager();   
+        $client = $em->getRepository('NzoUserBundle:Client')->find($id);
+        $demande = $em->getRepository('NzoTunisiefretBundle:DemandeExport')->findBy(array('client' => $id, 'tacking' => 1));
+        return $this->render('NzoTunisiefretBundle:Exportateur:ProfilClient.html.twig', array('client' => $client, 'demande' => $demande));
+    }
+    
    /**
     * @Secure(roles="ROLE_EXPORTATEUR")
     */

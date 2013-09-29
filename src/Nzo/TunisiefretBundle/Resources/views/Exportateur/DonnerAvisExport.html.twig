@@ -63,7 +63,7 @@
         <li><a href="{{path('nzo_tunisiefret_homepage')}}">Accueil</a></li>
         <li class="current"><span>Avis de Fret</span></li>
     </ul>
-    <h4 class="legend2">Donnez une note et votre Avis à <strong class="red">{{postule.demandeexport.client.nomentrop}}</strong></h4>
+        <h4 class="legend2">Donnez une note et votre Avis à <a href="{{path('exp_profil_client', {'id':postule.demandeexport.client.id | urlencrypt} )}}"><strong class="red">{{postule.demandeexport.client.nomentrop}}</strong></a></h4>
     
     <form action="{{path('exp_donner_avis_demande_export', {'id':postule.id | urlencrypt})}}" method="POST" role="form" id='avisform'>
         <legend>Donnez une note</legend>

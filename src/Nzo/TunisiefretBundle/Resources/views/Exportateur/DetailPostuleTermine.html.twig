@@ -156,7 +156,7 @@
                             </div>
                           <div class="media-body">
                               <div class="legend bottom" style="padding-bottom: 29px;">
-                                  <a href=""><h4 class="media-heading pull-left">{{postule.demandeexport.client.nomentrop}}</h4></a>
+                                  <a href="{{path('exp_profil_client', {'id':postule.demandeexport.client.id | urlencrypt} )}}"><h4 class="media-heading pull-left">{{postule.demandeexport.client.nomentrop}}</h4></a>
                                 <span class="pull-right">
                                     <span id="nzoratingstar"></span> {%if postule.demandeexport.client.note > -1%} <strong>({{postule.demandeexport.client.note}})</strong>{%endif%}
                                 </span>
@@ -189,7 +189,7 @@
                               {%endif%}  
                           {%endif%}   
                           <hr>
-                          <h4 class="legend2">{{postule.demandeexport.client.nomentrop}}</h4> 
+                          <a href="{{path('exp_profil_client', {'id':postule.demandeexport.client.id | urlencrypt} )}}"><h4 class="legend2">{{postule.demandeexport.client.nomentrop}}</h4> </a>
                           {%if postule.demandeexport.avisexport.noteclient == null%}
                           <p class="text-success">Vous n'avez pas encore associer un Avis à "{{postule.demandeexport.client.nomentrop}}".</p>
                           <p><a href="{{path('exp_donner_avis_demande_export', {'id':postule.id | urlencrypt})}}">Donnez un Avis</a></p>
