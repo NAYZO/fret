@@ -62,5 +62,58 @@
 </div>
 {% endblock menu %}
 {% block content %}
-profil Affreteur
+Affréteur: {{exportateur.nomentrop}} <br>
+Logo: <img class="media-object img-thumbnail" src="{{ asset('exportateurfilesupload/')}}{{exportateur.logoname}}" alt="" width="100" height="100"> <br>
+Note: <span id="nzonoteexportateur"></span> ( {{exportateur.note}} ) <br>
+Adresse: {{exportateur.adresse}} <br>
+Ville: {{exportateur.ville}} <br>
+ ----------------------------- <br>
+ 
+Description: <br> 
+{{exportateur.description}} <br>
+
+----------------------------- <br>
+
+<div class="panel panel-default bottom">
+    <div class="panel-heading"><strong>Analyse</strong></div>
+    <div class="panel-body">
+        <p><span class="red">Nombre Postules: </span>{{exportateur.nbdemandeexportpostule}}</p>
+        <p><span class="red">Nombre Contrat En Cours: </span>{{exportateur.nbcontratencours}}</p>
+        <p><span class="red">Nombre Contrat Terminé: </span>{{exportateur.nbcontrattermine}}</p>
+    </div>
+</div>
+
+<br>
+----------------- <br>
+Liste des Contrats: ( {{postules|length}} ) <br> <br>
+{%for key, postule in postules %}
+    {%if postule.demandeexport.terminerdemande is null%}
+        {{postule.demandeexport.titre}} <br>
+        Contrat En Cours - Type Contrat: {{postule.demandeexport.type}} - {{postule.demandeexport.datetacking|date("d/m/Y")}}
+    {%else%}
+        {{postule.demandeexport.titre}} | 
+        Type Contrat: {{postule.demandeexport.type}} - {{postule.demandeexport.datetacking|date("d/m/Y")}} <br>
+        {%if postule.demandeexport.avisexport.avisexportateur is not null%}
+            <span id="nzonoteexp{{key}}"></span> {{postule.demandeexport.avisexport.avisexportateur}}
+             <script>
+            $(document).ready(function(){           
+                 $("#nzonoteexp{{key}}").raty({ path: '/bundles/nzotunisiefret/images', noRatedMsg: "aucune note associé!", hints: ['', '', '', '', ''], readOnly: true, score: {{postule.demandeexport.avisexport.noteexportateur}} }); 
+            });    
+           </script>
+        {%else%}   
+           Aucun Avis associer!
+       {%endif%}
+    {%endif%}
+    <br>----------------------------- <br>
+{%endfor%}
 {% endblock content %}
+
+ 
+ {% block js %} 
+    <script src="{{ asset('bundles/nzotunisiefret/js/jquery.raty.min.js') }}"></script>
+    <script>
+        $(document).ready(function(){
+             $('#nzonoteexportateur').raty({ path: '/bundles/nzotunisiefret/images', noRatedMsg: "aucune note associé!", hints: ['', '', '', '', ''], readOnly: true, score: {{exportateur.note}} });
+        });    
+    </script>
+{% endblock js %}
