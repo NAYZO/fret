@@ -59,5 +59,65 @@
 </div>
 {% endblock menu %}
 {% block content %}
-profil Client
+Client: {{client.nomentrop}} <br>
+Logo: <img class="media-object img-thumbnail" src="{{ asset('clientfilesupload/')}}{{client.logoname}}" alt="" width="100" height="100"> <br>
+Note: <span id="nzonoteclient"></span> ( {{client.note}} ) <br>
+Adresse: {{client.adresse}} <br>
+Ville: {{client.ville}} <br>
+ ----------------------------- <br>
+ 
+Description: <br> 
+{{client.description}} <br>
+
+----------------------------- <br>
+
+<div class="panel panel-default bottom">
+            <div class="panel-heading"><strong>Analyse</strong></div>
+            <div class="panel-body">
+                <div class="row">
+                   <div class="col-md-5">
+                        <p><span class="red">Nombre Demandes déposé: </span>{{client.nbdemandeexportdepose}}</p>
+                        <p><span class="red">Nombre Demande active: </span>{{active}}</p>
+                        <p><span class="red">Nombre Contrat En Cours: </span>{{client.nbcontratencours}}</p>
+                   </div>
+                   <div class="col-md-5">
+                       <p><span class="red">Nombre Contrat Terminé: </span>{{client.nbcontrattermine}}</p>
+                   </div>
+                </div>
+             </div>
+        </div>
+
+<br>
+----------------- <br>
+Liste des Contrats: ( {{demandes|length}} ) <br> <br>
+{%for key, demande in demandes %}
+    {%if demande.terminerdemande is null%}
+        {{demande.titre}} <br>
+        Contrat En Cours - Type Contrat: {{demande.type}} - {{demande.datetacking|date("d/m/Y")}}
+    {%else%}
+        {{demande.titre}} | 
+        Type Contrat: {{demande.type}} - {{demande.datetacking|date("d/m/Y")}} <br>
+        {%if demande.avisexport.avisclient is not null%}
+            <span id="nzonotecl{{key}}"></span> {{demande.avisexport.avisclient}}
+             <script>
+            $(document).ready(function(){           
+                 $("#nzonotecl{{key}}").raty({ path: '/bundles/nzotunisiefret/images', noRatedMsg: "aucune note associé!", hints: ['', '', '', '', ''], readOnly: true, score: {{demande.avisexport.noteclient}} }); 
+            });    
+           </script>
+        {%else%}   
+           Aucun Avis associer!
+       {%endif%}
+    {%endif%}
+    <br>----------------------------- <br>
+{%endfor%}
 {% endblock content %}
+
+ 
+ {% block js %} 
+    <script src="{{ asset('bundles/nzotunisiefret/js/jquery.raty.min.js') }}"></script>
+    <script>
+        $(document).ready(function(){
+             $('#nzonoteclient').raty({ path: '/bundles/nzotunisiefret/images', noRatedMsg: "aucune note associé!", hints: ['', '', '', '', ''], readOnly: true, score: {{client.note}} });
+        });    
+    </script>
+{% endblock js %}

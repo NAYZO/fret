@@ -32,6 +32,17 @@ class DemandeExportRepository extends EntityRepository
          return $qb->getQuery();            
     } 
     
+    public function getCountClientDemandeExportActive($id)
+    {
+         $qb = $this->createQueryBuilder('a');
+         $qb->select('COUNT(a)')
+            ->where('a.client = :client')
+            ->andWhere('a.tacking = 0')              
+            ->andWhere('a.annuler_demande is NULL')               
+            ->setParameter('client', $id);
+         return $qb->getQuery()->getSingleScalarResult();
+    } 
+    
     public function getClientDemandeExportArchive($id)
     {
          $qb = $this->createQueryBuilder('a');

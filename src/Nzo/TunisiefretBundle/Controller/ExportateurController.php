@@ -240,8 +240,9 @@ class ExportateurController extends Controller {
     {
         $em = $this->getDoctrine()->getManager();   
         $client = $em->getRepository('NzoUserBundle:Client')->find($id);
-        $demande = $em->getRepository('NzoTunisiefretBundle:DemandeExport')->findBy(array('client' => $id, 'tacking' => 1));
-        return $this->render('NzoTunisiefretBundle:Exportateur:ProfilClient.html.twig', array('client' => $client, 'demande' => $demande));
+        $demandes = $em->getRepository('NzoTunisiefretBundle:DemandeExport')->findBy(array('client' => $id, 'tacking' => 1));
+        $active = $em->getRepository('NzoTunisiefretBundle:DemandeExport')->getCountClientDemandeExportActive($client->getId());
+        return $this->render('NzoTunisiefretBundle:Exportateur:ProfilClient.html.twig', array('client' => $client, 'demandes' => $demandes, 'active' => $active));
     }
     
    /**
