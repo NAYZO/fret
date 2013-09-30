@@ -163,6 +163,17 @@ class ClientController extends Controller {
         return $this->render('NzoTunisiefretBundle:Client:ProfilExportateur.html.twig', array('exportateur' => $exportateur, 'postules' => $postules));
     }
 
+     /**
+    * @Secure(roles="ROLE_CLIENT")
+    */
+    public function ProfilPublicClientAction()
+    {
+        $usr = $this->get('security.context')->getToken()->getUser();
+        $em = $this->getDoctrine()->getManager();   
+        $demandes = $em->getRepository('NzoTunisiefretBundle:DemandeExport')->findBy(array('client' => $usr->getId(), 'tacking' => 1));
+        $active = $em->getRepository('NzoTunisiefretBundle:DemandeExport')->getCountClientDemandeExportActive($usr->getId());
+        return $this->render('NzoTunisiefretBundle:Client:ProfilClientPublic.html.twig', array('demandes' => $demandes, 'active' => $active));
+    }
 
     /**
     * @Secure(roles="ROLE_CLIENT")

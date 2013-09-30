@@ -106,6 +106,10 @@ client_postule_archive_detail:
 client_profil_exportateur:
     pattern: /Profil-Affreteur_~{id}
     defaults: {_controller: NzoTunisiefretBundle:Client:ProfilExportateur}   
+    
+client_profil_public:
+    pattern: /Client/Profil-Public/
+    defaults: {_controller: NzoTunisiefretBundle:Client:ProfilPublicClient}    
 
 client_demande_export_encours_detail:
     pattern: /Demande-Fret_~{id}/EnCours/Detail/
@@ -196,6 +200,10 @@ exp_list_messages:
 exp_profil_client:
     pattern: /Profil-Client_~{id}
     defaults: {_controller: NzoTunisiefretBundle:Exportateur:ProfilClient}
+    
+exp_profil_public:
+    pattern: /Affreteur/Profil-Public/
+    defaults: {_controller: NzoTunisiefretBundle:Exportateur:ProfilPublicExportateur}     
     
 exp_detail_postule_archive:    
     pattern: /Detail-Postule_~{id}/Archive/

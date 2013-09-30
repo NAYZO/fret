@@ -245,6 +245,17 @@ class ExportateurController extends Controller {
         return $this->render('NzoTunisiefretBundle:Exportateur:ProfilClient.html.twig', array('client' => $client, 'demandes' => $demandes, 'active' => $active));
     }
     
+    /**
+    * @Secure(roles="ROLE_EXPORTATEUR")
+    */
+    public function ProfilPublicExportateurAction()
+    {
+        $usr = $this->get('security.context')->getToken()->getUser();
+        $em = $this->getDoctrine()->getManager();   
+        $postules = $em->getRepository('NzoTunisiefretBundle:DemandeExportPostule')->findBy(array('exportateur' => $usr->getId(), 'demande_accepter' => 1));
+        return $this->render('NzoTunisiefretBundle:Exportateur:ProfilExportateurPublic.html.twig', array('postules' => $postules));
+    }
+    
    /**
     * @Secure(roles="ROLE_EXPORTATEUR")
     */
