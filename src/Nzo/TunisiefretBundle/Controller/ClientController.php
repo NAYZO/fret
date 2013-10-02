@@ -158,9 +158,9 @@ class ClientController extends Controller {
     public function ProfilExportateurAction($id)
     {
         $em = $this->getDoctrine()->getManager();   
-        $exportateur = $em->getRepository('NzoUserBundle:Exportateur')->find($id);
-        $postules = $em->getRepository('NzoTunisiefretBundle:DemandeExportPostule')->findBy(array('exportateur' => $id, 'demande_accepter' => 1));
-        return $this->render('NzoTunisiefretBundle:Client:ProfilExportateur.html.twig', array('exportateur' => $exportateur, 'postules' => $postules));
+        $exportateur = $em->getRepository('NzoUserBundle:Exportateur')->find($id);        
+        $postules = $em->createQuery("SELECT a FROM NzoTunisiefretBundle:DemandeExportPostule a JOIN a.demandeexport d WHERE a.demande_accepter = 1 AND a.exportateur = ".$exportateur->getId()." ORDER BY d.date_tacking DESC");
+        return $this->render('NzoTunisiefretBundle:Client:ProfilExportateur.html.twig', array('exportateur' => $exportateur, 'postules' => $postules->getResult() ));
     }
 
      /**
@@ -170,7 +170,7 @@ class ClientController extends Controller {
     {
         $usr = $this->get('security.context')->getToken()->getUser();
         $em = $this->getDoctrine()->getManager();   
-        $demandes = $em->getRepository('NzoTunisiefretBundle:DemandeExport')->findBy(array('client' => $usr->getId(), 'tacking' => 1));
+        $demandes = $em->getRepository('NzoTunisiefretBundle:DemandeExport')->findBy(array('client' => $usr->getId(), 'tacking' => 1), array('date_tacking' => 'DESC'));
         $active = $em->getRepository('NzoTunisiefretBundle:DemandeExport')->getCountClientDemandeExportActive($usr->getId());
         return $this->render('NzoTunisiefretBundle:Client:ProfilClientPublic.html.twig', array('demandes' => $demandes, 'active' => $active));
     }

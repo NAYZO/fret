@@ -240,7 +240,7 @@ class ExportateurController extends Controller {
     {
         $em = $this->getDoctrine()->getManager();   
         $client = $em->getRepository('NzoUserBundle:Client')->find($id);
-        $demandes = $em->getRepository('NzoTunisiefretBundle:DemandeExport')->findBy(array('client' => $id, 'tacking' => 1));
+        $demandes = $em->getRepository('NzoTunisiefretBundle:DemandeExport')->findBy(array('client' => $id, 'tacking' => 1), array('date_tacking' => 'DESC'));
         $active = $em->getRepository('NzoTunisiefretBundle:DemandeExport')->getCountClientDemandeExportActive($client->getId());
         return $this->render('NzoTunisiefretBundle:Exportateur:ProfilClient.html.twig', array('client' => $client, 'demandes' => $demandes, 'active' => $active));
     }
@@ -251,8 +251,8 @@ class ExportateurController extends Controller {
     public function ProfilPublicExportateurAction()
     {
         $usr = $this->get('security.context')->getToken()->getUser();
-        $em = $this->getDoctrine()->getManager();   
-        $postules = $em->getRepository('NzoTunisiefretBundle:DemandeExportPostule')->findBy(array('exportateur' => $usr->getId(), 'demande_accepter' => 1));
+        $em = $this->getDoctrine()->getManager();           
+        $postules = $em->createQuery("SELECT a FROM NzoTunisiefretBundle:DemandeExportPostule a JOIN a.demandeexport d WHERE a.demande_accepter = 1 AND a.exportateur = ".$usr->getId()." ORDER BY d.date_tacking DESC");
         return $this->render('NzoTunisiefretBundle:Exportateur:ProfilExportateurPublic.html.twig', array('postules' => $postules));
     }
     
