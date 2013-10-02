@@ -58,58 +58,95 @@
     </div>
 </div>
 {% endblock menu %}
+
+{#---------------------contenu-------------------#}
 {% block content %}
-Client: {{client.nomentrop}} <br>
-Logo: <img class="media-object img-thumbnail" src="{{ asset('clientfilesupload/')}}{{client.logoname}}" alt="" width="100" height="100"> <br>
-Note: <span id="nzonoteclient"></span> ( {{client.note}} ) <br>
-Adresse: {{client.adresse}} <br>
-Ville: {{client.ville}} <br>
- ----------------------------- <br>
- 
-Description: <br> 
-{{client.description}} <br>
-
------------------------------ <br>
-
-<div class="panel panel-default bottom">
-            <div class="panel-heading"><strong>Analyse</strong></div>
-            <div class="panel-body">
-                <div class="row">
-                   <div class="col-md-5">
-                        <p><span class="red">Nombre Demandes déposé: </span>{{client.nbdemandeexportdepose}}</p>
-                        <p><span class="red">Nombre Demande active: </span>{{active}}</p>
-                        <p><span class="red">Nombre Contrat En Cours: </span>{{client.nbcontratencours}}</p>
-                   </div>
-                   <div class="col-md-5">
-                       <p><span class="red">Nombre Contrat Terminé: </span>{{client.nbcontrattermine}}</p>
-                   </div>
-                </div>
-             </div>
+<div class="padding">
+    <div class="row">
+        {#---------------------profil client-------------------#}
+        <div class="media legend2">
+            <span class="pull-left">
+                <img class="media-object img-thumbnail" alt="" src="{{ asset('clientfilesupload/')}}{{client.logoname}}" style="width: 100px; height: 100px;">
+            </span>
+            <div class="media-body">
+                <h3 class="media-heading">{{client.nomentrop}}</h3>
+                <span id="nzonoteclient"></span> ( {{client.note}} )
+                <hr>
+                <p class="small text-muted"><span class="text-danger">Adresse:</span> {{client.adresse}} | <span class="text-danger">Ville:</span> {{client.ville}} </p>
+                <h5>{{client.description}}</h5>
+            </div>
         </div>
+        {#---------------------analyse-------------------#}
+        <div class="col-md-3">
+            <div class="panel panel-default bottom">
+                <div class="panel-heading"><strong>Analyse</strong></div>
+                <div class="panel-body">
+                    <p><span class="red">Nombre Demandes déposé: </span>{{client.nbdemandeexportdepose}}</p>
+                    <p><span class="red">Nombre Demande active: </span>{{active}}</p>
+                    <p><span class="red">Nombre Contrat En Cours: </span>{{client.nbcontratencours}}</p>
 
-<br>
------------------ <br>
-Liste des Contrats: ( {{demandes|length}} ) <br> <br>
-{%for key, demande in demandes %}
-    {%if demande.terminerdemande is null%}
-        {{demande.titre}} <br>
-        Contrat En Cours - Type Contrat: {{demande.type}} - {{demande.datetacking|date("d/m/Y")}}
-    {%else%}
-        {{demande.titre}} | 
-        Type Contrat: {{demande.type}} - {{demande.datetacking|date("d/m/Y")}} <br>
-        {%if demande.avisexport.avisclient is not null%}
-            <span id="nzonotecl{{key}}"></span> {{demande.avisexport.avisclient}}
-             <script>
-            $(document).ready(function(){           
-                 $("#nzonotecl{{key}}").raty({ path: '/bundles/nzotunisiefret/images', noRatedMsg: "aucune note associé!", hints: ['', '', '', '', ''], readOnly: true, score: {{demande.avisexport.noteclient}} }); 
-            });    
-           </script>
-        {%else%}   
-           Aucun Avis associer!
-       {%endif%}
-    {%endif%}
-    <br>----------------------------- <br>
-{%endfor%}
+                    <p><span class="red">Nombre Contrat Terminé: </span>{{client.nbcontrattermine}}</p>
+
+                </div>
+            </div>
+        </div>
+        {#---------------------liste des contrats-------------------#}
+        <div class="col-md-9">
+            <div class="panel panel-default bottom">
+                <div class="panel-heading"><strong>Liste des Contrats: ( {{demandes|length}} )</strong></div>
+                <div class="panel-body">
+                    {% if demandes is empty %}
+                        <p class="text-success">Aucun contrat effectué!</p>
+                    {% else %}
+                    {%for key, demande in demandes %}
+                        {%if demande.terminerdemande is null%}
+                        <div class="row">
+                            <div class="col-md-12">
+                                <p>
+                                    <span class="text-primary" style="font-size:16px"><strong>{{demande.titre}}</strong> </span>
+                                    <span class="pull-right text-muted">{{demande.datetacking|date("d/m/Y")}} </span>
+                                </p>
+                                <p class="text-muted"><span class="text-danger">Type contrat:</span> {{demande.type}} | Contrat en cours</p>
+                            </div>
+                        </div>
+                        {%else%}
+                           <div class="row">
+                                <div class="col-md-12">
+                                    <p>
+                                        <span class="text-primary"  style="font-size:16px"><strong>{{demande.titre}}</strong> </span>
+                                        <span class="pull-right text-muted">{{demande.datetacking|date("d/m/Y")}} </span>
+                                    </p>
+                                    {#---------------------Note-------------------#}
+                                    <p>
+                                        <span class="pull-left">
+                                            {%if demande.avisexport.avisclient is not null%}
+                                                <span id="nzonotecl{{key}}"></span>
+                                            <script>
+                                            $(document).ready(function(){           
+                                                $("#nzonotecl{{key}}").raty({ path: '/bundles/nzotunisiefret/images', noRatedMsg: "aucune note associé!", hints: ['', '', '', '', ''], readOnly: true, score: {{demande.avisexport.noteclient}} }); 
+                                            });    
+                                            </script>
+                                            {%else%}   
+                                            <span class="text-info">Aucun Avis associer!</span>
+                                            {%endif%}
+                                        </span>
+                                        <span class="pull-right text-danger"><strong>{{demande.type}}</strong></span>
+                                    </p>
+                                </div>
+                              </div>
+                              {#---------------------Avis-------------------#}
+                              {%if demande.avisexport.avisclient is not null%}
+                                <h5>{{demande.avisexport.avisclient}}</h5>
+                              {%endif%}
+                        {%endif%}
+                        <hr>
+                    {%endfor%}
+                    {%endif%}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock content %}
 
  
