@@ -61,54 +61,93 @@
     </div>
 </div>
 {% endblock menu %}
+{#---------------------contenu-------------------#}
 {% block content %}
-Affréteur: {{app.user.nomentrop}} <br>
-Logo: <img class="media-object img-thumbnail" src="{{ asset('exportateurfilesupload/')}}{{app.user.logoname}}" alt="" width="100" height="100"> <br>
-Note: <span id="nzonoteexportateur"></span> ( {{app.user.note}} ) <br>
-Adresse: {{app.user.adresse}} <br>
-Ville: {{app.user.ville}} <br>
- ----------------------------- <br>
- 
-Description: <br> 
-{{app.user.description}} <br>
-
------------------------------ <br>
-
-<div class="panel panel-default bottom">
-    <div class="panel-heading"><strong>Analyse</strong></div>
-    <div class="panel-body">
-        <p><span class="red">Nombre Postules: </span>{{app.user.nbdemandeexportpostule}}</p>
-        <p><span class="red">Nombre Contrat En Cours: </span>{{app.user.nbcontratencours}}</p>
-        <p><span class="red">Nombre Contrat Terminé: </span>{{app.user.nbcontrattermine}}</p>
+<div class="padding">
+    <div class="row">
+        {#---------------------profil exportateur-------------------#}
+        <div class="media legend2">
+            <span class="pull-left">
+                <img class="media-object img-thumbnail" alt="" src="{{ asset('exportateurfilesupload/')}}{{app.user.logoname}}" style="width: 100px; height: 100px;">
+            </span>
+            <div class="media-body">
+                <h3 class="media-heading">{{app.user.nomentrop}}</h3>
+                <span id="nzonoteexportateur"></span> ( {{app.user.note}} )
+                <hr>
+                <p class="small text-muted"><span class="text-danger">Adresse:</span> {{app.user.adresse}} | <span class="text-danger">Ville:</span> {{app.user.ville}} </p>
+                <h5>{{app.user.description}}</h5>
+            </div>
+        </div>
+        {#---------------------analyse-------------------#}
+        <div class="col-md-3">
+            <div class="panel panel-default bottom">
+                <div class="panel-heading"><strong>Analyse</strong></div>
+                <div class="panel-body">
+                    <p><span class="red">Nombre Postules: </span>{{app.user.nbdemandeexportpostule}}</p>
+                    <p><span class="red">Nombre Contrat En Cours: </span>{{app.user.nbcontratencours}}</p>
+                    <p><span class="red">Nombre Contrat Terminé: </span>{{app.user.nbcontrattermine}}</p>
+                </div>
+            </div>
+        </div>
+        {#---------------------liste des contrats-------------------#}
+        <div class="col-md-9">
+            <div class="panel panel-default bottom">
+                <div class="panel-heading"><strong>Liste des Contrats: ( {{postules|length}} )</strong></div>
+                <div class="panel-body">
+                    {% if postules is empty %}
+                        <p class="text-success">Aucun contrat effectué!</p>
+                    {% else %}
+                    {%for key, postule in postules %}
+                        {%if postule.demandeexport.terminerdemande is null%}
+                        <div class="row">
+                            <div class="col-md-12">
+                                <p>
+                                    <span class="text-primary" style="font-size:16px"><strong>{{postule.demandeexport.titre}}</strong> </span>
+                                    <span class="pull-right text-muted">{{postule.demandeexport.datetacking|date("d/m/Y")}} </span>
+                                </p>
+                                <p class="text-muted"><span class="text-danger">Type contrat:</span> {{postule.demandeexport.type}} | Contrat en cours</p>
+                            </div>
+                        </div>
+                        {%else%}
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <p>
+                                        <span class="text-primary"  style="font-size:16px"><strong>{{postule.demandeexport.titre}}</strong> </span>
+                                        <span class="pull-right text-muted">{{postule.demandeexport.datetacking|date("d/m/Y")}} </span>
+                                    </p>
+                                    {#---------------------Note-------------------#}
+                                    <p>
+                                        <span class="pull-left">
+                                            {%if postule.demandeexport.avisexport.avisexportateur is not null%}
+                                                <span id="nzonoteexp{{key}}"></span> 
+                                                <script>
+                                                $(document).ready(function(){           
+                                                    $("#nzonoteexp{{key}}").raty({ path: '/bundles/nzotunisiefret/images', noRatedMsg: "aucune note associé!", hints: ['', '', '', '', ''], readOnly: true, score: {{postule.demandeexport.avisexport.noteexportateur}} }); 
+                                                });    
+                                                </script>
+                                            {%else%}   
+                                                <span class="text-info">Aucun Avis associer!</span>
+                                            {%endif%}
+                                        </span>
+                                        <span class="pull-right text-danger"><strong>{{postule.demandeexport.type}}</strong></span>
+                                    </p>
+                                </div>
+                              </div>
+                            {#---------------------Avis-------------------#}
+                            {%if postule.demandeexport.avisexport.avisexportateur is not null%}
+                                <h5> {{postule.demandeexport.avisexport.avisexportateur}} </h5>             
+                            {%endif%}
+                        {%endif%}
+                        <hr>
+                    {%endfor%}
+                    {%endif%}
+                </div>
+            </div>
+        </div>
     </div>
 </div>
-
-<br>
------------------ <br>
-Liste des Contrats: ( {{postules|length}} ) <br> <br>
-{%for key, postule in postules %}
-    {%if postule.demandeexport.terminerdemande is null%}
-        {{postule.demandeexport.titre}} <br>
-        Contrat En Cours - Type Contrat: {{postule.demandeexport.type}} - {{postule.demandeexport.datetacking|date("d/m/Y")}}
-    {%else%}
-        {{postule.demandeexport.titre}} | 
-        Type Contrat: {{postule.demandeexport.type}} - {{postule.demandeexport.datetacking|date("d/m/Y")}} <br>
-        {%if postule.demandeexport.avisexport.avisexportateur is not null%}
-            <span id="nzonoteexp{{key}}"></span> {{postule.demandeexport.avisexport.avisexportateur}}
-             <script>
-            $(document).ready(function(){           
-                 $("#nzonoteexp{{key}}").raty({ path: '/bundles/nzotunisiefret/images', noRatedMsg: "aucune note associé!", hints: ['', '', '', '', ''], readOnly: true, score: {{postule.demandeexport.avisexport.noteexportateur}} }); 
-            });    
-           </script>
-        {%else%}   
-           Aucun Avis associer!
-       {%endif%}
-    {%endif%}
-    <br>----------------------------- <br>
-{%endfor%}
 {% endblock content %}
 
- 
  {% block js %} 
     <script src="{{ asset('bundles/nzotunisiefret/js/jquery.raty.min.js') }}"></script>
     <script>

@@ -9,26 +9,75 @@
         </div>
     </div>
 {% endblock banner %}
-{% block content %}
-<div class="row">
-<div class="panel panel-default bottom col-md-4 col-md-offset-4">
-    <div class="panel-body">
-        <img src="{{ asset('clientfilesupload/')}}{{user.logoname}}" width="200" height="100" alt="alll" class="img-thumbnail bottom col-md-offset-2">                      
+{#---------------------2eme menu-------------------#}
+{% block menu %}
+<div class="nav-container">
+    <div class="box">
+        <ul id="bignav" class="nav nav-pills bottom cl-effect-1">     
+            <li class="col-md-offset-2"><a href="{{path('nzo_tunisiefret_homepage')}}" >Dashboard</a></li>
+            <li class="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                    Mes Demandes <span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu">
+                    <li><a href="{{ path('nzo_voirlistedemande_export_active') }}" >Active</a></li>
+                    <li><a href="{{ path('nzo_voirlistedemande_export_archive') }}" >Archivé</a></li>
+                </ul>
+            </li>
 
-             
-                    <label>Nom Entreprise: <span>{{user.nomentrop}}</span></label>
-           
-                    <label>Ville : <span>{{user.ville}}</span></label>
-          
-                    <label>Téléphone fix : <span>{{user.tel}}</span></label>
-              
-                    <label>adresse : <span>{{user.adresse}}</span></label>
-               
-                    <label>Email : <span>{{user.email}}</span></label>
-  
+            <li class="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                    Mes Contrats <span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu">
+                    <li><a href="{{ path('client_contrat_encours') }}" >En Cours</a></li>
+                    <li><a href="{{ path('client_contrat_terminer') }}" >Terminé</a></li>
+                </ul>
+            </li>
+            <li><a href="{{ path('nzo_poserdemande_export') }}" >Déposer Demande Fret</a></li>
+            <li><a href="{{ path('client_list_demande_type') }}">Liste Demandes Fret Type</a></li>
+        </ul>
+        {#-----------select-menu--------------#}
+        <div id="dd" class="wrapper-dropdown-5" tabindex="1">MENU
+            <ul class="dropdownd">
+                <li><a href="{{path('nzo_tunisiefret_homepage')}}" >Dashboard</a></li>
+                <li class="sanslien"><strong>Mes demandes</strong>
+                    <ul class="second-drop">
+                        <li><a href="{{ path('nzo_voirlistedemande_export_active') }}">Active</a></li>
+                        <li><a href="{{ path('nzo_voirlistedemande_export_archive') }}" >Archivé</a></li>  
+                    </ul>
+                </li>
+                <li class="sanslien"><strong>Mes Contrats</strong>
+                    <ul class="second-drop">
+                        <li><a href="{{ path('client_contrat_encours') }}" >En Cours</a></li>
+                        <li><a href="{{ path('client_contrat_terminer') }}" >Terminé</a></li>
+                    </ul>
+                </li>
+                <li><a href="{{ path('nzo_poserdemande_export') }}">Déposer Demande Fret</a></li>
+                <li><a href="{{ path('client_list_demande_type') }}">Liste Demandes Fret Type</a></li>
+            </ul>
+        </div>
     </div>
 </div>
-    </div>
+{% endblock menu %}
+{% block content %}
+<div class="padding">
+    <div class="row">
+        {#---------------------profil client-------------------#}
+        <div class="media col-md-6 panel panel-default padding col-md-offset-3">
+            <span class="pull-left">
+                <img class="media-object img-thumbnail" alt="" src="{{ asset('clientfilesupload/')}}{{user.logoname}}" style="width: 150px; height: 150px;">
+            </span>
+            <div class="media-body">
+                <h3 class="media-heading">{{user.nomentrop}}</h3>
+                <hr>
+                <h5><span class="text-danger">Email : </span> {{user.email}}</h5>
+                <h5><span class="text-danger">Téléphone fix : </span> {{user.tel}}</h5>
+                <h5><span class="text-danger">adresse : </span> {{user.adresse}}</h5>
+                <h5><span class="text-danger">Ville : </span> {{user.ville}}</h5>
 
-        
+            </div>
+        </div>
+     </div>
+</div>                    
 {% endblock content %}

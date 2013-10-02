@@ -1,43 +1,83 @@
  
 {% extends "NzoTunisiefretBundle::layoutExportateur.html.twig" %}
 
-{% block title %} {{ parent() }} Exportateur {% endblock %}
+{% block title %} {{ parent() }} Profil Exportateur {% endblock %}
+{% block banner %}
+<div class="jumbotron">
+    <div class="col-md-4"> 
+        <div class="row">
+            <h4 class="title-banner" style="">Profil</h4>
+        </div>
+    </div>
+</div>
+{% endblock banner %}
+{#---------------------2eme menu-------------------#}
+{% block menu %}
+<div class="nav-container">
+    <div class="box">
+        <ul id="bignav" class="nav nav-pills bottom cl-effect-1">     
+            <li class="col-md-offset-3"><a href="{{path('nzo_tunisiefret_homepage')}}">Liste Demandes</a></li>
+            <li class="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                    Mes Postules <span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu">
+                    <li><a href="{{ path('exp_liste_postule_active') }}" >Active</a></li>
+                    <li><a href="{{ path('exp_liste_postule_archive') }}" >Archivé</a></li>
+                </ul>
+            </li>
+            <li class="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                    Mes Contrats <span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu">
+                    <li><a href="{{ path('exp_liste_contrats_en_cours') }}" >En Cours</a></li>
+                    <li><a href="{{ path('exp_liste_contrats_termine') }}" >Terminé</a></li>
+                </ul>
+            </li>
+            <li><a href="#" >Statistique</a></li>
+        </ul>
 
+        <div id="dd" class="wrapper-dropdown-5" tabindex="1">MENU
+            <ul class="dropdownd">
+                <li><a href="{{path('nzo_tunisiefret_homepage')}}">Liste Demandes</a></li>
+                <li class="sanslien"><strong>Mes Postules</strong>
+                    <ul class="second-drop">
+                        <li><a href="{{ path('exp_liste_postule_active') }}" >Active</a></li>
+                        <li><a href="{{ path('exp_liste_postule_archive') }}" >Archivé</a></li>
+                    </ul>
+                </li>
+                <li class="sanslien"><strong>Mes Contrats</strong>
+                    <ul class="second-drop">
+                        <li><a href="{{ path('exp_liste_contrats_en_cours') }}" >En Cours</a></li>
+                        <li><a href="{{ path('exp_liste_contrats_termine') }}" >Terminé</a></li>
+                    </ul>
+                </li>
+                <li><a href="#" >Statistique</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+{% endblock menu %}
 
 {% block content %}
-<br>                                           
-                          
-                            <!--formulaire-->
-                            <form action="" id="contactForm">
-                                <div class="fieldset">     
-                                    
-                                    <h2 class="legend">Voir Profil</h2> 
-                                    <ul class="form-list">
-                                        <li>
-                                            <div class="field">
-                                                <label>Nom Entreprise: <span>{{user.nomentrop}}</span></label>
-                                            </div>
-                                           
-                                        </li>
-                                        <li>
-                                            <div class="field">
-                                                <label>Ville : <span>{{user.ville}}</span></label>
-                                            </div>
-                                            <div class="field">
-                                                <label>Téléphone fix : <span>{{user.tel}}</span></label>
-                                            </div>
-                                            
-                                        </li>
-                                        <li>
-                                            <div class="field">
-                                                <label>adresse : <span>{{user.adresse}}</span></label>
-                                            </div>
-                                            <div class="field">
-                                                <label>Email : <span>{{user.email}}</span></label>
-                                            </div>
-                                        </li>                                   
-                                    </ul>
-         <img src="{{ asset('exportateurfilesupload/')}}{{user.logoname}}" width="200" height="200" alt="alll">                      
-                                </div>
-                            </form>
+<div class="padding">
+    <div class="row">
+        {#---------------------profil exportateur-------------------#}
+        <div class="media col-md-6 panel panel-default padding col-md-offset-3">
+            <span class="pull-left">
+                <img class="media-object img-thumbnail" alt="" src="{{ asset('exportateurfilesupload/')}}{{app.user.logoname}}" style="width: 150px; height: 150px;">
+            </span>
+            <div class="media-body">
+                <h3 class="media-heading">{{user.nomentrop}}</h3>
+                <hr>
+                <h5><span class="text-danger">Email : </span> {{user.email}}</h5>
+                <h5><span class="text-danger">Téléphone fix : </span> {{user.tel}}</h5>
+                <h5><span class="text-danger">adresse : </span> {{user.adresse}}</h5>
+                <h5><span class="text-danger">Ville : </span> {{user.ville}}</h5>
+
+            </div>
+        </div>
+     </div>
+</div>                    
 {% endblock content %}

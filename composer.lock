@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "145c0548f0f61d76dad0841753995a41",
+    "hash": "ecfec356d804948587c8891becc7901f",
     "packages": [
         {
             "name": "doctrine/annotations",
@@ -1343,12 +1343,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/NAYZO/NzoUrlEncryptorBundle.git",
-                "reference": "00af81ea21a62b2f9c5e71d82afe8ac973d0165a"
+                "reference": "e473924a8adcae5bf39ebe2b19efa938b504d01d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/NAYZO/NzoUrlEncryptorBundle/zipball/00af81ea21a62b2f9c5e71d82afe8ac973d0165a",
-                "reference": "00af81ea21a62b2f9c5e71d82afe8ac973d0165a",
+                "url": "https://api.github.com/repos/NAYZO/NzoUrlEncryptorBundle/zipball/e473924a8adcae5bf39ebe2b19efa938b504d01d",
+                "reference": "e473924a8adcae5bf39ebe2b19efa938b504d01d",
                 "shasum": ""
             },
             "require": {
@@ -1390,7 +1390,7 @@
                 "url",
                 "variable"
             ],
-            "time": "2013-09-29 17:22:01"
+            "time": "2013-09-30 14:31:21"
         },
         {
             "name": "phpoption/phpoption",
@@ -2119,23 +2119,22 @@
         },
         {
             "name": "symfony/icu",
-            "version": "v1.2.0",
+            "version": "v1.0.0",
             "target-dir": "Symfony/Component/Icu",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/Icu.git",
-                "reference": "v1.2.0"
+                "reference": "cac3fdfb111adbe590155f491594636d45129783"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/Icu/zipball/v1.2.0",
-                "reference": "v1.2.0",
+                "url": "https://api.github.com/repos/symfony/Icu/zipball/cac3fdfb111adbe590155f491594636d45129783",
+                "reference": "cac3fdfb111adbe590155f491594636d45129783",
                 "shasum": ""
             },
             "require": {
-                "lib-icu": ">=4.4",
                 "php": ">=5.3.3",
-                "symfony/intl": ">=2.3,<3.0"
+                "symfony/intl": "~2.3"
             },
             "type": "library",
             "autoload": {
@@ -2163,7 +2162,7 @@
                 "icu",
                 "intl"
             ],
-            "time": "2013-06-03 18:32:58"
+            "time": "2013-06-03 18:32:07"
         },
         {
             "name": "symfony/monolog-bundle",
