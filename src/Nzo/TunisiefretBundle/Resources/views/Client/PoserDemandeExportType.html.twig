@@ -69,11 +69,11 @@
     </ul>
 <form action="#" id="contactForm" method="post" {{ form_enctype(form) }} role="form">
     <fieldset>
-        <legend class="colorlegend"><strong>Déposez Votre Demande de Fret</strong></legend>  
+        <legend class="text-primary">Déposez Votre Demande de Fret</legend>  
         {% if(form_errors(form)) %}
             <div class="error-alert"> {{ form_errors(form) }} </div>
         {% endif %}
-        <div class="col-md-6">
+        <div class="col-md-4">
             <div class="row">
                 {#--type---#}
                 <div class="form-group">
@@ -92,16 +92,7 @@
                 {% if(form_errors(form.titre)) %}
                   <div class="error-input">{{ form_errors(form.titre) }}</div>
                 {% endif %}
-
-                {#--Adresse---#}
-                <div class="form-group">
-                    <label>Adresse <span class="required">*</span></label>
-                    {{ form_widget(form.adresse,{'attr': {'class': 'form-control', 'rows': '5', 'style': 'resize:none;height: 119px;'}}) }}
-                </div>
-                {% if(form_errors(form.adresse)) %}
-                  <div class="error-input">{{ form_errors(form.adresse) }}</div>
-                {% endif %}
-
+                
                 {#--Pays---#}
                 <div class="form-group">
                     <label>Pays <span class="required">*</span></label>
@@ -112,7 +103,8 @@
                 {% endif %}
             </div>
         </div>
-        <div class="col-md-6">
+            
+        <div class="col-md-4">
             {#--Ville---#}
             <div class="form-group">
                 <label>Ville <span class="required">*</span></label>
@@ -122,6 +114,17 @@
               <div class="error-input">{{ form_errors(form.ville) }}</div>
             {% endif %}
 
+            {#--Adresse---#}
+            <div class="form-group">
+                <label>Adresse <span class="required">*</span></label>
+                {{ form_widget(form.adresse,{'attr': {'class': 'form-control', 'rows': '5', 'style': 'resize:none;height: 123px;'}}) }}
+            </div>
+            {% if(form_errors(form.adresse)) %}
+              <div class="error-input">{{ form_errors(form.adresse) }}</div>
+            {% endif %} 
+        </div>
+        <div class="col-md-4">
+            
             {#--Code Postal---#}
             <div class="form-group">
                 <label>Code Postal <span class="required">*</span></label>
@@ -149,7 +152,7 @@
               <div class="error-input">{{ form_errors(form.prix) }}</div>
             {% endif %}
         </div>     
-        
+        <div class="row"></div>
         {#--Description---#}
         <div class="form-group">
             <label>Description <span class="required">*</span></label>
