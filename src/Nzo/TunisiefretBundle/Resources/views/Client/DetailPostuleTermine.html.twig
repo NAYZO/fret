@@ -181,25 +181,34 @@
                 <div class="panel-heading">Avis et Notes Associé</div>
                     <div class="panel-body">
                         <h4 class="legend2">{{postule.demandeexport.client.nomentrop}}</h4>
-                          {%if postule.demandeexport.avisexport.noteclient == null%}                                 
-                          <p class="text-success">Avis pas encore associer.</p>
+                          {%if postule.demandeexport.avisexport is not null%}              
+                                {%if postule.demandeexport.avisexport.noteclient == null%}                                 
+                                <p class="text-success">Avis pas encore associer.</p>
+                                {%else%}
+                                  {%if postule.demandeexport.avisexport.noteexportateur == null%}
+                                      <p class="text-success">Vous devez associez un Avis afin de voir votre note donner par <strong class="red">"{{postule.exportateur.nomentrop}}"</strong></p> 
+                                  {%else%}
+                                      <p><strong class="red">Note Reçu : </strong> <span id="nzoratingstarclient"></span> <strong>({{postule.demandeexport.avisexport.noteclient}})</strong>
+                                      <p><strong class="red">Avis Reçu : </strong>{{postule.demandeexport.avisexport.avisclient}}</p>
+                                    {%endif%}  
+                                {%endif%}   
                           {%else%}
-                            {%if postule.demandeexport.avisexport.noteexportateur == null%}
-                                <p class="text-success">Vous devez associez un Avis afin de voir votre note donner par <strong class="red">"{{postule.exportateur.nomentrop}}"</strong></p> 
-                            {%else%}
-                                <p><strong class="red">Note Reçu : </strong> <span id="nzoratingstarclient"></span> <strong>({{postule.demandeexport.avisexport.noteclient}})</strong>
-                                <p><strong class="red">Avis Reçu : </strong>{{postule.demandeexport.avisexport.avisclient}}</p>
-                              {%endif%}  
-                          {%endif%}   
+                             <p class="text-success">Avis pas encore associer.</p>     
+                          {%endif%}              
                           <hr>
                           <h4 class="legend2">{{postule.exportateur.nomentrop}}</h4>
-                          {%if postule.demandeexport.avisexport.noteexportateur == null%}
-                          <p class="text-success">Vous n'avez pas encore associer un Avis à "{{postule.exportateur.nomentrop}}".</p>
-                          <p><a href="{{path('client_donner_avis_demande_export', {'id':postule.id | urlencrypt})}}">Donnez un Avis</a></p>
-                          {%else%}   
-                          <p><strong class="red">Note Associer : </strong> <span id="nzoratingstarexportateur"></span> <strong>({{postule.demandeexport.avisexport.noteexportateur}})</strong></p>
-                          <p><strong class="red">Avis Associer : </strong> {{postule.demandeexport.avisexport.avisexportateur}}</p>
-                          {%endif%}   
+                           {%if postule.demandeexport.avisexport is not null%}     
+                                {%if postule.demandeexport.avisexport.noteexportateur == null%}
+                                <p class="text-success">Vous n'avez pas encore associer un Avis à "{{postule.exportateur.nomentrop}}".</p>
+                                <p><a href="{{path('client_donner_avis_demande_export', {'id':postule.id | urlencrypt})}}">Donnez un Avis</a></p>
+                                {%else%}   
+                                <p><strong class="red">Note Associer : </strong> <span id="nzoratingstarexportateur"></span> <strong>({{postule.demandeexport.avisexport.noteexportateur}})</strong></p>
+                                <p><strong class="red">Avis Associer : </strong> {{postule.demandeexport.avisexport.avisexportateur}}</p>
+                                {%endif%}   
+                           {%else%}
+                            <p class="text-success">Vous n'avez pas encore associer un Avis à "{{postule.exportateur.nomentrop}}".</p>
+                            <p><a href="{{path('client_donner_avis_demande_export', {'id':postule.id | urlencrypt})}}">Donnez un Avis</a></p>
+                           {%endif%}      
                     </div>
                 </div>
                 {#----------------Resultat et Description----------------#}  
@@ -354,12 +363,18 @@
 
             //Rating Star
             $('#nzoratingstar').raty({ path: '/bundles/nzotunisiefret/images', noRatedMsg: "aucune note associé!", hints: ['', '', '', '', ''], readOnly: true, score: {{postule.exportateur.note}} });
-             {%if postule.demandeexport.avisexport.noteclient is not null%}
-                 $('#nzoratingstarclient').raty({ path: '/bundles/nzotunisiefret/images', noRatedMsg: "aucune note associé!", hints: ['', '', '', '', ''], readOnly: true, score: {{postule.demandeexport.avisexport.noteclient}} });
-             {%endif%}   
-             {%if postule.demandeexport.avisexport.noteexportateur is not null%}
-                 $('#nzoratingstarexportateur').raty({ path: '/bundles/nzotunisiefret/images', noRatedMsg: "aucune note associé!", hints: ['', '', '', '', ''], readOnly: true, score: {{postule.demandeexport.avisexport.noteexportateur}} });
-             {%endif%}  
+             
+             {%if postule.demandeexport.avisexport is not null%}
+                 {%if postule.demandeexport.avisexport.noteclient is not null%}
+                    $('#nzoratingstarclient').raty({ path: '/bundles/nzotunisiefret/images', noRatedMsg: "aucune note associé!", hints: ['', '', '', '', ''], readOnly: true, score: {{postule.demandeexport.avisexport.noteclient}} });
+                {%endif%} 
+             {%endif%}
+                 
+             {%if postule.demandeexport.avisexport is not null%}
+                 {%if postule.demandeexport.avisexport.noteexportateur is not null%}
+                    $('#nzoratingstarexportateur').raty({ path: '/bundles/nzotunisiefret/images', noRatedMsg: "aucune note associé!", hints: ['', '', '', '', ''], readOnly: true, score: {{postule.demandeexport.avisexport.noteexportateur}} });
+                {%endif%} 
+             {%endif%}
             
         });
         
