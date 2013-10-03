@@ -13,21 +13,19 @@
 <div class="padding">
 <div class="well col-md-4 col-md-offset-4 pading-login">
  <form action="{{ path("fos_user_security_check") }}" method="post" style="padding: 40px" role="form">
-
   <fieldset>
     <legend><strong>Connectez Vous</strong></legend>
     {% if error %}
        <div class="error-login">{{ error|trans({}, 'FOSUserBundle') }}</div>
     {% endif %}
     <div class="form-group">
-        <label for="disabledTextInput"><strong>Nom D'utilisateur</strong> <span class="required">*</span></label>
-      <input type="text" name="_username" value="{{ last_username }}" required="required" placeholder="Entrez Votre Nom D'utilisateur" class="form-control">              
+        <label><strong>Login</strong> <span class="required">*</span></label>
+        <input type="text" name="_username" value="{{ last_username }}" required="required" placeholder="Entrez Votre Nom D'utilisateur" class="form-control">              
     </div>
     <div class="form-group bottom">
-        <label for="disabledSelect" class="pull-left"><strong>Mot de Passe</strong> <span class="required">*</span></label>
+        <label><strong>Mot de Passe</strong> <span class="required">*</span></label>
+        <input type="password" type="password" name="_password" required="required" placeholder="Entrez Votre Mot de Passe" class="form-control"> 
         <a href="{{path('fos_user_resetting_request')}}" class="pull-right">Forgot your password?</a>
-        <input type="password" type="password" name="_password" required="required" placeholder="Entrez Votre Mot de Passe" class="form-control">
-        
     </div>
  
     <div class="checkbox">
