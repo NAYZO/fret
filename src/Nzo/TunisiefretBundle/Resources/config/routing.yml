@@ -142,6 +142,10 @@ nzo_detaildemande_export_type:
 client_supprimer_demande_type:    
     pattern: /Demande-Fret-Type_~{id}/Supprimer/
     defaults: {_controller: NzoTunisiefretBundle:Client:SupprimerDemandeExportType}  
+    
+client_recherche:  
+    pattern: /Recherche/Demande-Fret/{type}
+    defaults: {_controller: NzoTunisiefretBundle:Client:Recherche}     
   
 client_reposter_demande_type:  
     pattern: /Demande-Fret-Type_~{id}/Deposer/

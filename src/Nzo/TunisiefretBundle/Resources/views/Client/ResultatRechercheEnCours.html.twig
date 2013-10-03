@@ -1,11 +1,11 @@
 {% extends "NzoTunisiefretBundle::layoutClient.html.twig" %}
-{% block title %} {{ parent() }} Liste Demandes Fret En Cours {% endblock %}
+{% block title %} {{ parent() }} Resultat Recherche {% endblock %}
 
 {% block banner %}
 <div class="jumbotron">
     <div class="col-md-4 col-sm-11 col-xs-11"> 
         <div class="row">
-            <h4 class="title-banner" style="">Liste Demandes Fret En Cours</h4>
+            <h4 class="title-banner" style="">Resultat Recherche</h4>
         </div>
     </div>
 </div>
@@ -62,30 +62,12 @@
 </div>
 {% endblock menu %}
 {% block content %}
-
-
-
-
-
-<form action="{{path('client_recherche',{'type':'EnCours'})}}" method="GET" role="form" id='avisform'>
-    <input type='text' name='mot'>
-    <div class="row"style="margin-right: 0">
-        <div class="pull-right">
-            <button type="submit" class="btn btn-danger">Rechercher</button>
-
-        </div>
-    </div>
-</form> 
-
-
-
 <div class="padding">
 <div class="row" style="padding-right: 16px;">
     <div class="col-md-9 pull-left">
         <ul id="breadcrumbs-two" style="margin-top: 14px;">
             <li><a href="{{path('nzo_tunisiefret_homepage')}}">Accueil</a></li>
-            <li><span>Mes Contrats</span></li>
-            <li class="current"><span>En Cours</span></li>
+            <li class="current"><span>Resultat Recherche</span></li>
         </ul>
     </div>
    <div class="pull-right">
@@ -94,7 +76,7 @@
 </div>
 {% if listecontratencours is empty %}
    <hr>
-   <p class="alert alert-info">Il n'existe aucun Contrat en cours !</p>
+   <p class="alert alert-info">Aucune resultat trouver!</p>
 {%else%}
 <div class="list-group">
     {% for demande in listecontratencours %}      

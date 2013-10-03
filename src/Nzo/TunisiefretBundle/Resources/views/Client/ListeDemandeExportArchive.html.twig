@@ -62,6 +62,22 @@
 </div>
 {% endblock menu %}
 {% block content %}
+
+  
+            <form action="{{path('client_recherche',{'type':'Archive'})}}" method="GET" role="form" id='avisform'>
+                <input type='text' name='mot'>
+                <div class="row"style="margin-right: 0">
+                    <div class="pull-right">
+                        <button type="submit" class="btn btn-danger">Rechercher</button>
+
+                    </div>
+                </div>
+            </form> 
+
+
+
+
+
 <div class="padding">
 <div class="row" style="padding-right: 16px;">
     <div class="col-md-9 pull-left">

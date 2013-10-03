@@ -62,6 +62,24 @@
 </div>
 {% endblock menu %}
 {% block content %}
+
+
+
+
+
+<form action="{{path('client_recherche',{'type':'Termine'})}}" method="GET" role="form" id='avisform'>
+    <input type='text' name='mot'>
+    <div class="row"style="margin-right: 0">
+        <div class="pull-right">
+            <button type="submit" class="btn btn-danger">Rechercher</button>
+
+        </div>
+    </div>
+</form> 
+
+
+
+
 <div class="padding">
 <div class="row" style="padding-right: 16px;">
     <div class="col-md-9 pull-left">
@@ -86,7 +104,7 @@
                 <h4 class="cl-effect-1"><a href="{{path('client_demande_export_termine_detail', {'id':demande.id|urlencrypt} )}}">{{demande.titre}}</a></h4>  
            </div>
                 
-            <p style="color: grey;">Nombre de Postule: {{demande.nombredepostule}} | Déposé le {{demande.datedepos|date("d/m/Y")}}</p>
+            <p style="color: grey;">Nombre de Postule: {{demande.nombredepostule}} | Date Contrat {{demande.datetacking|date("d/m/Y")}}</p>
              <div class="row">
             <p class="list-group-item-text col-md-10">
                 {% if demande.description|length > 150 %}

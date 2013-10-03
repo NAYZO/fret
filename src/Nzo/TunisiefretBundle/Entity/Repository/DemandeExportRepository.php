@@ -81,7 +81,7 @@ class DemandeExportRepository extends EntityRepository
          $qb->where('a.client = :client')    
             ->andWhere('a.terminer_demande is NOT NULL')                            
             ->setParameter('client', $id)
-            ->orderBy('a.date_depos', 'DESC');
+            ->orderBy('a.date_tacking', 'DESC');
          return $qb->getQuery();            
     } 
 
@@ -107,5 +107,64 @@ class DemandeExportRepository extends EntityRepository
             ->setMaxResults(3);     
          return $qb->getQuery()->execute();  
     } 
+    
+    //Recherche
+    public function RechercheDemandeActive($id, $mot)
+    {
+         $qb = $this->createQueryBuilder('a');
+         $qb->where( $qb->expr()->like('a.titre', '?1') )
+            ->orWhere( $qb->expr()->like('a.description', '?2') )
+            ->andWhere('a.client = :client')
+            ->andWhere('a.tacking = 0')              
+            ->andWhere('a.annuler_demande is NULL')               
+            ->setParameter(1, '%' . $mot . '%')
+            ->setParameter(2, '%' . $mot . '%')
+            ->setParameter('client', $id)
+            ->orderBy('a.date_depos', 'DESC');           
+         return $qb->getQuery();            
+    } 
  
+    public function RechercheDemandeArchive($id, $mot)
+    {
+         $qb = $this->createQueryBuilder('a');
+         $qb->where( $qb->expr()->like('a.titre', '?1') )
+            ->orWhere( $qb->expr()->like('a.description', '?2') )
+            ->andWhere('a.client = :client')
+            ->andWhere('a.tacking = 0')              
+            ->andWhere('a.annuler_demande is NOT NULL')               
+            ->setParameter(1, '%' . $mot . '%')
+            ->setParameter(2, '%' . $mot . '%')
+            ->setParameter('client', $id)
+            ->orderBy('a.date_depos', 'DESC');           
+         return $qb->getQuery();            
+    } 
+    
+    public function RechercheDemandeEnCours($id, $mot)
+    {
+         $qb = $this->createQueryBuilder('a');
+         $qb->where( $qb->expr()->like('a.titre', '?1') )
+            ->orWhere( $qb->expr()->like('a.description', '?2') )
+            ->andWhere('a.client = :client')
+            ->andWhere('a.tacking = 1')              
+            ->andWhere('a.terminer_demande is NULL')              
+            ->setParameter(1, '%' . $mot . '%')
+            ->setParameter(2, '%' . $mot . '%')
+            ->setParameter('client', $id)
+            ->orderBy('a.date_tacking', 'DESC');           
+         return $qb->getQuery();                       
+    } 
+    
+    public function RechercheDemandeTerminer($id, $mot)
+    {
+         $qb = $this->createQueryBuilder('a');
+         $qb->where( $qb->expr()->like('a.titre', '?1') )
+            ->orWhere( $qb->expr()->like('a.description', '?2') )
+            ->andWhere('a.client = :client')
+            ->andWhere('a.terminer_demande is NOT NULL')                            
+            ->setParameter(1, '%' . $mot . '%')
+            ->setParameter(2, '%' . $mot . '%')
+            ->setParameter('client', $id)
+            ->orderBy('a.date_tacking', 'DESC');           
+         return $qb->getQuery();                       
+    } 
 }

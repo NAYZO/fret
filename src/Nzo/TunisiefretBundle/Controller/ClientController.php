@@ -719,5 +719,52 @@ class ClientController extends Controller {
         return new Response(json_encode($val));
         }
     }  
-   
+    
+    /**
+    * @Secure(roles="ROLE_CLIENT")
+    */
+    public function RechercheAction($type)
+    {
+        $mot = $this->getRequest()->query->get('mot');
+        //$mot = str_replace('’', '\'', $str);
+       if($type=='Active') {
+           $usr = $this->get('security.context')->getToken()->getUser();
+           $em = $this->getDoctrine()->getManager();   
+           $query = $em->getRepository('NzoTunisiefretBundle:DemandeExport')->RechercheDemandeActive($usr->getId(), $mot);
+                $paginator = $this->get('knp_paginator'); 
+                $listedemandeexport = $paginator->paginate($query,
+                $this->get('request')->query->get('page', 1), 6);         
+           return $this->render('NzoTunisiefretBundle:Client:ResultatRecherche.html.twig', array('listedemandeexport' => $listedemandeexport));
+       }
+       else if($type=='Archive') {         
+           $usr = $this->get('security.context')->getToken()->getUser();
+           $em = $this->getDoctrine()->getManager();   
+           $query = $em->getRepository('NzoTunisiefretBundle:DemandeExport')->RechercheDemandeArchive($usr->getId(), $mot);
+                $paginator = $this->get('knp_paginator'); 
+                $listedemandeexport = $paginator->paginate($query,
+                $this->get('request')->query->get('page', 1), 6);         
+           return $this->render('NzoTunisiefretBundle:Client:ResultatRecherche.html.twig', array('listedemandeexport' => $listedemandeexport));
+       }
+       else if($type=='EnCours') {
+           $usr = $this->get('security.context')->getToken()->getUser();
+            $em = $this->getDoctrine()->getManager();        
+            $query = $em->getRepository('NzoTunisiefretBundle:DemandeExport')->RechercheDemandeEnCours($usr->getId(), $mot);
+            $paginator = $this->get('knp_paginator'); 
+            $listecontratencours = $paginator->paginate($query,
+            $this->get('request')->query->get('page', 1), 6);         
+            return $this->render('NzoTunisiefretBundle:Client:ResultatRechercheEnCours.html.twig', array('listecontratencours' => $listecontratencours));
+        
+       }
+       else if($type=='Termine') {
+            $usr = $this->get('security.context')->getToken()->getUser();
+            $em = $this->getDoctrine()->getManager();        
+            $query = $em->getRepository('NzoTunisiefretBundle:DemandeExport')->RechercheDemandeTerminer($usr->getId(), $mot);
+            $paginator = $this->get('knp_paginator'); 
+            $listecontratencours = $paginator->paginate($query,
+            $this->get('request')->query->get('page', 1), 6);         
+            return $this->render('NzoTunisiefretBundle:Client:ResultatRechercheEnCours.html.twig', array('listecontratencours' => $listecontratencours));
+       }
+       else       
+         return $this->redirect($this->generateUrl('nzo_tunisiefret_homepage'));  
+    }
 }
