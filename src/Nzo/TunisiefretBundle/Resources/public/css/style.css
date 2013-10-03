@@ -20,8 +20,8 @@
     box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);
 }
 .bg-menu{
-    background-color: black;
-    border-bottom: 2px solid rgba(160, 160, 160, 0.59);
+    background: black url('../images/ancient_pattern-footer.jpg') ;
+    border-bottom: 2px solid rgba(175, 175, 175, 1);
     border-top: none;
     border-left: none;
     border-right: none;
@@ -127,7 +127,7 @@
     padding: 19px;
     border-top: 4px solid rgba(160, 160, 160, 0.59);
     color: white;
-    background-color: #141414;
+    background: black url('../images/ancient_pattern-footer.jpg') ;
 }
 .footer-menu li{
     border-left: 1px solid rgba(148, 148, 148, 0.79)
@@ -157,7 +157,7 @@
     color: #ffffff;
     text-align: right;
     text-shadow: 0 1px 2px rgba(0, 0, 0, 0.6);
-    background-color:rgba(163, 0, 6, 0.83);
+    background-color:rgba(1, 40, 54, 0.81);
     padding: 10px;
     text-transform: uppercase
 }
@@ -167,7 +167,7 @@
     left: 100%;
     display: inline-block;
     border-right: 31px solid transparent;
-    border-top: 39px solid rgba(163, 0, 6, 0.83);
+    border-top: 39px solid rgba(1, 40, 54, 0.81);
     border-left: 0px solid transparent;
     content: '';
 }
@@ -335,8 +335,7 @@ legend strong{color: #3079a2;}
     padding-right: 25px;
 }
 .pading-login {
-    padding: 0px 20px 0px 20px;
-    margin-top: 30px;
+    padding: 0;
 }
 
 /* DEMO 5 */
