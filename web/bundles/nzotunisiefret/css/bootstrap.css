@@ -301,11 +301,11 @@ html {
 }
 
 body {
-  font-family: 'Istok Web', sans-serif;
+  font-family: Century Gothic, sans-serif;
   font-size: 14px;
   line-height: 1.428571429;
   color: #333333;
-  background: url("../images/bg.png");
+  background: url("../images/subtle_white_feathers.png");
 }
 
 input,
@@ -463,7 +463,7 @@ h6,
 .h4,
 .h5,
 .h6 {
-  font-family: 'Philosopher', sans-serif;
+/*  font-family: 'Philosopher', sans-serif;*/
   font-weight: 500;
   line-height: 1.1;
 }
@@ -1634,11 +1634,12 @@ legend {
   width: 100%;
   padding: 0;
   margin-bottom: 20px;
-  font-size: 21px;
+  font-size: 18px;
   line-height: inherit;
   color: #333333;
   border: 0;
-  border-bottom: 1px solid #e5e5e5;
+  border-bottom: 1px solid #D6D6D6;
+  text-transform: uppercase;
 }
 
 label {
@@ -1646,8 +1647,8 @@ label {
   margin-bottom: 5px;
 /*  font-weight: bold;*/
   color: rgb(99, 99, 99);
-  padding-bottom: 10px;
-  font-size: 16px;
+/*  padding-bottom: 10px;*/
+  font-size: 14px;
 }
 
 input[type="search"] {
@@ -1710,6 +1711,7 @@ input[type="number"]::-webkit-inner-spin-button {
 }
 
 .form-control {
+  margin-bottom: 25px;
   display: block;
   width: 100%;
   height: 34px;
@@ -1719,8 +1721,8 @@ input[type="number"]::-webkit-inner-spin-button {
   color: #555555;
   vertical-align: middle;
   background-color: #ffffff;
-  border: 1px solid #66afe9;
-/*  border-radius: 4px;*/
+  border: 1px solid #BDBDBD;
+  /*border-radius: 4px;*/
   -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
           box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
   -webkit-transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
@@ -5548,13 +5550,19 @@ a.list-group-item:focus {
 
 .well {
   min-height: 20px;
-  padding: 19px;
   margin-bottom: 20px;
-  background-color: white;
+/*  background-color: white;
   border: 1px solid #e3e3e3;
   border-radius: 4px;
   -webkit-box-shadow: 0 1px 1px rgba(0,0,0,0.25), 0 0 39px rgba(0,0,0,0.1) inset;
-          box-shadow: 0 1px 1px rgba(0,0,0,0.25), 0 0 39px rgba(0,0,0,0.1) inset;
+          box-shadow: 0 1px 1px rgba(0,0,0,0.25), 0 0 39px rgba(0,0,0,0.1) inset;*/
+  background: white;
+    padding: 20px;
+    -webkit-box-shadow: 0 0 0 4px #ededed;
+    -moz-box-shadow: 0 0 0 4px #ededed;
+    box-shadow: 0 0 0 4px #ededed;
+    border: 1px solid #ddd;
+    position: relative;
 }
 
 .well blockquote {
@@ -5648,10 +5656,11 @@ body.modal-open,
 
 .modal-content {
   position: relative;
+  min-height: 163px;
   background-color: #ffffff;
   border: 1px solid #999999;
   border: 1px solid rgba(0, 0, 0, 0.2);
-  border-radius: 6px;
+/*  border-radius: 6px;*/
   outline: none;
   -webkit-box-shadow: 0 3px 9px rgba(0, 0, 0, 0.5);
           box-shadow: 0 3px 9px rgba(0, 0, 0, 0.5);
@@ -5682,6 +5691,9 @@ body.modal-open,
   min-height: 16.428571429px;
   padding: 15px;
   border-bottom: 1px solid #e5e5e5;
+  background: rgb(250, 250, 250);
+  color: #3079a2;
+  text-transform: uppercase;
 }
 
 .modal-header .close {

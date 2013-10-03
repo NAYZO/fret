@@ -6,7 +6,7 @@
 {% endblock head %}
 {% block banner %}
             <div class="jumbotron">
-                <div class="col-md-4"> 
+                <div class="col-md-4 col-sm-11 col-xs-11"> 
                     <div class="row">
                         <h4 class="title-banner" style="margin-bottom: 0">contact</h4>
                     </div>
@@ -15,23 +15,49 @@
         {% endblock banner %}
 
 {% block content %}
-
-<div class="col-md-12" style="margin-bottom: 50px">
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="row bottom">
-                                <div class="col-md-5">
-                                    <img src="{{ asset('bundles/nzotunisiefret/images') }}/tel-icon.png" alt="tel"> 21 382 879
-                                </div>
-                                <div class="col-md-5">
-                                    <img src="{{ asset('bundles/nzotunisiefret/images') }}/mail-icon.png" alt="mail"> TunisieFret@mail.fr
-                                </div>
-                            </div>
-                            <img src="{{ asset('bundles/nzotunisiefret/images') }}/separator.png" alt="" class="bottom"/>
-                        </div>
-                        <div class="col-md-6">sdmflk</div>
+<div class="padding">
+    <div class="col-md-12 col-lg-offset-1">
+        <form action="#" id="contactForm" method="post" role="form">
+        <div class="row">
+            <div class="col-md-5" style="border-right: 1px solid rgb(214, 214, 214);">
+                <div class="row bottom">
+                    <div class="col-md-4">
+                        <img src="{{ asset('bundles/nzotunisiefret/images') }}/tel-icon.png" alt="tel"> 21 382 879
                     </div>
+                    <div class="col-md-6">
+                        <img src="{{ asset('bundles/nzotunisiefret/images') }}/mail-icon.png" alt="mail"> TunisieFret@mail.fr
+                    </div>
+                </div>
+                <img src="{{ asset('bundles/nzotunisiefret/images') }}/separator.png" alt="" class="bottom"/>
+               
+                <div class="col-md-10">
+                    {#--NOM---#}
+                    <div class="form-group">
+                        <label>Nom</label>
+                        <input type="text" class="form-control" />
+                    </div>
+                    {#--Email---#}
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input type="email" class="form-control" />
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4" style="border-left: 1px solid white;">
+                {#--sujet---#}
+                    <div class="form-group">
+                        <label>Sujet</label>
+                        <input type="text" class="form-control" />
+                    </div>
+                    {#--sujet---#}
+                    <div class="form-group">
+                        <label>Message</label>
+                        <textarea class="form-control" rows="6" ></textarea>
+                    </div>
+            </div>
+        </div>
+        </form>
     </div>
-
+</div>
 {% endblock content %}
  
