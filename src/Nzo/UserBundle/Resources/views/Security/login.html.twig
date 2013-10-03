@@ -2,7 +2,7 @@
 {% block title %} {{ parent() }} Se Connecter{% endblock %}
 {% block banner %}
     <div class="jumbotron">
-        <div class="col-md-4"> 
+        <div class="col-md-4 col-sm-11 col-xs-11"> 
             <div class="row">
                 <h4 class="title-banner" style="">Se Connecter</h4>
             </div>
@@ -10,11 +10,12 @@
     </div>
 {% endblock banner %}
 {% block content %}
-<div class="well col-md-5 col-md-offset-4 pading-login">
+<div class="padding">
+<div class="well col-md-4 col-md-offset-4 pading-login">
  <form action="{{ path("fos_user_security_check") }}" method="post" style="padding: 40px" role="form">
 
   <fieldset>
-    <legend><strong>Connectez Vous : </strong></legend>
+    <legend><strong>Connectez Vous</strong></legend>
     {% if error %}
        <div class="error-login">{{ error|trans({}, 'FOSUserBundle') }}</div>
     {% endif %}
@@ -22,21 +23,23 @@
         <label for="disabledTextInput"><strong>Nom D'utilisateur</strong> <span class="required">*</span></label>
       <input type="text" name="_username" value="{{ last_username }}" required="required" placeholder="Entrez Votre Nom D'utilisateur" class="form-control">              
     </div>
-    <div class="form-group">
-        <label for="disabledSelect"><strong>Mot de Passe</strong> <span class="required">*</span></label>
-        <input type="password" type="password" name="_password" required="required" placeholder="Entrez Votre Mot de Passe" class="form-control">
+    <div class="form-group bottom">
+        <label for="disabledSelect" class="pull-left"><strong>Mot de Passe</strong> <span class="required">*</span></label>
         <a href="{{path('fos_user_resetting_request')}}" class="pull-right">Forgot your password?</a>
+        <input type="password" type="password" name="_password" required="required" placeholder="Entrez Votre Mot de Passe" class="form-control">
+        
     </div>
+ 
     <div class="checkbox">
       <label>
         <input type="checkbox" id="remember_me" name="_remember_me" value="on"> Se Souvenir de Moi
       </label>
     </div>
-    <button type="submit" class="btn btn-danger pull-right" name="_submit" >Se Connecter</button>
+    <button type="submit" class="btn btn-primary btn-block" name="_submit" >Se Connecter</button>
     <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
   </fieldset>
 </form>
     </div> 
-
+    </div>
     
 {% endblock content %}

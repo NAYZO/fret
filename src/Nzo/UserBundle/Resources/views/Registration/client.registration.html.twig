@@ -2,27 +2,27 @@
 
 {% block title %} {{ parent() }} Sign Up {% endblock %}
 {% block banner %}
-            <div class="jumbotron">
-                <div class="col-md-4"> 
-                    <div class="row">
-                        <h4 class="title-banner" style="">Incription Client </h4>
-                    </div>
-            </div>
+<div class="jumbotron">
+    <div class="col-md-4 col-sm-11 col-xs-11"> 
+        <div class="row">
+            <h4 class="title-banner" style="">Incription Client </h4>
         </div>
-        {% endblock banner %}
+    </div>
+</div>
+{% endblock banner %}
 {% block content %}
-<div class="col-md-8 col-md-offset-2">
-<form action="{{ path('client_registration') }}" id="contactForm" method="post" {{ form_enctype(form) }} class="well" style="padding: 40px" role="form">
-   <fieldset>
-        <legend class="colorlegend"><strong>Inscrivez Vous</strong></legend>  
+<div class="padding">
+    <form action="{{ path('client_registration') }}" id="contactForm" method="post" {{ form_enctype(form) }} class="well padding" style="padding: 40px" role="form">
+        <fieldset>
+            <legend class="colorlegend"><strong>Inscrivez Vous</strong></legend>  
         
-        {% if(form_errors(form)) %}
-            <div class="alert alert-error text-center"> {{ form_errors(form) }} </div>
-        {% endif %}
-        <div class="col-md-6"> 
+            {% if(form_errors(form)) %}
+                <div class="alert alert-error text-center"> {{ form_errors(form) }} </div>
+            {% endif %}
+            <div class="col-md-4"> 
                 {#--Nom d'utilisateur---#}
                 <div class="form-group">
-                    <label>Nom D'utilisateur</label>
+                    <label>Nom d'utilisateur <span class="required">*</span></label>
                     {{ form_widget(form.username,{'attr': {'class': 'form-control'}}) }}
                 </div>
                 {% if(form_errors(form.username)) %}
@@ -31,7 +31,7 @@
 
                 {#--Email---#}
                 <div class="form-group">
-                  <label>Email</label>
+                  <label>Email <span class="required">*</span></label>
                     {{ form_widget(form.email,{'attr': {'class': 'form-control'}}) }}
                 </div>
                 {% if(form_errors(form.email)) %}
@@ -40,65 +40,69 @@
 
                 {#--Password---#}
                 <div class="form-group">
-                    <label>Mot de Passe</label>
+                    <label>Mot de Passe <span class="required">*</span></label>
                     {{ form_widget(form.plainPassword.first,{'attr': {'class': 'form-control'}}) }}                                      
                 </div>
                   
-               {#--Password Confirm---#}
+                {#--Password Confirm---#}
                 <div class="form-group">
-                  <label>Confirmez Votre Mot de passe</label>
+                  <label>Confirmez Votre Mot de passe <span class="required">*</span></label>
                   {{ form_widget(form.plainPassword.second,{'attr': {'class': 'form-control'}}) }}
                 </div>
                 {% if(form_errors(form.plainPassword.first)) %}
                     <div class="error-input">{{ form_errors(form.plainPassword.first) }}</div>
                 {% endif %} 
-
-        {#--Entreprise---#}
+                    
+                {#--Entreprise---#}
                 <div class="form-group">
-                          <label>Nom Entreprise</label>
+                    <label>Nom Entreprise <span class="required">*</span></label>
                     {{ form_widget(form.nomentrop,{'attr': {'class': 'form-control'}}) }}
                 </div>
                 {% if(form_errors(form.nomentrop)) %}
                   <div class="error-input">{{ form_errors(form.nomentrop) }}</div>
                 {% endif %}         
 
+            </div>
+            <div class="col-md-4">
+        
                 {#--Ville---#}
                 <div class="form-group">
-                          <label>Ville</label>
+                          <label>Ville <span class="required">*</span></label>
                     {{ form_widget(form.ville,{'attr': {'class': 'form-control'}}) }}
                 </div>
                 {% if(form_errors(form.ville)) %}
                   <div class="error-input">{{ form_errors(form.ville) }}</div>
-                {% endif %}  
-                        </div>
-                       <div class="col-md-6"> 
+                {% endif %} 
+                  
                 {#--Adresse---#}
-                 <div class="form-group">
-                      <label>Adresse</label>
-                    {{ form_widget(form.adresse,{'attr': {'class': 'form-control'}}) }}
+                <div class="form-group">
+                      <label>Adresse <span class="required">*</span></label>
+                    {{ form_widget(form.adresse,{'attr': {'class': 'form-control', 'style': 'height: 129px;'}}) }}
                 </div>
                 {% if(form_errors(form.adresse)) %}
                   <div class="error-input">{{ form_errors(form.adresse) }}</div>
                 {% endif %}    
 
                 {#--Tel---#}
-                 <div class="form-group">
-                      <label>Téléphone</label>
+                <div class="form-group">
+                    <label>Téléphone <span class="required">*</span></label>
                     {{ form_widget(form.tel,{'attr': {'class': 'form-control'}}) }}
                 </div>
                 {% if(form_errors(form.tel)) %}
                   <div class="error-input">{{ form_errors(form.tel) }}</div>
                 {% endif %}    
-
-                {#--Fax---#}
+                  
+                 {#--Fax---#}
                  <div class="form-group">
                       <label>Fax</label>
                     {{ form_widget(form.fax,{'attr': {'class': 'form-control'}}) }}
                 </div>
-                {% if(form_errors(form.fax)) %}
+                 {% if(form_errors(form.fax)) %}
                   <div class="error-input">{{ form_errors(form.fax) }}</div>
                 {% endif %} 
-
+            </div>
+                 
+            <div class="col-md-4">
                 {#--Website---#}
                  <div class="form-group">
                       <label>Site Web</label>
@@ -106,31 +110,32 @@
                 </div>
                 {% if(form_errors(form.siteweb)) %}
                   <div class="error-input">{{ form_errors(form.siteweb) }}</div>
-                {% endif %}     
+                {% endif %} 
+                  
+                 {#--Logo---#}
+                 <div class="form-group">
+                    <label>Logo</label>
+                    {{ form_widget(form.uploadlogo,{'attr': {'class': 'form-control'}}) }}
+                 </div>
+                 {% if(form_errors(form.uploadlogo)) %}
+                    <div class="error-input">{{ form_errors(form.uploadlogo) }}</div>
+                 {% endif %} 
 
                 {#--Description---#}
                  <div class="form-group">
-                      <label>Description</label>
-                    {{ form_widget(form.description,{'attr': {'class': 'form-control'}}) }}
+                    <label>Description</label>
+                    {{ form_widget(form.description,{'attr': {'class': 'form-control', 'style': 'height: 229px;'}}) }}
                 </div>
-                {% if(form_errors(form.description)) %}
-                  <div class="error-input">{{ form_errors(form.description) }}</div>
-                {% endif %}  
-
-                {#--Logo---#}
-                 <div class="form-group">
-                      <label>Logo</label>
-                    {{ form_widget(form.uploadlogo,{'attr': {'class': 'form-control'}}) }}
-                </div>
-                {% if(form_errors(form.uploadlogo)) %}
-                  <div class="error-input">{{ form_errors(form.uploadlogo) }}</div>
-                {% endif %}        
-                           </div>                      
-                <input type="submit" value="Sign Up" name="_submit" class="btn btn-primary pull-right">
-                       {{ form_rest(form) }}
-            </fieldset>
-        </form>
-        </div>
-
-        {% endblock content %}
+                 {% if(form_errors(form.description)) %}
+                   <div class="error-input">{{ form_errors(form.description) }}</div>
+                 {% endif %}  
+            </div>   
+                <div class="row"></div>
+            <hr>
+            <input type="submit" value="Inscription" name="_submit" class="btn btn-primary pull-right">
+            {{ form_rest(form) }}
+        </fieldset>
+    </form>
+</div>
+{% endblock content %}
 
