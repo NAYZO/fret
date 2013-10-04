@@ -53,7 +53,7 @@ class FrontController extends Controller
                 ->setSubject('Contact Tunisie Fret')
                 ->setFrom($email)
                 ->setTo('tunisiefret@gmail.com')
-                ->setBody($this->renderView('NzoTunisiefretBundle:Front:contactEmail.txt.twig', array('nom' => $nom, 'email' => $email, 'sujet' => $sujet, 'message' => $message)));
+                ->setBody($this->renderView('NzoTunisiefretBundle:Front:contactEmail.html.twig', array('nom' => $nom, 'email' => $email, 'sujet' => $sujet, 'message' => $message)), 'text/html');
             $this->get('mailer')->send($envoi);
             return new Response('Merci. votre message a été envoyé avec succès.');
         }    
