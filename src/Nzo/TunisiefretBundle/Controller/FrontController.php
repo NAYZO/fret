@@ -4,6 +4,8 @@ namespace Nzo\TunisiefretBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use FOS\UserBundle\Model\UserInterface;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Httpfoundation\Response;
 
 class FrontController extends Controller
 {    
@@ -39,8 +41,21 @@ class FrontController extends Controller
         return $this->redirect($this->generateUrl('nzo_tunisiefret_homepage'));
     }
     
-    public function contactAction()
-    {
-        
+    public function contactAction(Request $request)
+    {   
+        if ($request->isXmlHttpRequest()) 
+        {
+            $nom = $this->getRequest()->query->get('nom');
+            $email = $this->getRequest()->query->get('email');
+            $sujet = $this->getRequest()->query->get('sujet');
+            $message = $this->getRequest()->query->get('message');
+            $envoi = \Swift_Message::newInstance()
+                ->setSubject('Contact Tunisie Fret')
+                ->setFrom($email)
+                ->setTo($this->getParameter('Nzo.emails.contact_email'))
+                ->setBody($this->renderView('NzoTunisiefretBundle:Front:contactEmail.txt.twig', array('nom' => $nom, 'email' => $email, 'sujet' => $sujet, 'message' => $message)));
+            $this->get('mailer')->send($envoi);
+            return new Response('Votre Message est envoyé avec succés');
+        }    
     }
 }
