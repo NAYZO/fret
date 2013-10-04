@@ -208,6 +208,15 @@ class ClientController extends Controller {
                     $em->persist($notif);
             
             $em->flush();
+            
+            
+            ///**************
+            $this->get('session')->getFlashBag()->add('notice', 'Vos changements ont été sauvegardés!');
+            //******
+            
+            
+            
+            
         return $this->redirect($this->generateUrl('client_donner_avis_demande_export', array('id' => $this->get('nzo_url_encryptor')->encrypt($postule->getId()))));   
   }
   

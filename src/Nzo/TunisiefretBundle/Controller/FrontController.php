@@ -45,17 +45,17 @@ class FrontController extends Controller
     {   
         if ($request->isXmlHttpRequest()) 
         {
-            $nom = $this->getRequest()->query->get('nom');
-            $email = $this->getRequest()->query->get('email');
-            $sujet = $this->getRequest()->query->get('sujet');
-            $message = $this->getRequest()->query->get('message');
+            $nom = $request->request->get('nom');
+            $email = $request->request->get('email');
+            $sujet = $request->request->get('sujet');
+            $message = $request->request->get('message');
             $envoi = \Swift_Message::newInstance()
                 ->setSubject('Contact Tunisie Fret')
                 ->setFrom($email)
-                ->setTo($this->getParameter('Nzo.emails.contact_email'))
+                ->setTo('tunisiefret@gmail.com')
                 ->setBody($this->renderView('NzoTunisiefretBundle:Front:contactEmail.txt.twig', array('nom' => $nom, 'email' => $email, 'sujet' => $sujet, 'message' => $message)));
             $this->get('mailer')->send($envoi);
-            return new Response('Votre Message est envoyé avec succés');
+            return new Response('Merci. votre message a été envoyé avec succès.');
         }    
     }
 }

@@ -20,7 +20,7 @@ nzo_apropos:
         
 nzo_contact_send:
     pattern:  /contact/send/
-    defaults: { _controller: NzoTunisiefretBundle:Front:contact }        
+    defaults: { _controller: NzoTunisiefretBundle:Front:contact}        
         
         
 #CLIENT ROUTE    
