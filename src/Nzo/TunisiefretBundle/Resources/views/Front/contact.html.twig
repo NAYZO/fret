@@ -5,20 +5,24 @@
 {% block head %}
 {% endblock head %}
 {% block banner %}
-            <div class="jumbotron">
-                <div class="col-md-4 col-sm-11 col-xs-11"> 
-                    <div class="row">
-                        <h4 class="title-banner" style="margin-bottom: 0">contact</h4>
-                    </div>
-            </div>
+<div class="jumbotron">
+    <div class="col-md-4 col-sm-11 col-xs-11"> 
+        <div class="row">
+            <h4 class="title-banner" style="margin-bottom: 0">contact</h4>
         </div>
-        {% endblock banner %}
+    </div>
+</div>
+{% endblock banner %}
 
 {% block content %}
 <div class="padding">
     <div class="col-md-12 col-lg-offset-1">
         <form action="#" id="contactForm" method="post" role="form">
         <div class="row">
+            <div class="col-md-9">
+                <div class="alert alert-info text-center"><strong>Votre message a été envoyer avec succes</strong></div>
+           <hr>
+            </div>
             <div class="col-md-5" style="border-right: 1px solid rgb(214, 214, 214);">
                 <div class="row bottom">
                     <div class="col-md-4">
@@ -54,8 +58,11 @@
                         <label>Message</label>
                         <textarea class="form-control" rows="6" ></textarea>
                     </div>
+                    <input type="submit" value="Envoyer" class="btn btn-primary pull-right">
             </div>
         </div>
+               
+                
         </form>
     </div>
 </div>
