@@ -16,7 +16,7 @@
 <div class="nav-container">
     <div class="box">
         <ul id="bignav" class="nav nav-pills bottom cl-effect-1">     
-            <li class="col-md-offset-3"><a href="{{path('nzo_tunisiefret_homepage')}}">Liste Demandes</a></li>
+            <li class="col-md-offset-4"><a href="{{path('nzo_tunisiefret_homepage')}}">Liste Demandes</a></li>
             <li class="dropdown">
                 <a class="dropdown-toggle" data-toggle="dropdown" href="#">
                     Mes Postules <span class="caret"></span>
@@ -35,7 +35,6 @@
                     <li><a href="{{ path('exp_liste_contrats_termine') }}" >Terminé</a></li>
                 </ul>
             </li>
-            <li><a href="#" >Statistique</a></li>
         </ul>
 
         <div id="dd" class="wrapper-dropdown-5" tabindex="1">MENU
@@ -53,7 +52,6 @@
                         <li><a href="{{ path('exp_liste_contrats_termine') }}" >Terminé</a></li>
                     </ul>
                 </li>
-                <li><a href="#" >Statistique</a></li>
             </ul>
         </div>
     </div>
@@ -69,10 +67,20 @@
             <li class="current"><span>En Cours</span></li>
         </ul>
     </div>
-   <div class="pull-right">
-        {{ knp_pagination_render(listepostules) }}
-    </div>
+    <!--recherche-->
+    <form action="{{path('client_recherche',{'type':'EnCours'})}}" method="GET" role="form" id='avisform' class="navbar-form pull-right" style="padding:0;margin-top: 30px;">
+        <div class="input-group">
+            <input type="text" name='mot' placeholder="Recherche..." class="form-control" style="width: 163px;height: 26px;">
+            <button type="submit" class="btn btn-default btn-xs" style="border-radius:0"><span class="glyphicon glyphicon-search"></span></button>
+        </div>
+    </form>
+    <!--/recherche-->
 </div>
+<hr>
+<div class="pull-right" style="padding-right: 16px;">
+        {{ knp_pagination_render(listepostules) }}
+</div>
+<div class="row"></div>
 <div class="list-group">
     {% if listepostules is empty %}
         <hr>
@@ -80,9 +88,9 @@
     {%else%}
     {% for postule in listepostules %}      
         <div class="list-group-item" style="padding: 30px;">
-            <div class="legend list-group-item-heading">
-                <h4 class="cl-effect-1"><a href="{{path('exp_contrat_encours_detail', {'id':postule.id | urlencrypt} )}}">{{postule.demandeexport.titre}}</a></h4>  
-                
+            <div class="legend list-group-item-heading padding-bottom">
+                <h4 class="cl-effect-1 pull-left"><a href="{{path('exp_contrat_encours_detail', {'id':postule.id | urlencrypt} )}}">{{postule.demandeexport.titre}}</a></h4>  
+                <h5 class="pull-right text-danger">{{postule.demandeexport.type}}</h5>
             </div>
             <p style="color: grey;">Postulé le {{postule.datepostule|date("d/m/Y")}}</p>
             <div class="row">
