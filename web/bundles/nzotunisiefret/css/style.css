@@ -477,3 +477,6 @@ legend strong{color: #3079a2;}
     .title-banner{ margin-top: 121px;}
     .title-banner:after {top: 121px}
 }
+.padding-bottom{
+    padding-bottom: 40px;
+}

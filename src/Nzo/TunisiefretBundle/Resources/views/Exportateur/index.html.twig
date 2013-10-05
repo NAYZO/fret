@@ -17,7 +17,7 @@
 <div class="nav-container">
     <div class="box">
         <ul id="bignav" class="nav nav-pills bottom cl-effect-1">     
-            <li class="col-md-offset-3 actives"><a href="{{path('nzo_tunisiefret_homepage')}}">Liste Demandes</a></li>
+            <li class="col-md-offset-4 actives"><a href="{{path('nzo_tunisiefret_homepage')}}">Liste Demandes</a></li>
             <li class="dropdown">
                 <a class="dropdown-toggle" data-toggle="dropdown" href="#">
                     Mes Postules <span class="caret"></span>
@@ -36,7 +36,6 @@
                     <li><a href="{{ path('exp_liste_contrats_termine') }}" >Terminé</a></li>
                 </ul>
             </li>
-            <li><a href="#" >Statistique</a></li>
         </ul>
 
         <div id="dd" class="wrapper-dropdown-5" tabindex="1">MENU
@@ -54,7 +53,6 @@
                         <li><a href="{{ path('exp_liste_contrats_termine') }}" >Terminé</a></li>
                     </ul>
                 </li>
-                <li><a href="#" >Statistique</a></li>
             </ul>
         </div>
     </div>
@@ -63,11 +61,22 @@
 {% block content %}
 <div class="padding">
     {#---------arboresence------------#}
-    <ul id="breadcrumbs-two" style="margin-top: 14px;">
-        <li class="current"><a href="{{path('nzo_tunisiefret_homepage')}}">Liste Demandes Fret</a></li>
-    </ul>
+    <div class="col-md-9 pull-left">
+        <ul id="breadcrumbs-two" style="margin-top: 14px;">
+            <li class="current"><a href="{{path('nzo_tunisiefret_homepage')}}">Liste Demandes Fret</a></li>
+        </ul>
+    </div>
+    <!--recherche-->
+    <form action="{{path('client_recherche',{'type':'EnCours'})}}" method="GET" role="form" id='avisform' class="navbar-form pull-right" style="padding:0;margin-top: 30px;">
+        <div class="input-group">
+            <input type="text" name='mot' placeholder="Recherche..." class="form-control" style="width: 163px;height: 26px;">
+            <button type="submit" class="btn btn-default btn-xs" style="border-radius:0"><span class="glyphicon glyphicon-search"></span></button>
+        </div>
+    </form>
+    <!--/recherche-->
+     <div class="row"></div>
     <hr>
-    
+   
     <div class="row">
         {#---------dashboard------------#}
         <div class=" col-md-3">
@@ -110,14 +119,15 @@
                 {% for demande in demandeexport %}
                     {%set djp = render(controller('NzoTunisiefretBundle:Exportateur:GetEtat', {'id': demande.id | urlencrypt}))%}
                 <div class="list-group-item" style="padding: 30px;">
-                        <div class="legend list-group-item-heading">
-                            <h4 class="cl-effect-1">
+                        <div class="legend list-group-item-heading padding-bottom">
+                            <h4 class="cl-effect-1 pull-left">
                                 {%if djp == 'false'%}
                                 <a href="{{path('nzo_postuledemande_export', {'id':demande.id | urlencrypt} )}}">{{demande.titre}}</a>
                             </h4>    
                                 {%else%}
-                                <a href="{{path('exp_detail_postule_active', {'id':djp | urlencrypt} )}}">{{demande.titre}}</a></h4>    
+                                <h4 class="cl-effect-1 pull-left"><a href="{{path('exp_detail_postule_active', {'id':djp | urlencrypt} )}}">{{demande.titre}}</a></h4>    
                                 {%endif%}
+                           <h5 class="pull-right text-danger">{{demande.type}}</h5>
                         </div>
                         <p style="color: grey;">Etat: 
                             {%if djp == 'false'%}

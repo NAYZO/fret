@@ -62,22 +62,6 @@
 </div>
 {% endblock menu %}
 {% block content %}
-
-  
-            <form action="{{path('client_recherche',{'type':'Archive'})}}" method="GET" role="form" id='avisform'>
-                <input type='text' name='mot'>
-                <div class="row"style="margin-right: 0">
-                    <div class="pull-right">
-                        <button type="submit" class="btn btn-danger">Rechercher</button>
-
-                    </div>
-                </div>
-            </form> 
-
-
-
-
-
 <div class="padding">
 <div class="row" style="padding-right: 16px;">
     <div class="col-md-9 pull-left">
@@ -87,10 +71,20 @@
             <li class="current"><span>Archivé</span></li>
         </ul>
     </div>
-   <div class="pull-right">
-        {{ knp_pagination_render(listedemandeexport) }}
-    </div>
+    <form action="{{path('client_recherche',{'type':'Archive'})}}" method="GET" role="form" id='avisform' class="navbar-form pull-right" style="padding:0">
+        <div class="input-group">
+            <input type="text" name='mot' placeholder="Recherche..." class="form-control" style="width: 163px;height: 26px;">
+            <button type="submit" class="btn btn-default btn-xs" style="border-radius:0"><span class="glyphicon glyphicon-search"></span></button>
+        </div>
+    </form>
+   
 </div>
+<hr>
+<div class="pull-right" style="padding-right: 16px;">
+    {{ knp_pagination_render(listedemandeexport) }}
+</div>
+
+<div class="row"></div>
 {% if listedemandeexport is empty %}
    <hr>
    <p class="alert alert-info">Aucune demande de fret archivé existante !</p>
@@ -98,10 +92,11 @@
 <div class="list-group">
      {% for demande in listedemandeexport %}
         <div class="list-group-item" style="padding: 30px;">
-            <div class="legend list-group-item-heading">
-                <h4 class="cl-effect-1">
-                    <strong><a href="{{path('client_demande_export_archive', {'id':demande.id | urlencrypt} )}}">{{demande.titre}}</a></strong>
-                </h4>  
+            <div class="legend list-group-item-heading padding-bottom">
+                <h4 class="cl-effect-1 pull-left">
+                    <a href="{{path('client_demande_export_archive', {'id':demande.id | urlencrypt} )}}">{{demande.titre}}</a>
+                </h4> 
+                <h5 class="pull-right text-danger">{{demande.type}}</h5>
             </div>
             <p style="color: grey;">Nombre de Postule: {{demande.nombredepostule}} | Déposer le {{demande.datedepos|date("d/m/Y")}}</p>
             <p class="list-group-item-text">
@@ -120,6 +115,7 @@
    <div class="pull-right">
         {{ knp_pagination_render(listedemandeexport) }}
     </div>
+</div>
 </div>
 {%endif%}
 {% endblock content %} 
