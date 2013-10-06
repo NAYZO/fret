@@ -193,8 +193,12 @@ class ClientController extends Controller {
             $postule->getDemandeExport()->setTerminerDemande($terminer);
             // nbcontratterminer ++ exportateur
             $postule->getExportateur()->setNbcontrattermine($postule->getExportateur()->getNbcontrattermine()+1);
+            // nbcontratencours -- exportateur
+            $postule->getExportateur()->setNbcontratencours($postule->getExportateur()->getNbcontratencours()-1);
             // nbcontratterminer ++ Client
             $postule->getDemandeExport()->getClient()->setNbcontrattermine($usr->getNbcontrattermine()+1);
+            // nbcontratencours -- Client
+            $postule->getDemandeExport()->getClient()->setNbcontratencours($usr->getNbcontratencours()-1);
             $em->persist($postule);
             
             // notif Exportateur                   

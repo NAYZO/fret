@@ -325,11 +325,58 @@ fos_user_resetting_reset:
 #--------------------------- babababababababaab -----------------------------------
 # ADMIN
 
+admin_home:
+    pattern: /admin/home/
+    defaults: { _controller: NzoTunisiefretBundle:Admin:home }
+    
 admin_liste_clients:
     pattern: /admin/liste-clients/
     defaults: { _controller: NzoTunisiefretBundle:Admin:ListeClients }
+    
+admin_detail_client:
+    pattern: /admin/Detail-Client_~{id}
+    defaults: { _controller: NzoTunisiefretBundle:Admin:DetailClient }    
 
 admin_liste_exportateurs:
     pattern: /admin/liste-affreteurs/
     defaults: { _controller: NzoTunisiefretBundle:Admin:ListeExportateurs }
+    
+admin_detail_affreteur:
+    pattern: /admin/Detail-Affreteur_~{id}
+    defaults: { _controller: NzoTunisiefretBundle:Admin:DetailAffreteur }      
+    
+admin_liste_demande_active:
+    pattern: /admin/liste-demande-fret/active/
+    defaults: { _controller: NzoTunisiefretBundle:Admin:ListeExportateurs }    
+
+admin_liste_demande_archive:
+    pattern: /admin/liste-demande-fret/archive/
+    defaults: { _controller: NzoTunisiefretBundle:Admin:ListeExportateurs }    
+    
+admin_liste_demande_encours:
+    pattern: /admin/liste-contrat-fret/encours/
+    defaults: { _controller: NzoTunisiefretBundle:Admin:ListeExportateurs }    
         
+admin_liste_demande_termine:
+    pattern: /admin/liste-contrat-fret/termine/
+    defaults: { _controller: NzoTunisiefretBundle:Admin:ListeExportateurs }        
+    
+admin_liste_demande_signiale:
+    pattern: /admin/liste-demande-signiale/
+    defaults: { _controller: NzoTunisiefretBundle:Admin:ListeExportateurs }    
+    
+admin_active_client:
+    pattern: /admin/Active-Client_~{id}
+    defaults: { _controller: NzoTunisiefretBundle:Admin:ActiveClient }     
+    
+admin_desactive_client:
+    pattern: /admin/Desactive-Client_~{id}
+    defaults: { _controller: NzoTunisiefretBundle:Admin:DesactiveClient }    
+    
+admin_active_affreteur:
+    pattern: /admin/Active-Affreteur_~{id}
+    defaults: { _controller: NzoTunisiefretBundle:Admin:ActiveAffreteur }    
+    
+admin_desactive_affreteur:
+    pattern: /admin/Desactive-Affreteur_~{id}
+    defaults: { _controller: NzoTunisiefretBundle:Admin:DesactiveAffreteur }    

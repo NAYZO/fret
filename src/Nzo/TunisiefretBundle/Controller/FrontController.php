@@ -13,7 +13,7 @@ class FrontController extends Controller
     {
         if ($this->get('security.context')->isGranted('ROLE_ADMIN')) 
         {
-            return $this->render('NzoTunisiefretBundle:Admin:index.html.twig');
+            return $this->redirect($this->generateUrl('admin_home'));
         } 
         else if ($this->get('security.context')->isGranted('ROLE_CLIENT')) 
         {  

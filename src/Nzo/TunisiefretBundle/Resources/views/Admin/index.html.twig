@@ -1,18 +1,192 @@
 {% extends "NzoTunisiefretBundle::layoutAdmin.html.twig" %}
 
-{% block title %} {{ parent() }} Admin {% endblock %}
+{% block title %} {{ parent() }} Accueil {% endblock %}
+{% block banner %}
+<div class="jumbotron">
+    <div class="col-md-4 col-sm-11 col-xs-11"> 
+        <div class="row">
+            <h4 class="title-banner" style="">DashBoard</h4>
+        </div>
+    </div>
+</div>
 
-{% block head %}
-{% endblock head %}
+{% endblock banner %}
+{#---------------------2eme menu-------------------#}
+{% block menu %}
+<div class="nav-container">
+    <div class="box">
+        <ul id="bignav" class="nav nav-pills bottom cl-effect-1">     
+            <li class="actives col-md-offset-2"><a href="{{path('admin_home')}}" >Dashboard</a></li>
+            <li class="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                    Utilisateurs <span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu">
+                    <li><a href="{{ path('admin_liste_clients') }}" >Clients</a></li>
+                    <li><a href="{{ path('admin_liste_exportateurs') }}" >Affréteurs</a></li>
+                </ul>
+            </li>
 
-{% block body %}
-
+            <li class="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                    Demandes Fret <span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu">
+                    <li><a href="{{ path('admin_liste_demande_active') }}" >Active</a></li>
+                    <li><a href="{{ path('admin_liste_demande_archive') }}" >Archive</a></li>
+                </ul>
+            </li>
+            <li class="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                    Contrats Fret <span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu">
+                    <li><a href="{{ path('admin_liste_demande_encours') }}" >En Cours</a></li>
+                    <li><a href="{{ path('admin_liste_demande_termine') }}" >Terminé</a></li>
+                </ul>
+            </li>
+            <li><a href="{{ path('admin_liste_demande_signiale') }}" >Liste Demandes Signialé</a></li>
+        </ul>
+        {#-----------select-menu--------------#}
+        <div id="dd" class="wrapper-dropdown-5" tabindex="1">MENU
+            <ul class="dropdownd">
+                <li class="activedrop"><a href="{{path('admin_home')}}" >Dashboard</a></li>
+                <li class="sanslien"><strong>Utilisateurs</strong>
+                    <ul class="second-drop">
+                        <li><a href="{{ path('admin_liste_clients') }}" >Clients</a></li>
+                    <li><a href="{{ path('admin_liste_exportateurs') }}" >Affréteurs</a></li>
+                    </ul>
+                </li>
+                <li class="sanslien"><strong>Demandes Fret</strong>
+                    <ul class="second-drop">
+                        <li><a href="{{ path('admin_liste_demande_active') }}" >Active</a></li>
+                    <li><a href="{{ path('admin_liste_demande_archive') }}" >Archive</a></li>
+                    </ul>
+                </li>
+                <li class="sanslien"><strong>Contrats Fret</strong>
+                    <ul class="second-drop">
+                        <li><a href="{{ path('admin_liste_demande_encours') }}" >En Cours</a></li>
+                        <li><a href="{{ path('admin_liste_demande_termine') }}" >Terminé</a></li>
+                    </ul>
+                </li>
+                <li><a href="{{ path('admin_liste_demande_signiale') }}" >Liste Demandes Signialé</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+{% endblock menu %}
 {% block content %}
 
+<div class="padding">
+    <div class="row">
+    <div class="col-md-12">
+        <div class="panel panel-default bottom">
+            <div class="panel-heading"><strong>Analyse</strong></div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-md-3">
+                        <p><span class="red">Nombre Clients: </span>{{nbclients}}</p>
+                        <p><span class="red">Nombre Affréteurs: </span>{{nbaffreteurs}}</p>
+                   </div>
+                   <div class="col-md-4">
+                        <p><span class="red">Nombre Demande Import Total: </span>{{nb_demande_import}}</p>
+                        <p><span class="red">Nombre Demande Import Active: </span>{{nb_demande_import_active}}</p>
+                        <p><span class="red">Nombre Demande Import Archive: </span>{{nb_demande_import_archive}}</p>
+                        <p><span class="red">Nombre Contrat Import En Cours: </span>{{nb_demande_import_encours}}</p>
+                        <p><span class="red">Nombre Contrat Import Terminé: </span>{{nb_demande_import_termine}}</p>
+                   </div>
+                   <div class="col-md-4">
+                        <p><span class="red">Nombre Demande Export Total: </span>{{nb_demande_export}}</p>
+                        <p><span class="red">Nombre Demande Export Active: </span>{{nb_demande_export_active}}</p>
+                        <p><span class="red">Nombre Demande Export Archive: </span>{{nb_demande_export_archive}}</p>
+                        <p><span class="red">Nombre Contrat Export En Cours: </span>{{nb_demande_export_encours}}</p>
+                        <p><span class="red">Nombre Contrat Export Terminé: </span>{{nb_demande_export_termine}}</p>
+                   </div>
+                </div>
+             </div>
+        </div>
+        <div class="panel panel-default bottom">
+            <div class="panel-heading"><strong>Dernière Demandes Fret Active</strong></div>
+            <div class="panel-body">
+                {% if demandefret_active is empty %}
+                    <p class="text-success">Aucune Demande Active trouvé !</p>
+                {% else %}
+                
+                {%for key,demande in demandefret_active if key<3 %}
+                    <div class="row">
+                        <div class="col-md-12">
+                            <span class="pull-left" ><a href="{{path('client_demande_export_active', {'id':demande.id | urlencrypt} )}}">{{demande.titre}}</a> ( {{demande.demandeexportpostule|length}} ) </span>
+                            <span class="pull-right" style="color: grey">Déposé le {{demande.datedepos|date("d/m/Y")}} </span>
+                        </div>
+                    </div>
+                {%endfor%}
+                <hr>
+                <div class="row">
+                    <div class="col-md-12">
+                        <p class="pull-right"> <a href="{{ path('nzo_voirlistedemande_export_active') }}" >Voir tout</a></p>
+                    </div>
+                </div>
+            {% endif %}
+            </div>
+        </div>
+
+        <div class="panel panel-default bottom">
+            <div class="panel-heading"><strong>Dernier contrat En Cours</strong></div>
+                <div class="panel-body">
+                    {% if demandefret_encours is empty %}
+                        <p class="text-success">Aucun contrats en cours !</p>
+                    {% else %}
+                    {%for demande in demandefret_encours %}
+                        {%set idpostule = render(controller('NzoTunisiefretBundle:Client:GetPostuleEncoursByDemande', {'id': demande.id | urlencrypt}))%}
+                        <div class="row">
+                            <div class="col-md-12">
+                                <span class="pull-left" ><a href="{{path('client_postule_encours_detail', {'id':idpostule | urlencrypt} )}}">{{demande.titre}}</a> </span>
+                                <span class="pull-right" style="color: grey">Déposé le {{demande.datedepos|date("d/m/Y")}} </span>
+                            </div>
+                        </div>
+                    {%endfor%}
+                    
+                    <hr>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <p class="pull-right"> <a href="{{ path('client_contrat_encours') }}">Voir tout</a></p>
+                        </div>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>  
+            
+        <div class="panel panel-default bottom">
+            <div class="panel-heading"><strong>Dernier contrats Terminé</strong></div>
+                <div class="panel-body">
+                    {% if demandefret_termine is empty %}
+                        <p class="text-success">Aucun contrat terminé !</p>
+                    {% else %}
+                    {%for demande in demandefret_termine %}
+                        {%set idpostule = render(controller('NzoTunisiefretBundle:Client:GetPostuleEncoursByDemande', {'id': demande.id | urlencrypt}))%}
+                        <div class="row">
+                            <div class="col-md-12">
+                                <span class="pull-left" ><a href="{{path('client_postule_encours_detail', {'id':idpostule | urlencrypt} )}}">{{demande.titre}}</a> </span>
+                                <span class="pull-right" style="color: grey">Déposé le {{demande.datedepos|date("d/m/Y")}} </span>
+                            </div>
+                        </div>
+                    {%endfor%}
+                    
+                    <hr>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <p class="pull-right"> <a href="{{ path('client_contrat_encours') }}">Voir tout</a></p>
+                        </div>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+            
+        </div>
+</div>   
+</div>
 {% endblock content %}
 
-{% block footer %}
-{% endblock footer %}
+{% block js %} 
 
-{% endblock body %}  
- 
+{% endblock js %}

@@ -1,33 +1,197 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <title>{% block title %}TunisieFret - {% endblock title %}</title>
-{% block head %}  {% endblock head %}
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>{% block title %}TunisieFret - Admin - {% endblock title %}</title>
+        <!--To be sure using the latest rendering mode for IE-->
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <!-- CSS -->
+        <link href="{{ asset('bundles/nzotunisiefret/css/bootstrap.css') }}" rel="stylesheet" media="screen">
+        <link href="{{ asset('bundles/nzotunisiefret/css/style.css') }}" rel="stylesheet" media="screen">
+        <link href="{{ asset('bundles/nzotunisiefret/css/component.css') }}" rel="stylesheet" media="screen">
+         <!--FONT-->
+        <link href='http://fonts.googleapis.com/css?family=Istok+Web' rel='stylesheet' type='text/css'>
+        
+        <script src="{{asset('bundles/nzotunisiefret/js/jquery-2.0.3.min.js') }}"></script>
+        {% block head %}  {% endblock head %}
     </head>
     <body>
-            <a href="{{ path('fos_user_security_logout') }}"> Déconnexion </a>
-        <br>
-        <a href="{{ path('nzo_tunisiefret_homepage') }}" > <span> Home </span> </a>
-        <br>
-        <a href="{{ path('fos_user_change_password') }}" > <span> Change Password </span> </a>
-        <br>
-        <a href="{{ path('admin_liste_clients') }}" > <span> Liste Clients </span> </a>
-        <br>
-        <a href="{{ path('admin_liste_exportateurs') }}" > <span> Liste Exportateurs </span> </a>
-        <br>
-    {% block body %}  
-
-        <div class="container">
-            <div class="row">
-                <div class="span12">
-                    <div class="well">
-                        {% block content %} {% endblock content %}
-                    </div>
+           <nav class="bg-menu navbar" role="navigation">
+            <div class="container">
+                <!-- Brand and toggle get grouped for better mobile display -->
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                        <span class="sr-only">Menu</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="{{path('admin_home')}}"><img src="{{ asset('bundles/nzotunisiefret/images') }}/logo.png" alt="logo"/></a>
                 </div>
-                {% block footer %}{% endblock footer %}
+                <!-- Collect the nav links, forms, and other content for toggling -->
+                <div class="collapse navbar-collapse navbar-ex1-collapse">
+                    <ul class="nav navbar-nav navbar-right nav-style">
+                        <li><a href="{{ path('admin_home') }}">Acceuil</a></li>
+                        <li class="dropdown">
+                            <a href="#" id="cliknotif" class="dropdown-toggle" data-toggle="dropdown">
+                                <span class="glyphicon glyphicon-bell"></span>
+                                <span id='nzonotifnb' class="label label-danger label-style">{#{%set nzonotificationnb = render(controller('NzoTunisiefretBundle:Client:AjaxGetNbNotif'))%}{%if nzonotificationnb > 0%}{{nzonotificationnb}}{%endif%}#}</span>
+                            </a>
+                            <ul id='nzolistnotifajax' class="dropdown-menu  notification" style="margin-top: 26px;">
+                              
+                            </ul>
+                        </li>
+         
+                        {% include "NzoUserBundle::connexion.html.twig" %}
+                    </ul>
+                </div><!-- /.navbar-collapse -->
             </div>
-       </div>
+        </nav>
+    {% block body %}
+        
+        {% block banner %}{% endblock banner %}
+        {% block menu %} {% endblock menu %}
+        {#Container#}
+        <section class="container">
+            <div class="row">
+                <div class="col-md-12 well">
+                    {% block content %}{% endblock content %}
+                </div>
+            </div>
+        </section>   
+        
+        {% block footer %}
+            <footer class="footer-bg">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-4">
+                        <ul class="list-inline footer-menu">
+                            <li><a href="{{path('admin_home')}}">Acceuil</a></li>
+                            <li><a href="{{path('nzo_apropos')}}">A propos de nous</a></li>
+                            <li><a href="{{path('nzo_contact')}}">Contact</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-md-4"></div>
+                    <div class="col-md-4 text-right copyright">© 2013 <a href='http://www.ovynet.com' target='_blank' >Ovynet</a>. All Rights Reserved.</div>
+                </div>
+            </div>
+            <div id="btn_up">
+                <img alt="Retour en haut" title="Retour en haut" src="{{ asset('bundles/nzotunisiefret/images') }}/up.png">
+            </div>
+        </footer>
+        {% endblock footer %}
+
     {% endblock body %} 
+    <!--JAVASCRIPT-->
+
+     <script src="{{ asset('bundles/nzotunisiefret/js/bootstrap.js') }}"></script>
+     <script src="{{ asset('bundles/nzotunisiefret/js/up.js') }}"></script>
+     <script src="{{ asset('bundles/nzotunisiefret/js/modal.js') }}"></script>     
+     <script>
+         {#
+         $(document).ready(function() {
+            nzostorage='';
+            setInterval(function(){ 
+                $.ajax({
+                     url:'{{path("ajax_get_nb_notif_client")}}',
+                     type: 'GET',
+                     success: function(nbnotif){
+                            (nbnotif==0) ? $('#nzonotifnb').html('') : $('#nzonotifnb').html(nbnotif);      
+                     },
+                     error:function(){}  
+                });
+            }, 10000);
+            
+            setInterval(function(){ 
+                $.ajax({
+                     url:'{{path("ajax_get_nb_msg_client")}}',
+                     type: 'GET',
+                     success: function(nbmsg){
+                            (nbmsg==0) ? $('#nzomsgnb').html('') : $('#nzomsgnb').html(nbmsg);      
+                     },
+                     error:function(){}  
+                });
+            }, 15000);
+         });
+         
+         $('#cliknotif').on('click', function(){
+            if($('#nzonotifnb').html() != '' || nzostorage == ''){                
+                $.ajax({
+                         url:'{{path("ajax_get_notif_client")}}',
+                         type:"POST",
+                         dataType:'json',
+                         success: function(a){
+                                if(a[0] == 'vide'){
+                                    $('#nzolistnotifajax').html('<li class="nonlu"><a href="#"><strong>Aucune Notification trouver!</strong></a></li>');
+                                }
+                                else{
+                                    var b='';
+                                    for(key in a)
+                                    {
+                                        if(a[key]['notifvu'] == 0)
+                                            b+='<li class="nonlu"><a href="'+a[key]['url']+'">'+a[key]['notiftext']+'</a></li>';
+                                        else                      
+                                            b+='<li><a href="'+a[key]['url']+'">'+a[key]['notiftext']+'</a></li>';                                    
+                                    }
+                                    b+='<li class="all"><a href="{{path('client_list_notifications')}}" class="text-center">Voir toute les notifications</a></li>';
+                                    nzostorage = b;
+                                    $('#nzolistnotifajax').html(b);
+                                    $('#nzonotifnb').html('');
+                                    }
+                         },
+                         error:function(){}  
+                    });              
+            }
+            $('#nzolistnotifajax').html(nzostorage);
+ 
+         });
+         #}
+     </script>
+     {#-----------menu-scroll---------#}
+     <script>
+        jQuery("document").ready(function($){
+            var nav = $('.nav-container');
+            $(window).scroll(function () {
+                if ($(this).scrollTop() > 204) {
+                    nav.addClass("f-nav");
+                } else {
+                    nav.removeClass("f-nav");
+                }
+            });
+        });    
+     </script>
+     {#-------------respensive-menu-------------#}
+     <script type="text/javascript">
+
+                        function DropDown(el) {
+                                this.dd = el;
+                                this.initEvents();
+                        }
+                        DropDown.prototype = {
+                                initEvents : function() {
+                                        var obj = this;
+
+                                        obj.dd.on('click', function(event){
+                                                $(this).toggleClass('active');
+                                                event.stopPropagation();
+                                        });	
+                                }
+                        }
+
+                        $(function() {
+
+                                var dd = new DropDown( $('#dd') );
+
+                                $(document).click(function() {
+                                        // all dropdowns
+					
+                                });
+
+                        });
+
+         </script>
+     {% block js %}  {% endblock js %}
     </body>
-    {% block js %}  {% endblock js %}
+    
 </html>

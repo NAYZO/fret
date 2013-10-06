@@ -153,4 +153,9 @@ pugx_multi_user:
     admin:
         entity: 
           class: Nzo\UserBundle\Entity\Admin
+        profile:
+          form: 
+            type: Nzo\UserBundle\Form\Type\ProfileAdminFormType
+            name: nzo_admin_profile
+            validation_groups:  [Profile, Default]   
 

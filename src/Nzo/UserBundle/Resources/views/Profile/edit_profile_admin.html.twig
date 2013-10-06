@@ -1,0 +1,105 @@
+{% extends "NzoTunisiefretBundle::layoutAdmin.html.twig" %}
+{% block title %} {{ parent() }} Modification Profil Admin {% endblock %}
+{% block banner %}
+    <div class="jumbotron">
+        <div class="col-md-4 col-sm-11 col-xs-11"> 
+            <div class="row">
+                <h4 class="title-banner" style="">Modification Profil</h4>
+            </div>
+        </div>
+    </div>
+{% endblock banner %}
+{#---------------------2eme menu-------------------#}
+{% block menu %}
+<div class="nav-container">
+    <div class="box">
+        <ul id="bignav" class="nav nav-pills bottom cl-effect-1">     
+            <li class="col-md-offset-2"><a href="{{path('nzo_tunisiefret_homepage')}}" >Dashboard</a></li>
+            <li class="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                    Mes Demandes <span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu">
+                    <li><a href="{{ path('nzo_voirlistedemande_export_active') }}" >Active</a></li>
+                    <li><a href="{{ path('nzo_voirlistedemande_export_archive') }}" >Archivé</a></li>
+                </ul>
+            </li>
+
+            <li class="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                    Mes Contrats <span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu">
+                    <li><a href="{{ path('client_contrat_encours') }}" >En Cours</a></li>
+                    <li><a href="{{ path('client_contrat_terminer') }}" >Terminé</a></li>
+                </ul>
+            </li>
+            <li><a href="{{ path('nzo_poserdemande_export') }}" >Déposer Demande Fret</a></li>
+            <li><a href="{{ path('client_list_demande_type') }}">Liste Demandes Fret Type</a></li>
+        </ul>
+        {#-----------select-menu--------------#}
+        <div id="dd" class="wrapper-dropdown-5" tabindex="1">MENU
+            <ul class="dropdownd">
+                <li><a href="{{path('nzo_tunisiefret_homepage')}}" >Dashboard</a></li>
+                <li class="sanslien"><strong>Mes demandes</strong>
+                    <ul class="second-drop">
+                        <li><a href="{{ path('nzo_voirlistedemande_export_active') }}">Active</a></li>
+                        <li><a href="{{ path('nzo_voirlistedemande_export_archive') }}" >Archivé</a></li>  
+                    </ul>
+                </li>
+                <li class="sanslien"><strong>Mes Contrats</strong>
+                    <ul class="second-drop">
+                        <li><a href="{{ path('client_contrat_encours') }}" >En Cours</a></li>
+                        <li><a href="{{ path('client_contrat_terminer') }}" >Terminé</a></li>
+                    </ul>
+                </li>
+                <li><a href="{{ path('nzo_poserdemande_export') }}">Déposer Demande Fret</a></li>
+                <li><a href="{{ path('client_list_demande_type') }}">Liste Demandes Fret Type</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+{% endblock menu %}
+{% block content %}
+<div class="padding">
+    <ul id="breadcrumbs-two">
+        <li><a href="{{path('nzo_tunisiefret_homepage')}}">Accueil</a></li>
+        <li class="current"><span>Modification Profil</span></li>
+    </ul>
+    <form action="{{ path('fos_user_profile_edit') }}" id="contactForm" method="post" {{ form_enctype(form) }} role="form">
+        <fieldset>
+            <legend><strong>Modifiez Votre Profil</strong></legend>  
+        
+            {% if(form_errors(form)) %}
+                <div class="error-alert"> {{ form_errors(form) }} </div>
+            {% endif %}
+            <div class="row">
+                <div class="col-md-6"> 
+            
+                    {#--Nom d'utilisateur---#}
+                    <div class="form-group">
+                        <label>Nom D'utilisateur <span class="required">*</span></label>
+                        {{ form_widget(form.username,{'attr': {'class': 'form-control'}}) }}
+                    </div>
+                    {% if(form_errors(form.username)) %}
+                      <div class="error-input">{{ form_errors(form.username) }}</div>
+                    {% endif %}
+
+                    {#--Email---#}
+                    <div class="form-group">
+                      <label>Email <span class="required">*</span></label>
+                        {{ form_widget(form.email,{'attr': {'class': 'form-control'}}) }}
+                    </div>
+                    {% if(form_errors(form.email)) %}
+                      <div class="error-input">{{ form_errors(form.email) }}</div>
+                    {% endif %}  
+                </div>  
+            </div> 
+
+            <input type="submit" value="Modifier" name="_submit" class="btn btn-danger pull-right">
+            <p class="text-danger"><span class="required">*</span> Champs Obligatoire</p>
+            {{ form_rest(form) }}
+        </fieldset>
+    </form>
+</div>
+{% endblock content %}

@@ -253,7 +253,7 @@ class ExportateurController extends Controller {
         $usr = $this->get('security.context')->getToken()->getUser();
         $em = $this->getDoctrine()->getManager();           
         $postules = $em->createQuery("SELECT a FROM NzoTunisiefretBundle:DemandeExportPostule a JOIN a.demandeexport d WHERE a.demande_accepter = 1 AND a.exportateur = ".$usr->getId()." ORDER BY d.date_tacking DESC");
-        return $this->render('NzoTunisiefretBundle:Exportateur:ProfilExportateurPublic.html.twig', array('postules' => $postules));
+        return $this->render('NzoTunisiefretBundle:Exportateur:ProfilExportateurPublic.html.twig', array('postules' => $postules->getResult() ));
     }
     
    /**

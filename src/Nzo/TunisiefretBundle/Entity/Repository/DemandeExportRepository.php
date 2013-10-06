@@ -167,4 +167,32 @@ class DemandeExportRepository extends EntityRepository
             ->orderBy('a.date_tacking', 'DESC');           
          return $qb->getQuery();                       
     } 
+    
+    // FOR ADMIN
+    
+    public function getAllDemandeFretActive()
+    {
+         $qb = $this->createQueryBuilder('a');
+         $qb->where('a.tacking = 0')              
+            ->andWhere('a.annuler_demande is NULL')               
+            ->orderBy('a.date_depos', 'DESC');
+         return $qb->getQuery()->execute();        
+    } 
+    
+    public function getAllDemandeFretEnCours()
+    {
+         $qb = $this->createQueryBuilder('a');
+         $qb->where('a.tacking = 1')              
+            ->andWhere('a.terminer_demande is NULL')               
+            ->orderBy('a.date_tacking', 'DESC');
+         return $qb->getQuery()->execute();        
+    } 
+    
+    public function getAllDemandeFretTermine()
+    {
+         $qb = $this->createQueryBuilder('a');
+         $qb->where('a.terminer_demande is NOT NULL')                                
+            ->orderBy('a.date_tacking', 'DESC');
+         return $qb->getQuery()->execute();        
+    } 
 }

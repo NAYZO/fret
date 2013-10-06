@@ -1,12 +1,12 @@
 {% extends "NzoTunisiefretBundle::layoutAdmin.html.twig" %}
-{% block title %} {{ parent() }} Liste des Clients {% endblock %}
+{% block title %} {{ parent() }} Liste des Affréteurs {% endblock %}
 
 {% block banner %}
 {#----------------Bannier de la page----------------#}
 <div class="jumbotron">
     <div class="col-md-4 col-sm-11 col-xs-11"> 
         <div class="row">
-            <h4 class="title-banner" style="">Liste des Clients</h4>
+            <h4 class="title-banner" style="">Liste des Affréteurs</h4>
         </div>
     </div>
 </div>
@@ -82,50 +82,50 @@
         <div class="col-md-9 pull-left">
             <ul id="breadcrumbs-two" style="margin-top: 14px;">
                 <li><a href="{{path('admin_home')}}">Accueil</a></li>
-                <li class="current"><span>Liste des Client</span></li>
+                <li class="current"><span>Liste des Affréteurs</span></li>
             </ul>
         </div>
         {#----------------Pagination----------------#}
         <div class="pull-right">
-            {{ knp_pagination_render(listeclients) }}
+            {{ knp_pagination_render(listeaffreteurs) }}
         </div>
     </div>
 
     {#----------------Titre de la page----------------#}
     <div class="legend2">
-        <h4>La Liste de Clients</h4>
+        <h4>La Liste des Affréteurs</h4>
     </div>
 
-    {#----------------Liste des Clients----------------#}       
+    {#----------------Liste des Affréteurs----------------#}       
         <table class="table table-striped table-bordered">
             <thead>
                 <tr>
                     <th>Logo</th>
-                    <th>Client</th>
+                    <th>Affréteur</th>
                     <th>Date Inscrit</th>
-                    <th>Nb Fret Déposé</th>
-                    <th>Nb Fret En Cours</th>
-                    <th>Nb Fret Terminé</th>
+                    <th>Nb Demandes Fret Postulé</th>
+                    <th>Nb Contrats En Cours</th>
+                    <th>Nb Contrats Terminé</th>
                     <th>Etat</th>
                     <th>Options</th>
                </tr>     
             </thead>
             <tbody>
-            {% for client in listeclients %}
+            {% for affreteur in listeaffreteurs %}
                 <tr>
-                    <td><img class="media-object img-thumbnail" alt="" src="{{ asset('clientfilesupload/')}}{{client.logoname}}" style="width: 100px; height: 100px;"></td>
-                    <td>{{client.nomentrop}}</td>
-                    <td>{{client.dateinscription|date("d/m/Y")}}</td>
-                    <td>{{client.nbdemandeexportdepose}}</td>
-                    <td>{{client.nbcontratencours}}</td>
-                    <td>{{client.nbcontrattermine}}</td>
-                    <td>{%if client.enabled%}Activé{%else%}Désactivé{%endif%}</td>
+                    <td><img class="media-object img-thumbnail" alt="" src="{{ asset('exportateurfilesupload/')}}{{affreteur.logoname}}" style="width: 100px; height: 100px;"></td>
+                    <td>{{affreteur.nomentrop}}</td>
+                    <td>{{affreteur.dateinscription|date("d/m/Y")}}</td>
+                    <td>{{affreteur.nbdemandeexportpostule}}</td>
+                    <td>{{affreteur.nbcontratencours}}</td>
+                    <td>{{affreteur.nbcontrattermine}}</td>
+                    <td>{%if affreteur.enabled%}Activé{%else%}Désactivé{%endif%}</td>
                     <td>
-                        <a href="{{path('admin_detail_client', {'id':client.id | urlencrypt} )}}"> Voir |</a>
-                        {%if client.enabled%}
-                            <a href="{{path('admin_desactive_client', {'id':client.id | urlencrypt} )}}"> Désactiver </a>
+                        <a href="{{path('admin_detail_affreteur', {'id':affreteur.id | urlencrypt} )}}"> Voir |</a>
+                        {%if affreteur.enabled%}
+                            <a href="{{path('admin_desactive_affreteur', {'id':affreteur.id | urlencrypt} )}}"> Désactiver </a>
                         {%else%}
-                            <a href="{{path('admin_active_client', {'id':client.id | urlencrypt} )}}"> Activer </a>
+                            <a href="{{path('admin_active_affreteur', {'id':affreteur.id | urlencrypt} )}}"> Activer </a>
                         {%endif%}    
                     </td>
                 </tr>
@@ -137,7 +137,7 @@
     {#----------------pagination----------------#} 
     <div class="row" style="padding-right: 16px;">
         <div class="pull-right">
-            {{ knp_pagination_render(listeclients) }}
+            {{ knp_pagination_render(listeaffreteurs) }}
         </div>
      </div>
  

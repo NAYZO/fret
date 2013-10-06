@@ -1,0 +1,183 @@
+{% extends "NzoTunisiefretBundle::layoutExportateur.html.twig" %}
+
+{% block title %} {{ parent() }} Detail Affreteur {% endblock %}
+{% block banner %}
+<div class="jumbotron">
+    <div class="col-md-4 col-sm-11 col-xs-11"> 
+        <div class="row">
+            <h4 class="title-banner" style="">Detail Affreteur</h4>
+        </div>
+    </div>
+</div>
+{% endblock banner %}
+{#---------------------2eme menu-------------------#}
+{% block menu %}
+<div class="nav-container">
+    <div class="box">
+        <ul id="bignav" class="nav nav-pills bottom cl-effect-1">     
+            <li class="actives col-md-offset-2"><a href="{{path('admin_home')}}" >Dashboard</a></li>
+            <li class="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                    Utilisateurs <span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu">
+                    <li><a href="{{ path('admin_liste_clients') }}" >Clients</a></li>
+                    <li><a href="{{ path('admin_liste_exportateurs') }}" >Affréteurs</a></li>
+                </ul>
+            </li>
+
+            <li class="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                    Demandes Fret <span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu">
+                    <li><a href="{{ path('admin_liste_demande_active') }}" >Active</a></li>
+                    <li><a href="{{ path('admin_liste_demande_archive') }}" >Archive</a></li>
+                </ul>
+            </li>
+            <li class="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                    Contrats Fret <span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu">
+                    <li><a href="{{ path('admin_liste_demande_encours') }}" >En Cours</a></li>
+                    <li><a href="{{ path('admin_liste_demande_termine') }}" >Terminé</a></li>
+                </ul>
+            </li>
+            <li><a href="{{ path('admin_liste_demande_signiale') }}" >Liste Demandes Signialé</a></li>
+        </ul>
+        {#-----------select-menu--------------#}
+        <div id="dd" class="wrapper-dropdown-5" tabindex="1">MENU
+            <ul class="dropdownd">
+                <li class="activedrop"><a href="{{path('admin_home')}}" >Dashboard</a></li>
+                <li class="sanslien"><strong>Utilisateurs</strong>
+                    <ul class="second-drop">
+                        <li><a href="{{ path('admin_liste_clients') }}" >Clients</a></li>
+                    <li><a href="{{ path('admin_liste_exportateurs') }}" >Affréteurs</a></li>
+                    </ul>
+                </li>
+                <li class="sanslien"><strong>Demandes Fret</strong>
+                    <ul class="second-drop">
+                        <li><a href="{{ path('admin_liste_demande_active') }}" >Active</a></li>
+                    <li><a href="{{ path('admin_liste_demande_archive') }}" >Archive</a></li>
+                    </ul>
+                </li>
+                <li class="sanslien"><strong>Contrats Fret</strong>
+                    <ul class="second-drop">
+                        <li><a href="{{ path('admin_liste_demande_encours') }}" >En Cours</a></li>
+                        <li><a href="{{ path('admin_liste_demande_termine') }}" >Terminé</a></li>
+                    </ul>
+                </li>
+                <li><a href="{{ path('admin_liste_demande_signiale') }}" >Liste Demandes Signialé</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+{% endblock menu %}
+{#---------------------contenu-------------------#}
+{% block content %}
+<div class="padding">
+    <div class="row">
+        {#---------------------profil exportateur-------------------#}
+        <div class="media legend2">
+            <span class="pull-left">
+                <img class="media-object img-thumbnail" alt="" src="{{ asset('exportateurfilesupload/')}}{{affreteur.logoname}}" style="width: 100px; height: 100px;">
+            </span>
+            <div class="media-body">
+                <h3 class="media-heading">{{affreteur.nomentrop}}</h3>
+                <span id="nzonoteexportateur"></span> ( {{affreteur.note}} )
+                <hr>
+                <p class="small text-muted">
+                    <span class="text-danger">Adresse:</span> {{affreteur.adresse}}
+                    | <span class="text-danger">Ville:</span> {{affreteur.ville}} 
+                    | <span class="text-danger">Tel:</span> {{affreteur.tel}}
+                    | <span class="text-danger">Fax:</span> {{affreteur.fax}}
+                    | <span class="text-danger">Site web:</span> {{affreteur.siteweb}}
+                </p>
+                <h5>{{affreteur.description}}</h5>
+            </div>
+        </div>
+        {#---------------------analyse-------------------#}
+        <div class="col-md-3">
+            <div class="panel panel-default bottom">
+                <div class="panel-heading"><strong>Analyse</strong></div>
+                <div class="panel-body">
+                    <p><span class="red">Nombre Postules: </span>{{affreteur.nbdemandeexportpostule}}</p>
+                    <p><span class="red">Nombre Contrat En Cours: </span>{{affreteur.nbcontratencours}}</p>
+                    <p><span class="red">Nombre Contrat Terminé: </span>{{affreteur.nbcontrattermine}}</p>
+                </div>
+            </div>
+        </div>
+        {#---------------------liste des contrats-------------------#}
+        <div class="col-md-9">
+            <div class="panel panel-default bottom">
+                <div class="panel-heading"><strong>Liste des Contrats: ( {{postules|length}} )</strong></div>
+                <div class="panel-body">
+                    {% if postules is empty %}
+                        <p class="text-success">Aucun contrat effectué!</p>
+                    {% else %}
+                    {%for key, postule in postules %}
+                        {%if postule.demandeexport.terminerdemande is null%}
+                        <div class="row">
+                            <div class="col-md-12">
+                                <p>
+                                    <span class="text-primary" style="font-size:16px"><strong>{{postule.demandeexport.titre}}</strong> </span>
+                                    <span class="pull-right text-muted">{{postule.demandeexport.datetacking|date("d/m/Y")}} </span>
+                                </p>
+                                <p class="text-muted"><span class="text-danger">Type contrat:</span> {{postule.demandeexport.type}} | Contrat en cours</p>
+                            </div>
+                        </div>
+                        {%else%}
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <p>
+                                        <span class="text-primary"  style="font-size:16px"><strong>{{postule.demandeexport.titre}}</strong> </span>
+                                        <span class="pull-right text-muted">{{postule.demandeexport.datetacking|date("d/m/Y")}} </span>
+                                    </p>
+                                    {#---------------------Note-------------------#}
+                                    <p>
+                                        <span class="pull-left">
+                                            {%if postule.demandeexport.avisexport is not null%}
+                                                {%if postule.demandeexport.avisexport.avisexportateur is not null%}
+                                                    <span id="nzonoteexp{{key}}"></span> 
+                                                    <script>
+                                                    $(document).ready(function(){           
+                                                        $("#nzonoteexp{{key}}").raty({ path: '/bundles/nzotunisiefret/images', noRatedMsg: "aucune note associé!", hints: ['', '', '', '', ''], readOnly: true, score: {{postule.demandeexport.avisexport.noteexportateur}} }); 
+                                                    });    
+                                                    </script>
+                                                {%else%}    
+                                                  <span class="text-info">Aucun Avis associer!</span>  
+                                                {%endif%}     
+                                            {%else%}   
+                                                <span class="text-info">Aucun Avis associer!</span>
+                                            {%endif%}
+                                        </span>
+                                        <span class="pull-right text-danger"><strong>{{postule.demandeexport.type}}</strong></span>
+                                    </p>
+                                </div>
+                              </div>
+                            {#---------------------Avis-------------------#}
+                            {%if postule.demandeexport.avisexport is not null%}
+                                {%if postule.demandeexport.avisexport.avisexportateur is not null%}
+                                    <h5> {{postule.demandeexport.avisexport.avisexportateur}} </h5>             
+                                {%endif%}
+                            {%endif%}
+                        {%endif%}
+                        <hr>
+                    {%endfor%}
+                    {%endif%}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}
+
+ {% block js %} 
+    <script src="{{ asset('bundles/nzotunisiefret/js/jquery.raty.min.js') }}"></script>
+    <script>
+        $(document).ready(function(){
+             $('#nzonoteexportateur').raty({ path: '/bundles/nzotunisiefret/images', noRatedMsg: "aucune note associé!", hints: ['', '', '', '', ''], readOnly: true, score: {{affreteur.note}} });
+        });    
+    </script>
+{% endblock js %}
