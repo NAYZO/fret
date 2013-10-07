@@ -5495,13 +5495,13 @@ a.list-group-item:focus {
 }
 
 .panel-warning {
-  border-color: #EEA1A1;
+  border-color: #FFD3D3;
 }
 
 .panel-warning > .panel-heading {
-  color: #B63B3B;
-  background-color: #FFE0E0;
-  border-color: #fbeed5;
+  color: #C26868;
+  background-color: #FFF4F4;
+  border-color: #FFFDF9;
 }
 
 .panel-warning > .panel-heading + .panel-collapse .panel-body {
@@ -5531,12 +5531,12 @@ a.list-group-item:focus {
 }
 
 .panel-info {
-  border-color: #7AB1BD;
+  border-color: #71AEB2;
 }
 
 .panel-info > .panel-heading {
   color: #08374E;
-  background-color: #CEE9DF;
+  background-color: #CEE7E9;
   border-color: #4B9EAF;
 }
 
