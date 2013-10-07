@@ -73,20 +73,20 @@
     
     {#----------------Titre de la page----------------#}
     <div class="legend2">
-        <h4 class="pull-left">{{postule.demandeexport.titre}}</h4>
+        <h4 class="pull-left">{{postule.demandeexport.titre}}  <span class="text-danger">( {{postule.demandeexport.type}} )</span></h4>
         <div class="row" style="padding-right: 14px;">
             <div class=" pull-right">
             <!-- Button trigger modal -->
-            <a data-toggle="modal" href="#nzoAnnulerModal" class="btn btn-danger btn-sm" style="margin-top: 12px;">Annuler votre Demande</a>
-            <a data-toggle="modal" href="#nzoEmbaucheModal" class="btn btn-success btn-sm" style="margin-top: 12px;">Embauchez "{{postule.exportateur.nomentrop}}"</a>
-
+            
+            <a data-toggle="modal" href="#nzoEmbaucheModal" class="btn btn-info btn-sm" style="margin-top: 12px;">Embauchez "{{postule.exportateur.nomentrop}}"</a>
+            <a data-toggle="modal" href="#nzoAnnulerModal" class="btn btn-primary btn-sm" style="margin-top: 12px;">Annuler votre Demande</a>
             <!-- Modal -->
             <div class="modal fade" id="nzoAnnulerModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
               <div class="modal-dialog">
                 <div class="modal-content">
                   <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title">Annuler votre demande: {{postule.demandeexport.titre}}</h4>
+                    <h5 class="modal-title"><strong>Annuler votre demande: {{postule.demandeexport.titre}}</strong></h5>
                   </div>
                   <div class="modal-body">
                       <form action="{{path('client_annuler_demande', {'id':postule.demandeexport.id | urlencrypt})}}" method="POST" role="form" >
@@ -106,7 +106,7 @@
                           </div>
                           <div class="row"style="margin-right: 0">
                               <div class="pull-right">
-                                <button type="submit" class="btn btn-danger">Confirmer</button>
+                                <button type="submit" class="btn btn-primary">Confirmer</button>
                                 <button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
                               </div>
                           </div>
@@ -124,7 +124,7 @@
                 <div class="modal-content">
                   <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title">Confirmation de Contrat d'exportation</h4>
+                    <h5 class="modal-title"><strong>Confirmation de Contrat d'exportation</strong></h5>
                   </div>
                   <div class="modal-body" style="color: black">
                       <form action="{{path('client_contrat_confirmer', {'id':postule.id | urlencrypt})}}" method="POST" role="form" >
@@ -134,7 +134,7 @@
                       
                           <div class="row"style="margin-right: 0">
                               <div class="pull-right">
-                                <button type="submit" class="btn btn-danger">Confirmer</button>
+                                <button type="submit" class="btn btn-primary">Confirmer</button>
                                 <button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
                               </div>
                           </div>
@@ -334,7 +334,7 @@
                             <textarea id="nzomsgexp" required="required" class="form-control" rows="6"></textarea>
                         </div>
                         <div class="buttons-set">
-                            <button type="submit" class="btn btn-danger pull-right">Envoyez</button>
+                            <button type="submit" class="btn btn-primary pull-right">Envoyez</button>
                         </div>
                     </form> 
                 </div>
