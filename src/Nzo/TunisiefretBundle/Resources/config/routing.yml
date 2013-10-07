@@ -23,7 +23,7 @@ nzo_contact_send:
     defaults: { _controller: NzoTunisiefretBundle:Front:contact}        
         
 nzo_inscription_confirmation:
-    path:  /Inscription/Confirmation_~CJ84YYC2B932Y9Y428YCT3789T13TUEGCB871TE487TC8T8CF1C81T3T1TC37TGTCB391B9YYW82Y8YCYMBCY24Y90YY489CTV8F28OF4C8
+    path:  /Inscription/Confirmation_~CJ84YYC2B932Y9Y428YCT3BHX2XN2N8
     defaults:
         _controller: FrameworkBundle:Template:template
         template: 'NzoTunisiefretBundle:Front:InscriptionConfirmation.html.twig' 
