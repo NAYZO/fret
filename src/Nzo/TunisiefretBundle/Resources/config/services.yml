@@ -2,7 +2,15 @@ parameters:
 #    nzo_tunisiefret.example.class: Nzo\TunisiefretBundle\Example
 
 services:
-  controller.pre_execute_listener:
-    class: Nzo\TunisiefretBundle\Listener\ControllerListener
-    tags:
-      -  { name: kernel.event_listener, event: kernel.controller, method: onCoreController }
+        
+    controller.pre_execute_listener:
+      class: Nzo\TunisiefretBundle\Listener\ControllerListener
+      tags:
+        -  { name: kernel.event_listener, event: kernel.controller, method: onCoreController }
+
+#    nzo.doctrine_listener:
+#        class: Nzo\TunisiefretBundle\Listener\DoctrineListener
+#        arguments: ["mailer", "@templating"]
+#        tags:
+#            - { name: doctrine.event_listener, event: postPersist } 
+            # OR prePersist

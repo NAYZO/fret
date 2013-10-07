@@ -112,7 +112,7 @@
                     <p class="text-success">Aucune Demande Active trouvé !</p>
                 {% else %}
                 
-                {%for key,demande in demandefret_active if key<3 %}
+                {%for key,demande in demandefret_active if key<5 %}
                     <div class="row">
                         <div class="col-md-12">
                             <span class="pull-left" ><a href="{{path('client_demande_export_active', {'id':demande.id | urlencrypt} )}}">{{demande.titre}}</a> ( {{demande.demandeexportpostule|length}} ) </span>
@@ -136,7 +136,7 @@
                     {% if demandefret_encours is empty %}
                         <p class="text-success">Aucun contrats en cours !</p>
                     {% else %}
-                    {%for demande in demandefret_encours %}
+                    {%for key,demande in demandefret_encours if key<5 %}
                         {%set idpostule = render(controller('NzoTunisiefretBundle:Client:GetPostuleEncoursByDemande', {'id': demande.id | urlencrypt}))%}
                         <div class="row">
                             <div class="col-md-12">
@@ -162,7 +162,7 @@
                     {% if demandefret_termine is empty %}
                         <p class="text-success">Aucun contrat terminé !</p>
                     {% else %}
-                    {%for demande in demandefret_termine %}
+                    {%for key,demande in demandefret_termine if key<5 %}
                         {%set idpostule = render(controller('NzoTunisiefretBundle:Client:GetPostuleEncoursByDemande', {'id': demande.id | urlencrypt}))%}
                         <div class="row">
                             <div class="col-md-12">

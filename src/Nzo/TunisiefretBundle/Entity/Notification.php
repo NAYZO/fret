@@ -29,6 +29,11 @@ class Notification
      * @ORM\ManyToOne(targetEntity="Nzo\UserBundle\Entity\Exportateur")
      */
     private $exportateur;
+    
+    /**
+     * @ORM\ManyToOne(targetEntity="Nzo\UserBundle\Entity\Admin")
+     */
+    private $admin;
 
     /**
      * @ORM\Column(name="vu", type="boolean")
@@ -206,5 +211,28 @@ class Notification
     public function getExportateur()
     {
         return $this->exportateur;
+    }
+
+    /**
+     * Set admin
+     *
+     * @param \Nzo\UserBundle\Entity\Admin $admin
+     * @return Notification
+     */
+    public function setAdmin(\Nzo\UserBundle\Entity\Admin $admin = null)
+    {
+        $this->admin = $admin;
+    
+        return $this;
+    }
+
+    /**
+     * Get admin
+     *
+     * @return \Nzo\UserBundle\Entity\Admin 
+     */
+    public function getAdmin()
+    {
+        return $this->admin;
     }
 }

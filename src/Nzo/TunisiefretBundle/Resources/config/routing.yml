@@ -22,7 +22,12 @@ nzo_contact_send:
     pattern:  /contact/send/
     defaults: { _controller: NzoTunisiefretBundle:Front:contact}        
         
-        
+nzo_inscription_confirmation:
+    path:  /Inscription/Confirmation_~CJ84YYC2B932Y9Y428YCT3789T13TUEGCB871TE487TC8T8CF1C81T3T1TC37TGTCB391B9YYW82Y8YCYMBCY24Y90YY489CTV8F28OF4C8
+    defaults:
+        _controller: FrameworkBundle:Template:template
+        template: 'NzoTunisiefretBundle:Front:InscriptionConfirmation.html.twig' 
+    
 #CLIENT ROUTE    
 nzo_poserdemande_export:
     pattern: /deposer-demande-fret/
@@ -280,7 +285,7 @@ fos_user_registration_check_email:
       
 fos_user_registration_confirm:
     pattern: /inscription/confirmer/{token}
-    defaults: { _controller: FOSUserBundle:Registration:confirm }
+    defaults: { _controller: NzoUserBundle:Registration:confirm }
     requirements:
       _method: GET
       
