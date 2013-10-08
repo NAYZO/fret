@@ -71,15 +71,15 @@
     <h4 class="pull-left"><strong>{{mydemande.titre}}</strong> <span class="text-danger">( {{mydemande.type}} )</span> </h4>
      <div class="row" style="padding-right: 14px;">
         <div class=" pull-right">
-            <a href="{{path('client_reposter_demande_type', {'id':mydemande.id | urlencrypt} )}}" class="btn btn-danger btn-xs">Déposer</a>
-            <a data-toggle="modal" href="#nzomyModal" class="btn btn-danger btn-xs" >Supprimer</a>
+            <a href="{{path('client_reposter_demande_type', {'id':mydemande.id | urlencrypt} )}}" class="btn btn-primary btn-xs">Déposer</a>
+            <a data-toggle="modal" href="#nzomyModal" class="btn btn-info btn-xs" >Supprimer</a>
             <!-- Modal -->
             <div class="modal fade" id="nzomyModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
               <div class="modal-dialog">
                 <div class="modal-content">
                   <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title">Supprimer la Demande</h4>
+                    <h5 class="modal-title"><strong>Supprimer la Demande</strong></h5>
                   </div>
                   <div class="modal-body">
                    Voulez vous supprimer la demande ? 
