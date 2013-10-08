@@ -66,16 +66,17 @@
         <li><a href="{{path('nzo_tunisiefret_homepage')}}">Accueil</a></li>
         <li class="current"><span>Modification Profil</span></li>
     </ul>
-    <form action="{{ path('fos_user_profile_edit') }}" id="contactForm" method="post" {{ form_enctype(form) }} role="form">
+        <hr>
+        <div class="row">
+    <form action="{{ path('fos_user_profile_edit') }}" id="contactForm" method="post" {{ form_enctype(form) }} role="form" class="col-md-6 col-md-offset-3 panel panel-default padding" style="padding: 40px" >
         <fieldset>
             <legend><strong>Modifiez Votre Profil</strong></legend>  
         
             {% if(form_errors(form)) %}
                 <div class="error-alert"> {{ form_errors(form) }} </div>
             {% endif %}
-            <div class="row">
-                <div class="col-md-6"> 
             
+              
                     {#--Nom d'utilisateur---#}
                     <div class="form-group">
                         <label>Nom D'utilisateur <span class="required">*</span></label>
@@ -93,13 +94,13 @@
                     {% if(form_errors(form.email)) %}
                       <div class="error-input">{{ form_errors(form.email) }}</div>
                     {% endif %}  
-                </div>  
-            </div> 
+             
 
-            <input type="submit" value="Modifier" name="_submit" class="btn btn-danger pull-right">
+            <input type="submit" value="Modifier" name="_submit" class="btn btn-primary pull-right">
             <p class="text-danger"><span class="required">*</span> Champs Obligatoire</p>
             {{ form_rest(form) }}
         </fieldset>
     </form>
+            </div>
 </div>
 {% endblock content %}

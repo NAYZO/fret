@@ -69,7 +69,7 @@
     
     {#----------------Titre de la page----------------#}
     <div class="legend2">
-        <h4 class="pull-left">{{postule.demandeexport.titre}}</h4>
+        <h4 class="pull-left">{{postule.demandeexport.titre}} <span class="text-danger">( {{postule.demandeexport.type}} )</span></h4>
         <div class="row" style="padding-right: 14px;">
             <div class=" pull-right">
             </div>
@@ -146,7 +146,7 @@
         {#----------------Information sue le client----------------#}
         <div class="col-md-6">
             <div class="panel panel-default">
-                <div class="panel-heading">Informations sur le Client</div>
+                <div class="panel-heading"><h4 class="text-primary">Informations sur le Client</h4></div>
                     <div class="panel-body">
                         <div class="media">
                             <div class="pull-left">
@@ -173,7 +173,7 @@
                 </div>
               {#----------------Avis et Notes Associé ----------------#}  
                <div class="panel panel-default">
-                <div class="panel-heading">Avis et Notes Associé</div>
+                   <div class="panel-heading"><h4 class="text-primary">Avis et Notes Associé</h4></div>
                 <div class="panel-body">
                         <h4 class="legend2">{{postule.exportateur.nomentrop}}</h4>
                          {%if postule.demandeexport.avisexport is not null%}                                 
@@ -197,21 +197,21 @@
                       {%if postule.demandeexport.avisexport is not null%}     
                           {%if postule.demandeexport.avisexport.noteclient == null%}
                             <p class="text-success">Vous n'avez pas encore associer un Avis à "{{postule.demandeexport.client.nomentrop}}".</p>
-                            <p><a href="{{path('exp_donner_avis_demande_export', {'id':postule.id | urlencrypt})}}">Donnez un Avis</a></p>
+                            <p><a href="{{path('exp_donner_avis_demande_export', {'id':postule.id | urlencrypt})}}" class="btn btn-default btn-sm">Donnez un Avis</a></p>
                           {%else%}   
                             <p><strong class="red">Note Associer : </strong> <span id="nzoratingstarclient"></span> <strong>({{postule.demandeexport.avisexport.noteclient}})</strong></p>
                             <p><strong class="red">Avis Associer : </strong> {{postule.demandeexport.avisexport.avisclient}}</p>
                           {%endif%}  
                        {%else%}
                            <p class="text-success">Vous n'avez pas encore associer un Avis à "{{postule.demandeexport.client.nomentrop}}".</p>
-                            <p><a href="{{path('exp_donner_avis_demande_export', {'id':postule.id | urlencrypt})}}">Donnez un Avis</a></p>
+                            <p><a href="{{path('exp_donner_avis_demande_export', {'id':postule.id | urlencrypt})}}" class="btn btn-default btn-sm">Donnez un Avis</a></p>
                       {%endif%}       
                     </div>
 
                 </div>
                 {#----------------Resultat et Description----------------#}  
                <div class="panel panel-default">
-                <div class="panel-heading">Resultat et Synthèse</div>
+                   <div class="panel-heading"><h4 class="text-primary">Resultat et Synthèse</h4></div>
                     <div class="panel-body">
                         <p><strong class="red">Date fin Mission : </strong> {{postule.demandeexport.terminerdemande.datejobend|date('d/m/Y')}}</p>
                         <p><strong class="red">Résultat : </strong> {{postule.demandeexport.terminerdemande.resultat}}</p>
@@ -261,7 +261,7 @@
                         </div>
                     </div>
                     <!-- BLOCK --> 
-                    <div id='nzolengthmsg' class="panel panel-warning">
+                    <div id='nzolengthmsg' class="panel panel-default">
                         <div class="panel-heading">
                             <h3 class="panel-title">
                                 <span > {{msgs|length -2 }} Messages </span>
@@ -310,7 +310,7 @@
                             <textarea id="nzomsgexp" required="required" class="form-control" rows="6"></textarea>
                         </div>
                         <div class="buttons-set">
-                            <button type="submit" class="btn btn-danger pull-right">Envoyez</button>
+                            <button type="submit" class="btn btn-primary pull-right">Envoyez</button>
                         </div>
                     </form> 
                 </div>

@@ -480,3 +480,37 @@ legend strong{color: #3079a2;}
 .padding-bottom{
     padding-bottom: 40px;
 }
+
+.error-container {
+width: 500px;
+min-height: 409px;
+margin-left: auto;
+margin-right: auto;
+margin-top: 60px;
+margin-bottom: 5px;
+padding: 20px;
+font: normal 12px 'Open Sans', HelveticaNeue, Helvetica, Arial;
+}
+.center {
+text-align: center;
+}
+.error-container .info-text {
+font-size: 22px;
+font-weight: 600;
+padding: 8px 0px;
+}
+.text-transparent {
+color: rgba(0, 0, 0, 0.2);
+text-shadow: 1px 1px 1px rgba(255, 255, 255, 0.6), 0 0 1px rgba(0, 0, 0, 0.3);
+}
+hr.main {
+margin: 0;
+border: 0;
+border-top: 1px solid #ddd;
+border-bottom: 1px solid #F5F5F5;
+}
+.error-container .error-text {
+font-size: 200px;
+line-height: 200px;
+font-weight: 600;
+}

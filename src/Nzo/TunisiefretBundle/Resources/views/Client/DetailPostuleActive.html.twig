@@ -16,7 +16,7 @@
     <div class="box">
         <ul id="bignav" class="nav nav-pills bottom cl-effect-1">     
             <li class="col-md-offset-2"><a href="{{path('nzo_tunisiefret_homepage')}}" >Dashboard</a></li>
-            <li class="dropdown">
+            <li class="actives dropdown">
                 <a class="dropdown-toggle" data-toggle="dropdown" href="#">
                     Mes Demandes <span class="caret"></span>
                 </a>
@@ -26,7 +26,7 @@
                 </ul>
             </li>
 
-            <li class="actives dropdown">
+            <li class="dropdown">
                 <a class="dropdown-toggle" data-toggle="dropdown" href="#">
                     Mes Contrats <span class="caret"></span>
                 </a>
@@ -73,9 +73,9 @@
     
     {#----------------Titre de la page----------------#}
     <div class="legend2">
-        <h4 class="pull-left">{{postule.demandeexport.titre}}  <span class="text-danger">( {{postule.demandeexport.type}} )</span></h4>
+        <h4 class="pull-left">{{postule.demandeexport.titre}} <span class="text-danger">( {{postule.demandeexport.type}} )</span></h4>
         <div class="row" style="padding-right: 14px;">
-            <div class=" pull-right">
+            <div class="pull-right">
             <!-- Button trigger modal -->
             
             <a data-toggle="modal" href="#nzoEmbaucheModal" class="btn btn-info btn-sm" style="margin-top: 12px;">Embauchez "{{postule.exportateur.nomentrop}}"</a>
@@ -93,7 +93,6 @@
                           <div class="form-group">
                             <label>Raison d'annulation</label>
                             <select id="nzoraison" class="form-control" name="annuler_raison">
-                                
                                 <option value="Postules ne répondent pas au besoin">Postules ne répondent pas au besoin</option>
                                 <option value="Demande d'exportation expiré">Demande d'exportation expiré</option>
                                 <option value="Ajouté par erreur">Ajouté par erreur</option>
@@ -168,7 +167,7 @@
                       </a>
                     </div>
                           
-                    <div id="collapseOne" class="panel-collapse collapse">
+                    <div id="collapseOne" class="panel-collapse collapse in">
                         <div class="panel-body">
                             <div class="row">
                                 <div class="col-md-6">
@@ -191,34 +190,12 @@
                     </div>
                 </div> 
             </div>
-            
-           <div class="panel-group" id="accordion2">
-            {#----------------Détails Postule----------------#}
-                <div class="panel panel-default">
-                  <div class="panel-heading">
-                    <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseThree">
-                        <h4 class="panel-title">
-                            Détails Postule de l'Affreteur
-                            <img src="{{ asset('bundles/nzotunisiefret/images') }}/down.png" alt="" class="pull-right"/>
-                        </h4>
-                    </a>
-                  </div>
-                  <div id="collapseThree" class="panel-collapse collapse">
-                    <div class="panel-body">
-                        <p style="color: grey"><span class="red">Date de Postule :</span> {{postule.datepostule|date("d/m/Y")}} | <span class="red"> Durée :</span> {{postule.duree}} | <span class="red"> Prix :</span> {{postule.prix}} </p>
-                        <p>
-                          {{postule.description}}
-                        </p> 
-                    </div>
-                  </div>
-                </div>
-              </div>
         </div>
             
         {#----------------Information sue l'Affreteur----------------#}
         <div class="col-md-6">
             <div class="panel panel-default">
-                <div class="panel-heading">Informations sur l'Affreteur</div>
+                <div class="panel-heading"><h4 class="text-primary">Informations sur l'Affreteur</h4></div>
                     <div class="panel-body">
                         <div class="media">
                             <div class="pull-left">
@@ -244,8 +221,30 @@
                         </div> 
                     </div>
                 </div>
-            </div>
+            <div class="panel-group" id="accordion2">
+            {#----------------Détails Postule----------------#}
+                <div class="panel panel-default">
+                  <div class="panel-heading">
+                    <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseThree">
+                        <h4 class="panel-title">
+                            Détails Postule de l'Affreteur
+                            <img src="{{ asset('bundles/nzotunisiefret/images') }}/down.png" alt="" class="pull-right"/>
+                        </h4>
+                    </a>
+                  </div>
+                  <div id="collapseThree" class="panel-collapse collapse in">
+                    <div class="panel-body">
+                        <p style="color: grey"><span class="red">Date de Postule :</span> {{postule.datepostule|date("d/m/Y")}} | <span class="red"> Durée :</span> {{postule.duree}} | <span class="red"> Prix :</span> {{postule.prix}} </p>
+                        <p>
+                          {{postule.description}}
+                        </p>
+                        <a href="" class="btn btn-xs btn-default pull-right">Signaler</a>
+                    </div>
+                  </div>
+                </div>
+              </div>  
         </div>
+    </div>
         
         {#----------------Nombre de message----------------#}
         <h4 class="legend2 bottom">Messages ( <span id='nzonbmsg'>{{msgs|length}}</span> )</h4>
@@ -284,7 +283,7 @@
                         </div>
                     </div>
                     <!-- BLOCK --> 
-                    <div id='nzolengthmsg' class="panel panel-warning">
+                    <div id='nzolengthmsg' class="panel panel-default">
                         <div class="panel-heading">
                             <h3 class="panel-title">
                                 <span > {{msgs|length -2 }} Messages </span>

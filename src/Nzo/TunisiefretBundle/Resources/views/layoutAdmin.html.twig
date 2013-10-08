@@ -6,6 +6,7 @@
         <title>{% block title %}TunisieFret - Admin - {% endblock title %}</title>
         <!--To be sure using the latest rendering mode for IE-->
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <link rel="icon" type="image/ico" href="{{ asset('bundles/nzotunisiefret/images') }}/favicon.ico"> 
         <!-- CSS -->
         <link href="{{ asset('bundles/nzotunisiefret/css/bootstrap.css') }}" rel="stylesheet" media="screen">
         <link href="{{ asset('bundles/nzotunisiefret/css/style.css') }}" rel="stylesheet" media="screen">
@@ -65,13 +66,7 @@
             <footer class="footer-bg">
             <div class="container">
                 <div class="row">
-                    <div class="col-md-4">
-                        <ul class="list-inline footer-menu">
-                            <li><a href="{{path('admin_home')}}">Acceuil</a></li>
-                            <li><a href="{{path('nzo_apropos')}}">A propos de nous</a></li>
-                            <li><a href="{{path('nzo_contact')}}">Contact</a></li>
-                        </ul>
-                    </div>
+                    <div class="col-md-4"></div>
                     <div class="col-md-4"></div>
                     <div class="col-md-4 text-right copyright">© 2013 <a href='http://www.ovynet.com' target='_blank' >Ovynet</a>. All Rights Reserved.</div>
                 </div>
