@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>TunisieFret</title>
+        <!--To be sure using the latest rendering mode for IE-->
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <link rel="icon" type="image/ico" href="{{ asset('bundles/nzotunisiefret/images') }}/favicon.ico">
+        <!-- CSS -->
+        <link href="{{ asset('bundles/nzotunisiefret/css/bootstrap.css') }}" rel="stylesheet" media="screen">
+        <link href="{{ asset('bundles/nzotunisiefret/css/style.css') }}" rel="stylesheet" media="screen">
+        {% block head %}  {% endblock head %}
+    </head>
+    <body>
+        <section class="container bottom">
+            <div class="row">
+                <div class="error-container center">
+                    <div class="info-text text-transparent">
+                          Le serveur a renvoyé une "{{ status_code }} {{ status_text }}". 
+                    </div>
+                    <hr class="main">
+                    <div class="error-text text-transparent" style="font-size: 108px;">
+                        ERREUR
+                    </div>
+                    <hr class="main">
+                    <div class="info-text text-transparent">
+                        vérifier l'URL si vous rencontrez des difficultés pour localiser une destination sur Tunisie Fret
+                    </div>
+                    <hr class="main bottom" style="margin-bottom: 18px;">
+                    <a href="{{path('nzo_tunisiefret_homepage')}}" class="btn btn-primary">Retour A La Page D'acceuil</a>
+                </div>
+            </div>
+        </section>   
+
+    </body>
+</html>
