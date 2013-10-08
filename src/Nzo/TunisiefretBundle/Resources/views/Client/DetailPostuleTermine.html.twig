@@ -73,7 +73,7 @@
     
     {#----------------Titre de la page----------------#}
     <div class="legend2">
-        <h4 class="pull-left">{{postule.demandeexport.titre}}</h4>
+        <h4 class="pull-left">{{postule.demandeexport.titre}} <span class="text-danger">( {{postule.demandeexport.type}} )</span></h4>
         <div class="row" style="padding-right: 14px;">
             <div class=" pull-right">
 
@@ -263,7 +263,7 @@
                         </div>
                     </div>
                     <!-- BLOCK --> 
-                    <div id='nzolengthmsg' class="panel panel-warning">
+                    <div id='nzolengthmsg' class="panel panel-default">
                         <div class="panel-heading">
                             <h3 class="panel-title">
                                 <span > {{msgs|length -2 }} Messages </span>
@@ -312,7 +312,7 @@
                             <textarea id="nzomsgexp" required="required" class="form-control" rows="6"></textarea>
                         </div>
                         <div class="buttons-set">
-                            <button type="submit" class="btn btn-danger pull-right">Envoyez</button>
+                            <button type="submit" class="btn btn-primary pull-right">Envoyez</button>
                         </div>
                     </form> 
                 </div>

@@ -2,6 +2,12 @@ nzo_tunisiefret_homepage:
     pattern:  /
     defaults: { _controller: NzoTunisiefretBundle:Front:index }
     
+nzo_notfound:
+    pattern: /notfound/
+    defaults:
+        _controller: FrameworkBundle:Template:template
+        template: 'NzoTunisiefretBundle:Front:notfound.html.twig'     
+    
 nzo_inscription:
     pattern:  /inscription/
     defaults: { _controller: NzoTunisiefretBundle:Front:inscription }

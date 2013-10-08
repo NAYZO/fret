@@ -62,6 +62,11 @@
 {% endblock menu %}
 {% block content %}
 <div class="padding">
+    <ul id="breadcrumbs-two">
+        <li><a href="{{path('nzo_tunisiefret_homepage')}}">Accueil</a></li>
+        <li class="current"><span>Voir Profil</span></li>
+    </ul>
+    <hr>
     <div class="row">
         {#---------------------profil client-------------------#}
         <div class="media col-md-6 panel panel-default padding col-md-offset-3">
