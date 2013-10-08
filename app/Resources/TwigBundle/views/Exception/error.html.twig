@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+
+{% if (app.session.getLocale == 'fr' ) %}  
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<link rel="shortcut icon" href="{{ asset('bundles/nzoenglishfirst/images/favicon.ico') }}" />
+        <title>Erreur trovée: {{ status_text }}</title>
+        
+         <style>
+        .errorpage {
+                   padding-top: 4%;
+                   
+                   text-align: center;
+        } 
+        </style>
+    </head>
+    <body>
+<div class="errorpage">
+        
+       {# <h1>Oops! Une erreur est survenue</h1>  #}
+       
+        <h2>Le serveur a renvoyé une "{{ status_code }} {{ status_text }}".</h2>
+
+        <div >Désolé, la page que vous avez demandé n'a pas été trouvé. <br>
+S'il vous plaît vérifier l'URL si vous rencontrez des difficultés pour localiser une destination sur <strong>English First</strong>!<br>
+Pour plus d'informations, essayez de visiter la page <a href="{{ path('NzoEnglishfirstBundle_homepage')}}">d'accueil</a> de <strong>English First</strong>. <br>
+<br>
+<a href="{{path('NzoEnglishfirstBundle_contact')}}" >Contactez-Nous </a>si vous avez besoin d'aide.
+<br>
+Copyright © 2012 <strong>English First</strong>. Tous droits réservés.
+
+        </div>
+</div>
+    </body>
+</html>
+
+{% else %}
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<link rel="shortcut icon" href="{{ asset('bundles/nzoenglishfirst/images/favicon.ico') }}" />
+        <title>An Error Occurred: {{ status_text }}</title>
+        <style>
+        .errorpage {
+                   padding-top: 4%;
+                   
+                   text-align: center;
+        } 
+        </style>
+    </head>
+    <body>
+        <div class="errorpage">
+       {# <h1>Oops! An Error Occurred</h1> #}
+       
+        <h2>The server returned a "{{ status_code }} {{ status_text }}".</h2>
+
+       <div >
+            Sorry, the page you requested was not found. <br>
+Please check the URL for proper spelling and capitalization if you're having trouble locating a destination on <strong>English First</strong>!<br>
+for more information try visiting the <strong>English First<strong/> <a href="{{ path('NzoEnglishfirstBundle_homepage')}}">home page</a>. <br>
+<br>
+Please <a href="{{path('NzoEnglishfirstBundle_contact')}}" >Contact Us</a> if you need more assistance.
+<br>
+Copyright © 2012 <strong>English First</strong>. All rights reserved.
+        </div>
+</div>
+    </body>
+</html>
+
+{% endif %}
