@@ -68,6 +68,15 @@
         <li><a href="{{ path('client_contrat_encours') }}">En Cours</a></li>
         <li class="current"><span>Avis D'affrètement</span></li>
     </ul>
+        
+        {# Notif Block#}
+        <div id='nzonotice' class="alert alert-success animated fadeInDown" style='display:none;'>
+            <span id='spannzonotice'></span>
+            <a class="close" data-dismiss="alert" href="#" aria-hidden="true">&times;</a>
+        </div>
+    {# Notif Block#}
+        
+        
     <h4 class="legend2">Donnez une note et votre Avis sur le travail du <strong class="red">{{postule.exportateur.nomentrop}}</strong></h4>
     
     <form action="{{path('client_donner_avis_demande_export', {'id':postule.id | urlencrypt})}}" method="POST" role="form" id='avisform'>

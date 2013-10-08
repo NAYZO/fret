@@ -66,6 +66,14 @@
             <li class="current"><a href="{{path('nzo_tunisiefret_homepage')}}">Liste Demandes Fret</a></li>
         </ul>
     </div>
+        
+        {# Notif Block#}
+        <div id='nzonotice' class="alert alert-success animated fadeInDown" style='display:none;'>
+            <span id='spannzonotice'></span>
+            <a class="close" data-dismiss="alert" href="#" aria-hidden="true">&times;</a>
+        </div>
+    {# Notif Block#}
+        
     <!--recherche-->
     <form action="{{path('client_recherche',{'type':'EnCours'})}}" method="GET" role="form" id='avisform' class="navbar-form pull-right" style="padding:0;margin-top: 30px;">
         <div class="input-group">

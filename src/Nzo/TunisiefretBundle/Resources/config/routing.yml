@@ -212,6 +212,10 @@ exp_detail_postule_active:
     pattern: /Detail-Postule-Active_~{id}
     defaults: {_controller: NzoTunisiefretBundle:Exportateur:DetailPostuleActive}  
 
+exp_recherche:  
+    pattern: /Affreteur-Recherche/Demande-Fret/{type}
+    defaults: {_controller: NzoTunisiefretBundle:Exportateur:Recherche}
+    
 exp_list_messages:
     pattern: /affreteur/liste-messages/
     defaults: {_controller: NzoTunisiefretBundle:Exportateur:Listemessages}

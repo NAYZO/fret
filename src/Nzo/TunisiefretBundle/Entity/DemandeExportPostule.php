@@ -60,7 +60,7 @@ class DemandeExportPostule
     protected $duree;
 
     /**
-     * @ORM\Column(name="prix", type="float")
+     * @ORM\Column(name="prix", type="string", length=100)
      * @Assert\NotBlank()
      */
     private $prix;

@@ -70,6 +70,14 @@
             <li><span>Mes Demandes</span></li>
             <li class="current"><span>Active</span></li>
         </ul>
+            
+            {# Notif Block#}
+        <div id='nzonotice' class="alert alert-success animated fadeInDown" style='display:none;'>
+            <span id='spannzonotice'></span>
+            <a class="close" data-dismiss="alert" href="#" aria-hidden="true">&times;</a>
+        </div>
+    {# Notif Block#}
+            
     </div>
     <form action="{{path('client_recherche',{'type':'Active'})}}" method="GET" role="form" id='avisform' class="navbar-form pull-right" style="padding:0">
         <div class="input-group">

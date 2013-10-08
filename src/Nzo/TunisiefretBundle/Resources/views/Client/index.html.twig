@@ -68,6 +68,13 @@
     <div class="row">
     <div class="col-md-3">
         <div class="panel panel-default bottom">
+            {# Notif Block#}
+            <div id='nzonotice' class="alert alert-success animated fadeInDown" style='display:none;'>
+                <span id='spannzonotice'></span>
+                <a class="close" data-dismiss="alert" href="#" aria-hidden="true">&times;</a>
+            </div>
+            {# Notif Block#}
+            
             <div class="panel-heading"><strong>Profil</strong></div>
             <div class="panel-body">
                 <a href="{{ path('fos_user_profile_show') }}">

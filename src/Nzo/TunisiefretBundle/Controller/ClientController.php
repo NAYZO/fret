@@ -82,8 +82,8 @@ class ClientController extends Controller {
                 $em->persist($demande);
                 $em->flush();
 
-                $this->get('session')->getFlashBag()->add('notice', 'c boooonn!');
-                return $this->redirect($this->generateUrl('nzo_tunisiefret_homepage'));
+                $this->get('session')->getFlashBag()->set('nzonotice', 'Demande de Fret enregistré avec succès');
+                return $this->redirect($this->generateUrl('nzo_voirlistedemande_export_active'));
             }
         }
         return $this->render('NzoTunisiefretBundle:Client:PoserDemandeExport.html.twig', array('form' => $form->createView()));
@@ -213,14 +213,8 @@ class ClientController extends Controller {
             
             $em->flush();
             
-            
-            ///**************
-            $this->get('session')->getFlashBag()->add('notice', 'Vos changements ont été sauvegardés!');
-            //******
-            
-            
-            
-            
+            $this->get('session')->getFlashBag()->set('nzonotice', 'Demande de Fret terminé avec succès');
+          
         return $this->redirect($this->generateUrl('client_donner_avis_demande_export', array('id' => $this->get('nzo_url_encryptor')->encrypt($postule->getId()))));   
   }
   
@@ -253,9 +247,10 @@ class ClientController extends Controller {
                     $notif->setUrl($url);
                     $em->persist($notif);
             
-            $em->flush();
-            //==================================================================================================================== redirection ver le contrat en cours ..
-        return $this->redirect($this->generateUrl('nzo_tunisiefret_homepage'));   
+            $em->flush();             
+        $this->get('session')->getFlashBag()->set('nzonotice', 'Votre Contrat de Fret est commencé');
+          
+        return $this->redirect($this->generateUrl('client_demande_export_encours_detail', array('id' => $this->get('nzo_url_encryptor')->encrypt($postule->getDemandeexport()->getId()))));   
   }
   
     /**
@@ -291,7 +286,8 @@ class ClientController extends Controller {
             }
             
             $em->flush();
-        return $this->redirect($this->generateUrl('nzo_voirlistedemande_export_active'));   
+            $this->get('session')->getFlashBag()->set('nzonotice', 'Votre demande de Fret est archivé');
+        return $this->redirect($this->generateUrl('nzo_voirlistedemande_export_archive'));   
   }
     
    /**
@@ -307,6 +303,7 @@ class ClientController extends Controller {
             $mydemande->setDemandeexporttype(false);
             $em->persist($mydemande);
             $em->flush();
+            $this->get('session')->getFlashBag()->set('nzonotice', 'Demande type supprimé!');
         return $this->redirect($this->generateUrl('client_list_demande_type'));    
     }
     
@@ -349,7 +346,7 @@ class ClientController extends Controller {
                 $em->persist($demande);
                 $em->flush();
 
-                $this->get('session')->getFlashBag()->add('notice', 'c boooonn!');
+                $this->get('session')->getFlashBag()->set('nzonotice', 'Demande de Fret enregistré avec succès');
                 return $this->redirect($this->generateUrl('nzo_tunisiefret_homepage'));
             }
         }
@@ -694,7 +691,8 @@ class ClientController extends Controller {
             $em->persist($notif);
             
             $em->flush();
-            return $this->redirect($this->generateUrl('nzo_tunisiefret_homepage'));
+            $this->get('session')->getFlashBag()->set('nzonotice', 'Avis associé avec succès');
+            return $this->redirect($this->generateUrl('client_demande_export_termine_detail', array('id' => $this->get('nzo_url_encryptor')->encrypt($postule->getDemandeexport()->getId()))));   
         }
 
         return $this->render('NzoTunisiefretBundle:Client:DonnerAvisExport.html.twig', array('postule' => $postule));

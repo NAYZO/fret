@@ -188,6 +188,14 @@
                         });
 
          </script>
+{% if app.session.flashbag.has('nzonotice') %}
+         <script>
+         $(document).ready( function() { 
+             $('#nzonotice').show();
+             $('#spannzonotice').html('{{app.session.flashbag.get('nzonotice')[0]}}');
+          } );
+             </script>          
+{% endif %}
      {% block js %}  {% endblock js %}
     </body>
     
