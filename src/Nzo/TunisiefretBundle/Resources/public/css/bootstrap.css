@@ -305,7 +305,7 @@ body {
   font-size: 14px;
   line-height: 1.428571429;
   color: #333333;
-  background: url("../images/subtle_white_feathers.png");
+  background: url("../images/bg.png");
 }
 
 input,
@@ -1401,6 +1401,8 @@ table {
 
 th {
   text-align: left;
+  background: rgba(2, 74, 97, 1);
+  color: white;
 }
 
 .table {

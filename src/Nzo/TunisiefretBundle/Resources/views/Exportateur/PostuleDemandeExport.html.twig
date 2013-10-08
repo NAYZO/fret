@@ -164,7 +164,7 @@
                         {#--duree---#}
                         <div class="form-group">
                             <label>Durée <span class="required">*</span></label>
-                            {{ form_widget(form.duree,{'attr': {'class': 'form-control'}}) }}
+                            {{ form_widget(form.duree,{'attr': {'class': 'form-control', 'placeholder': 'e.g 2 semaines'}}) }}
                         </div>
                         {% if(form_errors(form.duree)) %}
                             <div class="error-input">{{ form_errors(form.duree) }}</div>
@@ -173,7 +173,7 @@
                         {#--prix---#}
                         <div class="form-group">
                             <label>Prix <span class="required">*</span></label>
-                            {{ form_widget(form.prix,{'attr': {'class': 'form-control'}}) }}
+                            {{ form_widget(form.prix,{'attr': {'class': 'form-control', 'placeholder': 'e.g 30 €'}}) }}
                         </div>
                         {% if(form_errors(form.prix)) %}
                         <div class="error-input">{{ form_errors(form.prix) }}</div>
