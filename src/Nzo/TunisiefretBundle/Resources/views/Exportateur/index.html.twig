@@ -60,20 +60,19 @@
 {% endblock menu %}
 {% block content %}
 <div class="padding">
-    {#---------arboresence------------#}
-    <div class="col-md-9 pull-left">
-        <ul id="breadcrumbs-two" style="margin-top: 14px;">
-            <li class="current"><a href="{{path('nzo_tunisiefret_homepage')}}">Liste Demandes Fret</a></li>
-        </ul>
-    </div>
-        
+    
         {# Notif Block#}
         <div id='nzonotice' class="alert alert-success animated fadeInDown" style='display:none;'>
             <span id='spannzonotice'></span>
             <a class="close" data-dismiss="alert" href="#" aria-hidden="true">&times;</a>
         </div>
     {# Notif Block#}
-        
+    {#---------arboresence------------#}
+    <div class="col-md-9 pull-left">
+        <ul id="breadcrumbs-two" style="margin-top: 14px;">
+            <li class="current"><a href="{{path('nzo_tunisiefret_homepage')}}">Liste Demandes Fret</a></li>
+        </ul>
+    </div>  
     <!--recherche-->
     <form action="{{path('client_recherche',{'type':'EnCours'})}}" method="GET" role="form" id='avisform' class="navbar-form pull-right" style="padding:0;margin-top: 30px;">
         <div class="input-group">
@@ -106,11 +105,28 @@
             <div class="panel panel-default bottom">
                 <div class="panel-heading"><strong>Analyse</strong></div>
                 <div class="panel-body">
-                    <p><span class="red">Nombre Demande active: </span>{{nbactive}}</p>
-                    <p><span class="red">Nombre Postules: </span>{{app.user.nbdemandeexportpostule}}</p>
-                    <p><span class="red">Nombre Contrat En Cours: </span>{{app.user.nbcontratencours}}</p>
-                    <p><span class="red">Nombre Contrat Terminé: </span>{{app.user.nbcontrattermine}}</p>
-                    <p><span class="red">Nombre Demande Archivé: </span>{{nbarchive}}</p>
+                    <table class="table table-bordered">
+                        <tr>
+                            <th>Type</th>
+                            <th>Nombre</th>
+                        </tr>
+                        <tr>
+                            <td>Demande active</td>
+                            <td>{{nbactive}}</td>
+                        </tr>
+                        <tr>
+                            <td>Postules</td>
+                            <td>{{app.user.nbdemandeexportpostule}}</td>
+                        </tr>
+                        <tr>
+                            <td>Contrat En Cours</td>
+                            <td>{{app.user.nbcontratencours}}</td>
+                        </tr>
+                        <tr>
+                            <td>Contrat Terminé</td>
+                            <td>{{nbarchive}}</td>
+                        </tr>
+                    </table>
                 </div>
             </div>
         </div>

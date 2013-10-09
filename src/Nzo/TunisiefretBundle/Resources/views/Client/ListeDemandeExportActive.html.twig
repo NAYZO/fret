@@ -64,20 +64,18 @@
 {% block content %}
 <div class="padding">
 <div class="row" style="padding-right: 16px;">
-    <div class="col-md-9 pull-left">
-        <ul id="breadcrumbs-two" style="margin-top: 14px;">
-            <li><a href="{{path('nzo_tunisiefret_homepage')}}">Accueil</a></li>
-            <li><span>Mes Demandes</span></li>
-            <li class="current"><span>Active</span></li>
-        </ul>
-            
-            {# Notif Block#}
+     {# Notif Block#}
         <div id='nzonotice' class="alert alert-success animated fadeInDown" style='display:none;'>
             <span id='spannzonotice'></span>
             <a class="close" data-dismiss="alert" href="#" aria-hidden="true">&times;</a>
         </div>
     {# Notif Block#}
-            
+    <div class="col-md-9 pull-left">
+        <ul id="breadcrumbs-two" style="margin-top: 14px;">
+            <li><a href="{{path('nzo_tunisiefret_homepage')}}">Accueil</a></li>
+            <li><span>Mes Demandes</span></li>
+            <li class="current"><span>Active</span></li>
+        </ul>     
     </div>
     <form action="{{path('client_recherche',{'type':'Active'})}}" method="GET" role="form" id='avisform' class="navbar-form pull-right" style="padding:0">
         <div class="input-group">

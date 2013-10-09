@@ -1401,8 +1401,7 @@ table {
 
 th {
   text-align: left;
-  background: rgba(2, 74, 97, 1);
-  color: white;
+  background-color: rgb(247, 247, 247);
 }
 
 .table {

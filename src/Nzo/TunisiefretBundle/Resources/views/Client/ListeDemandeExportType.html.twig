@@ -64,21 +64,19 @@
 {% block content %}
 <div class="padding">
 <div class="row" style="padding-right: 16px;">
+    {# Notif Block#}
+        <div id='nzonotice' class="alert alert-success animated fadeInDown" style='display:none;'>
+            <span id='spannzonotice'></span>
+            <a class="close" data-dismiss="alert" href="#" aria-hidden="true">&times;</a>
+        </div>
+    {# Notif Block#}
     <div class="col-md-9 pull-left">
         <ul id="breadcrumbs-two" style="margin-top: 14px;">
             <li><a href="{{path('nzo_tunisiefret_homepage')}}">Accueil</a></li>
             <li class="current"><span>Liste Demandes Type</span></li>
         </ul>
     </div>
-        
-        
-        {# Notif Block#}
-        <div id='nzonotice' class="alert alert-success animated fadeInDown" style='display:none;'>
-            <span id='spannzonotice'></span>
-            <a class="close" data-dismiss="alert" href="#" aria-hidden="true">&times;</a>
-        </div>
-    {# Notif Block#}
-        
+          
    <div class="pull-right">
         {{ knp_pagination_render(listedemandeexporttype) }}
     </div>
