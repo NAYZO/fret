@@ -1,23 +1,22 @@
 {% extends "NzoTunisiefretBundle::layoutExportateur.html.twig" %}
 
-{% block title %} {{ parent() }} Liste Postules En Cours {% endblock %}
+{% block title %} {{ parent() }} Resultat Recherche {% endblock %}
 
 {% block banner %}
 <div class="jumbotron">
     <div class="col-md-4 col-sm-11 col-xs-11"> 
         <div class="row">
-            <h4 class="title-banner" style="">Liste Postules En Cours</h4>
+            <h4 class="title-banner" style="">Resultat Recherche</h4>
         </div>
     </div>
 </div>
 {% endblock banner %}
-{#---------------------2eme menu-------------------#}
 {% block menu %}
 <div class="nav-container">
     <div class="box">
         <ul id="bignav" class="nav nav-pills bottom cl-effect-1">     
             <li class="col-md-offset-4"><a href="{{path('nzo_tunisiefret_homepage')}}">Liste Demandes</a></li>
-            <li class="dropdown">
+            <li class="dropdown actives">
                 <a class="dropdown-toggle" data-toggle="dropdown" href="#">
                     Mes Postules <span class="caret"></span>
                 </a>
@@ -26,7 +25,7 @@
                     <li><a href="{{ path('exp_liste_postule_archive') }}" >Archivé</a></li>
                 </ul>
             </li>
-            <li class="dropdown actives">
+            <li class="dropdown ">
                 <a class="dropdown-toggle" data-toggle="dropdown" href="#">
                     Mes Contrats <span class="caret"></span>
                 </a>
@@ -42,13 +41,13 @@
                 <li><a href="{{path('nzo_tunisiefret_homepage')}}">Liste Demandes</a></li>
                 <li class="sanslien"><strong>Mes Postules</strong>
                     <ul class="second-drop">
-                        <li><a href="{{ path('exp_liste_postule_active') }}" >Active</a></li>
+                        <li class="activedrop"><a href="{{ path('exp_liste_postule_active') }}" >Active</a></li>
                         <li><a href="{{ path('exp_liste_postule_archive') }}" >Archivé</a></li>
                     </ul>
                 </li>
                 <li class="sanslien"><strong>Mes Contrats</strong>
                     <ul class="second-drop">
-                        <li class="activedrop"><a href="{{ path('exp_liste_contrats_en_cours') }}" >En Cours</a></li>
+                        <li><a href="{{ path('exp_liste_contrats_en_cours') }}" >En Cours</a></li>
                         <li><a href="{{ path('exp_liste_contrats_termine') }}" >Terminé</a></li>
                     </ul>
                 </li>
@@ -63,54 +62,38 @@
     <div class="col-md-9 pull-left">
         <ul id="breadcrumbs-two" style="margin-top: 14px;">
             <li><a href="{{path('nzo_tunisiefret_homepage')}}">Accueil</a></li>
-            <li><span>Liste Contrats</span></li>
-            <li class="current"><span>En Cours</span></li>
+            <li class="current"><span>Resultat Recherche</span></li>
         </ul>
     </div>
-    <!--recherche-->
-    <form action="{{path('exp_recherche',{'type':'EnCours'})}}" method="GET" role="form" id='avisform' class="navbar-form pull-right" style="padding:0;margin-top: 30px;">
-        <div class="input-group">
-            <input type="text" name='mot' placeholder="Recherche..." class="form-control" style="width: 163px;height: 26px;">
-            <button type="submit" class="btn btn-default btn-xs" style="border-radius:0"><span class="glyphicon glyphicon-search"></span></button>
-        </div>
-    </form>
-    <!--/recherche-->
 </div>
-<hr>
 <div class="pull-right" style="padding-right: 16px;">
-        {{ knp_pagination_render(listepostules) }}
+    {{ knp_pagination_render(listepostules) }}
 </div>
 <div class="row"></div>
 <div class="list-group">
     {% if listepostules is empty %}
         <hr>
-        <p class="alert alert-info">Il n'existe aucune demande de fret en cours !</p>
+        <p class="alert alert-info">Aucune resultat trouver!</p>
     {%else%}
-    {% for postule in listepostules %}      
+    {% for postule in listepostules %}
         <div class="list-group-item" style="padding: 30px;">
             <div class="legend list-group-item-heading padding-bottom">
-                <h4 class="cl-effect-1 pull-left"><a href="{{path('exp_contrat_encours_detail', {'id':postule.id | urlencrypt} )}}">{{postule.demandeexport.titre}}</a></h4>  
+                <h4 class="cl-effect-1 pull-left"><a href="{{path('exp_detail_postule_active', {'id':postule.id | urlencrypt} )}}">{{postule.demandeexport.titre}}</a></h4>  
                 <h5 class="pull-right text-danger">{{postule.demandeexport.type}}</h5>
             </div>
             <p style="color: grey;">Postulé le {{postule.datepostule|date("d/m/Y")}}</p>
-            <div class="row">
-                <span class="list-group-item-text col-md-10">
-                    {% if postule.demandeexport.description|length > 150 %}
-                        {{postule.demandeexport.description|slice(0, 150)}}...
-                    {%else%}
-                        {{postule.demandeexport.description}}
-                    {% endif %}
-                    <a href="{{path('exp_contrat_encours_detail', {'id':postule.id | urlencrypt} )}}" class="pull-right"> Voir détails </a>
-                </span>
-                <div class="col-md-2 media" style="margin-top: 0;border-left: 1px solid rgb(218, 213, 213)">
-                   
-                    <a href="{{path('exp_profil_client', {'id':postule.demandeexport.client.id | urlencrypt} )}}" class="pull-left"><img class="media-object img-thumbnail" src="{{ asset('clientfilesupload/')}}{{postule.demandeexport.client.logoname}}" alt="" width="50" height="100"></a>
-                    <a href="{{path('exp_profil_client', {'id':postule.demandeexport.client.id | urlencrypt} )}}"><span class="media-body">{{postule.exportateur.nomentrop}}</span></a>
-               </div>
-            </div>
-       </div>     
+            <p class="list-group-item-text">
+                {% if postule.demandeexport.description|length > 150 %}
+                    {{postule.demandeexport.description|slice(0, 150)}}...
+                {%else%}
+                    {{postule.demandeexport.description}}
+                {% endif %}
+                <a href="{{path('exp_detail_postule_active', {'id':postule.id | urlencrypt} )}}" class="pull-right"> Voir détails </a>
+            </p>
+              
+        </div>
     {% endfor %}
-    {% endif %}
+        {% endif %}
 </div>
 <div class="row" style="padding-right: 16px;">
     <div class="pull-right">

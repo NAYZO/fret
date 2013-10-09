@@ -532,41 +532,50 @@ class ExportateurController extends Controller {
            $usr = $this->get('security.context')->getToken()->getUser();
         $em = $this->getDoctrine()->getManager();   
         
-        $query = $em->createQuery("SELECT a FROM NzoTunisiefretBundle:DemandeExportPostule a JOIN a.demandeexport d WHERE d.description LIKE :mot OR d.titre LIKE :mot AND d.tacking = 0 AND d.annuler_demande is NULL AND a.demande_refuser = 0 AND a.annuler_by_exportateur = 0 AND a.exportateur = ".$usr->getId()." ORDER BY a.datepostule DESC ");
+        $query = $em->createQuery("SELECT a FROM NzoTunisiefretBundle:DemandeExportPostule a JOIN a.demandeexport d WHERE (d.description LIKE :mot OR d.titre LIKE :mot) AND d.tacking = 0 AND d.annuler_demande is NULL AND a.demande_refuser = 0 AND a.annuler_by_exportateur = 0 AND a.exportateur = ".$usr->getId()." ORDER BY a.datepostule DESC ");
         $query->setParameter('mot', "%$mot%");
         
         $paginator = $this->get('knp_paginator'); 
         $listepostules = $paginator->paginate($query,
         $this->get('request')->query->get('page', 1), 6);         
-        return $this->render('NzoTunisiefretBundle:Exportateur:ListePostuleActive.html.twig', array('listepostules' => $listepostules));
+        return $this->render('NzoTunisiefretBundle:Exportateur:ResultatRecherche.html.twig', array('listepostules' => $listepostules));
        }
        else if($type=='Archive') {         
            $usr = $this->get('security.context')->getToken()->getUser();
-           $em = $this->getDoctrine()->getManager();   
-           $query = $em->getRepository('NzoTunisiefretBundle:DemandeExport')->RechercheDemandeArchive($usr->getId(), $mot);
-                $paginator = $this->get('knp_paginator'); 
-                $listedemandeexport = $paginator->paginate($query,
-                $this->get('request')->query->get('page', 1), 6);         
-           return $this->render('NzoTunisiefretBundle:Client:ResultatRecherche.html.twig', array('listedemandeexport' => $listedemandeexport));
+            $em = $this->getDoctrine()->getManager();   
+            
+            $query = $em->createQuery("SELECT a FROM NzoTunisiefretBundle:DemandeExportPostule a JOIN a.demandeexport d WHERE (d.description LIKE :mot OR d.titre LIKE :mot) AND (d.tacking = 0 OR d.annuler_demande is NOT NULL OR a.demande_refuser = 1 OR a.annuler_by_exportateur = 1) AND a.exportateur = ".$usr->getId()." ORDER BY a.datepostule DESC ");
+            $query->setParameter('mot', "%$mot%");
+            
+            $paginator = $this->get('knp_paginator'); 
+            $listepostules = $paginator->paginate($query,
+            $this->get('request')->query->get('page', 1), 6);         
+            return $this->render('NzoTunisiefretBundle:Exportateur:ResultatRecherche.html.twig', array('listepostules' => $listepostules));
        }
        else if($type=='EnCours') {
            $usr = $this->get('security.context')->getToken()->getUser();
-            $em = $this->getDoctrine()->getManager();        
-            $query = $em->getRepository('NzoTunisiefretBundle:DemandeExport')->RechercheDemandeEnCours($usr->getId(), $mot);
+            $em = $this->getDoctrine()->getManager(); 
+            
+            $query = $em->createQuery("SELECT a FROM NzoTunisiefretBundle:DemandeExportPostule a JOIN a.demandeexport d WHERE (d.description LIKE :mot OR d.titre LIKE :mot) AND d.tacking = 1 AND d.terminer_demande is NULL AND d.annuler_demande is NULL AND a.demande_refuser = 0 AND a.annuler_by_exportateur = 0 AND a.exportateur = ".$usr->getId()." ORDER BY a.datepostule DESC ");
+            $query->setParameter('mot', "%$mot%");
+            
             $paginator = $this->get('knp_paginator'); 
-            $listecontratencours = $paginator->paginate($query,
+            $listepostules = $paginator->paginate($query,
             $this->get('request')->query->get('page', 1), 6);         
-            return $this->render('NzoTunisiefretBundle:Client:ResultatRechercheEnCours.html.twig', array('listecontratencours' => $listecontratencours));
+            return $this->render('NzoTunisiefretBundle:Exportateur:ResultatRechercheEnCours.html.twig', array('listepostules' => $listepostules));
         
        }
        else if($type=='Termine') {
             $usr = $this->get('security.context')->getToken()->getUser();
-            $em = $this->getDoctrine()->getManager();        
-            $query = $em->getRepository('NzoTunisiefretBundle:DemandeExport')->RechercheDemandeTerminer($usr->getId(), $mot);
+            $em = $this->getDoctrine()->getManager();   
+            
+            $query = $em->createQuery("SELECT a FROM NzoTunisiefretBundle:DemandeExportPostule a JOIN a.demandeexport d WHERE (d.description LIKE :mot OR d.titre LIKE :mot) AND d.terminer_demande is NOT NULL AND a.exportateur = ".$usr->getId()." ORDER BY a.datepostule DESC ");
+            $query->setParameter('mot', "%$mot%");
+            
             $paginator = $this->get('knp_paginator'); 
-            $listecontratencours = $paginator->paginate($query,
+            $listepostules = $paginator->paginate($query,
             $this->get('request')->query->get('page', 1), 6);         
-            return $this->render('NzoTunisiefretBundle:Client:ResultatRechercheEnCours.html.twig', array('listecontratencours' => $listecontratencours));
+            return $this->render('NzoTunisiefretBundle:Exportateur:ResultatRechercheEnCours.html.twig', array('listepostules' => $listepostules));
        }
        else       
          return $this->redirect($this->generateUrl('nzo_tunisiefret_homepage'));  

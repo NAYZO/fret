@@ -94,7 +94,7 @@
                             <label>Raison d'annulation</label>
                             <select id="nzoraison" class="form-control" name="annuler_raison">
                                 <option value="Postules ne répondent pas au besoin">Postules ne répondent pas au besoin</option>
-                                <option value="Demande d'exportation expiré">Demande d'exportation expiré</option>
+                                <option value="Demande de fret expiré">Demande de fret expiré</option>
                                 <option value="Ajouté par erreur">Ajouté par erreur</option>
                                 <option value="Autre">Autre</option>
                             </select>
@@ -123,11 +123,11 @@
                 <div class="modal-content">
                   <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h5 class="modal-title"><strong>Confirmation de Contrat d'exportation</strong></h5>
+                    <h5 class="modal-title"><strong>Confirmation de Contrat de Fret</strong></h5>
                   </div>
                   <div class="modal-body" style="color: black">
                       <form action="{{path('client_contrat_confirmer', {'id':postule.id | urlencrypt})}}" method="POST" role="form" >
-                          <p><strong class="red">Demande d'exportation : </strong> {{postule.demandeexport.titre}}</p>
+                          <p><strong class="red">Demande de fret : </strong> {{postule.demandeexport.titre}}</p>
                           <p><strong class="red">Référence : </strong> {{postule.demandeexport.reference}}</p>
                           <p>Confirmez et commencez cette mission avec <strong class="red">{{postule.exportateur.nomentrop}}</strong></p>
                       
@@ -156,12 +156,12 @@
     <div class="row">
         <div class="col-md-6">      
             <div class="panel-group" id="accordion1" style="margin-bottom: 10px">
-                {#----------------Détails demande Export----------------#}
+                {#----------------Détails demande de Fret----------------#}
                 <div class="panel panel-default">            
                     <div class="panel-heading">
                       <a data-toggle="collapse" href="#collapseOne">
                         <h4 class="panel-title">
-                           Détail de la demande d'export
+                           Détail de la demande de Fret
                            <img src="{{ asset('bundles/nzotunisiefret/images') }}/down.png" alt="" class="pull-right"/>  
                        </h4>
                       </a>
