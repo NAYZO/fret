@@ -5,17 +5,17 @@
     <fieldset>
         <legend class="colorlegend"><strong>Mot de passe oublié ?</strong></legend>  
         {% if invalid_username is defined %}
-            <div class="error-alert">{{ 'resetting.request.invalid_username'|trans({'%username%': invalid_username}, 'FOSUserBundle') }}</div>
+            <div class="error-login">{{ 'resetting.request.invalid_username'|trans({'%username%': invalid_username}, 'FOSUserBundle') }}</div>
         {% endif %}
             
         <div class="form-group">
             <label for="username">S'il vous plaît entrez votre {{ 'resetting.request.username'|trans({}, 'FOSUserBundle') }}</label>
             {#--Email Or Username--#}
             <div class="input-prepend">
-                <input type="text" name="username" required=""  class="form-control" placeholder="{{ 'resetting.request.username'|trans({}, 'FOSUserBundle') }}">
+                <input type="text" name="username" required=""  class="form-control">
             </div>
         </div>
-        <input type="submit" name="submit" value="{{ 'resetting.request.submit'|trans({}, 'FOSUserBundle') }}" class="btn btn-danger pull-right" />
+        <input type="submit" name="submit" value="{{ 'resetting.request.submit'|trans({}, 'FOSUserBundle') }}" class="btn btn-primary pull-right" />
 
     </fieldset>
 </form>
