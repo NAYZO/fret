@@ -91,6 +91,18 @@ vich_uploader:
             delete_on_update: true
             inject_on_load: true
             namer: vich_uploader.namer_uniqid            
+
+# intl-bundle
+sonata_intl:
+    timezone:
+        # default timezone used as fallback
+        default: Europe/Paris
+
+        # locale specific overrides
+        locales:
+            fr: Europe/Paris
+            en_UK: Europe/London    
+    
     
  # FOS USER
 fos_user:

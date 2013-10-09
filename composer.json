@@ -26,7 +26,8 @@
         "jms/security-extra-bundle": "*",
         "knplabs/knp-paginator-bundle": "dev-master",
         "raulfraile/ladybug-bundle": "*",
-        "nzo/url-encryptor-bundle": "dev-master"
+        "nzo/url-encryptor-bundle": "dev-master",
+        "sonata-project/intl-bundle": "2.2.*@dev"
     },
     "scripts": {
         "post-install-cmd": [

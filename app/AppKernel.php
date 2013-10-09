@@ -23,6 +23,7 @@ class AppKernel extends Kernel
             new PUGX\MultiUserBundle\PUGXMultiUserBundle(),
             new Vich\UploaderBundle\VichUploaderBundle(),
             new Knp\Bundle\PaginatorBundle\KnpPaginatorBundle(),
+            new Sonata\IntlBundle\SonataIntlBundle(),
 //          new RaulFraile\Bundle\LadybugBundle\RaulFraileLadybugBundle(),
             
             new JMS\AopBundle\JMSAopBundle(),
