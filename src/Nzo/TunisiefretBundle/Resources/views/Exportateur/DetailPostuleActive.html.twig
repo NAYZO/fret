@@ -59,22 +59,19 @@
 {% endblock menu %}
 {% block content %}
 <div class="padding" style="margin-bottom: 177px;">
+    {# Notif Block#}
+        <div id='nzonotice' class="alert alert-success animated fadeInDown" style='display:none;'>
+            <span id='spannzonotice'></span>
+            <a class="close" data-dismiss="alert" href="#" aria-hidden="true">&times;</a>
+        </div>
+    {# Notif Block#}
     {#----------------breadcrumb----------------#}
     <ul id="breadcrumbs-two">
       <li><a href="{{path('nzo_tunisiefret_homepage')}}">Accueil</a></li>
       <li><span>Liste Postules</span></li>
       <li><a href="{{path('exp_liste_postule_active')}}">Active</a></li>
       <li class="current"><span>Détails</span></li>
-    </ul>
-    
-        
-        {# Notif Block#}
-        <div id='nzonotice' class="alert alert-success animated fadeInDown" style='display:none;'>
-            <span id='spannzonotice'></span>
-            <a class="close" data-dismiss="alert" href="#" aria-hidden="true">&times;</a>
-        </div>
-    {# Notif Block#}
-        
+    </ul>  
     {#----------------Titre de la page----------------#}
     <div class="legend2">
         <h4 class="pull-left">{{postule.demandeexport.titre}} <span class="text-danger">( {{postule.demandeexport.type}} )</span></h4>
@@ -203,7 +200,8 @@
                         <p style="color: grey"><span class="red">Date de Postule :</span> {{postule.datepostule|date("d/m/Y")}} | <span class="red"> Durée :</span> {{postule.duree}} | <span class="red"> Prix :</span> {{postule.prix}} </p>
                         <p>
                           {{postule.description}}
-                        </p> 
+                        </p>
+                        <a href="" class="btn btn-xs btn-default pull-right">Signaler</a>
                     </div>
                   </div>
                 </div>
@@ -249,7 +247,7 @@
                         </div>
                     </div>
                     <!-- BLOCK --> 
-                    <div id='nzolengthmsg' class="panel panel-warning">
+                    <div id='nzolengthmsg' class="panel panel-default">
                         <div class="panel-heading">
                             <h3 class="panel-title">
                                 <span > {{msgs|length -2 }} Messages </span>

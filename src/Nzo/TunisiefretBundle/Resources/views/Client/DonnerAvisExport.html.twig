@@ -62,20 +62,18 @@
 {% endblock menu %}
 {% block content %}
 <div class="padding">
-    <ul id="breadcrumbs-two" class="bottom">
-        <li><a href="{{path('nzo_tunisiefret_homepage')}}">Accueil</a></li>
-        <li><span>Mes Contrats</span></li>
-        <li><a href="{{ path('client_contrat_encours') }}">En Cours</a></li>
-        <li class="current"><span>Avis D'affrètement</span></li>
-    </ul>
-        
-        {# Notif Block#}
+    {# Notif Block#}
         <div id='nzonotice' class="alert alert-success animated fadeInDown" style='display:none;'>
             <span id='spannzonotice'></span>
             <a class="close" data-dismiss="alert" href="#" aria-hidden="true">&times;</a>
         </div>
     {# Notif Block#}
-        
+    <ul id="breadcrumbs-two" class="bottom">
+        <li><a href="{{path('nzo_tunisiefret_homepage')}}">Accueil</a></li>
+        <li><span>Mes Contrats</span></li>
+        <li><a href="{{ path('client_contrat_encours') }}">En Cours</a></li>
+        <li class="current"><span>Avis D'affrètement</span></li>
+    </ul> 
         
     <h4 class="legend2">Donnez une note et votre Avis sur le travail du <strong class="red">{{postule.exportateur.nomentrop}}</strong></h4>
     

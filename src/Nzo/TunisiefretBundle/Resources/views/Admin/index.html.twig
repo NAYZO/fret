@@ -79,32 +79,62 @@
 
 <div class="padding">
     <div class="row">
-    <div class="col-md-12">
+    
         <div class="panel panel-default bottom">
             <div class="panel-heading"><strong>Analyse</strong></div>
             <div class="panel-body">
-                <div class="row">
-                    <div class="col-md-3">
-                        <p><span class="red">Nombre Clients: </span>{{nbclients}}</p>
-                        <p><span class="red">Nombre Affréteurs: </span>{{nbaffreteurs}}</p>
-                   </div>
-                   <div class="col-md-4">
-                        <p><span class="red">Nombre Demande Import Total: </span>{{nb_demande_import}}</p>
-                        <p><span class="red">Nombre Demande Import Active: </span>{{nb_demande_import_active}}</p>
-                        <p><span class="red">Nombre Demande Import Archive: </span>{{nb_demande_import_archive}}</p>
-                        <p><span class="red">Nombre Contrat Import En Cours: </span>{{nb_demande_import_encours}}</p>
-                        <p><span class="red">Nombre Contrat Import Terminé: </span>{{nb_demande_import_termine}}</p>
-                   </div>
-                   <div class="col-md-4">
-                        <p><span class="red">Nombre Demande Export Total: </span>{{nb_demande_export}}</p>
-                        <p><span class="red">Nombre Demande Export Active: </span>{{nb_demande_export_active}}</p>
-                        <p><span class="red">Nombre Demande Export Archive: </span>{{nb_demande_export_archive}}</p>
-                        <p><span class="red">Nombre Contrat Export En Cours: </span>{{nb_demande_export_encours}}</p>
-                        <p><span class="red">Nombre Contrat Export Terminé: </span>{{nb_demande_export_termine}}</p>
-                   </div>
+                <div class="col-md-4">
+                    <p><span class="red">Nombre Clients: </span>{{nbclients}}</p>
                 </div>
+                <div class="col-md-4">
+                <p><span class="red">Nombre Affréteurs: </span>{{nbaffreteurs}}</p>
+                </div>
+                    <div class="row"></div>
+                <hr>   
+                <h4 class="legend2">Analyse des Demandes</h4>
+                    
+                        <div class="table-responsive">
+                            <table class="table table-bordered">
+                                <tr class="active">
+                                    <th>Demande Import Total</th>
+                                    <th>Demande Import Active</th>
+                                    <th>Demande Import Archive</th>
+                                    <th>Demande Export Total</th>
+                                    <th>Demande Export Active</th>
+                                    <th>Demande Export Archive</th>
+                                </tr>
+                                <tr>
+                                    <td>{{nb_demande_import}}</td>
+                                    <td>{{nb_demande_import_active}}</td>
+                                    <td>{{nb_demande_import_archive}}</td>
+                                    <td>{{nb_demande_export}}</td>
+                                    <td>{{nb_demande_export_active}}</td>
+                                    <td>{{nb_demande_export_encours}}</td>
+                                </tr>
+                            </table>
+                        </div>
+                       <h4 class="legend2">Analyse des Contrats</h4> 
+                        <div class="table-responsive">
+                            <table class="table table-bordered">
+                                <tr class="active">
+                                    <th>Contrat Import En Cours</th>
+                                    <th>Contrat Import Terminé</th>
+                                    <th>Contrat Export En Cours</th>
+                                    <th>Contrat Export Terminé</th>
+                                </tr>
+                                <tr>
+                                    <td>{{nb_demande_import_encours}}</td>
+                                    <td>{{nb_demande_import_termine}}</td>
+                                    <td>{{nb_demande_export_encours}}</td>
+                                    <td>{{nb_demande_export_termine}}</td>
+                                </tr>
+                            </table>
+                        </div>
+                  
+               
+                             </div>
              </div>
-        </div>
+ 
         <div class="panel panel-default bottom">
             <div class="panel-heading"><strong>Dernière Demandes Fret Active</strong></div>
             <div class="panel-body">

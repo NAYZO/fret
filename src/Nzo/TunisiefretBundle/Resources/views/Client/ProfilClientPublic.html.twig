@@ -84,12 +84,28 @@
             <div class="panel panel-default bottom">
                 <div class="panel-heading"><strong>Analyse</strong></div>
                 <div class="panel-body">
-                    <p><span class="red">Nombre Demandes déposé: </span>{{app.user.nbdemandeexportdepose}}</p>
-                    <p><span class="red">Nombre Demande active: </span>{{active}}</p>
-                    <p><span class="red">Nombre Contrat En Cours: </span>{{app.user.nbcontratencours}}</p>
-
-                    <p><span class="red">Nombre Contrat Terminé: </span>{{app.user.nbcontrattermine}}</p>
-
+                    <table class="table table-bordered">
+                        <tr>
+                            <th>Type</th>
+                            <th>Nombre</th>
+                        </tr>
+                        <tr>
+                            <td>Demandes déposé</td>
+                            <td>{{app.user.nbdemandeexportdepose}}</td>
+                        </tr>
+                        <tr>
+                            <td>Demande active</td>
+                            <td>{{active}}</td>
+                        </tr>
+                        <tr>
+                            <td>Contrat En Cours</td>
+                            <td>{{app.user.nbcontratencours}}</td>
+                        </tr>
+                        <tr>
+                            <td>Contrat Terminé</td>
+                            <td>{{app.user.nbcontrattermine}}</td>
+                        </tr>
+                    </table>
                 </div>
             </div>
         </div>

@@ -59,6 +59,12 @@
 {% endblock menu %}
 {% block content %}
 <div class="padding" style="margin-bottom: 177px;">
+     {# Notif Block#}
+        <div id='nzonotice' class="alert alert-success animated fadeInDown" style='display:none;'>
+            <span id='spannzonotice'></span>
+            <a class="close" data-dismiss="alert" href="#" aria-hidden="true">&times;</a>
+        </div>
+    {# Notif Block#}
     {#----------------breadcrumb----------------#}
     <ul id="breadcrumbs-two">
       <li><a href="{{path('nzo_tunisiefret_homepage')}}">Accueil</a></li>
@@ -66,15 +72,7 @@
       <li><a href="{{path('exp_liste_contrats_termine')}}">Terminé</a></li>
       <li class="current"><span>Détails</span></li>
     </ul>
-    
-        {# Notif Block#}
-        <div id='nzonotice' class="alert alert-success animated fadeInDown" style='display:none;'>
-            <span id='spannzonotice'></span>
-            <a class="close" data-dismiss="alert" href="#" aria-hidden="true">&times;</a>
-        </div>
-    {# Notif Block#}
-        
-        
+     
     {#----------------Titre de la page----------------#}
     <div class="legend2">
         <h4 class="pull-left">{{postule.demandeexport.titre}} <span class="text-danger">( {{postule.demandeexport.type}} )</span></h4>

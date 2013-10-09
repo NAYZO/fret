@@ -62,19 +62,16 @@
 {% endblock menu %}
 {% block content %}
 <div class="padding">
-    <ul id="breadcrumbs-two">
-        <li><a href="{{path('nzo_tunisiefret_homepage')}}">Accueil</a></li>
-        <li class="current"><span>Déposer Demande Fret</span></li>
-    </ul>
-        
-        
-     {# Notif Block#}
+       {# Notif Block#}
         <div id='nzonotice' class="alert alert-success animated fadeInDown" style='display:none;'>
             <span id='spannzonotice'></span>
             <a class="close" data-dismiss="alert" href="#" aria-hidden="true">&times;</a>
         </div>
     {# Notif Block#}
-        
+    <ul id="breadcrumbs-two">
+        <li><a href="{{path('nzo_tunisiefret_homepage')}}">Accueil</a></li>
+        <li class="current"><span>Déposer Demande Fret</span></li>
+    </ul>
         
     <form action="#" id="contactForm" method="post" {{ form_enctype(form) }} role="form">
     <fieldset>

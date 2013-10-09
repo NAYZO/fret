@@ -66,15 +66,14 @@
 
 <div class="padding">
     <div class="row">
-    <div class="col-md-3">
-        <div class="panel panel-default bottom">
-            {# Notif Block#}
+         {# Notif Block#}
             <div id='nzonotice' class="alert alert-success animated fadeInDown" style='display:none;'>
                 <span id='spannzonotice'></span>
                 <a class="close" data-dismiss="alert" href="#" aria-hidden="true">&times;</a>
             </div>
             {# Notif Block#}
-            
+    <div class="col-md-3">
+        <div class="panel panel-default bottom">
             <div class="panel-heading"><strong>Profil</strong></div>
             <div class="panel-body">
                 <a href="{{ path('fos_user_profile_show') }}">
@@ -94,17 +93,24 @@
         <div class="panel panel-default bottom">
             <div class="panel-heading"><strong>Analyse</strong></div>
             <div class="panel-body">
-                <div class="row">
-                   <div class="col-md-5">
-                        <p><span class="red">Nombre Demande déposé: </span>{{app.user.nbdemandeexportdepose}}</p>
-                        <p><span class="red">Nombre Demande active: </span>{{depose|length}}</p>
-                        <p><span class="red">Nombre Contrat En Cours: </span>{{app.user.nbcontratencours}}</p>
-                   </div>
-                   <div class="col-md-5">
-                       <p><span class="red">Nombre Contrat Terminé: </span>{{app.user.nbcontrattermine}}</p>
-                       <p><span class="red">Nombre Demande Archivé: </span>{{nbarchive}}</p>
-                   </div>
-                </div>
+                <div class="table-responsive">
+                 <table class="table table-bordered">
+                        <tr class="active">
+                            <th>Demande déposé</th>
+                            <th>Demande active</th>
+                            <th>Demande Archivé</th>
+                            <th>Contrat En Cours</th>
+                            <th>Contrat Terminé</th>
+                        </tr>
+                        <tr>
+                            <td>{{app.user.nbdemandeexportdepose}}</td>
+                            <td>{{depose|length}}</td>
+                            <td>{{nbarchive}}</td>
+                            <td>{{app.user.nbcontratencours}}</td>
+                            <td>{{app.user.nbcontrattermine}}</td>
+                        </tr>
+                    </table>
+             </div>
              </div>
         </div>
         <div class="panel panel-default bottom">
