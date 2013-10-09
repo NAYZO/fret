@@ -37,7 +37,7 @@
                         <li class="dropdown">
                             <a href="#" id="cliknotif" class="dropdown-toggle" data-toggle="dropdown">
                                 <span class="glyphicon glyphicon-bell"></span>
-                                <span id='nzonotifnb' class="label label-danger label-style">{#{%set nzonotificationnb = render(controller('NzoTunisiefretBundle:Client:AjaxGetNbNotif'))%}{%if nzonotificationnb > 0%}{{nzonotificationnb}}{%endif%}#}</span>
+                                <span id='nzonotifnb' class="label label-danger label-style">{%set nzonotificationnb = render(controller('NzoTunisiefretBundle:Admin:AjaxGetNbNotif'))%}{%if nzonotificationnb > 0%}{{nzonotificationnb}}{%endif%}</span>
                             </a>
                             <ul id='nzolistnotifajax' class="dropdown-menu  notification" style="margin-top: 26px;">
                               
@@ -84,12 +84,11 @@
      <script src="{{ asset('bundles/nzotunisiefret/js/up.js') }}"></script>
      <script src="{{ asset('bundles/nzotunisiefret/js/modal.js') }}"></script>     
      <script>
-         {#
          $(document).ready(function() {
             nzostorage='';
             setInterval(function(){ 
                 $.ajax({
-                     url:'{{path("ajax_get_nb_notif_client")}}',
+                     url:'{{path("ajax_get_nb_notif_admin")}}',
                      type: 'GET',
                      success: function(nbnotif){
                             (nbnotif==0) ? $('#nzonotifnb').html('') : $('#nzonotifnb').html(nbnotif);      
@@ -97,23 +96,12 @@
                      error:function(){}  
                 });
             }, 10000);
-            
-            setInterval(function(){ 
-                $.ajax({
-                     url:'{{path("ajax_get_nb_msg_client")}}',
-                     type: 'GET',
-                     success: function(nbmsg){
-                            (nbmsg==0) ? $('#nzomsgnb').html('') : $('#nzomsgnb').html(nbmsg);      
-                     },
-                     error:function(){}  
-                });
-            }, 15000);
          });
          
          $('#cliknotif').on('click', function(){
             if($('#nzonotifnb').html() != '' || nzostorage == ''){                
                 $.ajax({
-                         url:'{{path("ajax_get_notif_client")}}',
+                         url:'{{path("ajax_get_notif_admin")}}',
                          type:"POST",
                          dataType:'json',
                          success: function(a){
@@ -129,7 +117,7 @@
                                         else                      
                                             b+='<li><a href="'+a[key]['url']+'">'+a[key]['notiftext']+'</a></li>';                                    
                                     }
-                                    b+='<li class="all"><a href="{{path('client_list_notifications')}}" class="text-center">Voir toute les notifications</a></li>';
+                                    b+='<li class="all"><a href="{{path('admin_list_notifications')}}" class="text-center">Voir toute les notifications</a></li>';
                                     nzostorage = b;
                                     $('#nzolistnotifajax').html(b);
                                     $('#nzonotifnb').html('');
@@ -141,7 +129,6 @@
             $('#nzolistnotifajax').html(nzostorage);
  
          });
-         #}
      </script>
      {#-----------menu-scroll---------#}
      <script>
@@ -186,6 +173,16 @@
                         });
 
          </script>
+{#
+{% if app.session.flashbag.has('nzonotice') %}
+         <script>
+         $(document).ready( function() { 
+             $('#nzonotice').show();
+             $('#spannzonotice').html('{{app.session.flashbag.get('nzonotice')[0]}}');
+          } );
+             </script>          
+{% endif %}
+#}
      {% block js %}  {% endblock js %}
     </body>
     

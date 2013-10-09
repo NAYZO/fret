@@ -5,9 +5,11 @@ namespace Nzo\TunisiefretBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use JMS\SecurityExtraBundle\Annotation\Secure;
+use Symfony\Component\Httpfoundation\Response;
 
 use Nzo\UserBundle\Entity\Client;
-
+use Nzo\TunisiefretBundle\Entity\DemandeExport;
+use Nzo\TunisiefretBundle\Entity\DemandeExportPostule;
 
 class AdminController extends Controller {
     
@@ -26,6 +28,19 @@ class AdminController extends Controller {
         }
     }
 
+    /**
+     * @Secure(roles="ROLE_ADMIN")
+     */
+    public function AjaxGetNbNotifAction(Request $request) 
+    {
+        $usr = $this->get('security.context')->getToken()->getUser();
+        $em = $this->getDoctrine()->getManager();
+        $nbnotifs = $em->getRepository('NzoTunisiefretBundle:Notification')->getNbNotifAdmin($usr);
+        if ($request->isXmlHttpRequest()) 
+        return new Response($nbnotifs);
+        return new Response($nbnotifs);
+    }
+    
     /**
     * @Secure(roles="ROLE_ADMIN")
     */
@@ -85,6 +100,7 @@ class AdminController extends Controller {
                     'demandefret_active' =>$demandefret_active, 'demandefret_encours' =>$demandefret_encours, 'demandefret_termine' =>$demandefret_termine));
     }
     
+    
    /**
     * @Secure(roles="ROLE_ADMIN")
     */
@@ -110,6 +126,20 @@ class AdminController extends Controller {
         $listeaffreteurs = $paginator->paginate($query,
         $this->get('request')->query->get('page', 1), 6);         
         return $this->render('NzoTunisiefretBundle:Admin:ListeAffreteurs.html.twig', array('listeaffreteurs' => $listeaffreteurs));
+    }
+    
+    /**
+    * @Secure(roles="ROLE_ADMIN")
+    */
+    public function ListeDemandeActiveAction()
+    {
+        $usr = $this->get('security.context')->getToken()->getUser();
+            $em = $this->getDoctrine()->getManager();        
+            $query = $em->getRepository('NzoTunisiefretBundle:DemandeExport')->getDemandeExportActiveAdmin();
+            $paginator = $this->get('knp_paginator'); 
+            $listedemandeexport = $paginator->paginate($query,
+            $this->get('request')->query->get('page', 1), 6);         
+            return $this->render('NzoTunisiefretBundle:Admin:ListeDemandeExportActive.html.twig', array('listedemandeexport' => $listedemandeexport));
     }
     
     /**
@@ -154,6 +184,16 @@ class AdminController extends Controller {
     /**
     * @Secure(roles="ROLE_ADMIN")
     */
+    public function DemandeExportActiveAction(DemandeExport $mydemande)
+    {  
+        $em = $this->getDoctrine()->getManager();        
+        $postules = $em->getRepository('NzoTunisiefretBundle:DemandeExportPostule')->getDemandeExportPostuleByDemande($mydemande);
+        return $this->render('NzoTunisiefretBundle:Admin:DemandeExportActive.html.twig', array('mydemande' => $mydemande, 'postules' => $postules));
+    }
+    
+    /**
+    * @Secure(roles="ROLE_ADMIN")
+    */
     public function ActiveAffreteurAction(\Nzo\UserBundle\Entity\Exportateur $id)
     {
         $id->setEnabled(true);
@@ -187,5 +227,62 @@ class AdminController extends Controller {
         $em = $this->getDoctrine()->getManager();           
         $postules = $em->createQuery("SELECT a FROM NzoTunisiefretBundle:DemandeExportPostule a JOIN a.demandeexport d WHERE a.demande_accepter = 1 AND a.exportateur = ".$id->getId()." ORDER BY d.date_tacking DESC");
         return $this->render('NzoTunisiefretBundle:Admin:DetailAffreteur.html.twig', array('affreteur' => $id, 'postules' => $postules->getResult() ));
+    }
+    
+    /**
+     * @Secure(roles="ROLE_ADMIN")
+     */
+    public function AjaxGetNotifAction(Request $request) 
+    {
+        if ($request->isXmlHttpRequest()) {  
+            
+            $usr = $this->get('security.context')->getToken()->getUser();
+            $em = $this->getDoctrine()->getManager();           
+                
+            $notifstotal = $em->getRepository('NzoTunisiefretBundle:Notification')->getListNotifAjaxAdmin($usr);    
+            if($notifstotal != NULL){
+                $i = 0;
+                foreach ($notifstotal as $res) {
+                    $notifdate = $res->getDate()->format('d/m/Y H:i');
+                    $val[$i] = array('date' => $notifdate, 'notiftext' => $res->getText(), 'notifvu' => $res->getVu(), 'url' => $res->getUrl());
+                    $i++;
+                }
+            }
+            else
+                $val = array('vide');
+            
+            // set Vu to True
+            $notifs = $em->getRepository('NzoTunisiefretBundle:Notification')->getListNotifAjaxAdminNonVu($usr);
+            foreach ($notifs as $res) {
+                    $res->setVu(true);
+                    $em->persist($res);           
+                }
+                $em->flush();
+        return new Response(json_encode($val));
+        }
+    }  
+    
+    /**
+    * @Secure(roles="ROLE_ADMIN")
+    */
+    public function ListeNotificationsAction()
+    {
+        $usr = $this->get('security.context')->getToken()->getUser();
+            $em = $this->getDoctrine()->getManager();        
+            $query = $em->getRepository('NzoTunisiefretBundle:Notification')->getListNotifAdmin($usr);
+            $paginator = $this->get('knp_paginator'); 
+            $listenotifications = $paginator->paginate($query,
+            $this->get('request')->query->get('page', 1), 8);         
+            return $this->render('NzoTunisiefretBundle:Admin:ListNotifications.html.twig', array('listenotifications' => $listenotifications));
+    }
+    
+    /**
+    * @Secure(roles="ROLE_ADMIN")
+    */
+    public function DetailPostuleActiveAction(DemandeExportPostule $postule)
+    { 
+        $em = $this->getDoctrine()->getManager();        
+        $msgs = $em->getRepository('NzoTunisiefretBundle:MsgDemandeExport')->findBy( array('demandeexportpostule' => $postule));
+        return $this->render('NzoTunisiefretBundle:Admin:DetailPostuleActive.html.twig', array('postule' => $postule, 'msgs' => $msgs));
     }
 }

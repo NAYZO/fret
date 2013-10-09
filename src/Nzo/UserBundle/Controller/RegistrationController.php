@@ -131,6 +131,7 @@ class RegistrationController extends ContainerAware
                         $admin = $em->getRepository('NzoUserBundle:Admin')->find(10);
                         $notif->setAdmin($admin);
                         $notif->setText($message);
+                        $notif->setUrl('#');
                         $em->persist($notif);
                         $em->flush();
 

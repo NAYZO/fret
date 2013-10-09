@@ -68,7 +68,7 @@
             </span>
             <div class="media-body">
                 <h3 class="media-heading">{{client.nomentrop}}</h3>
-                <span id="nzonoteclient"></span> ( {{client.note}} )
+                <span id="nzonoteclient"></span> ( {%if client.note == -1%}Aucune Note associer{%else%}{{client.note}}{%endif%} )
                 <hr>
                 <p class="small text-muted"><span class="text-danger">Adresse:</span> {{client.adresse}} | <span class="text-danger">Ville:</span> {{client.ville}} </p>
                 <h5>{{client.description}}</h5>

@@ -338,6 +338,10 @@ admin_home:
     pattern: /admin/home/
     defaults: { _controller: NzoTunisiefretBundle:Admin:home }
     
+ajax_get_nb_notif_admin:
+    pattern: /nb-notif-admin/ajax/
+    defaults: {_controller: NzoTunisiefretBundle:Admin:AjaxGetNbNotif}    
+    
 admin_liste_clients:
     pattern: /admin/liste-clients/
     defaults: { _controller: NzoTunisiefretBundle:Admin:ListeClients }
@@ -356,7 +360,7 @@ admin_detail_affreteur:
     
 admin_liste_demande_active:
     pattern: /admin/liste-demande-fret/active/
-    defaults: { _controller: NzoTunisiefretBundle:Admin:ListeExportateurs }    
+    defaults: { _controller: NzoTunisiefretBundle:Admin:ListeDemandeActive }    
 
 admin_liste_demande_archive:
     pattern: /admin/liste-demande-fret/archive/
@@ -388,4 +392,21 @@ admin_active_affreteur:
     
 admin_desactive_affreteur:
     pattern: /admin/Desactive-Affreteur_~{id}
-    defaults: { _controller: NzoTunisiefretBundle:Admin:DesactiveAffreteur }    
+    defaults: { _controller: NzoTunisiefretBundle:Admin:DesactiveAffreteur }  
+    
+ajax_get_notif_admin:
+    pattern: /liste-notif-admin/ajax/
+    defaults: {_controller: NzoTunisiefretBundle:Admin:AjaxGetNotif}     
+    
+admin_list_notifications:
+    pattern: /admin/liste-notifications/
+    defaults: {_controller: NzoTunisiefretBundle:Admin:ListeNotifications}   
+    
+admin_demande_export_active:    
+    pattern: /Admin/Demande-Fret-Active_~{id}
+    defaults: {_controller: NzoTunisiefretBundle:Admin:DemandeExportActive}
+    
+admin_postule_active_detail:
+    pattern: /Admin/Postule-Active_~{id}/Detail/
+    defaults: {_controller: NzoTunisiefretBundle:Admin:DetailPostuleActive}    
+    

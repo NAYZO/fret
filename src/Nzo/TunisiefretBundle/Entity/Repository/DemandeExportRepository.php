@@ -195,4 +195,13 @@ class DemandeExportRepository extends EntityRepository
             ->orderBy('a.date_tacking', 'DESC');
          return $qb->getQuery()->execute();        
     } 
+    
+    public function getDemandeExportActiveAdmin()
+    {
+         $qb = $this->createQueryBuilder('a');
+         $qb->where('a.tacking = 0')              
+            ->andWhere('a.annuler_demande is NULL')               
+            ->orderBy('a.date_depos', 'DESC');
+         return $qb->getQuery();            
+    } 
 }

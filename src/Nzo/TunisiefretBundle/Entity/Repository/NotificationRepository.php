@@ -90,4 +90,45 @@ class NotificationRepository extends EntityRepository
             ->setParameter('exportateur', $id);
          return $qb->getQuery();
     }
+    
+    // ADMIN
+    
+    public function getNbNotifAdmin($id)
+    {
+         $qb = $this->createQueryBuilder('a');
+         $qb->select('COUNT(a)')
+            ->where('a.admin = :admin')
+            ->andWhere('a.vu = 0')             
+            ->setParameter('admin', $id);
+         return $qb->getQuery()->getSingleScalarResult();
+    } 
+    
+    public function getListNotifAdmin($id)
+    {
+         $qb = $this->createQueryBuilder('a');
+         $qb->where('a.admin = :admin')
+            ->orderBy('a.date', 'DESC')
+            ->setParameter('admin', $id);
+         return $qb->getQuery();
+    }
+    
+    public function getListNotifAjaxAdmin($id)
+    {
+         $qb = $this->createQueryBuilder('a');
+         $qb->where('a.admin = :admin')        
+            ->orderBy('a.date', 'DESC')
+            ->setParameter('admin', $id)
+            ->setMaxResults(4);     
+         return $qb->getQuery()->execute();
+    }
+    
+    public function getListNotifAjaxAdminNonVu($id)
+    {
+         $qb = $this->createQueryBuilder('a');
+         $qb->where('a.admin = :admin')
+            ->andWhere('a.vu = 0')          
+            ->orderBy('a.date', 'DESC')
+            ->setParameter('admin', $id);
+         return $qb->getQuery()->execute();
+    }
 }

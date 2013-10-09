@@ -72,7 +72,7 @@
             </span>
             <div class="media-body">
                 <h3 class="media-heading">{{exportateur.nomentrop}}</h3>
-                <span id="nzonoteexportateur"></span> ( {{exportateur.note}} )
+                <span id="nzonoteexportateur"></span> ( {%if exportateur.note == -1%}Aucune Note associer{%else%}{{exportateur.note}}{%endif%} )
                 <hr>
                 <p class="small text-muted"><span class="text-danger">Adresse:</span> {{exportateur.adresse}} | <span class="text-danger">Ville:</span> {{exportateur.ville}} </p>
                 <h5>{{exportateur.description}}</h5>

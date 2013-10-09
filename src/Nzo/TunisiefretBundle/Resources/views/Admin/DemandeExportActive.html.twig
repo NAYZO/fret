@@ -1,0 +1,153 @@
+{% extends "NzoTunisiefretBundle::layoutAdmin.html.twig" %}
+{% block title %} {{ parent() }} Demandes Fret Active{% endblock %}
+{% block banner %}
+<div class="jumbotron">
+    <div class="col-md-4 col-sm-11 col-xs-11"> 
+        <div class="row">
+            <h4 class="title-banner" style=""> Demandes Fret Active </h4>
+        </div>
+    </div>
+</div>
+{% endblock banner %}
+{#---------------------2eme menu-------------------#}
+{% block menu %}
+<div class="nav-container">
+    <div class="box">
+        <ul id="bignav" class="nav nav-pills bottom cl-effect-1">     
+            <li class="actives col-md-offset-2"><a href="{{path('admin_home')}}" >Dashboard</a></li>
+            <li class="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                    Utilisateurs <span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu">
+                    <li><a href="{{ path('admin_liste_clients') }}" >Clients</a></li>
+                    <li><a href="{{ path('admin_liste_exportateurs') }}" >Affréteurs</a></li>
+                </ul>
+            </li>
+
+            <li class="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                    Demandes Fret <span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu">
+                    <li><a href="{{ path('admin_liste_demande_active') }}" >Active</a></li>
+                    <li><a href="{{ path('admin_liste_demande_archive') }}" >Archive</a></li>
+                </ul>
+            </li>
+            <li class="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                    Contrats Fret <span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu">
+                    <li><a href="{{ path('admin_liste_demande_encours') }}" >En Cours</a></li>
+                    <li><a href="{{ path('admin_liste_demande_termine') }}" >Terminé</a></li>
+                </ul>
+            </li>
+            <li><a href="{{ path('admin_liste_demande_signiale') }}" >Liste Demandes Signalé</a></li>
+        </ul>
+        {#-----------select-menu--------------#}
+        <div id="dd" class="wrapper-dropdown-5" tabindex="1">MENU
+            <ul class="dropdownd">
+                <li class="activedrop"><a href="{{path('admin_home')}}" >Dashboard</a></li>
+                <li class="sanslien"><strong>Utilisateurs</strong>
+                    <ul class="second-drop">
+                        <li><a href="{{ path('admin_liste_clients') }}" >Clients</a></li>
+                    <li><a href="{{ path('admin_liste_exportateurs') }}" >Affréteurs</a></li>
+                    </ul>
+                </li>
+                <li class="sanslien"><strong>Demandes Fret</strong>
+                    <ul class="second-drop">
+                        <li><a href="{{ path('admin_liste_demande_active') }}" >Active</a></li>
+                    <li><a href="{{ path('admin_liste_demande_archive') }}" >Archive</a></li>
+                    </ul>
+                </li>
+                <li class="sanslien"><strong>Contrats Fret</strong>
+                    <ul class="second-drop">
+                        <li><a href="{{ path('admin_liste_demande_encours') }}" >En Cours</a></li>
+                        <li><a href="{{ path('admin_liste_demande_termine') }}" >Terminé</a></li>
+                    </ul>
+                </li>
+                <li><a href="{{ path('admin_liste_demande_signiale') }}" >Liste Demandes Signalé</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+{% endblock menu %}
+{% block content %}
+<div class="padding">	
+    <ul id="breadcrumbs-two">
+        <li><a href="{{path('admin_home')}}">Accueil</a></li>
+        <li><span>Liste Demandes</span></li>
+        <li><a href="{{ path('admin_liste_demande_active') }}">Active</a></li>
+        <li class="current"><span>Détails</span></li>
+    </ul>
+ <div class="legend2">
+     <h4 class="pull-left"><strong>{{mydemande.titre}}</strong> <span class="text-danger">( {{mydemande.type}} )</span></h4>
+        <div class="row" style="padding-right: 14px;">
+            <div class=" pull-right">
+           
+            </div>
+        </div>
+    </div>
+    <div class="panel panel-default bottom">
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-md-6" style="border-right: 1px solid rgb(213, 210, 210);padding: 20px;">
+                    <p><strong class="red">Référence : </strong>{{mydemande.reference}} </p>
+                    <p><strong class="red">Prix : </strong>{{mydemande.prix}} </p>
+                    <p><strong class="red">Pays : </strong>{{mydemande.pays}} </p>
+                    <p><strong class="red">Ville : </strong>{{mydemande.ville}} </p>
+                </div>
+    
+                <div class="col-md-6" style="padding: 20px;">
+                    <p><strong class="red">Code Postal : </strong>{{mydemande.codepostal}} </p>
+                    <p><strong class="red">Adresse : </strong>{{mydemande.adresse}} </p>
+                    <p><strong class="red">Date Maximal : </strong>{{mydemande.datemax|date("d/m/Y")}} </p>
+                    <p><strong class="red">Date dépôt : </strong>{{mydemande.datedepos|date("d/m/Y")}} </p>
+                </div>
+             </div>
+             <div class="row">
+                <div style="padding: 20px;">
+                    <hr/>
+                    <p><strong class="red">Description : </strong>{{mydemande.description}} </p>
+                </div>
+             </div>
+        </div>
+    </div>
+    
+    <h4 class="legend2 bottom"><strong>Liste Postule: </strong>( {{postules|length}} )</h4>
+    
+    {#-------Liste postuler------------#}
+    {% if postules is empty %}
+       <p class="alert alert-info">Il n'existe aucun postule sur cette demande de fret !</p>
+    {%else%}
+    {% for postule in postules %} 
+    <div class="panel panel-default bottom">
+        <div class="panel-body">
+            <div class="media">
+                <span class="pull-left">
+                    <img class="media-object img-thumbnail" src="{{ asset('exportateurfilesupload/')}}{{postule.exportateur.logoname}}" alt="{{postule.exportateur.logoname}}"  width="80">
+                </span>
+                <div class="media-body">
+                    <h4 class="media-heading"><a href="{{path('client_profil_exportateur', {'id':postule.exportateur.id | urlencrypt} )}}"><strong>{{postule.exportateur.nomentrop}}</strong></a></h4>
+                    <p style="color: grey">{{postule.datepostule|date("d/m/Y")}}</p>
+                    <p class="list-group-item-text cl-effect-1">
+                        {% if postule.description|length > 130 %}
+                            {{postule.description|slice(0, 130)}}...
+                        {%else%}
+                            {{postule.description}}
+                        {% endif %}
+                        <a href="{{path('admin_postule_active_detail', {'id':postule.id | urlencrypt} )}}" class="pull-right"> Voir détails </a>
+                    </p>
+               </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+    {% endif %}
+</div>
+{% endblock content %}
+{% block js %}
+{% endblock js %}
+ 
+ 

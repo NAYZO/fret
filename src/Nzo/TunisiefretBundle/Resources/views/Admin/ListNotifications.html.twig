@@ -1,0 +1,121 @@
+{% extends "NzoTunisiefretBundle::layoutAdmin.html.twig" %}
+{% block title %} {{ parent() }} Liste des Notifications {% endblock %}
+
+{% block banner %}
+{#----------------Bannier de la page----------------#}
+<div class="jumbotron">
+    <div class="col-md-4 col-sm-11 col-xs-11"> 
+        <div class="row">
+            <h4 class="title-banner" style="">Liste des Notifications</h4>
+        </div>
+    </div>
+</div>
+{% endblock banner %}
+{#---------------------2eme menu-------------------#}
+{% block menu %}
+<div class="nav-container">
+    <div class="box">
+        <ul id="bignav" class="nav nav-pills bottom cl-effect-1">     
+            <li class="actives col-md-offset-2"><a href="{{path('admin_home')}}" >Dashboard</a></li>
+            <li class="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                    Utilisateurs <span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu">
+                    <li><a href="{{ path('admin_liste_clients') }}" >Clients</a></li>
+                    <li><a href="{{ path('admin_liste_exportateurs') }}" >Affréteurs</a></li>
+                </ul>
+            </li>
+
+            <li class="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                    Demandes Fret <span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu">
+                    <li><a href="{{ path('admin_liste_demande_active') }}" >Active</a></li>
+                    <li><a href="{{ path('admin_liste_demande_archive') }}" >Archive</a></li>
+                </ul>
+            </li>
+            <li class="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                    Contrats Fret <span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu">
+                    <li><a href="{{ path('admin_liste_demande_encours') }}" >En Cours</a></li>
+                    <li><a href="{{ path('admin_liste_demande_termine') }}" >Terminé</a></li>
+                </ul>
+            </li>
+            <li><a href="{{ path('admin_liste_demande_signiale') }}" >Liste Demandes Signalé</a></li>
+        </ul>
+        {#-----------select-menu--------------#}
+        <div id="dd" class="wrapper-dropdown-5" tabindex="1">MENU
+            <ul class="dropdownd">
+                <li class="activedrop"><a href="{{path('admin_home')}}" >Dashboard</a></li>
+                <li class="sanslien"><strong>Utilisateurs</strong>
+                    <ul class="second-drop">
+                        <li><a href="{{ path('admin_liste_clients') }}" >Clients</a></li>
+                    <li><a href="{{ path('admin_liste_exportateurs') }}" >Affréteurs</a></li>
+                    </ul>
+                </li>
+                <li class="sanslien"><strong>Demandes Fret</strong>
+                    <ul class="second-drop">
+                        <li><a href="{{ path('admin_liste_demande_active') }}" >Active</a></li>
+                    <li><a href="{{ path('admin_liste_demande_archive') }}" >Archive</a></li>
+                    </ul>
+                </li>
+                <li class="sanslien"><strong>Contrats Fret</strong>
+                    <ul class="second-drop">
+                        <li><a href="{{ path('admin_liste_demande_encours') }}" >En Cours</a></li>
+                        <li><a href="{{ path('admin_liste_demande_termine') }}" >Terminé</a></li>
+                    </ul>
+                </li>
+                <li><a href="{{ path('admin_liste_demande_signiale') }}" >Liste Demandes Signalé</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+{% endblock menu %}
+{% block content %}
+<div class="padding">
+    <div class="row bottom" style="padding-right: 16px;">
+        {#----------------Arborescence----------------#}
+        <div class="col-md-9 pull-left">
+            <ul id="breadcrumbs-two" style="margin-top: 14px;">
+                <li><a href="{{path('admin_home')}}">Accueil</a></li>
+                <li class="current"><span>Liste des Notifications</span></li>
+            </ul>
+        </div>
+        {#----------------Pagination----------------#}
+        <div class="pull-right">
+            {{ knp_pagination_render(listenotifications) }}
+        </div>
+    </div>
+
+    {#----------------Titre de la page----------------#}
+    <div class="legend2">
+        <h4>La Liste de Vos Notifications</h4>
+    </div>
+
+    {#----------------Liste des notificaitons----------------#}       
+    {% for notif in listenotifications %}
+        <div class="list-group-item alert-notif bottom">
+            <div class="list-group-item-heading">
+               <a href="{{notif.url}}"> <h5 class="pull-left">{{notif.text|raw}}</h5></a>
+                <div class="row" style="padding-right: 14px;">
+                    <div class=" pull-right">
+                        <strong>{{notif.date|date("d/m/Y")}}</strong> 
+                    </div>
+                </div>
+            </div>
+        </div>
+    {%endfor%}
+
+    {#----------------pagination----------------#} 
+    <div class="row" style="padding-right: 16px;">
+        <div class="pull-right">
+            {{ knp_pagination_render(listenotifications) }}
+        </div>
+     </div>
+</div>
+{% endblock content %} 
+ 
