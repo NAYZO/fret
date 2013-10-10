@@ -122,9 +122,11 @@ class RegistrationController extends ContainerAware
                     $em = $this->container->get('doctrine')->getManager();      
                     if ($user instanceof Client) {
                         $message = 'Nouveau Client Inscrit';
+                        $sj=1;
                     }
                     else if ($user instanceof Exportateur) {
                         $message = 'Nouveau Affréteur Inscrit';
+                        $sj=2;
                     }
 
                         $notif = new Notification();
@@ -133,14 +135,9 @@ class RegistrationController extends ContainerAware
                         $notif->setText($message);
                         $notif->setUrl('#');
                         $em->persist($notif);
-                        $em->flush();
-
-                    $envoi = \Swift_Message::newInstance()
-                            ->setSubject('Notification Tunisie Fret')
-                            ->setFrom('tunisiefret@gmail.com')
-                            ->setTo($admin->getEmail())
-                            ->setBody($this->container->get('templating')->render('NzoTunisiefretBundle:Front:NotifEmailAdmin.html.twig', array('message' => $message)), 'text/html');
-                    $this->container->get('mailer')->send($envoi);
+                        $em->flush();                        
+                        
+                        $this->container->get('nzo.mailer')->NzoSendMail($admin->getEmail(), $sj);
                 //**************************
         $event = new GetResponseUserEvent($user, $request);
         $dispatcher->dispatch(FOSUserEvents::REGISTRATION_CONFIRM, $event);

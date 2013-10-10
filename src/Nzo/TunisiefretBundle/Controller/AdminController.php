@@ -165,9 +165,15 @@ class AdminController extends Controller {
         $em = $this->getDoctrine()->getManager();
         $em->persist($id);
         $em->flush();
+        
+        $this->get('nzo.mailer')->NzoSendMail($id->getEmail(), 3);
 
-        $this->get('session')->getFlashBag()->add('notice', 'c boooonn!');
-        return $this->redirect($this->generateUrl('admin_home'));
+        $this->get('session')->getFlashBag()->set('nzonotice', 'Compte Désactivé!');
+        $url = $this->get('request')->headers->get('referer');
+                      if(empty($url)) {
+                      $url = $this->generateUrl('admin_home');
+                      }
+        return $this->redirect( $url );
     }
     
    /**

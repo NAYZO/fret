@@ -7,7 +7,12 @@ services:
       class: Nzo\TunisiefretBundle\Listener\ControllerListener
       tags:
         -  { name: kernel.event_listener, event: kernel.controller, method: onCoreController }
-
+        
+    nzo.mailer:
+      class: Nzo\TunisiefretBundle\Services\Mailer
+      arguments: ["@mailer", "@templating"]
+      
+      
 #    nzo.doctrine_listener:
 #        class: Nzo\TunisiefretBundle\Listener\DoctrineListener
 #        arguments: ["mailer", "@templating"]

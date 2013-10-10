@@ -78,6 +78,12 @@
 {% block content %}
 <div class="padding">
     <div class="row bottom" style="padding-right: 16px;">
+        {# Notif Block#}
+            <div id='nzonotice' class="alert alert-success animated fadeInDown" style='display:none;'>
+                <span id='spannzonotice'></span>
+                <a class="close" data-dismiss="alert" href="#" aria-hidden="true">&times;</a>
+            </div>
+            {# Notif Block#}
         {#----------------Arborescence----------------#}
         <div class="col-md-9 pull-left">
             <ul id="breadcrumbs-two" style="margin-top: 14px;">
