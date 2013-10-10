@@ -205,13 +205,17 @@ class ClientController extends Controller {
                     $notif = new Notification();
                     $notif->setExportateur($postule->getExportateur());
                     //==================================================================================================================== lien exportateur pour info demande export + classe css
-                    $text = 'Demande Export <span>'.$postule->getDemandeExport()->getTitre().'</span> est Terminé!';
+                    $text = 'Contrat de Fret <span>'.$postule->getDemandeExport()->getTitre().'</span> est Terminé!';
                     $notif->setText($text);
                     $url = $this->get('router')->generate('exp_contrat_termine_detail', array('id' => $this->get('nzo_url_encryptor')->encrypt($postule->getId())));                  
                     $notif->setUrl($url);
                     $em->persist($notif);
             
             $em->flush();
+            
+            //Email
+            $textmail = 'Contrat de Fret <a href="'.$url.'"><span>'.$postule->getDemandeExport()->getTitre().'</span></a> est Terminé!';
+            $this->get('nzo.mailer')->NzoSendMail($postule->getExportateur()->getEmail(), 5, $postule->getExportateur()->getNomentrop(), $textmail );
             
             $this->get('session')->getFlashBag()->set('nzonotice', 'Demande de Fret terminé avec succès');
           
@@ -243,11 +247,16 @@ class ClientController extends Controller {
                     //==================================================================================================================== lien exportateur pour info demande export + classe css
                     $text = 'Votre contrat: <span>'.$postule->getDemandeexport()->getTitre()."</span> est commencé le ".$postule->getDemandeexport()->getDateTacking()->format('d/m/Y');
                     $notif->setText($text);
-                    $url = $this->get('router')->generate('exp_notif_url_val', array('id' => $this->get('nzo_url_encryptor')->encrypt($postule->getId())));    
+                    $url = $this->get('router')->generate('exp_notif_url_val', array('id' => $this->get('nzo_url_encryptor')->encrypt($postule->getId())), true);   
                     $notif->setUrl($url);
                     $em->persist($notif);
             
-            $em->flush();             
+            $em->flush();
+            
+            //Email
+            $textmail = 'Votre contrat de fret: <a href="'.$url.'"><span>'.$postule->getDemandeexport()->getTitre()."</span></a> est commencé le ".$postule->getDemandeexport()->getDateTacking()->format('d/m/Y');
+            $this->get('nzo.mailer')->NzoSendMail($postule->getExportateur()->getEmail(), 6, $postule->getExportateur()->getNomentrop(), $textmail );
+            
         $this->get('session')->getFlashBag()->set('nzonotice', 'Votre Contrat de Fret est commencé');
           
         return $this->redirect($this->generateUrl('client_demande_export_encours_detail', array('id' => $this->get('nzo_url_encryptor')->encrypt($postule->getDemandeexport()->getId()))));   
@@ -278,14 +287,19 @@ class ClientController extends Controller {
                 $notif = new Notification();
                 $notif->setExportateur($postule->getExportateur());
                 //==================================================================================================================== lien exportateur pour info demande export + classe css
-                $text = 'Demande Export <span>'.$mydemande->getTitre().'</span> est annulé!';
+                $text = 'Demande de Fret <span>'.$mydemande->getTitre().'</span> est annulé!';
                 $notif->setText($text);
-                $url = $this->get('router')->generate('exp_notif_url_val', array('id' => $this->get('nzo_url_encryptor')->encrypt($postule->getId())));    
+                $url = $this->get('router')->generate('exp_notif_url_val', array('id' => $this->get('nzo_url_encryptor')->encrypt($postule->getId())), true);    
                 $notif->setUrl($url);
                 $em->persist($notif);
             }
             
             $em->flush();
+            
+            //Email 
+            $textmail = 'Demande de Fret <a href="'.$url.'"><span>'.$mydemande->getTitre().'</span></a> est annulé!';
+            $this->get('nzo.mailer')->NzoSendMail($postule->getExportateur()->getEmail(), 7, $postule->getExportateur()->getNomentrop(), $textmail );
+            
             $this->get('session')->getFlashBag()->set('nzonotice', 'Votre demande de Fret est archivé');
         return $this->redirect($this->generateUrl('nzo_voirlistedemande_export_archive'));   
   }
@@ -684,13 +698,18 @@ class ClientController extends Controller {
             $notif = new Notification();
             $notif->setExportateur($postule->getExportateur());
             //==================================================================================================================== lien exportateur pour avis export + classe css
-            $text = 'Vous avez reçu un Avis sur le Contrat Export <span>'.$postule->getDemandeexport()->getTitre().'</span>';
+            $text = 'Vous avez reçu un Avis sur le Contrat <span>'.$postule->getDemandeexport()->getTitre().'</span>';
             $notif->setText($text);
-            $url = $this->get('router')->generate('exp_notif_url_val', array('id' => $this->get('nzo_url_encryptor')->encrypt($postule->getId())));    
+            $url = $this->get('router')->generate('exp_notif_url_val', array('id' => $this->get('nzo_url_encryptor')->encrypt($postule->getId())), true);   
             $notif->setUrl($url);
             $em->persist($notif);
             
             $em->flush();
+            
+            //Email 
+            $textmail = 'Vous avez reçu un Avis sur le Contrat <a href="'.$url.'"><span>'.$postule->getDemandeexport()->getTitre().'</span></a>';
+            $this->get('nzo.mailer')->NzoSendMail($postule->getExportateur()->getEmail(), 8, $postule->getExportateur()->getNomentrop(), $textmail );
+            
             $this->get('session')->getFlashBag()->set('nzonotice', 'Avis associé avec succès');
             return $this->redirect($this->generateUrl('client_demande_export_termine_detail', array('id' => $this->get('nzo_url_encryptor')->encrypt($postule->getDemandeexport()->getId()))));   
         }
