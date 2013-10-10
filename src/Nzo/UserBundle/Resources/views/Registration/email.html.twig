@@ -1,3 +1,10 @@
+{% block subject %}
+{% autoescape false %}
+{{ 'registration.email.subject'|trans({'%username%': user.username, '%confirmationUrl%': confirmationUrl}, 'FOSUserBundle') }}
+{% endautoescape %}
+{% endblock %}
+{% block body_html %}
+<body bgcolor="#8d8e90" style="font-family: Century Gothic, sans-serif;">
 <table width="100%" border="0" cellspacing="0" cellpadding="0" bgcolor="#EDEBE6">
   <tr>
     <td><table width="600" border="0" cellspacing="0" cellpadding="0" bgcolor="#FFFFFF" align="center">
@@ -18,15 +25,7 @@
         </tr>
         <tr>
             <td style="padding-bottom: 40px;">
-            <div style="padding: 28px;">
-                <p><strong style="color: rgb(4, 100, 175);">Un Message est envoyé par</strong> : {{ nom }}</p> 
-                <p><strong style="color: rgb(4, 100, 175);">Date de l'envoi</strong> :  {{ "now" | date("d-m-Y  -  H:i") }}. </p>
-                 
-                <p><strong style="color: rgb(4, 100, 175)">Email Emetteur</strong> : {{ email }} </p>
-                <p><strong style="color: rgb(4, 100, 175);">Sujet</strong> : {{ sujet }}</p>
-                <p><strong style="color: rgb(4, 100, 175);">Contenu</strong>: {{ message }}</p>
-                <hr style="border-top: 1px solid #ddd;border-bottom: 1px solid #F5F5F5;">
-            </div>
+                <p style="padding:10px">{{ 'registration.email.message'|trans({'%username%': user.username, '%confirmationUrl%': confirmationUrl}, 'FOSUserBundle') }}</p>
             </td>
         </tr>
         
@@ -54,3 +53,4 @@
 </table>
     </body>
 
+{% endblock %}
