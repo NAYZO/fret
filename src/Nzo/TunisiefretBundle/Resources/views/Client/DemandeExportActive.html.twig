@@ -81,7 +81,7 @@
                 <div class="modal-content">
                   <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title">Annuler votre demande: {{mydemande.titre}}</h4>
+                    <h5 class="modal-title"><strong class="text-info">Annuler votre demande: {{mydemande.titre}}</strong></h5>
                   </div>
                   <div class="modal-body">
                    <form action="{{path('client_annuler_demande', {'id':mydemande.id | urlencrypt})}}" method="POST" role="form" >
@@ -100,7 +100,7 @@
                           </div>
                           <div class="row"style="margin-right: 0">
                               <div class="pull-right">
-                                <button type="submit" class="btn btn-danger">Confirmer</button>
+                                <button type="submit" class="btn btn-primary">Confirmer</button>
                                 <button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
                               </div>
                           </div>
