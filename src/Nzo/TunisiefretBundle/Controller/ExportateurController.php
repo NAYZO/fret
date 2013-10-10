@@ -106,7 +106,7 @@ class ExportateurController extends Controller {
                 $this->get('nzo.mailer')->NzoSendMail($DemandeExport->getClient()->getEmail(), 9, $DemandeExport->getClient()->getNomentrop(), $textmail );
 
                 $this->get('session')->getFlashBag()->set('nzonotice', 'Postule enregistré avec succès');
-                return $this->redirect($this->generateUrl('exp_detail_postule_active', array('id' => $this->get('nzo_url_encryptor')->encrypt($PostuleExport->getId()))), true);  
+                return $this->redirect($this->generateUrl('exp_detail_postule_active', array('id' => $this->get('nzo_url_encryptor')->encrypt($PostuleExport->getId()))));  
             }
         }
         $res = $em->getRepository('NzoTunisiefretBundle:DemandeExportPostule')->findBy( array('exportateur' => $usr, 'demandeexport' => $DemandeExport));
