@@ -118,11 +118,11 @@ fos_user:
             from_email:
                 address:         test@gmail.com
                 sender_name:    Tunise Fret
-            template: NzoUserBundle:Registration:email.txt.twig  
+            template: NzoUserBundle:Registration:email.html.twig  
     resetting:
         token_ttl: 86400
         email:
-            template: NzoUserBundle:Resetting:email.txt.twig
+            template: NzoUserBundle:Resetting:email.html.twig
             from_email:
                 address:        test@gmail.com
                 sender_name:    Tunise Fret                 
