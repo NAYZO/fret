@@ -410,3 +410,6 @@ admin_postule_active_detail:
     pattern: /Admin/Postule-Active_~{id}/Detail/
     defaults: {_controller: NzoTunisiefretBundle:Admin:DetailPostuleActive}    
     
+admin_supprimer_demande:    
+    pattern: /Admin/Demande-Fret-Type_~{id}/Supprimer/
+    defaults: {_controller: NzoTunisiefretBundle:Admin:SupprimerDemande}    

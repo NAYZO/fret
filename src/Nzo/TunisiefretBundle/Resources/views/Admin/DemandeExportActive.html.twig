@@ -85,7 +85,26 @@
      <h4 class="pull-left"><strong>{{mydemande.titre}}</strong> <span class="text-danger">( {{mydemande.type}} )</span></h4>
         <div class="row" style="padding-right: 14px;">
             <div class=" pull-right">
-           
+            <a data-toggle="modal" href="#nzomyModal" class="btn btn-info btn-xs" >Supprimer Demande</a>
+
+                <!-- Modal -->
+                <div class="modal fade" id="nzomyModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h5 class="modal-title"><strong>Supprimer la Demande</strong></h5>
+                      </div>
+                      <div class="modal-body">
+                       Voulez vous supprimer la demande <strong>{{mydemande.titre}}</strong> ? 
+                      </div>
+                      <div class="modal-footer">
+                        <a href="{{path('admin_supprimer_demande', {'id':mydemande.id | urlencrypt} )}}" class="btn btn-primary">Confirmer</a>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
+                      </div>
+                    </div><!-- /.modal-content -->
+                  </div><!-- /.modal-dialog -->
+                </div><!-- /.modal -->
             </div>
         </div>
     </div>

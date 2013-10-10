@@ -10,6 +10,7 @@ use Symfony\Component\Httpfoundation\Response;
 use Nzo\UserBundle\Entity\Client;
 use Nzo\TunisiefretBundle\Entity\DemandeExport;
 use Nzo\TunisiefretBundle\Entity\DemandeExportPostule;
+use Nzo\TunisiefretBundle\Entity\Notification;
 
 class AdminController extends Controller {
     
@@ -232,7 +233,7 @@ class AdminController extends Controller {
         $em = $this->getDoctrine()->getManager();
         $em->persist($id);
         $em->flush();
-
+        
         $this->get('nzo.mailer')->NzoSendMail($id->getEmail(), 4, $id->getNomentrop());
 
         $this->get('session')->getFlashBag()->set('nzonotice', 'Compte Désactivé!');
@@ -308,5 +309,46 @@ class AdminController extends Controller {
         $em = $this->getDoctrine()->getManager();        
         $msgs = $em->getRepository('NzoTunisiefretBundle:MsgDemandeExport')->findBy( array('demandeexportpostule' => $postule));
         return $this->render('NzoTunisiefretBundle:Admin:DetailPostuleActive.html.twig', array('postule' => $postule, 'msgs' => $msgs));
+    }
+    
+    /**
+    * @Secure(roles="ROLE_ADMIN")
+    */
+    public function SupprimerDemandeAction(DemandeExport $mydemande)
+    { 
+            $em = $this->getDoctrine()->getManager();            
+            
+            // notif Affréteurs
+            $listepostules = $mydemande->getDemandeexportpostule();
+            foreach($listepostules as $postule)
+            {
+                $notif = new Notification();
+                $notif->setExportateur($postule->getExportateur());                
+                $text = 'Demande de Fret <span>'.$mydemande->getTitre().'</span> est supprimé par l\'Administrateur!';
+                $notif->setText($text);
+                $notif->setUrl('#');
+                $em->persist($notif);
+                
+                //Email 
+                $textmail = 'Demande de Fret <span>'.$mydemande->getTitre().'</span> est supprimé par l\'Administrateur!';
+                $this->get('nzo.mailer')->NzoSendMail($postule->getExportateur()->getEmail(), 12, $postule->getExportateur()->getNomentrop(), $textmail );
+            }
+            // notif Client
+                $notif = new Notification();
+                $notif->setClient($mydemande->getClient());                
+                $text = 'Demande de Fret <span>'.$mydemande->getTitre().'</span> est supprimé par l\'Administrateur!';
+                $notif->setText($text);
+                $notif->setUrl('#');
+                $em->persist($notif);
+                
+                //Email 
+                $textmail = 'Demande de Fret <span>'.$mydemande->getTitre().'</span> est supprimé par l\'Administrateur!';
+                $this->get('nzo.mailer')->NzoSendMail($mydemande->getClient()->getEmail(), 12, $mydemande->getClient()->getNomentrop(), $textmail );
+                
+            $em->remove($mydemande);
+            $em->flush();
+            
+            $this->get('session')->getFlashBag()->set('nzonotice', 'Demande de Fret Supprimé!');
+            return $this->redirect( $this->generateUrl('admin_home') );
     }
 }

@@ -280,7 +280,7 @@ class ClientController extends Controller {
             $mydemande->setAnnulerDemande($annuler);
             $em->persist($mydemande);
             
-            // notif Exportateurs
+            // notif Affréteurs
             $listepostules = $mydemande->getDemandeexportpostule();
             foreach($listepostules as $postule)
             {
@@ -292,13 +292,13 @@ class ClientController extends Controller {
                 $url = $this->get('router')->generate('exp_notif_url_val', array('id' => $this->get('nzo_url_encryptor')->encrypt($postule->getId())), true);    
                 $notif->setUrl($url);
                 $em->persist($notif);
+                
+                //Email 
+                $textmail = 'Demande de Fret <a href="'.$url.'"><span>'.$mydemande->getTitre().'</span></a> est annulé!';
+                $this->get('nzo.mailer')->NzoSendMail($postule->getExportateur()->getEmail(), 7, $postule->getExportateur()->getNomentrop(), $textmail );
             }
             
-            $em->flush();
-            
-            //Email 
-            $textmail = 'Demande de Fret <a href="'.$url.'"><span>'.$mydemande->getTitre().'</span></a> est annulé!';
-            $this->get('nzo.mailer')->NzoSendMail($postule->getExportateur()->getEmail(), 7, $postule->getExportateur()->getNomentrop(), $textmail );
+            $em->flush();   
             
             $this->get('session')->getFlashBag()->set('nzonotice', 'Votre demande de Fret est archivé');
         return $this->redirect($this->generateUrl('nzo_voirlistedemande_export_archive'));   

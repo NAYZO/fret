@@ -99,6 +99,13 @@ class Mailer
                     array('message' => $txt, 
                         'nom' => $nom )); 
         } 
+        else if($sj==12)
+        {
+            $sujet = 'Demande Supprimé par l\'Administrateur!';
+            $body  = $this->templating->render('NzoTunisiefretBundle:Front:EmailUser.html.twig', 
+                    array('message' => $txt, 
+                        'nom' => $nom )); 
+        } 
         
         $mail = \Swift_Message::newInstance(); 
         $mail ->setFrom($this->from, $this->nom) 
