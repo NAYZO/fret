@@ -84,8 +84,8 @@
                 <img class="media-object img-thumbnail" alt="" src="{{ asset('exportateurfilesupload/')}}{{affreteur.logoname}}" style="width: 100px; height: 100px;">
             </span>
             <div class="media-body">
-                <h3 class="media-heading">{{affreteur.nomentrop}}</h3>
-                <span id="nzonoteexportateur"></span> ( {{affreteur.note}} )
+                <h3 class="media-heading">{{affreteur.nomentrop}}</h3> 
+                <span id="nzonoteexportateur"></span> ( {%if affreteur.note == -1%}Aucune Note associer{%else%}{{affreteur.note}}{%endif%} )
                 <hr>
                 <p class="small text-muted">
                     <span class="text-danger">Adresse:</span> {{affreteur.adresse}}
