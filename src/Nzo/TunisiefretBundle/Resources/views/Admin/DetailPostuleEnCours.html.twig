@@ -1,0 +1,297 @@
+{% extends "NzoTunisiefretBundle::layoutAdmin.html.twig" %}
+{% block title %} {{ parent() }} Détails Demande Fret En Cours {% endblock %}
+
+{% block banner %}
+<div class="jumbotron">
+    <div class="col-md-4 col-sm-11 col-xs-11"> 
+        <div class="row">
+            <h4 class="title-banner" style="">Détails Demande Fret En Cours</h4>
+        </div>
+    </div>
+</div>
+{% endblock banner %}
+{#---------------------2eme menu-------------------#}
+{% block menu %}
+<div class="nav-container">
+    <div class="box">
+        <ul id="bignav" class="nav nav-pills bottom cl-effect-1">     
+            <li class="actives col-md-offset-2"><a href="{{path('admin_home')}}" >Dashboard</a></li>
+            <li class="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                    Utilisateurs <span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu">
+                    <li><a href="{{ path('admin_liste_clients') }}" >Clients</a></li>
+                    <li><a href="{{ path('admin_liste_exportateurs') }}" >Affréteurs</a></li>
+                </ul>
+            </li>
+
+            <li class="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                    Demandes Fret <span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu">
+                    <li><a href="{{ path('admin_liste_demande_active') }}" >Active</a></li>
+                    <li><a href="{{ path('admin_liste_demande_archive') }}" >Archive</a></li>
+                </ul>
+            </li>
+            <li class="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                    Contrats Fret <span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu">
+                    <li><a href="{{ path('admin_liste_demande_encours') }}" >En Cours</a></li>
+                    <li><a href="{{ path('admin_liste_demande_termine') }}" >Terminé</a></li>
+                </ul>
+            </li>
+            <li><a href="{{ path('admin_liste_demande_signiale') }}" >Liste Demandes Signalé</a></li>
+        </ul>
+        {#-----------select-menu--------------#}
+        <div id="dd" class="wrapper-dropdown-5" tabindex="1">MENU
+            <ul class="dropdownd">
+                <li class="activedrop"><a href="{{path('admin_home')}}" >Dashboard</a></li>
+                <li class="sanslien"><strong>Utilisateurs</strong>
+                    <ul class="second-drop">
+                        <li><a href="{{ path('admin_liste_clients') }}" >Clients</a></li>
+                    <li><a href="{{ path('admin_liste_exportateurs') }}" >Affréteurs</a></li>
+                    </ul>
+                </li>
+                <li class="sanslien"><strong>Demandes Fret</strong>
+                    <ul class="second-drop">
+                        <li><a href="{{ path('admin_liste_demande_active') }}" >Active</a></li>
+                    <li><a href="{{ path('admin_liste_demande_archive') }}" >Archive</a></li>
+                    </ul>
+                </li>
+                <li class="sanslien"><strong>Contrats Fret</strong>
+                    <ul class="second-drop">
+                        <li><a href="{{ path('admin_liste_demande_encours') }}" >En Cours</a></li>
+                        <li><a href="{{ path('admin_liste_demande_termine') }}" >Terminé</a></li>
+                    </ul>
+                </li>
+                <li><a href="{{ path('admin_liste_demande_signiale') }}" >Liste Demandes Signalé</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+{% endblock menu %}
+{% block content %}
+<div class="padding" style="margin-bottom: 177px;">
+    {#----------------breadcrumb----------------#}
+    <ul id="breadcrumbs-two">
+      <li><a href="{{path('admin_home')}}">Accueil</a></li>
+      <li><span>Liste Demandes</span></li>
+      <li><a href="{{path('admin_liste_demande_encours')}}">En Cours</a></li>
+      <li class="current"><span>Détails</span></li>
+    </ul>
+    
+    {#----------------Titre de la page----------------#}
+    <div class="legend2">
+        <h4 class="pull-left">{{postule.demandeexport.titre}} <span class="text-danger">( {{postule.demandeexport.type}} )</span></h4>
+        <div class="row" style="padding-right: 14px;">
+            <div class=" pull-right">
+            
+            </div>
+        </div>
+    </div>
+    
+    {#----------------Etat de la demande----------------#}
+    <div class="row" style="padding-right: 14px;">
+        <h4 class="pull-right red">Etat de la demande: En Cours</h4>
+    </div>
+    
+    {#----------------Collapse----------------#}
+    <div class="row">
+        <div class="col-md-6">      
+            <div class="panel-group" id="accordion1" style="margin-bottom: 10px">
+                {#----------------Détails demande Fret----------------#}
+                <div class="panel panel-default">            
+                    <div class="panel-heading">
+                      <a data-toggle="collapse" href="#collapseOne">
+                        <h4 class="panel-title">
+                           Détail de la demande de fret
+                           <img src="{{ asset('bundles/nzotunisiefret/images') }}/down.png" alt="" class="pull-right"/>  
+                       </h4>
+                      </a>
+                    </div>
+                          
+                    <div id="collapseOne" class="panel-collapse collapse in">
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <p><strong class="red">Réf : </strong>{{postule.demandeexport.reference}} </p>
+                                    <p><strong class="red">Prix : </strong>{{postule.demandeexport.prix}} </p>
+                                    <p><strong class="red">Pays : </strong>{{postule.demandeexport.pays | country }} </p>
+                                    <p><strong class="red">Ville : </strong>{{postule.demandeexport.ville}} </p>
+                                </div>
+                                <div class="col-md-6">
+                                    <p><strong class="red">Code Postal : </strong>{{postule.demandeexport.codepostal}} </p>
+                                    <p><strong class="red">Date Maximal : </strong>{{postule.demandeexport.datemax|date("d/m/Y")}} </p>
+                                    <p><strong class="red">Date Dépot : </strong>{{postule.demandeexport.datedepos|date("d/m/Y")}} </p>
+                                </div>
+                            </div>
+                            <hr>
+                                <p><strong class="red">Adresse : </strong>{{postule.demandeexport.adresse}}</p>
+                            <hr>
+                            <p><strong class="red">Description : </strong>{{postule.demandeexport.description}} </p>
+                        </div>       
+                    </div>
+                </div> 
+            </div>
+        </div>
+            
+        {#----------------Information sue l'Affreteur----------------#}
+        <div class="col-md-6">
+            <div class="panel panel-default">
+                <div class="panel-heading">Informations sur l'Affreteur</div>
+                    <div class="panel-body">
+                        <div class="media">
+                            <div class="pull-left">
+                                <a href=""><img class="media-object img-thumbnail" src="{{ asset('exportateurfilesupload/')}}{{postule.exportateur.logoname}}" alt="" width="100" height="100"></a>
+                            </div>
+                          <div class="media-body">
+                              <div class="legend bottom" style="padding-bottom: 29px;">
+                                  
+                                  <a href="{{path('admin_detail_affreteur', {'id':postule.exportateur.id | urlencrypt} )}}"><h4 class="media-heading pull-left">{{postule.exportateur.nomentrop}}</h4></a>
+                                <span class="pull-right">
+                                    <span id="nzoratingstar"></span> {%if postule.exportateur.note > -1%} <strong>({{postule.exportateur.note}})</strong>{%endif%}
+                                </span>
+                              </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <p class="red"><strong>Contrats en cours : </strong> {{postule.exportateur.nbcontratencours}}</p>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <p class="red"><strong>Contrats terminé : </strong> {{postule.exportateur.nbcontrattermine}}</p>
+                                    </div>
+                                </div>
+                           </div>
+                        </div> 
+                    </div>
+                </div>
+            
+              
+           <div class="panel-group" id="accordion2">
+            {#----------------Détails Postule----------------#}
+                <div class="panel panel-default">
+                  <div class="panel-heading">
+                    <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseThree">
+                        <h4 class="panel-title">
+                            Détails Postule de l'Affreteur
+                            <img src="{{ asset('bundles/nzotunisiefret/images') }}/down.png" alt="" class="pull-right"/>
+                        </h4>
+                    </a>
+                  </div>
+                  <div id="collapseThree" class="panel-collapse collapse in">
+                    <div class="panel-body">
+                        <p style="color: grey"><span class="red">Date de Postule :</span> {{postule.datepostule|date("d/m/Y")}} | <span class="red"> Durée :</span> {{postule.duree}} | <span class="red"> Prix :</span> {{postule.prix}} </p>
+                        <p>
+                          {{postule.description}}
+                        </p>
+                        
+                    </div>
+                  </div>
+                </div>
+              </div>
+        </div>
+    </div>
+        
+        {#----------------Nombre de message----------------#}
+        <h4 class="legend2 bottom">Messages ( <span id='nzonbmsg'>{{msgs|length}}</span> )</h4>
+
+        {#----------------Liste des messges----------------#}
+        <div id="scroll" class="row" >
+            <div class="col-md-8" id="nzomsgcontent"> 
+                {% if msgs is empty %}
+                <p class="alert alert-info">Aucun message trouvé!</p>
+                {%else%}
+                {% if msgs|length <= 4 %}   
+                    {% for msg in msgs %} 
+                        <div class="panel panel-info">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">
+                                    {%if msg.client != null %} {{msg.client.nomentrop}} {%else%} {{msg.exportateur.nomentrop}}{%endif%}
+                                    <p class="pull-right">{{msg.date|date("d/m/Y H:i")}}</p>
+                                </h3>
+                            </div>
+                            <div class="panel-body">
+                                {{msg.message}}
+                            </div>
+                        </div>
+                    {% endfor %}    
+                {% else %}              
+                    <!-- First -->
+                    <div class="panel panel-info">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">
+                               {%if msgs|first.client != null %} {{msgs|first.client.nomentrop}} {%else%} {{msgs|first.exportateur.nomentrop}}{%endif%}
+                                <p class="pull-right">{{msgs|first.date|date("d/m/Y H:i")}}</p>
+                            </h3>
+                        </div>
+                        <div class="panel-body">
+                             {{msgs|first.message}}
+                        </div>
+                    </div>
+                    <!-- BLOCK --> 
+                    <div id='nzolengthmsg' class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">
+                                <span > {{msgs|length -2 }} Messages </span>
+                            </h3>
+                        </div>
+                    </div>
+                    <!-- Hidden FOR --> 
+                    <div id='nzoblockfor' style="display: none; margin-bottom: 5px">
+                        {% for msg in msgs %} 
+                        {% if msg != msgs|first and msg != msgs|last %}
+                        <div class="panel panel-info">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">
+                                    {%if msg.client != null %} {{msg.client.nomentrop}} {%else%} {{msg.exportateur.nomentrop}}{%endif%}
+                                    <p class="pull-right">{{msg.date|date("d/m/Y H:i")}}</p>
+                                </h3>
+                            </div>
+                            <div class="panel-body">
+                                 {{msg.message}}
+                            </div>
+                        </div>
+                        {% endif %}  
+                      {% endfor %}  
+                     </div>          
+                    <!-- Last -->
+                    <div class="panel panel-info">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">
+                                {%if msgs|last.client != null %} {{msgs|last.client.nomentrop}} {%else%} {{msgs|last.exportateur.nomentrop}}{%endif%}
+                                <p class="pull-right">{{msgs|last.date|date("d/m/Y H:i")}}</p>
+                            </h3>
+                        </div>
+                        <div class="panel-body">
+                             {{msgs|last.message}}
+                        </div>
+                    </div>
+                    <!-- END Last -->
+                {% endif %}
+                {% endif %}
+            </div>
+               
+        </div>
+    </div>      
+{% endblock content %}
+ 
+ {% block js %} 
+    <script src="{{ asset('bundles/nzotunisiefret/js/jquery.raty.min.js') }}"></script>
+    <script>
+        $(document).ready(function(){
+            
+           $('#nzolengthmsg').on('click',function(){ 
+                $('#nzolengthmsg').remove();
+                $('#nzoblockfor').show();
+            }); 
+
+            //Rating Star
+            $('#nzoratingstar').raty({ path: '/bundles/nzotunisiefret/images', noRatedMsg: "aucune note associé!", hints: ['', '', '', '', ''], readOnly: true, score: {{postule.exportateur.note}} });
+        });
+        
+        
+    </script>
+{% endblock js %}

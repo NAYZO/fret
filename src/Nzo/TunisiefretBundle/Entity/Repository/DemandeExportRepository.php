@@ -204,4 +204,30 @@ class DemandeExportRepository extends EntityRepository
             ->orderBy('a.date_depos', 'DESC');
          return $qb->getQuery();            
     } 
+    
+    public function getDemandeExportArchiveAdmin()
+    {
+         $qb = $this->createQueryBuilder('a');
+         $qb->where('a.tacking = 0')                 
+            ->andWhere('a.annuler_demande is NOT NULL')  
+            ->orderBy('a.date_depos', 'DESC');
+         return $qb->getQuery();            
+    } 
+    
+    public function getContratEncoursAdmin()
+    {
+         $qb = $this->createQueryBuilder('a');
+         $qb->where('a.tacking = 1')     
+            ->andWhere('a.terminer_demande is NULL')     
+            ->orderBy('a.date_tacking', 'DESC');
+         return $qb->getQuery();            
+    } 
+    
+    public function getContratTerminerAdmin()
+    {
+         $qb = $this->createQueryBuilder('a');
+         $qb->where('a.terminer_demande is NOT NULL')  
+            ->orderBy('a.date_tacking', 'DESC');
+         return $qb->getQuery();            
+    } 
 }

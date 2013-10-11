@@ -314,6 +314,93 @@ class AdminController extends Controller {
     /**
     * @Secure(roles="ROLE_ADMIN")
     */
+    public function ListeContratEncoursAction()
+    {
+            $em = $this->getDoctrine()->getManager();        
+            $query = $em->getRepository('NzoTunisiefretBundle:DemandeExport')->getContratEncoursAdmin();
+            $paginator = $this->get('knp_paginator'); 
+            $listecontratencours = $paginator->paginate($query,
+            $this->get('request')->query->get('page', 1), 6);         
+            return $this->render('NzoTunisiefretBundle:Admin:ListeContratEncours.html.twig', array('listecontratencours' => $listecontratencours));
+    }
+    
+    /**
+    * @Secure(roles="ROLE_ADMIN")
+    */
+    public function DemandeExportEnCoursDetailAction(DemandeExport $mydemande)
+    {
+        $tt = $mydemande->getDemandeexportpostule();
+            foreach($tt as $res){
+               if($res->getDemandeAccepter())
+                  $em = $this->getDoctrine()->getManager();        
+                  $msgs = $em->getRepository('NzoTunisiefretBundle:MsgDemandeExport')->findBy( array('demandeexportpostule' => $res)); 
+                return $this->render('NzoTunisiefretBundle:Admin:DetailPostuleEnCours.html.twig', array('postule' => $res, 'msgs' => $msgs));
+            }          
+    }
+    
+    /**
+    * @Secure(roles="ROLE_ADMIN")
+    */
+    public function ListeDemandeArchiveAction()
+    {
+            $em = $this->getDoctrine()->getManager();        
+            $query = $em->getRepository('NzoTunisiefretBundle:DemandeExport')->getDemandeExportArchiveAdmin();
+            $paginator = $this->get('knp_paginator'); 
+            $listedemandeexport = $paginator->paginate($query,
+            $this->get('request')->query->get('page', 1), 6);         
+            return $this->render('NzoTunisiefretBundle:Admin:ListeDemandeExportArchive.html.twig', array('listedemandeexport' => $listedemandeexport));
+    }
+    
+    /**
+    * @Secure(roles="ROLE_ADMIN")
+    */
+    public function DemandeExportArchiveAction(DemandeExport $mydemande)
+    { 
+        $em = $this->getDoctrine()->getManager();
+        $postules = $em->getRepository('NzoTunisiefretBundle:DemandeExportPostule')->getDemandeExportPostuleByDemande($mydemande);
+        return $this->render('NzoTunisiefretBundle:Admin:DemandeExportArchive.html.twig', array('mydemande' => $mydemande, 'postules' => $postules));
+    }
+    
+    /**
+    * @Secure(roles="ROLE_ADMIN")
+    */
+    public function DetailPostuleArchiveAction(DemandeExportPostule $postule)
+    {
+        $em = $this->getDoctrine()->getManager();        
+        $msgs = $em->getRepository('NzoTunisiefretBundle:MsgDemandeExport')->findBy( array('demandeexportpostule' => $postule));
+        return $this->render('NzoTunisiefretBundle:Admin:DetailPostuleArchive.html.twig', array('postule' => $postule, 'msgs' => $msgs));
+    }
+    
+    /**
+    * @Secure(roles="ROLE_ADMIN")
+    */
+    public function ListeContratTerminerAction()
+    {
+            $em = $this->getDoctrine()->getManager();        
+            $query = $em->getRepository('NzoTunisiefretBundle:DemandeExport')->getContratTerminerAdmin();
+            $paginator = $this->get('knp_paginator'); 
+            $listecontratterminer = $paginator->paginate($query,
+            $this->get('request')->query->get('page', 1), 6);         
+            return $this->render('NzoTunisiefretBundle:Admin:ListeContratTerminer.html.twig', array('listecontratterminer' => $listecontratterminer));
+    }
+    
+    /**
+    * @Secure(roles="ROLE_ADMIN")
+    */
+    public function DemandeExportTermineDetailAction(DemandeExport $mydemande)
+    { 
+        $tt = $mydemande->getDemandeexportpostule();
+            foreach($tt as $res){
+               if($res->getDemandeAccepter())
+                  $em = $this->getDoctrine()->getManager();        
+                  $msgs = $em->getRepository('NzoTunisiefretBundle:MsgDemandeExport')->findBy( array('demandeexportpostule' => $res)); 
+                return $this->render('NzoTunisiefretBundle:Admin:DetailPostuleTermine.html.twig', array('postule' => $res, 'msgs' => $msgs));
+            }          
+    }
+    
+    /**
+    * @Secure(roles="ROLE_ADMIN")
+    */
     public function SupprimerDemandeAction(DemandeExport $mydemande)
     { 
             $em = $this->getDoctrine()->getManager();            

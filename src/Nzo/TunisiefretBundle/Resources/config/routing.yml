@@ -351,47 +351,47 @@ admin_detail_client:
     defaults: { _controller: NzoTunisiefretBundle:Admin:DetailClient }    
 
 admin_liste_exportateurs:
-    pattern: /admin/liste-affreteurs/
+    pattern: /Admin/liste-affreteurs/
     defaults: { _controller: NzoTunisiefretBundle:Admin:ListeExportateurs }
     
 admin_detail_affreteur:
-    pattern: /admin/Detail-Affreteur_~{id}
+    pattern: /Admin/Detail-Affreteur_~{id}
     defaults: { _controller: NzoTunisiefretBundle:Admin:DetailAffreteur }      
     
 admin_liste_demande_active:
-    pattern: /admin/liste-demande-fret/active/
+    pattern: /Admin/liste-demande-fret/active/
     defaults: { _controller: NzoTunisiefretBundle:Admin:ListeDemandeActive }    
 
 admin_liste_demande_archive:
-    pattern: /admin/liste-demande-fret/archive/
-    defaults: { _controller: NzoTunisiefretBundle:Admin:ListeExportateurs }    
+    pattern: /Admin/liste-demande-fret/archive/
+    defaults: { _controller: NzoTunisiefretBundle:Admin:ListeDemandeArchive }    
     
 admin_liste_demande_encours:
-    pattern: /admin/liste-contrat-fret/encours/
-    defaults: { _controller: NzoTunisiefretBundle:Admin:ListeExportateurs }    
+    pattern: /Admin/liste-contrat-fret/encours/
+    defaults: { _controller: NzoTunisiefretBundle:Admin:ListeContratEncours }    
         
 admin_liste_demande_termine:
-    pattern: /admin/liste-contrat-fret/termine/
-    defaults: { _controller: NzoTunisiefretBundle:Admin:ListeExportateurs }        
+    pattern: /Admin/liste-contrat-fret/termine/
+    defaults: { _controller: NzoTunisiefretBundle:Admin:ListeContratTerminer }        
     
 admin_liste_demande_signiale:
-    pattern: /admin/liste-demande-signiale/
+    pattern: /Admin/liste-demande-signiale/
     defaults: { _controller: NzoTunisiefretBundle:Admin:ListeExportateurs }    
     
 admin_active_client:
-    pattern: /admin/Active-Client_~{id}
+    pattern: /Admin/Active-Client_~{id}
     defaults: { _controller: NzoTunisiefretBundle:Admin:ActiveClient }     
     
 admin_desactive_client:
-    pattern: /admin/Desactive-Client_~{id}
+    pattern: /Admin/Desactive-Client_~{id}
     defaults: { _controller: NzoTunisiefretBundle:Admin:DesactiveClient }    
     
 admin_active_affreteur:
-    pattern: /admin/Active-Affreteur_~{id}
+    pattern: /Admin/Active-Affreteur_~{id}
     defaults: { _controller: NzoTunisiefretBundle:Admin:ActiveAffreteur }    
     
 admin_desactive_affreteur:
-    pattern: /admin/Desactive-Affreteur_~{id}
+    pattern: /Admin/Desactive-Affreteur_~{id}
     defaults: { _controller: NzoTunisiefretBundle:Admin:DesactiveAffreteur }  
     
 ajax_get_notif_admin:
@@ -399,7 +399,7 @@ ajax_get_notif_admin:
     defaults: {_controller: NzoTunisiefretBundle:Admin:AjaxGetNotif}     
     
 admin_list_notifications:
-    pattern: /admin/liste-notifications/
+    pattern: /Admin/liste-notifications/
     defaults: {_controller: NzoTunisiefretBundle:Admin:ListeNotifications}   
     
 admin_demande_export_active:    
@@ -412,4 +412,20 @@ admin_postule_active_detail:
     
 admin_supprimer_demande:    
     pattern: /Admin/Demande-Fret-Type_~{id}/Supprimer/
-    defaults: {_controller: NzoTunisiefretBundle:Admin:SupprimerDemande}    
+    defaults: {_controller: NzoTunisiefretBundle:Admin:SupprimerDemande} 
+    
+admin_demande_export_archive:    
+    pattern: /Admin/Demande-Fret_~{id}/Archive/
+    defaults: {_controller: NzoTunisiefretBundle:Admin:DemandeExportArchive}  
+    
+admin_postule_archive_detail:
+    pattern: /Admin/Postule-Archive_~{id}/Detail/
+    defaults: {_controller: NzoTunisiefretBundle:Admin:DetailPostuleArchive} 
+    
+admin_demande_export_encours_detail:
+    pattern: /Admin/Demande-Fret_~{id}/EnCours/Detail/
+    defaults: {_controller: NzoTunisiefretBundle:Admin:DemandeExportEnCoursDetail}   
+    
+admin_demande_export_termine_detail:  
+    pattern: /Admin/Demande-Fret_~{id}/Terminé/
+    defaults: {_controller: NzoTunisiefretBundle:Admin:DemandeExportTermineDetail}    
