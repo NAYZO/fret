@@ -514,3 +514,7 @@ font-size: 200px;
 line-height: 200px;
 font-weight: 600;
 }
+.info{
+    background-color: #E8F1F8;
+  border-color: #9AC3CC;
+}

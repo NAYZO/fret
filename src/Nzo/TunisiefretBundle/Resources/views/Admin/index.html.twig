@@ -98,27 +98,48 @@
                     <div class="row"></div>
                 <hr>   
                 <h4 class="legend2">Analyse des Demandes</h4>
-                    
-                        <div class="table-responsive">
-                            <table class="table table-bordered">
-                                <tr class="active">
-                                    <th>Demande Import Total</th>
-                                    <th>Demande Import Active</th>
-                                    <th>Demande Import Archive</th>
-                                    <th>Demande Export Total</th>
-                                    <th>Demande Export Active</th>
-                                    <th>Demande Export Archive</th>
-                                </tr>
-                                <tr>
-                                    <td>{{nb_demande_import}}</td>
-                                    <td>{{nb_demande_import_active}}</td>
-                                    <td>{{nb_demande_import_archive}}</td>
-                                    <td>{{nb_demande_export}}</td>
-                                    <td>{{nb_demande_export_active}}</td>
-                                    <td>{{nb_demande_export_encours}}</td>
-                                </tr>
-                            </table>
+                <div class="row">
+                    <div class="col-md-6">
+                          <div class="table-responsive">
+                              <div class="panel panel-info">
+                                <div class="panel-heading">Nombre de Demande d'import</div>
+                                    <table class="table table-bordered">
+                                        <tr class="active">
+                                            <th>Total</th>
+                                            <th>Active</th>
+                                            <th>Archive</th>
+                                        </tr>
+                                        <tr>
+                                            <td>{{nb_demande_import}}</td>
+                                            <td>{{nb_demande_import_active}}</td>
+                                            <td>{{nb_demande_import_archive}}</td>
+                                        </tr>
+                                    </table>
+                              </div>
                         </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="table-responsive">
+                            <div class="panel panel-info">
+                                <div class="panel-heading">Nombre de Demande d'Export</div>
+                                    <table class="table table-bordered">
+                                        <tr class="active">
+                                            <th>Total</th>
+                                            <th>Active</th>
+                                            <th>Archive</th>
+                                        </tr>
+                                        <tr>
+                                            <td>{{nb_demande_export}}</td>
+                                            <td>{{nb_demande_export_active}}</td>
+                                            <td>{{nb_demande_export_encours}}</td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                      </div>
+                </div>
+                      
+                    
                        <h4 class="legend2">Analyse des Contrats</h4> 
                         <div class="table-responsive">
                             <table class="table table-bordered">
