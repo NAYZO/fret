@@ -5532,13 +5532,13 @@ a.list-group-item:focus {
 }
 
 .panel-info {
-  border-color: #71AEB2;
+  border-color: #83B4B8;
 }
 
 .panel-info > .panel-heading {
   color: #08374E;
-  background-color: #CEE7E9;
-  border-color: #4B9EAF;
+  background-color: #E8F1F8;
+  border-color: #9AC3CC;
 }
 
 .panel-info > .panel-heading + .panel-collapse .panel-body {

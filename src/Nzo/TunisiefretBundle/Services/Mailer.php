@@ -40,14 +40,14 @@ class Mailer
         {
             $sujet = 'Activation de Compte';
             $body  = $this->templating->render('NzoTunisiefretBundle:Front:EmailUser.html.twig', 
-                    array('message' => 'Nous vous informe, que votre compte est désormais active', 
+                    array('message' => 'On vous informe, que votre compte est désormais active', 
                         'nom' => $nom )); 
         }   
         else if($sj==4)
         {
             $sujet = 'Désactivation de Compte';
             $body  = $this->templating->render('NzoTunisiefretBundle:Front:EmailUser.html.twig', 
-                    array('message' => 'Nous vous informe, que votre compte est désactivé!', 
+                    array('message' => 'On vous informe, que votre compte a été est désactivé!', 
                         'nom' => $nom )); 
         }   
         else if($sj==5)
