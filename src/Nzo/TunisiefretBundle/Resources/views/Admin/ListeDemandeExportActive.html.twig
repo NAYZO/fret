@@ -105,14 +105,14 @@
 {%else%}
 <div class="list-group">
     {% for demande in listedemandeexport %}
-        <a href="{{path('admin_detail_client', {'id':demande.client.id | urlencrypt} )}}"> CLIEEEEEEEEEEEEEEEENNNNNNT</a>  
         <div class="list-group-item" style="padding: 30px;">
             <div class="legend list-group-item-heading padding-bottom">
                 <h4 class="cl-effect-1 pull-left"><a href="{{path('admin_demande_export_active', {'id':demande.id | urlencrypt} )}}">{{demande.titre}}</a></h4>  
                 <h5 class="pull-right text-danger">{{demande.type}}</h5>
             </div>
             <p style="color: grey;">Nombre de Postule: {{demande.nombredepostule}} | Déposer le {{demande.datedepos|date("d/m/Y")}}</p>
-            <p class="list-group-item-text">
+            <div class="row">
+            <p class="list-group-item-text col-md-10">
                 {% if demande.description|length > 150 %}
                     {{demande.description|slice(0, 150)}}...
                 {%else%}
@@ -120,6 +120,11 @@
                 {% endif %}
                 <a href="{{path('admin_demande_export_active', {'id':demande.id | urlencrypt} )}}" class="pull-right"> Voir détails </a>
             </p>
+            <div class="col-md-2 media" style="margin-top: 0;border-left: 1px solid rgb(218, 213, 213)">
+                <a href="{{path('admin_detail_client', {'id':demande.client.id | urlencrypt} )}}" class="pull-left"><img class="media-object img-thumbnail" src="{{ asset('clientfilesupload/')}}{{demande.client.logoname}}" alt="" width="50" height="100"></a>
+                <a href="{{path('admin_detail_client', {'id':demande.client.id | urlencrypt} )}}"><span class="media-body">{{demande.client.nomentrop}}</span></a>
+           </div>
+            </div>
               
         </div>
     {% endfor %}
