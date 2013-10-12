@@ -148,7 +148,7 @@
                     <img class="media-object img-thumbnail" src="{{ asset('exportateurfilesupload/')}}{{postule.exportateur.logoname}}" alt="{{postule.exportateur.logoname}}"  width="80">
                 </span>
                 <div class="media-body">
-                    <h4 class="media-heading"><a href="{{path('client_profil_exportateur', {'id':postule.exportateur.id | urlencrypt} )}}"><strong>{{postule.exportateur.nomentrop}}</strong></a></h4>
+                    <h4 class="media-heading"><a href="{{path('admin_detail_affreteur', {'id':postule.exportateur.id | urlencrypt} )}}"><strong>{{postule.exportateur.nomentrop}}</strong></a></h4>
                     <p style="color: grey">{{postule.datepostule|date("d/m/Y")}}</p>
                     <p class="list-group-item-text cl-effect-1">
                         {% if postule.description|length > 130 %}
