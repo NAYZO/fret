@@ -110,6 +110,7 @@
 {%else%}
 <div class="list-group">
      {% for demande in listedemandeexport %}
+        <a href="{{path('admin_detail_client', {'id':demande.client.id | urlencrypt} )}}"> CLIEEEEEEEEEEEEEEEENNNNNNT</a>  
         <div class="list-group-item" style="padding: 30px;">
             <div class="legend list-group-item-heading padding-bottom">
                 <h4 class="cl-effect-1 pull-left">

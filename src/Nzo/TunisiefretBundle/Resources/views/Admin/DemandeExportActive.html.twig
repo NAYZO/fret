@@ -81,6 +81,7 @@
         <li><a href="{{ path('admin_liste_demande_active') }}">Active</a></li>
         <li class="current"><span>Détails</span></li>
     </ul>
+        <a href="{{path('admin_detail_client', {'id':mydemande.client.id | urlencrypt} )}}"> CLIEEEEEEEEEEEEEEEENNNNNNT</a>
  <div class="legend2">
      <h4 class="pull-left"><strong>{{mydemande.titre}}</strong> <span class="text-danger">( {{mydemande.type}} )</span></h4>
         <div class="row" style="padding-right: 14px;">
