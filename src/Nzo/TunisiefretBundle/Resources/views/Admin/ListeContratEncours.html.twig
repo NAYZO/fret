@@ -104,7 +104,6 @@
 {%else%}
 <div class="list-group">
     {% for demande in listecontratencours %}   
-        <a href="{{path('admin_detail_client', {'id':demande.client.id | urlencrypt} )}}"> CLIEEEEEEEEEEEEEEEENNNNNNT</a>  
         <div class="list-group-item" style="padding: 30px;">
             <div class="legend list-group-item-heading padding-bottom">
                 <h4 class="cl-effect-1 pull-left"><a href="{{path('admin_demande_export_encours_detail', {'id':demande.id | urlencrypt} )}}">{{demande.titre}}</a></h4>  
@@ -121,10 +120,9 @@
                     <a href="{{path('admin_demande_export_encours_detail', {'id':demande.id | urlencrypt} )}}" class="pull-right"> Voir détails </a>
                 </span>
                 <div class="col-md-2 media" style="margin-top: 0;border-left: 1px solid rgb(218, 213, 213)">
-                    
-                   <a href="{{path('admin_detail_affreteur', {'id':demande.ContratEnCoursPostule.exportateur.id | urlencrypt} )}}" class="pull-left"><img class="media-object img-thumbnail" src="{{ asset('exportateurfilesupload/')}}{{demande.ContratEnCoursPostule.exportateur.logoname}}" alt="" width="50" height="100"></a>
-                    <a href="{{path('admin_detail_affreteur', {'id':demande.ContratEnCoursPostule.exportateur.id | urlencrypt} )}}"><span class="media-body">{{demande.ContratEnCoursPostule.exportateur.nomentrop}}</span></a>
-               </div>
+                   <a href="{{path('exp_profil_client', {'id':demande.client.id | urlencrypt} )}}" class="pull-left"><img class="media-object img-thumbnail" src="{{ asset('clientfilesupload/')}}{{demande.client.logoname}}" alt="" width="50" height="100"></a>
+                   <a href="{{path('exp_profil_client', {'id':demande.client.id | urlencrypt} )}}"><span class="media-body">{{demande.client.nomentrop}}</span></a>
+                </div>
             </div>
          </div>
     {% endfor %}

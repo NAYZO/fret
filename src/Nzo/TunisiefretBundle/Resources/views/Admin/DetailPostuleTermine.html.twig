@@ -88,14 +88,12 @@
       <li><span>Liste Demandes</span></li>
       <li><a href="{{path('admin_liste_demande_termine')}}">Terminé</a></li>
       <li class="current"><span>Détails</span></li>
-    </ul>
-     <a href="{{path('admin_detail_client', {'id':postule.demandeexport.client.id | urlencrypt} )}}"> CLIEEEEEEEEEEEEEEEENNNNNNT</a>   
+    </ul> 
     {#----------------Titre de la page----------------#}
     <div class="legend2">
         <h4 class="pull-left">{{postule.demandeexport.titre}} <span class="text-danger">( {{postule.demandeexport.type}} )</span></h4>
         <div class="row" style="padding-right: 14px;">
-            <div class=" pull-right">
-
+            <div class=" pull-right">     
             </div>
         </div>
     </div>
@@ -138,8 +136,19 @@
                             <hr>
                                 <p><strong class="red">Adresse : </strong>{{postule.demandeexport.adresse}}</p>
                             <hr>
-                            <p><strong class="red">Description : </strong>{{postule.demandeexport.description}} </p>
-                        </div>       
+                            <div class="media">
+                                <div class="pull-left">
+                                    <a href="{{path('admin_detail_client', {'id':postule.demandeexport.client.id | urlencrypt} )}}"><img class="media-object img-thumbnail" src="{{ asset('clientfilesupload/')}}{{postule.demandeexport.client.logoname}}" alt="" width="80" height="80"></a>
+                                </div>
+                                <div class="media-body">
+
+                                    <div class="legend bottom">
+                                        <a href="{{path('admin_detail_client', {'id':postule.demandeexport.client.id | urlencrypt} )}}"><h4 class="media-heading pull-left">{{postule.demandeexport.client.nomentrop}}</h4></a><br/> 
+                                    </div>
+                                    <span><strong class="red">Description : </strong>{{postule.demandeexport.description}} </span>
+                                </div>
+                            </div>
+                       </div>       
                     </div>
                 </div> 
             </div>
@@ -170,7 +179,7 @@
         {#----------------Information sue l'Affreteur----------------#}
         <div class="col-md-6">
             <div class="panel panel-default">
-                <div class="panel-heading">Informations sur l'Affreteur</div>
+                <div class="panel-heading"><h5 class="text-info">Informations sur l'Affréteur</h5></div>
                     <div class="panel-body">
                         <div class="media">
                             <div class="pull-left">

@@ -81,8 +81,7 @@
         <li><a href="{{ path('admin_liste_demande_active') }}">Active</a></li>
         <li class="current"><span>Détails</span></li>
     </ul>
-        <a href="{{path('admin_detail_client', {'id':mydemande.client.id | urlencrypt} )}}"> CLIEEEEEEEEEEEEEEEENNNNNNT</a>
- <div class="legend2">
+<div class="legend2">
      <h4 class="pull-left"><strong>{{mydemande.titre}}</strong> <span class="text-danger">( {{mydemande.type}} )</span></h4>
         <div class="row" style="padding-right: 14px;">
             <div class=" pull-right">
@@ -112,19 +111,26 @@
     <div class="panel panel-default bottom">
         <div class="panel-body">
             <div class="row">
-                <div class="col-md-6" style="border-right: 1px solid rgb(213, 210, 210);padding: 20px;">
+                <div class="col-md-5" style="border-right: 1px solid rgb(213, 210, 210);padding: 20px;">
+                  
                     <p><strong class="red">Référence : </strong>{{mydemande.reference}} </p>
                     <p><strong class="red">Prix : </strong>{{mydemande.prix}} </p>
                     <p><strong class="red">Pays : </strong>{{mydemande.pays | country }} </p>
                     <p><strong class="red">Ville : </strong>{{mydemande.ville}} </p>
                 </div>
     
-                <div class="col-md-6" style="padding: 20px;">
+                <div class="col-md-5" style="border-right: 1px solid rgb(213, 210, 210);padding: 20px;">
                     <p><strong class="red">Code Postal : </strong>{{mydemande.codepostal}} </p>
                     <p><strong class="red">Adresse : </strong>{{mydemande.adresse}} </p>
                     <p><strong class="red">Date Maximal : </strong>{{mydemande.datemax|date("d/m/Y")}} </p>
                     <p><strong class="red">Date dépôt : </strong>{{mydemande.datedepos|date("d/m/Y")}} </p>
                 </div>
+                    <div class="col-md-2">
+                        <a href="{{path('admin_detail_client', {'id':mydemande.client.id | urlencrypt} )}}">
+                        <img class="media-object img-thumbnail col-md-offset-2" src="{{ asset('clientfilesupload/')}}{{mydemande.client.logoname}}" alt="" width="100" height="100">
+                        <p class="text-center"><strong>{{mydemande.client.nomentrop}}</strong></p>
+                    </a>
+                    </div>
              </div>
              <div class="row">
                 <div style="padding: 20px;">
