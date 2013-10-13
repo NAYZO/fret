@@ -438,4 +438,49 @@ class AdminController extends Controller {
             $this->get('session')->getFlashBag()->set('nzonotice', 'Demande de Fret Supprimé!');
             return $this->redirect( $this->generateUrl('admin_home') );
     }
+    
+    /**
+    * @Secure(roles="ROLE_ADMIN")
+    */
+    public function RechercheAction($type)
+    {
+        $mot = $this->getRequest()->query->get('mot');
+       if($type=='Active') {
+           $em = $this->getDoctrine()->getManager();   
+           $query = $em->getRepository('NzoTunisiefretBundle:DemandeExport')->RechercheDemandeActiveAdmin($mot);
+                $paginator = $this->get('knp_paginator'); 
+                $listedemandeexport = $paginator->paginate($query,
+                $this->get('request')->query->get('page', 1), 6);         
+           return $this->render('NzoTunisiefretBundle:Admin:ResultatRecherche.html.twig', array('listedemandeexport' => $listedemandeexport));
+       }
+       else if($type=='Archive') {         
+           $em = $this->getDoctrine()->getManager();   
+           $query = $em->getRepository('NzoTunisiefretBundle:DemandeExport')->RechercheDemandeArchiveAdmin($mot);
+                $paginator = $this->get('knp_paginator'); 
+                $listedemandeexport = $paginator->paginate($query,
+                $this->get('request')->query->get('page', 1), 6);         
+           return $this->render('NzoTunisiefretBundle:Admin:ResultatRecherche.html.twig', array('listedemandeexport' => $listedemandeexport));
+       }
+       else if($type=='EnCours') {
+            $em = $this->getDoctrine()->getManager();        
+            $query = $em->getRepository('NzoTunisiefretBundle:DemandeExport')->RechercheDemandeEnCoursAdmin($mot);
+            $paginator = $this->get('knp_paginator'); 
+            $listecontratencours = $paginator->paginate($query,
+            $this->get('request')->query->get('page', 1), 6);         
+            return $this->render('NzoTunisiefretBundle:Admin:ResultatRechercheEnCours.html.twig', array('listecontratencours' => $listecontratencours));
+        
+       }
+       else if($type=='Termine') {
+            $em = $this->getDoctrine()->getManager();        
+            $query = $em->getRepository('NzoTunisiefretBundle:DemandeExport')->RechercheDemandeTerminerAdmin($mot);
+            $paginator = $this->get('knp_paginator'); 
+            $listecontratencours = $paginator->paginate($query,
+            $this->get('request')->query->get('page', 1), 6);         
+            return $this->render('NzoTunisiefretBundle:Admin:ResultatRechercheEnCours.html.twig', array('listecontratencours' => $listecontratencours));
+       }
+       else       
+         return $this->redirect($this->generateUrl('admin_home'));  
+    }
+
+
 }

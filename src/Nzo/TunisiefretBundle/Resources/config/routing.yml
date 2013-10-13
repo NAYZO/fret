@@ -428,4 +428,8 @@ admin_demande_export_encours_detail:
     
 admin_demande_export_termine_detail:  
     pattern: /Admin/Demande-Fret_~{id}/Terminé/
-    defaults: {_controller: NzoTunisiefretBundle:Admin:DemandeExportTermineDetail}    
+    defaults: {_controller: NzoTunisiefretBundle:Admin:DemandeExportTermineDetail}   
+    
+admin_recherche:  
+    pattern: /Admin/Recherche/Demande-Fret/{type}
+    defaults: {_controller: NzoTunisiefretBundle:Admin:Recherche}     

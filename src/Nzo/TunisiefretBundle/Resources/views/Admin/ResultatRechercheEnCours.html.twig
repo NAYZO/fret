@@ -1,11 +1,11 @@
 {% extends "NzoTunisiefretBundle::layoutAdmin.html.twig" %}
-{% block title %} {{ parent() }} Liste Des Demandes Fret Archive {% endblock %}
+{% block title %} {{ parent() }} Resultat Recherche {% endblock %}
 
 {% block banner %}
 <div class="jumbotron">
     <div class="col-md-4 col-sm-11 col-xs-11"> 
         <div class="row">
-            <h4 class="title-banner" style="">Liste Des Demandes Fret Archive</h4>
+            <h4 class="title-banner" style="">Resultat Recherche</h4>
         </div>
     </div>
 </div>
@@ -77,70 +77,54 @@
 {% block content %}
 <div class="padding">
 <div class="row" style="padding-right: 16px;">
-    {# Notif Block#}
-        <div id='nzonotice' class="alert alert-success animated fadeInDown" style='display:none;'>
-            <span id='spannzonotice'></span>
-            <a class="close" data-dismiss="alert" href="#" aria-hidden="true">&times;</a>
-        </div>
-    {# Notif Block#}
     <div class="col-md-9 pull-left">
         <ul id="breadcrumbs-two" style="margin-top: 14px;">
             <li><a href="{{path('admin_home')}}">Accueil</a></li>
-            <li><span>Liste Demandes</span></li>
-            <li class="current"><span>Archivé</span></li>
-        </ul>   
+            <li class="current"><span>Resultat Recherche</span></li>
+        </ul>
     </div>
-    <form action="{{path('admin_recherche',{'type':'Archive'})}}" method="GET" role="form" id='avisform' class="navbar-form pull-right" style="padding:0">
-        <div class="input-group">
-            <input type="text" name='mot' placeholder="Recherche..." class="form-control" style="width: 163px;height: 26px;">
-            <button type="submit" class="btn btn-default btn-xs" style="border-radius:0"><span class="glyphicon glyphicon-search"></span></button>
-        </div>
-    </form>
    
 </div>
 <hr>
 <div class="pull-right" style="padding-right: 16px;">
-    {{ knp_pagination_render(listedemandeexport) }}
+   {{ knp_pagination_render(listecontratencours) }}
 </div>
 
 <div class="row"></div>
-{% if listedemandeexport is empty %}
+{% if listecontratencours is empty %}
    <hr>
-   <p class="alert alert-info">Aucune demande de fret archivé existante !</p>
+   <p class="alert alert-info">Aucune resultat trouvé !</p>
 {%else%}
 <div class="list-group">
-     {% for demande in listedemandeexport %}
+    {% for demande in listecontratencours %}   
         <div class="list-group-item" style="padding: 30px;">
             <div class="legend list-group-item-heading padding-bottom">
-                <h4 class="cl-effect-1 pull-left">
-                    <a href="{{path('admin_demande_export_archive', {'id':demande.id | urlencrypt} )}}">{{demande.titre}}</a>
-                </h4> 
+                <h4 class="cl-effect-1 pull-left"><a href="{{path('admin_demande_export_encours_detail', {'id':demande.id | urlencrypt} )}}">{{demande.titre}}</a></h4>  
                 <h5 class="pull-right text-danger">{{demande.type}}</h5>
             </div>
-            <p style="color: grey;">Nombre de Postule: {{demande.nombredepostule}} | Déposer le {{demande.datedepos|date("d/m/Y")}}</p>
+            <p style="color: grey;">Nombre de Postule: {{demande.nombredepostule}} | Date Contrat {{demande.datetacking|date("d/m/Y")}}</p>
             <div class="row">
-            <p class="list-group-item-text col-md-10">
-                {% if demande.description|length > 150 %}
-                    {{demande.description|slice(0, 150)}}...
-                {%else%}
-                    {{demande.description}}
-                {% endif %}
-                <a href="{{path('admin_demande_export_archive', {'id':demande.id | urlencrypt} )}}" class="pull-right"> Voir détails </a>
-            </p>
-            <div class="col-md-2 media" style="margin-top: 0;border-left: 1px solid rgb(218, 213, 213)">
-               <a href="{{path('exp_profil_client', {'id':demande.client.id | urlencrypt} )}}" class="pull-left"><img class="media-object img-thumbnail" src="{{ asset('clientfilesupload/')}}{{demande.client.logoname}}" alt="" width="50" height="100"></a>
-               <a href="{{path('exp_profil_client', {'id':demande.client.id | urlencrypt} )}}"><span class="media-body">{{demande.client.nomentrop}}</span></a>
-            </div> 
+                <span class="list-group-item-text col-md-10">
+                    {% if demande.description|length > 150 %}
+                        {{demande.description|slice(0, 150)}}...
+                    {%else%}
+                        {{demande.description}}
+                    {% endif %}
+                    <a href="{{path('admin_demande_export_encours_detail', {'id':demande.id | urlencrypt} )}}" class="pull-right"> Voir détails </a>
+                </span>
+                <div class="col-md-2 media" style="margin-top: 0;border-left: 1px solid rgb(218, 213, 213)">
+                   <a href="{{path('exp_profil_client', {'id':demande.client.id | urlencrypt} )}}" class="pull-left"><img class="media-object img-thumbnail" src="{{ asset('clientfilesupload/')}}{{demande.client.logoname}}" alt="" width="50" height="100"></a>
+                   <a href="{{path('exp_profil_client', {'id':demande.client.id | urlencrypt} )}}"><span class="media-body">{{demande.client.nomentrop}}</span></a>
+                </div>
             </div>
-        </div>
+         </div>
     {% endfor %}
 </div>
-<div class="row" style="padding-right: 16px;padding-left: 16px;">
-   <div class="pull-right">
-        {{ knp_pagination_render(listedemandeexport) }}
+<div class="row" style="padding-right: 16px;">
+    <div class="pull-right">
+        {{ knp_pagination_render(listecontratencours) }}
     </div>
 </div>
-</div>
+    </div>
 {%endif%}
-{% endblock content %} 
- 
+{% endblock content %}
