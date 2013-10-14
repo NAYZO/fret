@@ -5625,7 +5625,7 @@ body.modal-open,
   right: 0;
   bottom: 0;
   left: 0;
-  z-index: 1040;
+  z-index: 9999;
   display: none;
   overflow: auto;
   overflow-y: scroll;
@@ -5648,6 +5648,7 @@ body.modal-open,
 }
 
 .modal-dialog {
+  margin-top: 78px;
   z-index: 1050;
   width: auto;
   padding: 10px;
