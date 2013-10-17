@@ -813,9 +813,19 @@ class ClientController extends Controller {
         $signalisation->setExportateur($postule->getExportateur());
         $signalisation->setTitre($titre);
         $signalisation->setDescription($description);
-        $signalisation->setType('Signal Postule');
-        
+        $signalisation->setType('Signal Postule');        
         $em->persist($signalisation);
+        //Notification Admin
+        $notif = new Notification();
+        $admin = $em->getRepository('NzoUserBundle:Admin')->find(10);
+        $notif->setAdmin($admin);
+        $notif->setText('Postule Signalé');
+        $url = $this->get('router')->generate('admin_liste_demande_signiale');              
+        $notif->setUrl($url);
+        $em->persist($notif);
+        
+        $em->flush();
+        //$this->container->get('nzo.mailer')->NzoSendMail($admin->getEmail(), 14);
         $em->flush();
         $this->get('session')->getFlashBag()->set('nzonotice', 'Votre signalisation est envoyer à l\'administrateur');
         return $this->redirect($this->generateUrl('nzo_tunisiefret_homepage'));

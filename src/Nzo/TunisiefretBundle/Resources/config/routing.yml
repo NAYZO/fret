@@ -442,5 +442,5 @@ admin_liste_demande_signiale:
     defaults: {_controller: NzoTunisiefretBundle:Admin:Signalisations}     
     
 admin_signalisation_detail:  
-    pattern: /Admin/Liste-Signalisation/Detail
+    pattern: /Admin/Signalisation/Detail_~{id}
     defaults: {_controller: NzoTunisiefretBundle:Admin:SignalisationDetail}    

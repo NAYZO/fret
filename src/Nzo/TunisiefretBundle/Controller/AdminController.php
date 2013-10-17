@@ -487,15 +487,20 @@ class AdminController extends Controller {
     */
     public function SignalisationsAction()
     { 
-        return $this->render('NzoTunisiefretBundle:Admin:Signalisations.html.twig');
+        $em = $this->getDoctrine()->getManager();        
+            $query = $em->getRepository('NzoTunisiefretBundle:Signalisation')->getAllSignatisations();
+            $paginator = $this->get('knp_paginator'); 
+            $signales = $paginator->paginate($query,
+            $this->get('request')->query->get('page', 1), 8);         
+            return $this->render('NzoTunisiefretBundle:Admin:Signalisations.html.twig', array('signales' => $signales));
     }
     
     /**
     * @Secure(roles="ROLE_ADMIN")
     */
-    public function SignalisationDetailAction()
+    public function SignalisationDetailAction(\Nzo\TunisiefretBundle\Entity\Signalisation $signale)
     { 
-        return $this->render('NzoTunisiefretBundle:Admin:SignalisationDetail.html.twig');
+        return $this->render('NzoTunisiefretBundle:Admin:SignalisationDetail.html.twig', array('signale' => $signale));
     }
 
 }

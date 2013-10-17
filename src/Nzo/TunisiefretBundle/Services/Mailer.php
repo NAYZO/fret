@@ -106,6 +106,18 @@ class Mailer
                     array('message' => $txt, 
                         'nom' => $nom )); 
         } 
+        else if($sj==13)
+        {
+            $sujet = 'Demande Signalé!';
+            $body  = $this->templating->render('NzoTunisiefretBundle:Front:NotifEmailAdmin.html.twig', 
+                    array('message' => 'une Demande est vient d\'être Signalé!' )); 
+        } 
+        else if($sj==14)
+        {
+            $sujet = 'Postule Signalé!';
+            $body  = $this->templating->render('NzoTunisiefretBundle:Front:NotifEmailAdmin.html.twig', 
+                    array('message' => 'un Postule est vient d\'être Signalé!' )); 
+        } 
         
         $mail = \Swift_Message::newInstance(); 
         $mail ->setFrom($this->from, $this->nom) 

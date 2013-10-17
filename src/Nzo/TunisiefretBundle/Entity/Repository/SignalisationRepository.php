@@ -12,4 +12,10 @@ use Doctrine\ORM\EntityRepository;
  */
 class SignalisationRepository extends EntityRepository
 {
+    public function getAllSignatisations()
+    {
+         $qb = $this->createQueryBuilder('a');
+         $qb->orderBy('a.date', 'DESC');
+         return $qb->getQuery();            
+    } 
 }

@@ -86,12 +86,12 @@
         </div>
         {#----------------Pagination----------------#}
         <div class="pull-right">
-           {# {{ knp_pagination_render(listeclients) }}#}
+           {{ knp_pagination_render(signales) }}
         </div>
     </div>
     {#----------------Titre de la page----------------#}
     <div class="legend2">
-        <h4>La Liste de Clients</h4>
+        <h4>Liste des Signalisations</h4>
     </div>
 
     {#----------------Liste des Clients----------------#}
@@ -108,19 +108,33 @@
                </tr>     
             </thead>
             <tbody>
-            {# {% for client in listeclients %}#}
-                <tr>
-                    <td><img class="media-object img-thumbnail" alt="" src="" style="width: 100px; height: 100px;"></td>
-                    <td><img class="media-object img-thumbnail" alt="" src="" style="width: 100px; height: 100px;"></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td>
-                        <a href="{{path('admin_signalisation_detail')}}"> Voir les details</a>
-                        
-                    </td>
-                </tr>
-             {#{%endfor%}#}
+             {% for signale in signales %}
+                   {% if signale.type=='Signal Postule'%}
+                        <tr>
+                            <td><img class="media-object img-thumbnail" alt="" src="{{ asset('clientfilesupload/')}}{{signale.client.logoname}}" style="width: 100px; height: 100px;"></td>
+                            <td><img class="media-object img-thumbnail" alt="" src="{{ asset('exportateurfilesupload/')}}{{signale.exportateur.logoname}}" style="width: 100px; height: 100px;"></td>
+                            <td>{{signale.titre}}</td>
+                            <td>{{signale.date|date('d/m/Y')}}</td>
+                            <td>{{signale.type}}</td>
+                            <td>
+                                <a href="{{path('admin_signalisation_detail',{'id': signale.id|urlencrypt})}}"> Voir les details</a>
+
+                            </td>
+                        </tr>
+                   {%elseif signale.type=='Signal Demande'%}     
+                        <tr>
+                            <td><img class="media-object img-thumbnail" alt="" src="{{ asset('exportateurfilesupload/')}}{{signale.exportateur.logoname}}" style="width: 100px; height: 100px;"></td>
+                            <td><img class="media-object img-thumbnail" alt="" src="{{ asset('clientfilesupload/')}}{{signale.client.logoname}}" style="width: 100px; height: 100px;"></td>                            
+                            <td>{{signale.titre}}</td>
+                            <td>{{signale.date|date('d/m/Y')}}</td>
+                            <td>{{signale.type}}</td>
+                            <td>
+                                <a href="{{path('admin_signalisation_detail',{'id': signale.id|urlencrypt})}}"> Voir les details</a>
+
+                            </td>
+                        </tr>
+                  {%endif%}      
+             {%endfor%}
             </tbody>
         </table>
         </div>
@@ -128,7 +142,7 @@
     {#----------------pagination----------------#} 
     <div class="row" style="padding-right: 16px;">
         <div class="pull-right">
-             {# {{ knp_pagination_render(listeclients) }}#}
+              {{ knp_pagination_render(signales) }}
         </div>
      </div>
  

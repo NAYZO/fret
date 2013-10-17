@@ -609,10 +609,20 @@ class ExportateurController extends Controller {
         $signalisation->setExportateur($usr);
         $signalisation->setTitre($titre);
         $signalisation->setDescription($description);
-        $signalisation->setType('Signal Demande');
-        
+        $signalisation->setType('Signal Demande');        
         $em->persist($signalisation);
+        
+        //Notification Admin
+        $notif = new Notification();
+        $admin = $em->getRepository('NzoUserBundle:Admin')->find(10);
+        $notif->setAdmin($admin);
+        $notif->setText('Demande Signalé');
+        $url = $this->get('router')->generate('admin_liste_demande_signiale');              
+        $notif->setUrl($url);
+        $em->persist($notif);
+        
         $em->flush();
+        //$this->container->get('nzo.mailer')->NzoSendMail($admin->getEmail(), 13);
         $this->get('session')->getFlashBag()->set('nzonotice', 'Votre signalisation est envoyer à l\'administrateur');
         return $this->redirect($this->generateUrl('nzo_tunisiefret_homepage'));
     }
