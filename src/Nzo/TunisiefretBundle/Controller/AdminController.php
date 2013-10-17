@@ -482,5 +482,20 @@ class AdminController extends Controller {
          return $this->redirect($this->generateUrl('admin_home'));  
     }
 
+   /**
+    * @Secure(roles="ROLE_ADMIN")
+    */
+    public function SignalisationsAction()
+    { 
+        return $this->render('NzoTunisiefretBundle:Admin:Signalisations.html.twig');
+    }
+    
+    /**
+    * @Secure(roles="ROLE_ADMIN")
+    */
+    public function SignalisationDetailAction()
+    { 
+        return $this->render('NzoTunisiefretBundle:Admin:SignalisationDetail.html.twig');
+    }
 
 }

@@ -433,3 +433,11 @@ admin_demande_export_termine_detail:
 admin_recherche:  
     pattern: /Admin/Recherche/Demande-Fret/{type}
     defaults: {_controller: NzoTunisiefretBundle:Admin:Recherche}     
+    
+admin_signalisations:  
+    pattern: /Admin/Liste-Signalisations/
+    defaults: {_controller: NzoTunisiefretBundle:Admin:Signalisations}     
+    
+admin_signalisation_detail:  
+    pattern: /Admin/Liste-Signalisation/Detail
+    defaults: {_controller: NzoTunisiefretBundle:Admin:SignalisationDetail}    
