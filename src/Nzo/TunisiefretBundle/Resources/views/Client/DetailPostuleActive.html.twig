@@ -251,7 +251,7 @@
                                  <h5 class="modal-title"><strong>Signaler un prostule</strong></h5>
                                </div>
                                <div class="modal-body" style="color: black">
-                                   <form action="{{path('client_signaler_postule', {'id':postule..id | urlencrypt})}}" method="POST" role="form" >
+                                   <form action="{{path('client_signaler_postule', {'id':postule.id | urlencrypt})}}" method="POST" role="form" >
                                        <p>Signaler le postule de <strong class="red">{{postule.exportateur.nomentrop}}</strong></p>
                                        <div class="form-group">
                                          <label>Type</label>

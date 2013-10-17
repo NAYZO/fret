@@ -797,4 +797,27 @@ class ClientController extends Controller {
        else       
          return $this->redirect($this->generateUrl('nzo_tunisiefret_homepage'));  
     }
+    
+    /**
+    * @Secure(roles="ROLE_CLIENT")
+    */
+    public function SignalerPostuleAction(DemandeExportPostule $postule, Request $request)
+    {   
+        $usr = $this->get('security.context')->getToken()->getUser();
+        $em = $this->getDoctrine()->getManager();   
+        $titre = $request->request->get('titre');
+        $description = $request->request->get('description');  
+        $signalisation = new \Nzo\TunisiefretBundle\Entity\Signalisation;
+        $signalisation->setClient($usr);
+        $signalisation->setDemandeexportpostule($postule);
+        $signalisation->setExportateur($postule->getExportateur());
+        $signalisation->setTitre($titre);
+        $signalisation->setDescription($description);
+        $signalisation->setType('Signal Postule');
+        
+        $em->persist($signalisation);
+        $em->flush();
+        $this->get('session')->getFlashBag()->set('nzonotice', 'Votre signalisation est envoyer à l\'administrateur');
+        return $this->redirect($this->generateUrl('nzo_tunisiefret_homepage'));
+    }
 }

@@ -160,7 +160,7 @@
                                  <h5 class="modal-title"><strong>Signaler une demande</strong></h5>
                                </div>
                                <div class="modal-body" style="color: black">
-                                   <form action="" method="POST" role="form" >
+                                   <form action="{{path('exp_signaler_demande', {'id':postule.demandeexport.id | urlencrypt})}}" method="POST" role="form" >
                                        <p>Signaler la demande de <strong class="red">{{postule.demandeexport.client.nomentrop}}</strong></p>
                                        <div class="form-group">
                                          <label>Type</label>
