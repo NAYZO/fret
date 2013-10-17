@@ -622,7 +622,7 @@ class ExportateurController extends Controller {
         $em->persist($notif);
         
         $em->flush();
-        //$this->container->get('nzo.mailer')->NzoSendMail($admin->getEmail(), 13);
+        $this->container->get('nzo.mailer')->NzoSendMail($admin->getEmail(), 13);
         $this->get('session')->getFlashBag()->set('nzonotice', 'Votre signalisation est envoyer à l\'administrateur');
         return $this->redirect($this->generateUrl('nzo_tunisiefret_homepage'));
     }

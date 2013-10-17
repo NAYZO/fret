@@ -157,17 +157,17 @@
                                         <span class="pull-left">
                                             {%if demande.avisexport is not null%}
                                                 {%if demande.avisexport.avisclient is not null%}
-                                                        <span id="nzonotecl{{key}}"></span>
+                                                        <span id="nzonotecl{{key}}"></span> ( {{demande.avisexport.noteclient}} )
                                                     <script>
                                                     $(document).ready(function(){           
                                                         $("#nzonotecl{{key}}").raty({ path: '/bundles/nzotunisiefret/images', noRatedMsg: "aucune note associé!", hints: ['', '', '', '', ''], readOnly: true, score: {{demande.avisexport.noteclient}} }); 
                                                     });    
                                                     </script>
                                                {%else%}    
-                                                  <span class="text-info">Aucun Avis associer!</span>  
+                                                  <span class="text-info">Avis pas encore associer!</span>  
                                                 {%endif%}     
                                             {%else%}   
-                                            <span class="text-info">Aucun Avis associer!</span>
+                                            <span class="text-info">Avis pas encore associer!</span>
                                             {%endif%}
                                         </span>
                                         <span class="pull-right text-danger"><strong>{{demande.type}}</strong></span>

@@ -825,7 +825,7 @@ class ClientController extends Controller {
         $em->persist($notif);
         
         $em->flush();
-        //$this->container->get('nzo.mailer')->NzoSendMail($admin->getEmail(), 14);
+        $this->container->get('nzo.mailer')->NzoSendMail($admin->getEmail(), 14);
         $em->flush();
         $this->get('session')->getFlashBag()->set('nzonotice', 'Votre signalisation est envoyer à l\'administrateur');
         return $this->redirect($this->generateUrl('nzo_tunisiefret_homepage'));
