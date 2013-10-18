@@ -114,7 +114,47 @@
                                 <p><strong class="red">Adresse : </strong>{{demandeexport.adresse}}</p>
                             <hr>
                             <p><strong class="red">Description : </strong>{{demandeexport.description}} </p>
-                            
+                             <!-- Button trigger modal -->
+                        <a data-toggle="modal" href="#nzosignalerModal" class="btn btn-xs btn-default pull-right">Signaler</a>
+                        
+   
+                        <!-- Modal Terminer Contrat-->
+                         <div class="modal fade" id="nzosignalerModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                           <div class="modal-dialog">
+                             <div class="modal-content">
+                               <div class="modal-header">
+                                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                 <h5 class="modal-title"><strong>Signaler une demande</strong></h5>
+                               </div>
+                               <div class="modal-body" style="color: black">
+                                   <form action="{{path('exp_signaler_demande', {'id':demandeexport.id | urlencrypt})}}" method="POST" role="form" >
+                                       <p>Signaler la demande de <strong class="red">{{demandeexport.client.nomentrop}}</strong></p>
+                                       <div class="form-group">
+                                         <label>Type</label>
+                                         <select class="form-control" name="titre">
+                                             <option value="Contenu Inapproprié">Contenu Inapproprié</option>
+                                             <option value="Phishing/Fraude">Phishing/Fraude</option>
+                                             <option value="SPAM/Faux Profil">SPAM/Faux Profil</option>
+                                             <option value="Client demande de travailler gratuitement">Client demande de travailler gratuitement</option>                                             
+                                             <option value="Client demande de travailler en dehors de TunisieFret">Client demande de travailler en dehors de TunisieFret</option>                                             
+                                         </select>
+                                         </div>          
+                                           <div class="form-group">
+                                           <label>Description</label>
+                                           <textarea class="form-control" rows="4" name="description"></textarea>
+                                         </div>
+                                       <div class="row"style="margin-right: 0">
+                                           <div class="pull-right">
+                                             <button type="submit" class="btn btn-primary">Signaler</button>
+                                             <button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
+                                           </div>
+                                       </div>
+                                   </form> 
+                               </div>
+
+                             </div><!-- /.modal-content -->
+                           </div><!-- /.modal-dialog -->
+                         </div><!-- /.modal -->
                         </div>       
                     </div>
                 </div> 

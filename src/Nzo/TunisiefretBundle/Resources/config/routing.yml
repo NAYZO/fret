@@ -163,12 +163,22 @@ client_reposter_demande_type:
 client_donner_avis_demande_export:  
     pattern: /Demande-Fret_~{id}/Ajout-Avis/
     defaults: {_controller: NzoTunisiefretBundle:Client:DonnerAvisDemandeExport} 
+    
+client_supprimer_notif:  
+    pattern: /Supprimer-Notification_~{id}
+    defaults: {_controller: NzoTunisiefretBundle:Client:SupprimerNotification} 
+    
+client_supprimer_msg:  
+    pattern: /Supprimer-Msg_~{id}
+    defaults: {_controller: NzoTunisiefretBundle:Client:SupprimerMsg}    
 
 client_signaler_postule:  
     pattern: /Signaler-Postule_~{id}
     defaults: {_controller: NzoTunisiefretBundle:Client:SignalerPostule}
   
+  
 #Affreteur ROUTE
+
 exp_home:
     pattern: /liste-demande-fret/
     defaults: {_controller: NzoTunisiefretBundle:Exportateur:Home}
@@ -260,6 +270,14 @@ ajax_send_msg_exportateur:
 exp_donner_avis_demande_export:  
     pattern: /Affreteur-Demande-Fret_~{id}/Ajout-Avis/
     defaults: {_controller: NzoTunisiefretBundle:Exportateur:DonnerAvisDemandeExport} 
+    
+exp_supprimer_notif:  
+    pattern: /Affreteur/Supprimer-Notification_~{id}
+    defaults: {_controller: NzoTunisiefretBundle:Exportateur:SupprimerNotification}   
+    
+exp_supprimer_msg:  
+    pattern: /Affreteur/Supprimer-Msg_~{id}
+    defaults: {_controller: NzoTunisiefretBundle:Exportateur:SupprimerMsg}    
     
 exp_signaler_demande:  
     pattern: /Affreteur/Signaler-Demande_~{id}

@@ -64,6 +64,13 @@
 {% endblock menu %}
 {% block content %}
 <div class="padding">
+    {# Notif Block#}
+        <div id='nzonotice' class="alert alert-success animated fadeInDown" style='display:none;'>
+            <span id='spannzonotice'></span>
+            <a class="close" data-dismiss="alert" href="#" aria-hidden="true">&times;</a>
+        </div>
+    {# Notif Block#}
+        
     <div class="row bottom" style="padding-right: 16px;">
         {#----------------Arborescence----------------#}
         <div class="col-md-9 pull-left">
@@ -105,6 +112,7 @@
                             {{notif.text}}
                         {% endif %}
                         <a href="{{notif.url}}" class="pull-right"> Voir détails </a>
+                        <a class="pull-right" href="{{path('client_supprimer_msg', {'id': notif.id | urlencrypt})}}"> Supp | </a>
                     </p>
                </div>
             </div>

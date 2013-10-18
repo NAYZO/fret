@@ -423,13 +423,13 @@ class AdminController extends Controller {
             // notif Client
                 $notif = new Notification();
                 $notif->setClient($mydemande->getClient());                
-                $text = 'Demande de Fret <span>'.$mydemande->getTitre().'</span> est supprimé par l\'Administrateur!';
+                $text = 'Votre Demande de Fret <span>'.$mydemande->getTitre().'</span> est supprimé par l\'Administrateur!';
                 $notif->setText($text);
                 $notif->setUrl('#');
                 $em->persist($notif);
                 
                 //Email 
-                $textmail = 'Demande de Fret <span>'.$mydemande->getTitre().'</span> est supprimé par l\'Administrateur!';
+                $textmail = 'Votre Demande de Fret <span>'.$mydemande->getTitre().'</span> est supprimé par l\'Administrateur!';
                 $this->get('nzo.mailer')->NzoSendMail($mydemande->getClient()->getEmail(), 12, $mydemande->getClient()->getNomentrop(), $textmail );
                 
             $em->remove($mydemande);

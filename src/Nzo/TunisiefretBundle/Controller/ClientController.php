@@ -830,4 +830,44 @@ class ClientController extends Controller {
         $this->get('session')->getFlashBag()->set('nzonotice', 'Votre signalisation est envoyer à l\'administrateur');
         return $this->redirect($this->generateUrl('nzo_tunisiefret_homepage'));
     }
+    
+    /**
+    * @Secure(roles="ROLE_CLIENT")
+    */
+    public function SupprimerNotificationAction(Notification $notif)
+    {
+        $usr = $this->get('security.context')->getToken()->getUser();
+       // security access     
+           if($notif->getClient() != $usr ) return $this->redirect($this->generateUrl('nzo_tunisiefret_homepage'));
+       // security access 
+        $em = $this->getDoctrine()->getManager();        
+        $em->remove($notif);
+        $em->flush();
+        $this->get('session')->getFlashBag()->set('nzonotice', 'Notification Supprimé avec succès');
+        $url = $this->get('request')->headers->get('referer');
+                      if(empty($url)) {
+                      $url = $this->generateUrl('client_list_notifications');
+                      }
+                      return $this->redirect( $url );        
+    }
+    
+    /**
+    * @Secure(roles="ROLE_CLIENT")
+    */
+    public function SupprimerMsgAction(NotifMsg $notif)
+    {
+        $usr = $this->get('security.context')->getToken()->getUser();
+       // security access     
+           if($notif->getClient() != $usr ) return $this->redirect($this->generateUrl('nzo_tunisiefret_homepage'));
+       // security access 
+        $em = $this->getDoctrine()->getManager();        
+        $em->remove($notif);
+        $em->flush();
+        $this->get('session')->getFlashBag()->set('nzonotice', 'Notification Supprimé avec succès');
+        $url = $this->get('request')->headers->get('referer');
+                      if(empty($url)) {
+                      $url = $this->generateUrl('client_list_messages');
+                      }
+                      return $this->redirect( $url );        
+    }
 }

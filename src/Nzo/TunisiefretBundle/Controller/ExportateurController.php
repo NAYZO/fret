@@ -91,6 +91,8 @@ class ExportateurController extends Controller {
                 //Notification Client
                 $Notification = new Notification();
                 $Notification->setClient($DemandeExport->getClient());
+                $Notification->setDemandeexport($DemandeExport);
+                $Notification->setDoneItByExportateur($usr);
                 $Notification->setText('Nouveau Postule sur la Demande <span>'.$DemandeExport->getTitre().'</span>');
                 $url = $this->get('router')->generate('client_notif_url_val', array('id' => $this->get('nzo_url_encryptor')->encrypt($PostuleExport->getId())), true);              
                 $Notification->setUrl($url);
@@ -464,6 +466,9 @@ class ExportateurController extends Controller {
                 $notif->setUrl('#');
                 $em->persist($notif);
             
+                // Suppression de notif client de postule au première fois
+                $othernotif = $em->getRepository('NzoTunisiefretBundle:Notification')->findBy( array('demandeexport' => $postule->getDemandeexport(), 'done_it_by_exportateur' => $usr));
+                foreach($othernotif as $res){ $em->remove($res); } 
             $em->flush();
             
             //Email   
@@ -626,4 +631,45 @@ class ExportateurController extends Controller {
         $this->get('session')->getFlashBag()->set('nzonotice', 'Votre signalisation est envoyer à l\'administrateur');
         return $this->redirect($this->generateUrl('nzo_tunisiefret_homepage'));
     }
+    
+    /**
+    * @Secure(roles="ROLE_EXPORTATEUR")
+    */
+    public function SupprimerNotificationAction(Notification $notif)
+    {
+        $usr = $this->get('security.context')->getToken()->getUser();
+       // security access     
+           if($notif->getExportateur() != $usr ) return $this->redirect($this->generateUrl('nzo_tunisiefret_homepage'));
+       // security access 
+        $em = $this->getDoctrine()->getManager();        
+        $em->remove($notif);
+        $em->flush();
+        $this->get('session')->getFlashBag()->set('nzonotice', 'Notification Supprimé avec succès');
+        $url = $this->get('request')->headers->get('referer');
+                      if(empty($url)) {
+                      $url = $this->generateUrl('exp_list_notifications');
+                      }
+                      return $this->redirect( $url );        
+    }
+    
+    /**
+    * @Secure(roles="ROLE_EXPORTATEUR")
+    */
+    public function SupprimerMsgAction(NotifMsg $notif)
+    {
+        $usr = $this->get('security.context')->getToken()->getUser();
+       // security access     
+           if($notif->getExportateur() != $usr ) return $this->redirect($this->generateUrl('nzo_tunisiefret_homepage'));
+       // security access 
+        $em = $this->getDoctrine()->getManager();        
+        $em->remove($notif);
+        $em->flush();
+        $this->get('session')->getFlashBag()->set('nzonotice', 'Notification Supprimé avec succès');
+        $url = $this->get('request')->headers->get('referer');
+                      if(empty($url)) {
+                      $url = $this->generateUrl('exp_list_messages');
+                      }
+                      return $this->redirect( $url );        
+    }
+    
 } 

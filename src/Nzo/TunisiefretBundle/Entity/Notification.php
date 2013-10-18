@@ -34,6 +34,16 @@ class Notification
      * @ORM\ManyToOne(targetEntity="Nzo\UserBundle\Entity\Admin")
      */
     private $admin;
+    
+    /**
+     * @ORM\ManyToOne(targetEntity="Nzo\TunisiefretBundle\Entity\DemandeExport")
+     */
+    private $demandeexport;
+    
+    /**
+     * @ORM\ManyToOne(targetEntity="Nzo\UserBundle\Entity\Exportateur")
+     */
+    private $done_it_by_exportateur;
 
     /**
      * @ORM\Column(name="vu", type="boolean")
@@ -234,5 +244,52 @@ class Notification
     public function getAdmin()
     {
         return $this->admin;
+    }
+    
+
+    /**
+     * Set demandeexport
+     *
+     * @param \Nzo\TunisiefretBundle\Entity\DemandeExport $demandeexport
+     * @return Notification
+     */
+    public function setDemandeexport(\Nzo\TunisiefretBundle\Entity\DemandeExport $demandeexport = null)
+    {
+        $this->demandeexport = $demandeexport;
+    
+        return $this;
+    }
+
+    /**
+     * Get demandeexport
+     *
+     * @return \Nzo\TunisiefretBundle\Entity\DemandeExport 
+     */
+    public function getDemandeexport()
+    {
+        return $this->demandeexport;
+    }
+
+    /**
+     * Set done_it_by_exportateur
+     *
+     * @param \Nzo\UserBundle\Entity\Exportateur $doneItByExportateur
+     * @return Notification
+     */
+    public function setDoneItByExportateur(\Nzo\UserBundle\Entity\Exportateur $doneItByExportateur = null)
+    {
+        $this->done_it_by_exportateur = $doneItByExportateur;
+    
+        return $this;
+    }
+
+    /**
+     * Get done_it_by_exportateur
+     *
+     * @return \Nzo\UserBundle\Entity\Exportateur 
+     */
+    public function getDoneItByExportateur()
+    {
+        return $this->done_it_by_exportateur;
     }
 }
