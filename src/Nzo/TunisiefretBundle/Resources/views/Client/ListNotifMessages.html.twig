@@ -102,7 +102,13 @@
                     <img class="media-object img-thumbnail" src="{{ asset('exportateurfilesupload/')}}{{notif.logoemetteur}}" alt="image"  width="80">
                 </span>
                 <div class="media-body">
-                    <h4 class="media-heading"><strong class="pull-left">{{notif.emetteur}}</strong><span class="pull-right">{{notif.date|date("d/m/Y")}}</span></h4>
+                    <h4 class="media-heading">
+                        <strong class="pull-left">{{notif.emetteur}}</strong>
+                        <span class="pull-right">
+                            {{notif.date|date("d/m/Y")}}
+                            <a href="{{path('client_supprimer_msg', {'id': notif.id | urlencrypt})}}" class="close" style="float:none">&times;</a>
+                        </span>
+                    </h4>
                     <br>
                     <p style="color: grey">{{notif.titredemandeexport}}</p>
                     <p class="list-group-item-text">
@@ -112,8 +118,7 @@
                             {{notif.text}}
                         {% endif %}
                         <a href="{{notif.url}}" class="pull-right"> Voir détails </a>
-                        <a class="pull-right" href="{{path('client_supprimer_msg', {'id': notif.id | urlencrypt})}}"> Supp | </a>
-                    </p>
+                   </p>
                </div>
             </div>
         </div>
