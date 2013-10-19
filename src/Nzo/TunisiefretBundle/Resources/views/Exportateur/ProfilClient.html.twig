@@ -78,14 +78,29 @@
         <div class="col-md-3">
             <div class="panel panel-default bottom">
                 <div class="panel-heading"><strong>Analyse</strong></div>
-                <div class="panel-body">
-                    <p><span class="red">Nombre Demandes déposé: </span>{{client.nbdemandeexportdepose}}</p>
-                    <p><span class="red">Nombre Demande active: </span>{{active}}</p>
-                    <p><span class="red">Nombre Contrat En Cours: </span>{{client.nbcontratencours}}</p>
-
-                    <p><span class="red">Nombre Contrat Terminé: </span>{{client.nbcontrattermine}}</p>
-
-                </div>
+                <table class="table">
+                        <tr>
+                            <th class="info">Type</th>
+                            <th class="info">Nombre</th>
+                        </tr>
+                        <tr>
+                            <td>Demandes déposé</td>
+                            <td>{{client.nbdemandeexportdepose}}</td>
+                        </tr>
+                        <tr>
+                            <td>Demande active</td>
+                            <td>{{active}}</td>
+                        </tr>
+                        <tr>
+                            <td>Contrat En Cours</td>
+                            <td>{{client.nbcontratencours}}</td>
+                        </tr>
+                        <tr>
+                            <td>Contrat Terminé</td>
+                            <td>{{client.nbcontrattermine}}</td>
+                        </tr>
+                    </table>
+                
             </div>
         </div>
         {#---------------------liste des contrats-------------------#}
