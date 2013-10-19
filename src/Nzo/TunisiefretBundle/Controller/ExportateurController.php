@@ -245,10 +245,13 @@ class ExportateurController extends Controller {
     public function ProfilClientAction($id)
     {
         $em = $this->getDoctrine()->getManager();   
-        $client = $em->getRepository('NzoUserBundle:Client')->find($id);
-        $demandes = $em->getRepository('NzoTunisiefretBundle:DemandeExport')->findBy(array('client' => $id, 'tacking' => 1), array('date_tacking' => 'DESC'));
-        $active = $em->getRepository('NzoTunisiefretBundle:DemandeExport')->getCountClientDemandeExportActive($client->getId());
-        return $this->render('NzoTunisiefretBundle:Exportateur:ProfilClient.html.twig', array('client' => $client, 'demandes' => $demandes, 'active' => $active));
+        $usr = $em->getRepository('NzoUserBundle:Client')->find($id);
+        // liste contat en cours 
+        $contratsCours = $em->getRepository('NzoTunisiefretBundle:DemandeExport')->getClientContratEncours($usr->getId());
+        //$demandesTermine = $em->getRepository('NzoTunisiefretBundle:DemandeExport')->findBy(array('client' => $usr->getId(), 'tacking' => 1), array('date_tacking' => 'DESC'));
+        $contratsTermine = $em->createQuery("SELECT a FROM NzoTunisiefretBundle:DemandeExport a JOIN a.terminer_demande d WHERE a.terminer_demande is NOT NULL AND a.client = ".$usr->getId()." ORDER BY d.date_jobend DESC ");            
+        $active = $em->getRepository('NzoTunisiefretBundle:DemandeExport')->getCountClientDemandeExportActive($usr->getId());
+        return $this->render('NzoTunisiefretBundle:Exportateur:ProfilClient.html.twig', array('client' => $usr, 'contratstermine' => $contratsTermine->getResult(), 'contratscours' => $contratsCours->getResult(), 'active' => $active));
     }
     
     /**
@@ -257,9 +260,14 @@ class ExportateurController extends Controller {
     public function ProfilPublicExportateurAction()
     {
         $usr = $this->get('security.context')->getToken()->getUser();
-        $em = $this->getDoctrine()->getManager();           
-        $postules = $em->createQuery("SELECT a FROM NzoTunisiefretBundle:DemandeExportPostule a JOIN a.demandeexport d WHERE a.demande_accepter = 1 AND a.exportateur = ".$usr->getId()." ORDER BY d.date_tacking DESC");
-        return $this->render('NzoTunisiefretBundle:Exportateur:ProfilExportateurPublic.html.twig', array('postules' => $postules->getResult() ));
+        $em = $this->getDoctrine()->getManager();    
+        // liste contat en cours 
+        $contratsCours = $em->createQuery("SELECT a FROM NzoTunisiefretBundle:DemandeExportPostule a JOIN a.demandeexport d WHERE d.tacking = 1 AND d.terminer_demande is NULL AND d.annuler_demande is NULL AND a.demande_refuser = 0 AND a.annuler_by_exportateur = 0 AND a.exportateur = ".$usr->getId()." ORDER BY a.datepostule DESC ");
+        
+        $contratsTermine = $em->createQuery("SELECT a FROM NzoTunisiefretBundle:DemandeExportPostule a JOIN a.demandeexport d JOIN d.terminer_demande t WHERE d.terminer_demande is NOT NULL AND a.exportateur = ".$usr->getId()." ORDER BY t.date_jobend DESC ");            
+   
+        return $this->render('NzoTunisiefretBundle:Exportateur:ProfilExportateurPublic.html.twig', array('contratstermine' => $contratsTermine->getResult(), 'contratscours' => $contratsCours->getResult()));
+        
     }
     
    /**

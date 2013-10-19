@@ -158,21 +158,28 @@ class ClientController extends Controller {
     public function ProfilExportateurAction($id)
     {
         $em = $this->getDoctrine()->getManager();   
-        $exportateur = $em->getRepository('NzoUserBundle:Exportateur')->find($id);        
-        $postules = $em->createQuery("SELECT a FROM NzoTunisiefretBundle:DemandeExportPostule a JOIN a.demandeexport d WHERE a.demande_accepter = 1 AND a.exportateur = ".$exportateur->getId()." ORDER BY d.date_tacking DESC");
-        return $this->render('NzoTunisiefretBundle:Client:ProfilExportateur.html.twig', array('exportateur' => $exportateur, 'postules' => $postules->getResult() ));
+        $usr = $em->getRepository('NzoUserBundle:Exportateur')->find($id);        
+        // liste contrat en cours 
+        $contratsCours = $em->createQuery("SELECT a FROM NzoTunisiefretBundle:DemandeExportPostule a JOIN a.demandeexport d WHERE d.tacking = 1 AND d.terminer_demande is NULL AND d.annuler_demande is NULL AND a.demande_refuser = 0 AND a.annuler_by_exportateur = 0 AND a.exportateur = ".$usr->getId()." ORDER BY a.datepostule DESC ");
+        
+        $contratsTermine = $em->createQuery("SELECT a FROM NzoTunisiefretBundle:DemandeExportPostule a JOIN a.demandeexport d JOIN d.terminer_demande t WHERE d.terminer_demande is NOT NULL AND a.exportateur = ".$usr->getId()." ORDER BY t.date_jobend DESC ");            
+   
+        return $this->render('NzoTunisiefretBundle:Client:ProfilExportateur.html.twig', array('exportateur' => $usr, 'contratstermine' => $contratsTermine->getResult(), 'contratscours' => $contratsCours->getResult()));    
     }
 
-     /**
+    /**
     * @Secure(roles="ROLE_CLIENT")
     */
     public function ProfilPublicClientAction()
     {
         $usr = $this->get('security.context')->getToken()->getUser();
         $em = $this->getDoctrine()->getManager();   
-        $demandes = $em->getRepository('NzoTunisiefretBundle:DemandeExport')->findBy(array('client' => $usr->getId(), 'tacking' => 1), array('date_tacking' => 'DESC'));
+        // liste contat en cours 
+        $contratsCours = $em->getRepository('NzoTunisiefretBundle:DemandeExport')->getClientContratEncours($usr->getId());
+        //$demandesTermine = $em->getRepository('NzoTunisiefretBundle:DemandeExport')->findBy(array('client' => $usr->getId(), 'tacking' => 1), array('date_tacking' => 'DESC'));
+        $contratsTermine = $em->createQuery("SELECT a FROM NzoTunisiefretBundle:DemandeExport a JOIN a.terminer_demande d WHERE a.terminer_demande is NOT NULL AND a.client = ".$usr->getId()." ORDER BY d.date_jobend DESC ");            
         $active = $em->getRepository('NzoTunisiefretBundle:DemandeExport')->getCountClientDemandeExportActive($usr->getId());
-        return $this->render('NzoTunisiefretBundle:Client:ProfilClientPublic.html.twig', array('demandes' => $demandes, 'active' => $active));
+        return $this->render('NzoTunisiefretBundle:Client:ProfilClientPublic.html.twig', array('contratstermine' => $contratsTermine->getResult(), 'contratscours' => $contratsCours->getResult(), 'active' => $active));
     }
 
     /**
@@ -416,7 +423,8 @@ class ClientController extends Controller {
     {
         $usr = $this->get('security.context')->getToken()->getUser();
             $em = $this->getDoctrine()->getManager();        
-            $query = $em->getRepository('NzoTunisiefretBundle:DemandeExport')->getClientContratTerminer($usr->getId());
+           // $query = $em->getRepository('NzoTunisiefretBundle:DemandeExport')->getClientContratTerminer($usr->getId());            
+            $query = $em->createQuery("SELECT a FROM NzoTunisiefretBundle:DemandeExport a JOIN a.terminer_demande d WHERE a.terminer_demande is NOT NULL AND a.client = ".$usr->getId()." ORDER BY d.date_jobend DESC ");            
             $paginator = $this->get('knp_paginator'); 
             $listecontratterminer = $paginator->paginate($query,
             $this->get('request')->query->get('page', 1), 6);         
@@ -444,7 +452,8 @@ class ClientController extends Controller {
     {
         $usr = $this->get('security.context')->getToken()->getUser();
             $em = $this->getDoctrine()->getManager();        
-            $query = $em->getRepository('NzoTunisiefretBundle:DemandeExport')->getClientDemandeExportArchive($usr->getId());
+            //$query = $em->getRepository('NzoTunisiefretBundle:DemandeExport')->getClientDemandeExportArchive($usr->getId());
+            $query = $em->createQuery("SELECT a FROM NzoTunisiefretBundle:DemandeExport a JOIN a.annuler_demande d WHERE a.annuler_demande is NOT NULL AND a.tacking = 0 AND a.client = ".$usr->getId()." ORDER BY d.date_annuler DESC ");            
             $paginator = $this->get('knp_paginator'); 
             $listedemandeexport = $paginator->paginate($query,
             $this->get('request')->query->get('page', 1), 6);         

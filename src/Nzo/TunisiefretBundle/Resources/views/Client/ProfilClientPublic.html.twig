@@ -112,23 +112,28 @@
         {#---------------------liste des contrats-------------------#}
         <div class="col-md-9">
             <div class="panel panel-default bottom">
-                <div class="panel-heading"><strong>Liste des Contrats: ( {{demandes|length}} )</strong></div>
+                <div class="panel-heading"><strong>Liste des Contrats: ( {{contratscours|length + contratstermine|length}} )</strong></div>
                 <div class="panel-body">
-                    {% if demandes is empty %}
-                        <p class="text-success">Aucun contrat effectué!</p>
-                    {% else %}
-                    {%for key, demande in demandes %}
-                        {%if demande.terminerdemande is null%}
+                {% if contratscours is empty and contratstermine is empty %}
+                    <p class="text-success">Aucun contrat effectué</p>
+                {% else %}
+  
+                    {%for demande in contratscours %}
                         <div class="row">
                             <div class="col-md-12">
                                 <p>
                                     <span class="text-primary" style="font-size:16px"><strong>{{demande.titre}}</strong> </span>
                                     <span class="pull-right text-muted">{{demande.datetacking|date("d/m/Y")}} </span>
                                 </p>
-                                <p class="text-muted"><span class="text-danger">Type contrat:</span> {{demande.type}} | Contrat en cours</p>
+                                <span class="pull-right text-danger"><strong>{{demande.type}}</strong></span>
+                                <p class="text-muted">Contrat en cours</p>
+                                
                             </div>
-                        </div>
-                        {%else%}
+                        </div>          
+                        <hr>
+                    {%endfor%}
+ 
+                    {%for key, demande in contratstermine %}
                            <div class="row">
                                 <div class="col-md-12">
                                     <p>
@@ -140,7 +145,7 @@
                                         <span class="pull-left">
                                             {%if demande.avisexport is not null%}
                                                 {%if demande.avisexport.avisexportateur is null%}
-                                                    <span class="text-info">Avis en attente!</span>  
+                                                    <span class="text-info">Avis en attente</span>  
                                                 {%elseif demande.avisexport.avisclient is not null%}
                                                         <span id="nzonotecl{{key}}"></span> ( {{demande.avisexport.noteclient}} )
                                                     <script>
@@ -149,10 +154,10 @@
                                                     });    
                                                     </script>
                                                {%else%}    
-                                                  <span class="text-info">Avis pas encore associer!</span>  
+                                                  <span class="text-info">Avis pas encore associer</span>  
                                                 {%endif%}     
                                             {%else%}   
-                                            <span class="text-info">Avis pas encore associer!</span>
+                                            <span class="text-info">Avis pas encore associer</span>
                                             {%endif%}
                                         </span>
                                         <span class="pull-right text-danger"><strong>{{demande.type}}</strong></span>
@@ -165,10 +170,9 @@
                                     <h5>{{demande.avisexport.avisclient}}</h5>
                                 {%endif%}    
                               {%endif%}
-                        {%endif%}
                         <hr>
                     {%endfor%}
-                    {%endif%}
+                {%endif%}
                 </div>
             </div>
         </div>
