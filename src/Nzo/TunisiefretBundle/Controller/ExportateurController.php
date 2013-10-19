@@ -218,7 +218,7 @@ class ExportateurController extends Controller {
     {
         $usr = $this->get('security.context')->getToken()->getUser();
         $em = $this->getDoctrine()->getManager();   
-        $query = $em->createQuery("SELECT a FROM NzoTunisiefretBundle:DemandeExportPostule a JOIN a.demandeexport d WHERE d.tacking = 1 AND d.terminer_demande is NULL AND d.annuler_demande is NULL AND a.demande_refuser = 0 AND a.annuler_by_exportateur = 0 AND a.exportateur = ".$usr->getId()." ORDER BY a.datepostule DESC ");
+        $query = $em->createQuery("SELECT a FROM NzoTunisiefretBundle:DemandeExportPostule a JOIN a.demandeexport d WHERE d.tacking = 1 AND d.terminer_demande is NULL AND d.annuler_demande is NULL AND a.demande_refuser = 0 AND a.annuler_by_exportateur = 0 AND a.exportateur = ".$usr->getId()." ORDER BY d.date_tacking DESC ");
         $paginator = $this->get('knp_paginator'); 
         $listepostules = $paginator->paginate($query,
         $this->get('request')->query->get('page', 1), 6);         
@@ -232,7 +232,8 @@ class ExportateurController extends Controller {
     {
         $usr = $this->get('security.context')->getToken()->getUser();
         $em = $this->getDoctrine()->getManager();   
-        $query = $em->createQuery("SELECT a FROM NzoTunisiefretBundle:DemandeExportPostule a JOIN a.demandeexport d WHERE d.terminer_demande is NOT NULL AND a.exportateur = ".$usr->getId()." ORDER BY a.datepostule DESC ");
+        //$query = $em->createQuery("SELECT a FROM NzoTunisiefretBundle:DemandeExportPostule a JOIN a.demandeexport d WHERE d.terminer_demande is NOT NULL AND a.exportateur = ".$usr->getId()." ORDER BY a.datepostule DESC ");
+        $query = $em->createQuery("SELECT a FROM NzoTunisiefretBundle:DemandeExportPostule a JOIN a.demandeexport d JOIN d.terminer_demande t WHERE d.terminer_demande is NOT NULL AND a.exportateur = ".$usr->getId()." ORDER BY t.date_jobend DESC ");            
         $paginator = $this->get('knp_paginator'); 
         $listepostules = $paginator->paginate($query,
         $this->get('request')->query->get('page', 1), 6);         
