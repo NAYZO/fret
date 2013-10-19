@@ -95,9 +95,11 @@
             <div class="list-group-item-heading">
                <a href="{{notif.url}}"> <h5 class="pull-left">{{notif.text|raw}}</h5></a>
                 <div class="row" style="padding-right: 14px;">
-                    <div class=" pull-right">
-                        <strong>{{notif.date|date("d/m/Y")}}</strong> 
-                        <a href="{{path('client_supprimer_notif', {'id': notif.id | urlencrypt})}}">Supp</a>
+                    <div class="pull-right">
+                        <p>
+                            <span><strong>{{notif.date|date("d/m/Y")}}</strong></span>
+                            <span><a href="{{path('client_supprimer_notif', {'id': notif.id | urlencrypt})}}" class="close" style="float:none">&times;</a></span>
+                        </p> 
                     </div>
                 </div>
             </div>
