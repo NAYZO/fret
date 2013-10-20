@@ -430,6 +430,11 @@ class ExportateurController extends Controller {
                 $em->persist($notifmsg);
                 $em->flush();
             }
+            
+            // email notif
+             $url = $this->get('router')->generate('client_notifmsg_url_val', array('id' => $this->get('nzo_url_encryptor')->encrypt($postule->getId())), true);             
+             $textmail = 'Nouveau Message reçu de <a href="'.$url.'"><span>'.$usr->getNomentrop().'</span></a>';
+             $this->get('nzo.mailer')->NzoSendMail($client->getEmail(), 15, $client->getNomentrop(), $textmail );
     
            //  recuperation liste msg
            $msgs = $em->getRepository('NzoTunisiefretBundle:MsgDemandeExport')->findBy( array('demandeexportpostule' => $postule));

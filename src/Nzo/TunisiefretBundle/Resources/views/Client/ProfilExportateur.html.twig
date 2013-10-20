@@ -138,7 +138,7 @@
                                         <span class="pull-left">
                                             {%if postule.demandeexport.avisexport is not null%}  
                                                {%if postule.demandeexport.avisexport.avisexportateur is not null%}
-                                                        <span id="nzonotecl{{key}}"></span> ( {{postule.demandeexport.avisexport.noteclient}} )
+                                                        <span id="nzonotecl{{key}}"></span> ( {{postule.demandeexport.avisexport.noteexportateur}} )
                                                     <script>
                                                     $(document).ready(function(){           
                                                         $("#nzonotecl{{key}}").raty({ path: '/bundles/nzotunisiefret/images', noRatedMsg: "aucune note associé!", hints: ['', '', '', '', ''], readOnly: true, score: {{postule.demandeexport.avisexport.noteexportateur}} }); 

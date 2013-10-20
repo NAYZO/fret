@@ -115,6 +115,13 @@ class Mailer
             $body  = $this->templating->render('NzoTunisiefretBundle:Front:NotifEmailAdmin.html.twig', 
                     array('message' => 'un Postule est vient d\'être Signalé!' )); 
         } 
+        else if($sj==15)
+        {
+            $sujet = 'Message reçu'; 
+            $body  = $this->templating->render('NzoTunisiefretBundle:Front:EmailUser.html.twig', 
+                    array('message' => $txt, 
+                        'nom' => $nom )); 
+        }  
         
         $mail = \Swift_Message::newInstance(); 
         $mail ->setFrom($this->from, $this->nom) 

@@ -637,13 +637,16 @@ class ClientController extends Controller {
                 $notifmsg->setLogoemetteur($usr->getLogoname());
                 $notifmsg->setTitredemandeexport($postule->getDemandeexport()->getTitre());
                 $notifmsg->setText($msg); 
-                $url = $this->get('router')->generate('exp_notifmsg_url_val', array('id' => $this->get('nzo_url_encryptor')->encrypt($postule->getId())));    
+                $url = $this->get('router')->generate('exp_notifmsg_url_val', array('id' => $this->get('nzo_url_encryptor')->encrypt($postule->getId())), true);          
                 $notifmsg->setUrl($url);
                 $em->persist($notifmsg);
                 $em->flush();
             }
             
-
+            // email notif
+             $url = $this->get('router')->generate('exp_notifmsg_url_val', array('id' => $this->get('nzo_url_encryptor')->encrypt($postule->getId())), true);          
+             $textmail = 'Nouveau Message reçu de <a href="'.$url.'"><span>'.$usr->getNomentrop().'</span></a>';
+             $this->get('nzo.mailer')->NzoSendMail($exportateur->getEmail(), 15, $exportateur->getNomentrop(), $textmail );
            //  recuperation liste msg
            $msgs = $em->getRepository('NzoTunisiefretBundle:MsgDemandeExport')->findBy( array('demandeexportpostule' => $postule));
 
