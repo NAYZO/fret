@@ -1,5 +1,5 @@
 .f-nav{ z-index: 9999; position: fixed; left: 0; top: 0; width: 100%;}
-
+#scroll{padding-bottom: 95px;}
 .nav-pills > .actives > a, .nav-pills > .actives .open > a, .actives .open > a:focus {
     border: 1px solid #5FB2CE;
     border-radius: 0;
