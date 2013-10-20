@@ -117,7 +117,7 @@
                 </h4> 
                 <h5 class="pull-right text-danger">{{demande.type}}</h5>
             </div>
-            <p style="color: grey;">Nombre de Postule: {{demande.nombredepostule}} | Déposer le {{demande.datedepos|date("d/m/Y")}}</p>
+            <p style="color: grey;">Nombre de Postule: {{demande.nombredepostule}} | Déposer le {{demande.annulerdemande.dateannuler|date("d/m/Y")}}</p>
             <div class="row">
             <p class="list-group-item-text col-md-10">
                 {% if demande.description|length > 150 %}

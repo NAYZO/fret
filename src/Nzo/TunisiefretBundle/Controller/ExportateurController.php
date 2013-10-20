@@ -204,7 +204,8 @@ class ExportateurController extends Controller {
     {
         $usr = $this->get('security.context')->getToken()->getUser();
         $em = $this->getDoctrine()->getManager();   
-        $query = $em->createQuery("SELECT a FROM NzoTunisiefretBundle:DemandeExportPostule a JOIN a.demandeexport d WHERE d.tacking = 0 OR d.annuler_demande is NOT NULL OR a.demande_refuser = 1 OR a.annuler_by_exportateur = 1 AND a.exportateur = ".$usr->getId()." ORDER BY a.datepostule DESC ");
+        $query = $em->createQuery("SELECT a FROM NzoTunisiefretBundle:DemandeExportPostule a JOIN a.demandeexport d JOIN d.annuler_demande an WHERE (d.tacking = 0 OR d.annuler_demande is NOT NULL OR a.demande_refuser = 1 OR a.annuler_by_exportateur = 1) AND a.exportateur = ".$usr->getId()." ORDER BY an.date_annuler DESC ");
+        
         $paginator = $this->get('knp_paginator'); 
         $listepostules = $paginator->paginate($query,
         $this->get('request')->query->get('page', 1), 6);         
@@ -400,19 +401,36 @@ class ExportateurController extends Controller {
                 $em->flush();
             // notif Client
             $client = $postule->getDemandeexport()->getClient();
-            $notifmsg = new NotifMsg();
-            $notifmsg->setClient($client);
-            $notifmsg->setEmetteur($usr->getNomentrop());
-            $notifmsg->setDemandeexportpostule($postule);
-            $notifmsg->setLogoemetteur($usr->getLogoname());
-            $notifmsg->setTitredemandeexport($postule->getDemandeexport()->getTitre());
-            $notifmsg->setText($msg);   
-            $url = $this->get('router')->generate('client_notifmsg_url_val', array('id' => $this->get('nzo_url_encryptor')->encrypt($postule->getId())), true);             
-            $notifmsg->setUrl($url);
             
-            $em->persist($notifmsg);
-            $em->flush();
-
+            $notifmsg = $em->getRepository('NzoTunisiefretBundle:NotifMsg')->findBy(array('client' => $client, 'demandeexportpostule' => $postule->getId()));
+            if($notifmsg)
+            {
+                foreach($notifmsg as $res){
+                    $res->setNbmsgnonvu( $res->getNbmsgnonvu()+1 );
+                    $res->setText($msg); 
+                    $res->setDate(new \DateTime('now')); 
+                    $res->setVu(false);
+                    $res->setVumsg(false);
+                    $em->persist($res);                    
+                }   
+                $em->flush();
+            }
+            else
+            {
+                $notifmsg = new NotifMsg();
+                $notifmsg->setNbmsgnonvu(1);
+                $notifmsg->setClient($client);
+                $notifmsg->setEmetteur($usr->getNomentrop());
+                $notifmsg->setDemandeexportpostule($postule);
+                $notifmsg->setLogoemetteur($usr->getLogoname());
+                $notifmsg->setTitredemandeexport($postule->getDemandeexport()->getTitre());
+                $notifmsg->setText($msg);   
+                $url = $this->get('router')->generate('client_notifmsg_url_val', array('id' => $this->get('nzo_url_encryptor')->encrypt($postule->getId())), true);             
+                $notifmsg->setUrl($url);
+                $em->persist($notifmsg);
+                $em->flush();
+            }
+    
            //  recuperation liste msg
            $msgs = $em->getRepository('NzoTunisiefretBundle:MsgDemandeExport')->findBy( array('demandeexportpostule' => $postule));
 
@@ -436,8 +454,10 @@ class ExportateurController extends Controller {
         $query = $em->getRepository('NzoTunisiefretBundle:NotifMsg')->findBy(array('exportateur' => $postule->getExportateur(), 'demandeexportpostule' => $postule->getId()));
 
             foreach($query as $res){
-                if(!$res->getVumsg())
-                    $res->setVumsg(true);
+                if(!$res->getVumsg()){
+                    $res->setNbmsgnonvu(0);
+                    $res->setVumsg(true);                    
+                }
                     $em->persist($res);
             }
             $em->flush();

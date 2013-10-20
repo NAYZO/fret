@@ -76,12 +76,18 @@ class NotifMsg
      */
     private $logoemetteur;
     
+    /**
+     * @ORM\Column(name="nb_msg_non_vu", type="integer")
+     */
+    private $nbmsgnonvu;
+    
     
     public function __construct()
     {
         $this->vu = false; 
         $this->vumsg = false; 
         $this->date = new \DateTime('now');        
+        $this->nbmsgnonvu = 0; 
     }
  
 
@@ -350,5 +356,28 @@ class NotifMsg
     public function getDemandeexportpostule()
     {
         return $this->demandeexportpostule;
+    }
+
+    /**
+     * Set nbmsgnonvu
+     *
+     * @param integer $nbmsgnonvu
+     * @return NotifMsg
+     */
+    public function setNbmsgnonvu($nbmsgnonvu)
+    {
+        $this->nbmsgnonvu = $nbmsgnonvu;
+    
+        return $this;
+    }
+
+    /**
+     * Get nbmsgnonvu
+     *
+     * @return integer 
+     */
+    public function getNbmsgnonvu()
+    {
+        return $this->nbmsgnonvu;
     }
 }

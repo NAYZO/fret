@@ -344,7 +344,8 @@ class AdminController extends Controller {
     public function ListeDemandeArchiveAction()
     {
             $em = $this->getDoctrine()->getManager();        
-            $query = $em->getRepository('NzoTunisiefretBundle:DemandeExport')->getDemandeExportArchiveAdmin();
+            //$query = $em->getRepository('NzoTunisiefretBundle:DemandeExport')->getDemandeExportArchiveAdmin();
+            $query = $em->createQuery("SELECT a FROM NzoTunisiefretBundle:DemandeExport a JOIN a.annuler_demande d WHERE a.annuler_demande is NOT NULL AND a.tacking = 0 ORDER BY d.date_annuler DESC ");            
             $paginator = $this->get('knp_paginator'); 
             $listedemandeexport = $paginator->paginate($query,
             $this->get('request')->query->get('page', 1), 6);         
@@ -377,7 +378,8 @@ class AdminController extends Controller {
     public function ListeContratTerminerAction()
     {
             $em = $this->getDoctrine()->getManager();        
-            $query = $em->getRepository('NzoTunisiefretBundle:DemandeExport')->getContratTerminerAdmin();
+            //$query = $em->getRepository('NzoTunisiefretBundle:DemandeExport')->getContratTerminerAdmin();
+            $query = $em->createQuery("SELECT a FROM NzoTunisiefretBundle:DemandeExport a JOIN a.terminer_demande d WHERE a.terminer_demande is NOT NULL ORDER BY d.date_jobend DESC ");            
             $paginator = $this->get('knp_paginator'); 
             $listecontratterminer = $paginator->paginate($query,
             $this->get('request')->query->get('page', 1), 6);         

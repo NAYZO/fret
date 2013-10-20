@@ -110,7 +110,7 @@
                         </span>
                     </h4>
                     <br>
-                    <p style="color: grey">{{notif.titredemandeexport}}</p>
+                    <p style="color: grey">{{notif.titredemandeexport}} {%if notif.nbmsgnonvu >0%} ( {{notif.nbmsgnonvu}} ) {%endif%}</p>
                     <p class="list-group-item-text">
                         {% if notif.text|length > 100 %}
                             {{notif.text|slice(0, 100)}}...
