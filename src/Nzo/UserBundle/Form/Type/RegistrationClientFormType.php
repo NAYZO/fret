@@ -14,8 +14,9 @@ class RegistrationClientFormType extends BaseType
                 ->add('nomentrop')                 
                 ->add('adresse', 'textarea')  
                 ->add('tel')    
-                ->add('fax')  
+                ->add('fax')                  
                 ->add('siteweb')  
+                //->add('licence', 'checkbox')
                 ->add('description')   
                 ->add('uploadlogo', 'file',  array('required' => false))
                 ->add('ville', 'choice', array(                   

@@ -642,4 +642,5 @@ class Client extends User
     {
         return $this->nbcontrattermine;
     }
+
 }

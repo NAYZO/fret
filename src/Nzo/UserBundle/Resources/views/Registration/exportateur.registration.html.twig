@@ -60,7 +60,8 @@
                 </div>
                 {% if(form_errors(form.nomentrop)) %}
                   <div class="error-input">{{ form_errors(form.nomentrop) }}</div>
-                {% endif %}         
+                {% endif %}  
+                  
             </div>
             <div class="col-md-4">
                 {#--Ville---#}
@@ -127,6 +128,11 @@
                   <div class="error-input">{{ form_errors(form.description) }}</div>
                 {% endif %}  
             </div>   
+                
+                
+             <p class="text-notification pull-left">En cliquant sur Inscription, vous acceptez nos <a href='{{path('nzo_licence')}}' target='_blank'>Conditions</a> </p>   
+                
+                
                 <div class="row"></div><hr>
             <p class="text-danger pull-left"><span class="required">*</span> Champs Obligatoire</p>
             <input type="submit" value="Inscription" name="_submit" class="btn btn-primary pull-right">

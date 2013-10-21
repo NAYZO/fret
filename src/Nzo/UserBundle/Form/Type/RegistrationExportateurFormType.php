@@ -16,6 +16,7 @@ class RegistrationExportateurFormType extends BaseType
                 ->add('tel')    
                 ->add('fax')  
                 ->add('siteweb')  
+                //->add('licence', 'checkbox')
                 ->add('description')   
                 ->add('uploadlogo', 'file',  array('required' => false))
                 ->add('ville', 'choice', array(                   

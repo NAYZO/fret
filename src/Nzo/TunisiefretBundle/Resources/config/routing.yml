@@ -27,6 +27,12 @@ nzo_inscription_confirmation:
     defaults:
         _controller: FrameworkBundle:Template:template
         template: 'NzoTunisiefretBundle:Front:InscriptionConfirmation.html.twig' 
+        
+nzo_licence:
+    pattern: /conditions/
+    defaults:
+        _controller: FrameworkBundle:Template:template
+        template: 'NzoTunisiefretBundle:Front:licence.html.twig'        
     
 #CLIENT ROUTE    
 nzo_poserdemande_export:
@@ -462,3 +468,9 @@ admin_liste_demande_signiale:
 admin_signalisation_detail:  
     pattern: /Admin/Signalisation/Detail_~{id}
     defaults: {_controller: NzoTunisiefretBundle:Admin:SignalisationDetail}    
+    
+# SLUG
+
+nzo_slug:
+    pattern:  /{slug}
+    defaults: { _controller: NzoTunisiefretBundle:Front:index }

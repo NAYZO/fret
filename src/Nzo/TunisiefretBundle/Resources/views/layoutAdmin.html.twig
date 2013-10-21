@@ -81,53 +81,7 @@
      <script src="{{ asset('bundles/nzotunisiefret/js/bootstrap.js') }}"></script>
      <script src="{{ asset('bundles/nzotunisiefret/js/up.js') }}"></script>
      <script src="{{ asset('bundles/nzotunisiefret/js/modal.js') }}"></script>     
-     <script>
-         $(document).ready(function() {
-            nzostorage='';
-            setInterval(function(){ 
-                $.ajax({
-                     url:'{{path("ajax_get_nb_notif_admin")}}',
-                     type: 'GET',
-                     success: function(nbnotif){
-                            (nbnotif==0) ? $('#nzonotifnb').html('') : $('#nzonotifnb').html(nbnotif);      
-                     },
-                     error:function(){}  
-                });
-            }, 10000);
-         });
-         
-         $('#cliknotif').on('click', function(){
-            if($('#nzonotifnb').html() != '' || nzostorage == ''){                
-                $.ajax({
-                         url:'{{path("ajax_get_notif_admin")}}',
-                         type:"POST",
-                         dataType:'json',
-                         success: function(a){
-                                if(a[0] == 'vide'){
-                                    $('#nzolistnotifajax').html('<li class="nonlu"><a href="#"><strong>Aucune Notification trouver!</strong></a></li>');
-                                }
-                                else{
-                                    var b='';
-                                    for(key in a)
-                                    {
-                                        if(a[key]['notifvu'] == 0)
-                                            b+='<li class="nonlu"><a href="'+a[key]['url']+'">'+a[key]['notiftext']+'</a></li>';
-                                        else                      
-                                            b+='<li><a href="'+a[key]['url']+'">'+a[key]['notiftext']+'</a></li>';                                    
-                                    }
-                                    b+='<li class="all"><a href="{{path('admin_list_notifications')}}" class="text-center">Voir toute les notifications</a></li>';
-                                    nzostorage = b;
-                                    $('#nzolistnotifajax').html(b);
-                                    $('#nzonotifnb').html('');
-                                    }
-                         },
-                         error:function(){}  
-                    });              
-            }
-            $('#nzolistnotifajax').html(nzostorage);
- 
-         });
-     </script>
+     
      {#-----------menu-scroll---------#}
      <script>
         jQuery("document").ready(function($){
@@ -179,6 +133,55 @@
           } );
              </script>          
 {% endif %}
+             
+<script>
+    $(document).ready(function() {
+        nzostorage='';
+        $('#cliknotif').on('click', function(){
+            if($('#nzonotifnb').html() != '' || nzostorage == ''){                
+                $.ajax({
+                         url:'{{path("ajax_get_notif_admin")}}',
+                         type:"POST",
+                         dataType:'json',
+                         success: function(a){
+                                if(a[0] == 'vide'){
+                                    $('#nzolistnotifajax').html('<li class="nonlu"><a href="#"><strong>Aucune Notification trouver!</strong></a></li>');
+                                }
+                                else{
+                                    var b='';
+                                    for(key in a)
+                                    {
+                                        if(a[key]['notifvu'] == 0)
+                                            b+='<li class="nonlu"><a href="'+a[key]['url']+'">'+a[key]['notiftext']+'</a></li>';
+                                        else                      
+                                            b+='<li><a href="'+a[key]['url']+'">'+a[key]['notiftext']+'</a></li>';                                    
+                                    }
+                                    b+='<li class="all"><a href="{{path('admin_list_notifications')}}" class="text-center">Voir toute les notifications</a></li>';
+                                    nzostorage = b;
+                                    $('#nzolistnotifajax').html(b);
+                                    $('#nzonotifnb').html('');
+                                    }
+                         },
+                         error:function(){}  
+                    });              
+            }
+            $('#nzolistnotifajax').html(nzostorage);
+ 
+         });
+         
+            setInterval(function(){ 
+                $.ajax({
+                     url:'{{path("ajax_get_nb_notif_admin")}}',
+                     type: 'GET',
+                     success: function(nbnotif){
+                            (nbnotif==0) ? $('#nzonotifnb').html('') : $('#nzonotifnb').html(nbnotif);      
+                     },
+                     error:function(){}  
+                });
+            }, 10000);
+         });
+                
+</script>             
      {% block js %}  {% endblock js %}
     </body>
     
