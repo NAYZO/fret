@@ -172,7 +172,7 @@
             setInterval(function(){ 
                 $.ajax({
                      url:'{{path("ajax_get_nb_notif_admin")}}',
-                     type: 'GET',
+                     type: 'POST',
                      success: function(nbnotif){
                             (nbnotif==0) ? $('#nzonotifnb').html('') : $('#nzonotifnb').html(nbnotif);      
                      },

@@ -138,10 +138,13 @@
 {% endif %}
 <script>
     $(document).ready(function() {
-            nzostorage='';         
+            nzostorage='';
+            valeurtitleorig = $('#nzotitlenotif').html();
+            nbnotiftitle = 0;
+            nbnotifmsgtitle = 0;
             totalnotifnb = {{nzonotificationnb}} + {{nzonotifmsgsnb}};
             if( totalnotifnb >0){
-                $('#nzotitlenotif').html( '('+totalnotifnb+') - ' + $('#nzotitlenotif').html() );
+                $('#nzotitlenotif').html( '('+totalnotifnb+') - ' + valeurtitleorig );
             }
             $('#cliknotif').on('click', function(){
             if($('#nzonotifnb').html() != '' || nzostorage == ''){                
@@ -166,6 +169,11 @@
                                     nzostorage = b;
                                     $('#nzolistnotifajax').html(b);
                                     $('#nzonotifnb').html('');
+                                    nbnotiftitle = 0;
+                                        if(nbnotifmsgtitle>0)
+                                            $('#nzotitlenotif').html( '('+nbnotifmsgtitle+') - ' + valeurtitleorig );
+                                        else
+                                            $('#nzotitlenotif').html( valeurtitleorig );
                                     }
                          },
                          error:function(){}  
@@ -178,18 +186,17 @@
          setInterval(function(){ 
                 $.ajax({
                      url:'{{path("ajax_get_nb_notif_client")}}',
-                     type: 'GET',
+                     type: 'POST',
                      success: function(nbnotif){
-                            if(nbnotif==0)
-                                $('#nzonotifnb').html('')
+                            if(nbnotif==0){
+                                $('#nzonotifnb').html('');
+                                nbnotiftitle = 0;
+                            }
                             else{
-                                $('#nzonotifnb').html(nbnotif);      
-                              {#  totalnotifnb = {{nzonotificationnb}} + {{nzonotifmsgsnb}};
-                                if( $('#nzomsgnb').html() != ''){
-                                    totalnotifnb1 = nbnotif + parseInt( $('#nzomsgnb').html() );
-                                    $('#nzotitlenotif').html( '('+totalnotifnb1+') - ' + $('#nzotitlenotif').html() );
-                                }
-                             #}
+                                $('#nzonotifnb').html(nbnotif); 
+                                nbnotiftitle = parseInt(nbnotif);
+                                varslugnotif = nbnotifmsgtitle + nbnotiftitle;
+                                $('#nzotitlenotif').html( '('+varslugnotif+') - ' + valeurtitleorig );
                             }
                      },
                      error:function(){}  
@@ -199,9 +206,18 @@
             setInterval(function(){ 
                 $.ajax({
                      url:'{{path("ajax_get_nb_msg_client")}}',
-                     type: 'GET',
+                     type: 'POST',
                      success: function(nbmsg){
-                            (nbmsg==0) ? $('#nzomsgnb').html('') : $('#nzomsgnb').html(nbmsg);      
+                            if(nbmsg==0){
+                                $('#nzomsgnb').html('');
+                                nbnotifmsgtitle = 0;
+                            }
+                            else{
+                                $('#nzomsgnb').html(nbmsg);   
+                                nbnotifmsgtitle = parseInt(nbmsg);
+                                varslugnotif = nbnotifmsgtitle + nbnotiftitle;
+                                $('#nzotitlenotif').html( '('+varslugnotif+') - ' + valeurtitleorig );
+                            }
                      },
                      error:function(){}  
                 });
