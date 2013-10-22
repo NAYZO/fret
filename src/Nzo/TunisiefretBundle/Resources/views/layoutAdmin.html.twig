@@ -84,16 +84,21 @@
      
      {#-----------menu-scroll---------#}
      <script>
-        jQuery("document").ready(function($){
-            var nav = $('.nav-container');
+        $(document).ready(function () {  
+            var top = $('.nav-container').offset().top - parseFloat($('.nav-container').css('marginTop').replace(/auto/, 100));
             $(window).scroll(function () {
-                if ($(this).scrollTop() > 300) {
-                    nav.addClass("f-nav");
-                } else {
-                    nav.removeClass("f-nav");
-                }
-            });
-        });    
+                // what the y position of the scroll is
+                var y = $(this).scrollTop();
+                // whether that's below the form
+            if (y >= top) {
+              // if so, ad the fixed class
+              $('.nav-container').addClass('f-nav');
+            } else {
+              // otherwise remove it
+              $('.nav-container').removeClass('f-nav');
+            }
+          });
+        });
      </script>
      {#-------------respensive-menu-------------#}
      <script type="text/javascript">
