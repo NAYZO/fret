@@ -24,8 +24,36 @@ class ClientController extends Controller {
     /**
      * @Secure(roles="ROLE_CLIENT")
      */
+    public function VerifDiffTime($id)
+    {   
+        $em = $this->getDoctrine()->getManager();   
+        $usr = $em->getRepository('NzoUserBundle:Exportateur')->find($id);
+        $now = new \DateTime('now');
+        $now = $now->format("Y-m-d H:i:s");   
+        $restime = (strtotime( $now ) - strtotime( $usr->getLastactionmade()->format("Y-m-d H:i:s") ) )/60; //sec -> minute
+        if( $restime > 2 )
+            return true;
+            return false;
+    }
+    
+    /**
+     * @Secure(roles="ROLE_CLIENT")
+     */
     public function preExecute()
-    {
+    { 
+        if( $this->getRequest()->getRequestUri() !='/app_dev.php/nb-notif-client/ajax/' && $this->getRequest()->getRequestUri() !='/app_dev.php/nb-msg-client/ajax/' ){
+            $usr = $this->get('security.context')->getToken()->getUser();
+            $now = new \DateTime('now');
+            $now = $now->format("Y-m-d H:i:s");   
+            $restime = (strtotime( $now ) - strtotime( $usr->getLastactionmade()->format("Y-m-d H:i:s") ) )/60; //sec -> minute
+            if( $restime > 2 ){
+                $em = $this->getDoctrine()->getManager();   
+                $usr->setLastactionmade( new \DateTime('now') );
+                $em->persist($usr);
+                $em->flush();
+            }
+        }    
+        //Crypt ID
         if( $this->getRequest()->attributes->has('id') ){     
             $decrypted = $this->get('nzo_url_encryptor')->decrypt( $this->getRequest()->attributes->get('id') );
             $this->getRequest()->attributes->set('id', $decrypted);
@@ -221,9 +249,11 @@ class ClientController extends Controller {
             $em->flush();
             
             //Email
-            $textmail = 'Contrat de Fret <a href="'.$url.'"><span>'.$postule->getDemandeExport()->getTitre().'</span></a> est Terminé!';
-            $this->get('nzo.mailer')->NzoSendMail($postule->getExportateur()->getEmail(), 5, $postule->getExportateur()->getNomentrop(), $textmail );
-            
+            if( $this->VerifDiffTime($postule->getExportateur()->getId()) )
+            {
+                $textmail = 'Contrat de Fret <a href="'.$url.'"><span>'.$postule->getDemandeExport()->getTitre().'</span></a> est Terminé!';
+                $this->get('nzo.mailer')->NzoSendMail($postule->getExportateur()->getEmail(), 5, $postule->getExportateur()->getNomentrop(), $textmail );
+            }
             $this->get('session')->getFlashBag()->set('nzonotice', 'Demande de Fret terminé avec succès');
           
         return $this->redirect($this->generateUrl('client_donner_avis_demande_export', array('id' => $this->get('nzo_url_encryptor')->encrypt($postule->getId()))));   
@@ -261,9 +291,10 @@ class ClientController extends Controller {
             $em->flush();
             
             //Email
-            $textmail = 'Votre contrat de fret: <a href="'.$url.'"><span>'.$postule->getDemandeexport()->getTitre()."</span></a> est commencé le ".$postule->getDemandeexport()->getDateTacking()->format('d/m/Y');
-            $this->get('nzo.mailer')->NzoSendMail($postule->getExportateur()->getEmail(), 6, $postule->getExportateur()->getNomentrop(), $textmail );
-            
+            if( $this->VerifDiffTime($postule->getExportateur()->getId()) ){            
+                $textmail = 'Votre contrat de fret: <a href="'.$url.'"><span>'.$postule->getDemandeexport()->getTitre()."</span></a> est commencé le ".$postule->getDemandeexport()->getDateTacking()->format('d/m/Y');
+                $this->get('nzo.mailer')->NzoSendMail($postule->getExportateur()->getEmail(), 6, $postule->getExportateur()->getNomentrop(), $textmail );
+            }
         $this->get('session')->getFlashBag()->set('nzonotice', 'Votre Contrat de Fret est commencé');
           
         return $this->redirect($this->generateUrl('client_demande_export_encours_detail', array('id' => $this->get('nzo_url_encryptor')->encrypt($postule->getDemandeexport()->getId()))));   
@@ -301,8 +332,10 @@ class ClientController extends Controller {
                 $em->persist($notif);
                 
                 //Email 
-                $textmail = 'Demande de Fret <a href="'.$url.'"><span>'.$mydemande->getTitre().'</span></a> est annulé!';
-                $this->get('nzo.mailer')->NzoSendMail($postule->getExportateur()->getEmail(), 7, $postule->getExportateur()->getNomentrop(), $textmail );
+                if( $this->VerifDiffTime($postule->getExportateur()->getId()) ){            
+                    $textmail = 'Demande de Fret <a href="'.$url.'"><span>'.$mydemande->getTitre().'</span></a> est annulé!';
+                    $this->get('nzo.mailer')->NzoSendMail($postule->getExportateur()->getEmail(), 7, $postule->getExportateur()->getNomentrop(), $textmail );
+                }
             }
             
             $em->flush();   
@@ -644,9 +677,11 @@ class ClientController extends Controller {
             }
             
             // email notif
-             $url = $this->get('router')->generate('exp_notifmsg_url_val', array('id' => $this->get('nzo_url_encryptor')->encrypt($postule->getId())), true);          
-             $textmail = 'Nouveau Message reçu de <a href="'.$url.'"><span>'.$usr->getNomentrop().'</span></a>';
-             $this->get('nzo.mailer')->NzoSendMail($exportateur->getEmail(), 15, $exportateur->getNomentrop(), $textmail );
+            if( $this->VerifDiffTime($exportateur->getId()) ){            
+                $url = $this->get('router')->generate('exp_notifmsg_url_val', array('id' => $this->get('nzo_url_encryptor')->encrypt($postule->getId())), true);          
+                $textmail = 'Nouveau Message reçu de <a href="'.$url.'"><span>'.$usr->getNomentrop().'</span></a>';
+                $this->get('nzo.mailer')->NzoSendMail($exportateur->getEmail(), 15, $exportateur->getNomentrop(), $textmail );
+            }
            //  recuperation liste msg
            $msgs = $em->getRepository('NzoTunisiefretBundle:MsgDemandeExport')->findBy( array('demandeexportpostule' => $postule));
 
@@ -740,9 +775,10 @@ class ClientController extends Controller {
             $em->flush();
             
             //Email 
-            $textmail = 'Vous avez reçu un Avis sur le Contrat <a href="'.$url.'"><span>'.$postule->getDemandeexport()->getTitre().'</span></a>';
-            $this->get('nzo.mailer')->NzoSendMail($postule->getExportateur()->getEmail(), 8, $postule->getExportateur()->getNomentrop(), $textmail );
-            
+            if( $this->VerifDiffTime($postule->getExportateur()->getId()) ){      
+                $textmail = 'Vous avez reçu un Avis sur le Contrat <a href="'.$url.'"><span>'.$postule->getDemandeexport()->getTitre().'</span></a>';
+                $this->get('nzo.mailer')->NzoSendMail($postule->getExportateur()->getEmail(), 8, $postule->getExportateur()->getNomentrop(), $textmail );
+            }
             $this->get('session')->getFlashBag()->set('nzonotice', 'Avis associé avec succès');
             return $this->redirect($this->generateUrl('client_demande_export_termine_detail', array('id' => $this->get('nzo_url_encryptor')->encrypt($postule->getDemandeexport()->getId()))));   
         }

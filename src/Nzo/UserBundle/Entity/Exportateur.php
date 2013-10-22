@@ -115,6 +115,11 @@ class Exportateur extends User
     protected $dateenabled;
     
     /**
+     * @ORM\Column(name="last_action_made", type="datetime", nullable=true)
+     */
+    protected $lastactionmade;  
+    
+    /**
      * @var integer $nbdemandeexportpostuler
      *
      * @ORM\Column(name="nbdemandeexportpostule", type="integer")
@@ -164,6 +169,7 @@ class Exportateur extends User
         $this->enabled = false;
         $this->note = -1;
         $this->dateinscription = new \DateTime('now');
+        $this->lastactionmade = new \DateTime('now');
         $this->notifier = 0;
         $this->notifiermsg = 0;
         //$this->recevoiremail = true;
@@ -645,5 +651,28 @@ class Exportateur extends User
     public function getNotifmsg()
     {
         return $this->notifmsg;
+    }
+
+    /**
+     * Set lastactionmade
+     *
+     * @param \DateTime $lastactionmade
+     * @return Exportateur
+     */
+    public function setLastactionmade($lastactionmade)
+    {
+        $this->lastactionmade = $lastactionmade;
+    
+        return $this;
+    }
+
+    /**
+     * Get lastactionmade
+     *
+     * @return \DateTime 
+     */
+    public function getLastactionmade()
+    {
+        return $this->lastactionmade;
     }
 }

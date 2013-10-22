@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>{% block title %}TunisieFret - {% endblock title %}</title>
+        <title id='nzotitlenotif'>{% block title %}TunisieFret - {% endblock title %}</title>
         <!--To be sure using the latest rendering mode for IE-->
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <link rel="icon" type="image/ico" href="{{ asset('bundles/nzotunisiefret/images') }}/favicon.ico"> 
@@ -140,6 +140,10 @@ $(document).ready( function() {
 <script>
     $(document).ready(function() {
         nzostorage='';
+        totalnotifnb = {{nzonotificationnb}} + {{nzonotifmsgsnb}};
+            if( totalnotifnb >0){
+                $('#nzotitlenotif').html( '('+totalnotifnb+') - ' + $('#nzotitlenotif').html() );
+            }
         $('#cliknotif').on('click', function(){
             if($('#nzonotifnb').html() != '' || nzostorage == ''){                
                 $.ajax({

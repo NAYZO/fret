@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>{% block title %}TunisieFret - {% endblock title %}</title>
+        <title id='nzotitlenotif'>{% block title %}TunisieFret - {% endblock title %}</title>
         <!--To be sure using the latest rendering mode for IE-->
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <link rel="icon" type="image/ico" href="{{ asset('bundles/nzotunisiefret/images') }}/favicon.ico"> 
@@ -138,8 +138,11 @@
 {% endif %}
 <script>
     $(document).ready(function() {
-            nzostorage='';            
-            
+            nzostorage='';         
+            totalnotifnb = {{nzonotificationnb}} + {{nzonotifmsgsnb}};
+            if( totalnotifnb >0){
+                $('#nzotitlenotif').html( '('+totalnotifnb+') - ' + $('#nzotitlenotif').html() );
+            }
             $('#cliknotif').on('click', function(){
             if($('#nzonotifnb').html() != '' || nzostorage == ''){                
                 $.ajax({
@@ -177,7 +180,17 @@
                      url:'{{path("ajax_get_nb_notif_client")}}',
                      type: 'GET',
                      success: function(nbnotif){
-                            (nbnotif==0) ? $('#nzonotifnb').html('') : $('#nzonotifnb').html(nbnotif);      
+                            if(nbnotif==0)
+                                $('#nzonotifnb').html('')
+                            else{
+                                $('#nzonotifnb').html(nbnotif);      
+                              {#  totalnotifnb = {{nzonotificationnb}} + {{nzonotifmsgsnb}};
+                                if( $('#nzomsgnb').html() != ''){
+                                    totalnotifnb1 = nbnotif + parseInt( $('#nzomsgnb').html() );
+                                    $('#nzotitlenotif').html( '('+totalnotifnb1+') - ' + $('#nzotitlenotif').html() );
+                                }
+                             #}
+                            }
                      },
                      error:function(){}  
                 });

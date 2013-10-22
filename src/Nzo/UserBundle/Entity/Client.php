@@ -115,6 +115,11 @@ class Client extends User
     protected $dateenabled;  
     
     /**
+     * @ORM\Column(name="last_action_made", type="datetime", nullable=true)
+     */
+    protected $lastactionmade;  
+    
+    /**
      * @var integer $nbdemandeexportdepose
      *
      * @ORM\Column(name="nbdemandeexportdepose", type="integer", nullable=true)
@@ -162,6 +167,7 @@ class Client extends User
         $this->enabled = false;
         $this->note = -1;
         $this->dateinscription = new \DateTime('now');
+        $this->lastactionmade = new \DateTime('now');
         $this->notifier = 0;
         $this->notifiermsg = 0;
         //$this->recevoiremail = true;
@@ -643,4 +649,27 @@ class Client extends User
         return $this->nbcontrattermine;
     }
 
+
+    /**
+     * Set lastactionmade
+     *
+     * @param \DateTime $lastactionmade
+     * @return Client
+     */
+    public function setLastactionmade($lastactionmade)
+    {
+        $this->lastactionmade = $lastactionmade;
+    
+        return $this;
+    }
+
+    /**
+     * Get lastactionmade
+     *
+     * @return \DateTime 
+     */
+    public function getLastactionmade()
+    {
+        return $this->lastactionmade;
+    }
 }
