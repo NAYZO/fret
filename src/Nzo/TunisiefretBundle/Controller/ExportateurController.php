@@ -613,7 +613,19 @@ class ExportateurController extends Controller {
     public function RechercheAction($type)
     {
         $mot = $this->getRequest()->query->get('mot');
-       if($type=='Active') {
+        if($type=='All') {
+           $usr = $this->get('security.context')->getToken()->getUser();
+        $em = $this->getDoctrine()->getManager();   
+        
+        $query = $em->createQuery("SELECT d FROM NzoTunisiefretBundle:Demandeexport d WHERE (d.description LIKE :mot OR d.titre LIKE :mot) AND d.tacking = 0 AND d.annuler_demande is NULL ORDER BY d.date_depos DESC ");
+        $query->setParameter('mot', "%$mot%");
+        
+        $paginator = $this->get('knp_paginator'); 
+        $listepostules = $paginator->paginate($query,
+        $this->get('request')->query->get('page', 1), 6);         
+        return $this->render('NzoTunisiefretBundle:Exportateur:ResultatRechercheAll.html.twig', array('listepostules' => $listepostules));
+       }
+       else if($type=='Active') {
            $usr = $this->get('security.context')->getToken()->getUser();
         $em = $this->getDoctrine()->getManager();   
         

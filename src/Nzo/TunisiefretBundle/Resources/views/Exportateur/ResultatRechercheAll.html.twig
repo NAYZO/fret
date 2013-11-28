@@ -11,6 +11,7 @@
     </div>
 </div>
 {% endblock banner %}
+{#---------------------2eme menu-------------------#}
 {% block menu %}
 <div class="nav-container">
     <div class="box">
@@ -25,7 +26,7 @@
                     <li><a href="{{ path('exp_liste_postule_archive') }}" >Archivé</a></li>
                 </ul>
             </li>
-            <li class="dropdown ">
+            <li class="dropdown">
                 <a class="dropdown-toggle" data-toggle="dropdown" href="#">
                     Mes Contrats <span class="caret"></span>
                 </a>
@@ -41,13 +42,13 @@
                 <li><a href="{{path('nzo_tunisiefret_homepage')}}">Liste Demandes</a></li>
                 <li class="sanslien"><strong>Mes Postules</strong>
                     <ul class="second-drop">
-                        <li class="activedrop"><a href="{{ path('exp_liste_postule_active') }}" >Active</a></li>
+                        <li><a href="{{ path('exp_liste_postule_active') }}" >Active</a></li>
                         <li><a href="{{ path('exp_liste_postule_archive') }}" >Archivé</a></li>
                     </ul>
                 </li>
                 <li class="sanslien"><strong>Mes Contrats</strong>
                     <ul class="second-drop">
-                        <li><a href="{{ path('exp_liste_contrats_en_cours') }}" >En Cours</a></li>
+                        <li class="activedrop"><a href="{{ path('exp_liste_contrats_en_cours') }}" >En Cours</a></li>
                         <li><a href="{{ path('exp_liste_contrats_termine') }}" >Terminé</a></li>
                     </ul>
                 </li>
@@ -66,8 +67,9 @@
         </ul>
     </div>
 </div>
+<hr>
 <div class="pull-right" style="padding-right: 16px;">
-    {{ knp_pagination_render(listepostules) }}
+        {{ knp_pagination_render(listepostules) }}
 </div>
 <div class="row"></div>
 <div class="list-group">
@@ -75,25 +77,41 @@
         <hr>
         <p class="alert alert-info">Aucune resultat trouver!</p>
     {%else%}
-    {% for postule in listepostules %}
-        <div class="list-group-item" style="padding: 30px;">
-            <div class="legend list-group-item-heading padding-bottom">
-                <h4 class="cl-effect-1 pull-left"><a href="{{path('exp_detail_postule_active', {'id':postule.id | urlencrypt} )}}">{{postule.demandeexport.titre}}</a></h4>  
-                <h5 class="pull-right text-danger">{{postule.demandeexport.type}}</h5>
-            </div>
-            <p style="color: grey;">Postulé le {{postule.datepostule|date("d/m/Y")}}</p>
-            <p class="list-group-item-text">
-                {% if postule.demandeexport.description|length > 150 %}
-                    {{postule.demandeexport.description|slice(0, 150)}}...
-                {%else%}
-                    {{postule.demandeexport.description}}
-                {% endif %}
-                <a href="{{path('exp_detail_postule_active', {'id':postule.id | urlencrypt} )}}" class="pull-right"> Voir détails </a>
-            </p>
-              
-        </div>
-    {% endfor %}
-        {% endif %}
+    {% for demande in listepostules %}
+                    {%set djp = render(controller('NzoTunisiefretBundle:Exportateur:GetEtat', {'id': demande.id | urlencrypt}))%}
+                <div class="list-group-item" style="padding: 30px;">
+                        <div class="legend list-group-item-heading padding-bottom">
+                            <h4 class="cl-effect-1 pull-left">
+                                {%if djp == 'false'%}
+                                <a href="{{path('nzo_postuledemande_export', {'id':demande.id | urlencrypt} )}}">{{demande.titre}}</a>
+                            </h4>    
+                                {%else%}
+                                <h4 class="cl-effect-1 pull-left"><a href="{{path('exp_detail_postule_active', {'id':djp | urlencrypt} )}}">{{demande.titre}}</a></h4>    
+                                {%endif%}
+                           <h5 class="pull-right text-danger">{{demande.type}}</h5>
+                        </div>
+                        <p style="color: grey;">Etat: 
+                            {%if djp == 'false'%}
+                                Pas Encore Poster  
+                            {%else%}
+                                Déja Posté
+                            {%endif%}
+                                | Déposer le {{demande.datedepos|date("d/m/Y")}}</p>
+                        <p class="list-group-item-text">
+                            {% if demande.description|length > 150 %}
+                                {{demande.description|slice(0, 150)}}...
+                            {%else%}
+                                {{demande.description}}
+                            {% endif %}                
+                            {%if djp == 'false'%}
+                                <a href="{{path('nzo_postuledemande_export', {'id':demande.id | urlencrypt} )}}" class="pull-right"> Voir détails </a>
+                            {%else%}
+                                <a href="{{path('exp_detail_postule_active', {'id':djp | urlencrypt} )}}" class="pull-right"> Voir détails </a>
+                            {%endif%}
+                        </p>
+                    </div>
+                {% endfor %}
+    {% endif %}
 </div>
 <div class="row" style="padding-right: 16px;">
     <div class="pull-right">
